@@ -1,0 +1,667 @@
+@* ============================================================
+   PAGES : Diagnostics, Révisions, Tâches
+   ============================================================ *@
+
+@* ─────────────────────────────────────────────────────────── *@
+@* Pages/Diagnostics/DiagnosticList.razor                      *@
+@* ─────────────────────────────────────────────────────────── *@
+@page "/diagnostics"
+@attribute [Authorize(Policy = "RequireMechanic")]
+@inject ApiClient Api
+@inject NavigationManager Nav
+@inject ToastService Toast
+
+<PageTitle>Pannes — MecaPro</PageTitle>
+
+<div class="page fade-in">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">⚠ Pannes & Diagnostics</h1>
+            <p class="page-subtitle">@_openCount panne(s) en cours · @_criticalCount critique(s)</p>
+        </div>
+        <button class="btn btn-primary" @onclick='() => Nav.NavigateTo("/diagnostics/new")'>
+            ＋ Nouveau diagnostic
+        </button>
+    </div>
+
+    @* Severity summary *@
+    <div class="severity-row">
+        <div class="severity-card critical @(_severityFilter == "Critical" ? "active" : "")"
+             @onclick='() => SetFilter("Critical")'>
+            <div class="sev-icon">🔴</div>
+            <div class="sev-count">@_criticalCount</div>
+            <div class="sev-label">Critique</div>
+        </div>
+        <div class="severity-card major @(_severityFilter == "Major" ? "active" : "")"
+             @onclick='() => SetFilter("Major")'>
+            <div class="sev-icon">🟠</div>
+            <div class="sev-count">@_majorCount</div>
+            <div class="sev-label">Majeure</div>
+        </div>
+        <div class="severity-card minor @(_severityFilter == "Minor" ? "active" : "")"
+             @onclick='() => SetFilter("Minor")'>
+            <div class="sev-icon">🟡</div>
+            <div class="sev-count">@_minorCount</div>
+            <div class="sev-label">Mineure</div>
+        </div>
+        <div class="severity-card info @(_severityFilter == "Info" ? "active" : "")"
+             @onclick='() => SetFilter("Info")'>
+            <div class="sev-icon">🔵</div>
+            <div class="sev-count">@_infoCount</div>
+            <div class="sev-label">Info</div>
+        </div>
+        <div class="severity-card resolved @(_severityFilter == "Resolved" ? "active" : "")"
+             @onclick='() => SetFilter("Resolved")'>
+            <div class="sev-icon">✅</div>
+            <div class="sev-count">@_resolvedCount</div>
+            <div class="sev-label">Résolues</div>
+        </div>
+    </div>
+
+    <div class="filter-bar">
+        <div class="search-wrap">
+            <input class="search-field" placeholder="Code panne, description…"
+                   @bind="_search" @bind:event="oninput" @onkeyup="OnSearch" />
+            <span class="search-ico">⌕</span>
+        </div>
+        <select class="filter-select" @bind="_statusFilter">
+            <option value="">Tous statuts</option>
+            <option value="Open">Ouvert</option>
+            <option value="InProgress">En cours</option>
+            <option value="Resolved">Résolu</option>
+        </select>
+        <button class="btn btn-ghost" @onclick="ResetFilters">✕ Reset</button>
+    </div>
+
+    @if (_loading) { <TableSkeleton Rows="8" /> }
+    else
+    {
+        <div class="diag-list">
+            @foreach (var d in _diagnostics)
+            {
+                <div class="diag-card severity-@d.Severity.ToLower() @(d.Status == "Resolved" ? "resolved" : "")"
+                     @onclick="() => OpenDetail(d)">
+                    <div class="diag-card-severity"></div>
+                    <div class="diag-card-body">
+                        <div class="diag-card-header">
+                            <div class="diag-card-code">@d.FaultCode</div>
+                            <StatusBadge Status="@d.Status" Small="true" />
+                            <span class="diag-card-sev-badge sev-@d.Severity.ToLower()">@d.Severity</span>
+                        </div>
+                        <div class="diag-card-desc">@d.Description</div>
+                        <div class="diag-card-meta">
+                            <span class="diag-plate">🚗 @d.VehiclePlate</span>
+                            <span>👤 @d.CustomerName</span>
+                            <span>🔧 @d.MechanicName</span>
+                            <span class="mono">📅 @d.DiagnosedAt.ToString("dd/MM/yyyy HH:mm")</span>
+                            @if (d.DiagnosticTool != null)
+                            { <span class="tool-badge">@d.DiagnosticTool</span> }
+                        </div>
+                        @if (d.ProbableCauses != null)
+                        {
+                            <div class="diag-causes">
+                                💡 <strong>Causes probables :</strong> @d.ProbableCauses
+                            </div>
+                        }
+                    </div>
+                    <div class="diag-card-actions" @onclick:stopPropagation="true">
+                        @if (d.Status != "Resolved")
+                        {
+                            <button class="btn btn-sm btn-ghost" @onclick="() => StartResolve(d)">
+                                ✓ Résoudre
+                            </button>
+                        }
+                        <button class="btn btn-sm btn-ghost" @onclick='() => Nav.NavigateTo($"/vehicles/{d.VehicleId}")'>
+                            Voir véhicule →
+                        </button>
+                    </div>
+                </div>
+            }
+            @if (!_diagnostics.Any())
+            {
+                <EmptyState Icon="✅" Title="Aucune panne"
+                            Description="Aucun diagnostic ne correspond à vos filtres." />
+            }
+        </div>
+        <Pagination CurrentPage="_page" TotalPages="_totalPages" OnPageChanged="ChangePage" />
+    }
+</div>
+
+@* Resolve Modal *@
+@if (_resolveTarget != null)
+{
+    <Modal Title=@($"Résoudre — {_resolveTarget.FaultCode}") OnClose="CloseResolve">
+        <div class="form-group">
+            <label class="form-label">Description de la résolution</label>
+            <textarea class="form-input" rows="4" @bind="_resolutionText"
+                      placeholder="Décrire les actions effectuées, pièces remplacées…"></textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" @onclick="CloseResolve">Annuler</button>
+            <button class="btn btn-primary" @onclick="ConfirmResolve"
+                    disabled="@string.IsNullOrWhiteSpace(_resolutionText)">
+                ✓ Confirmer la résolution
+            </button>
+        </div>
+    </Modal>
+}
+
+@code {
+    private List<DiagnosticListDto> _diagnostics = new();
+    private bool _loading = true;
+    private string _search = "", _statusFilter = "", _severityFilter = "";
+    private int _page = 1, _totalPages = 1;
+    private int _criticalCount, _majorCount, _minorCount, _infoCount, _resolvedCount, _openCount;
+    private DiagnosticListDto? _resolveTarget;
+    private string _resolutionText = "";
+
+    protected override async Task OnInitializedAsync() => await LoadAsync();
+
+    private async Task LoadAsync()
+    {
+        _loading = true;
+        var url = $"/api/v1/diagnostics?page={_page}&pageSize=20" +
+                  $"&search={Uri.EscapeDataString(_search)}" +
+                  $"&status={_statusFilter}&severity={_severityFilter}";
+        var result = await Api.GetAsync<DiagnosticPagedResult>(url);
+        _diagnostics = result?.Items.ToList() ?? new();
+        _totalPages = result?.TotalPages ?? 1;
+        _criticalCount = result?.CriticalCount ?? 0;
+        _majorCount = result?.MajorCount ?? 0;
+        _minorCount = result?.MinorCount ?? 0;
+        _infoCount = result?.InfoCount ?? 0;
+        _resolvedCount = result?.ResolvedCount ?? 0;
+        _openCount = _criticalCount + _majorCount + _minorCount + _infoCount;
+        _loading = false;
+    }
+
+    private async Task SetFilter(string sev)
+    {
+        _severityFilter = _severityFilter == sev ? "" : sev;
+        _page = 1;
+        await LoadAsync();
+    }
+
+    private async Task OnSearch(KeyboardEventArgs e) { if (e.Key == "Enter") { _page = 1; await LoadAsync(); } }
+    private async Task ResetFilters() { _search = ""; _statusFilter = ""; _severityFilter = ""; _page = 1; await LoadAsync(); }
+    private async Task ChangePage(int p) { _page = p; await LoadAsync(); }
+    private void OpenDetail(DiagnosticListDto d) => Nav.NavigateTo($"/diagnostics/{d.Id}");
+    private void StartResolve(DiagnosticListDto d) { _resolveTarget = d; _resolutionText = ""; }
+    private void CloseResolve() { _resolveTarget = null; }
+
+    private async Task ConfirmResolve()
+    {
+        if (_resolveTarget == null) return;
+        await Api.PostAsync<object>($"/api/v1/diagnostics/{_resolveTarget.Id}/resolve",
+            new { resolution = _resolutionText });
+        Toast.Success($"Panne {_resolveTarget.FaultCode} résolue.");
+        CloseResolve();
+        await LoadAsync();
+    }
+}
+
+
+@* ─────────────────────────────────────────────────────────── *@
+@* Pages/Revisions/RevisionList.razor                          *@
+@* ─────────────────────────────────────────────────────────── *@
+@page "/revisions"
+@attribute [Authorize(Policy = "RequireMechanic")]
+@inject ApiClient Api
+@inject NavigationManager Nav
+@inject ToastService Toast
+
+<PageTitle>Révisions — MecaPro</PageTitle>
+
+<div class="page fade-in">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">📅 Révisions</h1>
+            <p class="page-subtitle">Planning et historique des interventions</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-ghost" @onclick="() => _view = (_view == "list" ? "calendar" : "list")">
+                @(_view == "list" ? "📆 Calendrier" : "📋 Liste")
+            </button>
+            <button class="btn btn-primary" @onclick='() => Nav.NavigateTo("/revisions/new")'>
+                ＋ Planifier
+            </button>
+        </div>
+    </div>
+
+    @* KPI Row *@
+    <div class="rev-kpi-row">
+        <div class="rev-kpi @(_dateFilter == "today" ? "active" : "")"
+             @onclick='() => SetDateFilter("today")'>
+            <div class="rev-kpi-val">@_todayCount</div>
+            <div class="rev-kpi-label">Aujourd'hui</div>
+        </div>
+        <div class="rev-kpi @(_dateFilter == "week" ? "active" : "")"
+             @onclick='() => SetDateFilter("week")'>
+            <div class="rev-kpi-val">@_weekCount</div>
+            <div class="rev-kpi-label">Cette semaine</div>
+        </div>
+        <div class="rev-kpi @(_statusFilter == "InProgress" ? "active" : "")"
+             @onclick='() => SetStatusFilter("InProgress")'>
+            <div class="rev-kpi-val" style="color:var(--amber)">@_inProgressCount</div>
+            <div class="rev-kpi-label">En cours</div>
+        </div>
+        <div class="rev-kpi @(_statusFilter == "Completed" ? "active" : "")"
+             @onclick='() => SetStatusFilter("Completed")'>
+            <div class="rev-kpi-val" style="color:var(--green)">@_completedCount</div>
+            <div class="rev-kpi-label">Terminées</div>
+        </div>
+        <div class="rev-kpi">
+            <div class="rev-kpi-val" style="color:var(--blue)">@_avgDuration min</div>
+            <div class="rev-kpi-label">Durée moy.</div>
+        </div>
+        <div class="rev-kpi">
+            <div class="rev-kpi-val" style="color:var(--green)">@_avgCost.ToString("N0") €</div>
+            <div class="rev-kpi-label">Coût moy.</div>
+        </div>
+    </div>
+
+    @if (_view == "list")
+    {
+        <div class="filter-bar">
+            <div class="search-wrap">
+                <input class="search-field" placeholder="Véhicule, client, type…"
+                       @bind="_search" @bind:event="oninput" @onkeyup="OnSearch" />
+                <span class="search-ico">⌕</span>
+            </div>
+            <input type="date" class="filter-select" @bind="_dateFrom" />
+            <input type="date" class="filter-select" @bind="_dateTo" />
+            <button class="btn btn-ghost" @onclick="ApplyFilters">Filtrer</button>
+            <button class="btn btn-ghost" @onclick="ResetFilters">✕</button>
+        </div>
+
+        @if (_loading) { <TableSkeleton Rows="10" /> }
+        else
+        {
+            <div class="data-card">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th><th>Véhicule</th><th>Client</th><th>Type</th>
+                            <th>Durée est.</th><th>Coût est.</th><th>Mécanicien</th>
+                            <th>Statut</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in _revisions)
+                        {
+                            <tr class="table-row clickable @(IsUrgent(r) ? "row-critical" : "")"
+                                @onclick="() => Nav.NavigateTo($&quot;/revisions/{r.Id}&quot;)">
+                                <td>
+                                    <div class="mono">@r.ScheduledDate.ToString("dd/MM/yyyy")</div>
+                                    <div class="text-muted" style="font-size:11px">@r.ScheduledDate.ToString("HH:mm")</div>
+                                </td>
+                                <td><span class="plate-badge">@r.VehiclePlate</span></td>
+                                <td>@r.CustomerName</td>
+                                <td><strong>@r.Type</strong></td>
+                                <td class="mono">@r.EstimatedMinutes min</td>
+                                <td class="mono accent">@r.EstimatedCost.ToString("N0") €</td>
+                                <td>@(r.MechanicName ?? "—")</td>
+                                <td><StatusBadge Status="@r.Status" /></td>
+                                <td @onclick:stopPropagation="true">
+                                    <div class="action-btns">
+                                        @if (r.Status == "Scheduled")
+                                        {
+                                            <button class="btn btn-sm btn-ghost"
+                                                    @onclick="() => StartRevision(r.Id)">▶ Démarrer</button>
+                                        }
+                                        @if (r.Status == "InProgress")
+                                        {
+                                            <button class="btn btn-sm btn-primary"
+                                                    @onclick="() => ShowCompleteModal(r)">✓ Terminer</button>
+                                        }
+                                        <button class="icon-btn-sm"
+                                                @onclick='() => Nav.NavigateTo($"/revisions/{r.Id}")'>👁</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <Pagination CurrentPage="_page" TotalPages="_totalPages" OnPageChanged="ChangePage" />
+            </div>
+        }
+    }
+    else
+    {
+        <RevisionCalendar Revisions="_allRevisions"
+                          OnRevisionClick="r => Nav.NavigateTo($&quot;/revisions/{r.Id}&quot;)"
+                          OnSlotClick="dt => Nav.NavigateTo($&quot;/revisions/new?date={dt:yyyy-MM-dd}&quot;)" />
+    }
+</div>
+
+@* Complete Revision Modal *@
+@if (_completeTarget != null)
+{
+    <Modal Title=@($"Terminer révision — {_completeTarget.VehiclePlate}") OnClose="CloseComplete">
+        <div class="form-group">
+            <label class="form-label">Durée réelle (minutes)</label>
+            <input type="number" class="form-input" @bind="_actualMinutes" min="1" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Coût réel (€ HT)</label>
+            <input type="number" class="form-input" @bind="_actualCost" min="0" step="0.01" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Notes</label>
+            <textarea class="form-input" rows="3" @bind="_completionNotes"
+                      placeholder="Observations, recommandations…"></textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" @onclick="CloseComplete">Annuler</button>
+            <button class="btn btn-primary" @onclick="ConfirmComplete">✓ Marquer terminée</button>
+        </div>
+    </Modal>
+}
+
+@code {
+    private List<RevisionListDto> _revisions = new();
+    private List<RevisionListDto> _allRevisions = new();
+    private bool _loading = true;
+    private string _view = "list";
+    private string _search = "", _statusFilter = "", _dateFilter = "";
+    private DateTime? _dateFrom, _dateTo;
+    private int _page = 1, _totalPages = 1;
+    private int _todayCount, _weekCount, _inProgressCount, _completedCount;
+    private int _avgDuration;
+    private decimal _avgCost;
+    private RevisionListDto? _completeTarget;
+    private int _actualMinutes;
+    private decimal _actualCost;
+    private string _completionNotes = "";
+
+    protected override async Task OnInitializedAsync() => await LoadAsync();
+
+    private async Task LoadAsync()
+    {
+        _loading = true;
+        var url = $"/api/v1/revisions?page={_page}&pageSize=20" +
+                  $"&search={Uri.EscapeDataString(_search)}&status={_statusFilter}" +
+                  $"&dateFilter={_dateFilter}" +
+                  (_dateFrom.HasValue ? $"&from={_dateFrom:yyyy-MM-dd}" : "") +
+                  (_dateTo.HasValue ? $"&to={_dateTo:yyyy-MM-dd}" : "");
+        var result = await Api.GetAsync<RevisionPagedResult>(url);
+        _revisions = result?.Items.ToList() ?? new();
+        _totalPages = result?.TotalPages ?? 1;
+        _todayCount = result?.TodayCount ?? 0;
+        _weekCount = result?.WeekCount ?? 0;
+        _inProgressCount = result?.InProgressCount ?? 0;
+        _completedCount = result?.CompletedCount ?? 0;
+        _avgDuration = result?.AvgDuration ?? 0;
+        _avgCost = result?.AvgCost ?? 0;
+        _loading = false;
+    }
+
+    private async Task SetDateFilter(string f) { _dateFilter = _dateFilter == f ? "" : f; _page = 1; await LoadAsync(); }
+    private async Task SetStatusFilter(string s) { _statusFilter = _statusFilter == s ? "" : s; _page = 1; await LoadAsync(); }
+    private async Task OnSearch(KeyboardEventArgs e) { if (e.Key == "Enter") { _page = 1; await LoadAsync(); } }
+    private async Task ApplyFilters() { _page = 1; await LoadAsync(); }
+    private async Task ResetFilters() { _search = ""; _statusFilter = ""; _dateFilter = ""; _dateFrom = null; _dateTo = null; _page = 1; await LoadAsync(); }
+    private async Task ChangePage(int p) { _page = p; await LoadAsync(); }
+
+    private bool IsUrgent(RevisionListDto r)
+        => r.Status == "Scheduled" && r.ScheduledDate < DateTime.Now.AddHours(2);
+
+    private async Task StartRevision(Guid id)
+    {
+        await Api.PostAsync<object>($"/api/v1/revisions/{id}/start", null);
+        Toast.Show("Révision démarrée", ToastType.Success);
+        await LoadAsync();
+    }
+
+    private void ShowCompleteModal(RevisionListDto r)
+    {
+        _completeTarget = r;
+        _actualMinutes = r.EstimatedMinutes;
+        _actualCost = r.EstimatedCost;
+        _completionNotes = "";
+    }
+
+    private void CloseComplete() => _completeTarget = null;
+
+    private async Task ConfirmComplete()
+    {
+        if (_completeTarget == null) return;
+        await Api.PostAsync<object>($"/api/v1/revisions/{_completeTarget.Id}/complete",
+            new { actualMinutes = _actualMinutes, actualCost = _actualCost, notes = _completionNotes });
+        Toast.Success("Révision terminée avec succès !");
+        CloseComplete();
+        await LoadAsync();
+    }
+}
+
+
+@* ─────────────────────────────────────────────────────────── *@
+@* Pages/Tasks/TaskBoard.razor — Kanban board des tâches       *@
+@* ─────────────────────────────────────────────────────────── *@
+@page "/tasks"
+@attribute [Authorize(Policy = "RequireMechanic")]
+@inject ApiClient Api
+@inject NavigationManager Nav
+@inject ToastService Toast
+
+<PageTitle>Tâches — MecaPro</PageTitle>
+
+<div class="page fade-in">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">✓ Tâches effectuées</h1>
+            <p class="page-subtitle">Journal de toutes les interventions</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-ghost" @onclick="() => _view = (_view == "board" ? "table" : "board")">
+                @(_view == "board" ? "📋 Tableau" : "⬛ Kanban")
+            </button>
+            <button class="btn btn-ghost" @onclick="ExportAsync">⬇ Exporter CSV</button>
+        </div>
+    </div>
+
+    @if (_view == "board")
+    {
+        <div class="kanban-board">
+            @foreach (var col in _columns)
+            {
+                <div class="kanban-col">
+                    <div class="kanban-col-header @col.Color">
+                        <span>@col.Icon @col.Title</span>
+                        <span class="kanban-count">@col.Tasks.Count</span>
+                    </div>
+                    <div class="kanban-cards">
+                        @foreach (var task in col.Tasks)
+                        {
+                            <div class="kanban-card" @onclick="() => OpenTaskDetail(task)">
+                                <div class="kc-header">
+                                    <span class="kc-id mono">#@task.Id.ToString()[..6]</span>
+                                    <span class="kc-cost">@task.TotalCost.ToString("N0") €</span>
+                                </div>
+                                <div class="kc-title">@task.Title</div>
+                                <div class="kc-plate">@task.VehiclePlate</div>
+                                <div class="kc-meta">
+                                    <span>@task.MechanicName</span>
+                                    <span class="mono text-muted">@task.EstimatedMinutes min</span>
+                                </div>
+                                @if (task.PartsUsed != null)
+                                {
+                                    <div class="kc-parts">🔩 @task.PartsUsed</div>
+                                }
+                                <div class="kc-footer">
+                                    <span class="mono text-muted" style="font-size:10px">@task.StartedAt.ToString("dd/MM HH:mm")</span>
+                                    @if (task.Status == "InProgress")
+                                    {
+                                        <button class="btn btn-xs btn-primary"
+                                                @onclick:stopPropagation="true"
+                                                @onclick="() => CompleteTask(task.Id)">✓</button>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        @* Table view *@
+        <div class="filter-bar">
+            <div class="search-wrap">
+                <input class="search-field" placeholder="Tâche, véhicule, mécanicien…"
+                       @bind="_search" @bind:event="oninput" @onkeyup="OnSearch" />
+                <span class="search-ico">⌕</span>
+            </div>
+            <input type="date" class="filter-select" @bind="_dateFilter" />
+            <select class="filter-select" @bind="_mechanicFilter">
+                <option value="">Tous mécaniciens</option>
+                @foreach (var m in _mechanics)
+                { <option value="@m.Id">@m.Name</option> }
+            </select>
+            <button class="btn btn-ghost" @onclick="LoadAsync">Filtrer</button>
+        </div>
+
+        <div class="data-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th><th>Heure</th><th>Véhicule</th><th>Tâche</th>
+                        <th>Mécanicien</th><th>Durée</th><th>Pièces utilisées</th>
+                        <th>Coût MO</th><th>Coût pièces</th><th>Total</th><th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in _tasks)
+                    {
+                        <tr class="table-row">
+                            <td class="mono">@t.StartedAt.ToString("dd/MM/yy")</td>
+                            <td class="mono text-muted">@t.StartedAt.ToString("HH:mm")</td>
+                            <td><span class="plate-badge">@t.VehiclePlate</span></td>
+                            <td><strong>@t.Title</strong></td>
+                            <td>@t.MechanicName</td>
+                            <td class="mono">@(t.ActualMinutes.HasValue ? $"{t.ActualMinutes} min" : $"~{t.EstimatedMinutes} min")</td>
+                            <td class="text-muted">@(t.PartsUsed ?? "—")</td>
+                            <td class="mono">@t.LaborCost.ToString("N0") €</td>
+                            <td class="mono">@t.PartsCost.ToString("N0") €</td>
+                            <td class="mono accent"><strong>@t.TotalCost.ToString("N0") €</strong></td>
+                            <td><StatusBadge Status="@t.Status" Small="true" /></td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr class="table-total">
+                        <td colspan="7" class="text-right"><strong>TOTAL</strong></td>
+                        <td class="mono accent"><strong>@_totalLabor.ToString("N0") €</strong></td>
+                        <td class="mono"><strong>@_totalParts.ToString("N0") €</strong></td>
+                        <td class="mono accent"><strong>@(_totalLabor + _totalParts).ToString("N0") €</strong></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <Pagination CurrentPage="_page" TotalPages="_totalPages" OnPageChanged="ChangePage" />
+        </div>
+    }
+</div>
+
+@code {
+    private List<TaskListDto> _tasks = new();
+    private List<KanbanColumn> _columns = new();
+    private List<MechanicDto> _mechanics = new();
+    private bool _loading = true;
+    private string _view = "board";
+    private string _search = "", _mechanicFilter = "";
+    private DateTime? _dateFilter;
+    private int _page = 1, _totalPages = 1;
+    private decimal _totalLabor, _totalParts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _mechanics = await Api.GetAsync<List<MechanicDto>>("/api/v1/mechanics") ?? new();
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _loading = true;
+        var result = await Api.GetAsync<TaskPagedResult>(
+            $"/api/v1/tasks?page={_page}&search={_search}&mechanic={_mechanicFilter}");
+        _tasks = result?.Items.ToList() ?? new();
+        _totalPages = result?.TotalPages ?? 1;
+        _totalLabor = _tasks.Sum(t => t.LaborCost);
+        _totalParts = _tasks.Sum(t => t.PartsCost);
+        BuildKanban();
+        _loading = false;
+    }
+
+    private void BuildKanban()
+    {
+        _columns = new List<KanbanColumn>
+        {
+            new() { Title = "En attente", Icon = "⏸", Color = "col-pending",
+                Tasks = _tasks.Where(t => t.Status == "Pending").ToList() },
+            new() { Title = "En cours", Icon = "▶", Color = "col-progress",
+                Tasks = _tasks.Where(t => t.Status == "InProgress").ToList() },
+            new() { Title = "Bloqué", Icon = "🚫", Color = "col-blocked",
+                Tasks = _tasks.Where(t => t.Status == "Blocked").ToList() },
+            new() { Title = "Terminé", Icon = "✓", Color = "col-done",
+                Tasks = _tasks.Where(t => t.Status == "Completed").ToList() },
+        };
+    }
+
+    private async Task CompleteTask(Guid id)
+    {
+        await Api.PostAsync<object>($"/api/v1/tasks/{id}/complete", null);
+        Toast.Success("Tâche marquée terminée");
+        await LoadAsync();
+    }
+
+    private void OpenTaskDetail(TaskListDto t) => Nav.NavigateTo($"/tasks/{t.Id}");
+    private async Task OnSearch(KeyboardEventArgs e) { if (e.Key == "Enter") await LoadAsync(); }
+    private async Task ChangePage(int p) { _page = p; await LoadAsync(); }
+
+    private async Task ExportAsync()
+    {
+        var bytes = await Api.GetBytesAsync($"/api/v1/tasks/export?format=csv");
+        // trigger download
+    }
+
+    private class KanbanColumn
+    {
+        public string Title { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public string Color { get; set; } = "";
+        public List<TaskListDto> Tasks { get; set; } = new();
+    }
+}
+
+@* Additional DTOs *@
+@code {
+    public record DiagnosticListDto(
+        Guid Id, string FaultCode, string Description, string Severity, string Status,
+        string? DiagnosticTool, string? ProbableCauses, string VehiclePlate, Guid VehicleId,
+        string CustomerName, string MechanicName, DateTime DiagnosedAt);
+
+    public record DiagnosticPagedResult(
+        IEnumerable<DiagnosticListDto> Items, int Total, int TotalPages,
+        int CriticalCount, int MajorCount, int MinorCount, int InfoCount, int ResolvedCount);
+
+    public record RevisionListDto(
+        Guid Id, string Type, DateTime ScheduledDate, string VehiclePlate,
+        string CustomerName, string? MechanicName, int EstimatedMinutes,
+        decimal EstimatedCost, string Status);
+
+    public record RevisionPagedResult(
+        IEnumerable<RevisionListDto> Items, int Total, int TotalPages,
+        int TodayCount, int WeekCount, int InProgressCount, int CompletedCount,
+        int AvgDuration, decimal AvgCost);
+
+    public record TaskListDto(
+        Guid Id, string Title, string Status, string VehiclePlate,
+        string MechanicName, int EstimatedMinutes, int? ActualMinutes,
+        decimal LaborCost, decimal PartsCost, decimal TotalCost,
+        string? PartsUsed, DateTime StartedAt);
+
+    public record TaskPagedResult(IEnumerable<TaskListDto> Items, int Total, int TotalPages);
+    public record MechanicDto(string Id, string Name);
+}

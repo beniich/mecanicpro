@@ -1,0 +1,237 @@
+@* Layout/MainLayout.razor *@
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
+@inject AuthService Auth
+@inject NotificationService NotifService
+@implements IAsyncDisposable
+
+<div class="app-shell @(_sidebarOpen ? "sidebar-open" : "sidebar-collapsed")">
+
+    @* ── SIDEBAR ────────────────────────────────────────── *@
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <span class="brand-icon">⬡</span>
+                <span class="brand-name">MecaPro</span>
+            </div>
+            <button class="sidebar-toggle" @onclick="ToggleSidebar">
+                @(_sidebarOpen ? "←" : "→")
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-label">Principal</span>
+                <NavLink href="/" Match="NavLinkMatch.All" class="nav-item">
+                    <span class="nav-icon">◧</span>
+                    <span class="nav-text">Tableau de bord</span>
+                </NavLink>
+                <NavLink href="/vehicles" class="nav-item">
+                    <span class="nav-icon">🚗</span>
+                    <span class="nav-text">Véhicules & QR</span>
+                </NavLink>
+                <NavLink href="/diagnostics" class="nav-item">
+                    <span class="nav-icon">⚠</span>
+                    <span class="nav-text">Pannes</span>
+                    @if (_activePannes > 0)
+                    {
+                        <span class="nav-badge danger">@_activePannes</span>
+                    }
+                </NavLink>
+                <NavLink href="/revisions" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-text">Révisions</span>
+                </NavLink>
+                <NavLink href="/tasks" class="nav-item">
+                    <span class="nav-icon">✓</span>
+                    <span class="nav-text">Tâches</span>
+                </NavLink>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-label">Clientèle</span>
+                <NavLink href="/customers" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Clients CRM</span>
+                </NavLink>
+                <NavLink href="/chat" class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-text">Chat</span>
+                    @if (_unreadMessages > 0)
+                    {
+                        <span class="nav-badge">@_unreadMessages</span>
+                    }
+                </NavLink>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-label">Stock & Commerce</span>
+                <NavLink href="/parts" class="nav-item">
+                    <span class="nav-icon">⚙</span>
+                    <span class="nav-text">Pièces</span>
+                </NavLink>
+                <NavLink href="/shop" class="nav-item">
+                    <span class="nav-icon">🛒</span>
+                    <span class="nav-text">E-Commerce</span>
+                </NavLink>
+                <NavLink href="/invoices" class="nav-item">
+                    <span class="nav-icon">🧾</span>
+                    <span class="nav-text">Factures</span>
+                </NavLink>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-label">Compte</span>
+                <NavLink href="/subscription" class="nav-item">
+                    <span class="nav-icon">💳</span>
+                    <span class="nav-text">Abonnement</span>
+                </NavLink>
+                <NavLink href="/settings" class="nav-item">
+                    <span class="nav-icon">⚙</span>
+                    <span class="nav-text">Paramètres</span>
+                </NavLink>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar">@_initials</div>
+                <div class="user-info">
+                    <strong>@_userName</strong>
+                    <span>@_userRole</span>
+                </div>
+                <button class="logout-btn" @onclick="LogoutAsync" title="Déconnexion">⏻</button>
+            </div>
+        </div>
+    </aside>
+
+    @* ── MAIN ────────────────────────────────────────────── *@
+    <div class="main-area">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" @onclick="ToggleSidebar">☰</button>
+                <div class="breadcrumb">@_pageTitle</div>
+            </div>
+            <div class="topbar-right">
+                @* Search *@
+                <div class="topbar-search">
+                    <input type="text" placeholder="Rechercher véhicule, client…"
+                           @bind="_searchQuery" @bind:event="oninput"
+                           @onkeyup="HandleSearch" class="search-input" />
+                    <span class="search-icon">⌕</span>
+                </div>
+                @* Notifications *@
+                <div class="notif-btn-wrap">
+                    <button class="icon-btn @(_showNotifs ? "active" : "")"
+                            @onclick="ToggleNotifications">
+                        🔔
+                        @if (_unreadNotifs > 0)
+                        {
+                            <span class="notif-count">@_unreadNotifs</span>
+                        }
+                    </button>
+                    @if (_showNotifs)
+                    {
+                        <NotificationPanel Notifications="_notifications"
+                                          OnClose="() => _showNotifs = false"
+                                          OnMarkAllRead="MarkAllNotificationsRead" />
+                    }
+                </div>
+                @* Subscription badge *@
+                <span class="sub-badge @_subscriptionTier">@_subscriptionTier.ToUpper()</span>
+            </div>
+        </header>
+
+        <main class="page-content">
+            @Body
+        </main>
+    </div>
+</div>
+
+@* Global Toast Container *@
+<ToastContainer />
+
+@* Global Confirm Dialog *@
+<ConfirmDialog @ref="_confirmDialog" />
+
+@code {
+    private bool _sidebarOpen = true;
+    private string _userName = "";
+    private string _userRole = "";
+    private string _initials = "";
+    private string _subscriptionTier = "starter";
+    private string _pageTitle = "Tableau de bord";
+    private int _unreadMessages;
+    private int _unreadNotifs;
+    private int _activePannes;
+    private string _searchQuery = "";
+    private bool _showNotifs;
+    private List<NotificationDto> _notifications = new();
+    private ConfirmDialog _confirmDialog = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await Auth.GetCurrentUserAsync();
+        if (user != null)
+        {
+            _userName = $"{user.FirstName} {user.LastName}";
+            _userRole = user.Roles.FirstOrDefault() ?? "Mécanicien";
+            _initials = $"{user.FirstName[0]}{user.LastName[0]}".ToUpper();
+            _subscriptionTier = user.SubscriptionTier;
+        }
+
+        await LoadBadgesAsync();
+        await NotifService.ConnectAsync();
+        NotifService.OnNotificationReceived += OnNewNotification;
+        NotifService.OnMessageReceived += OnNewMessage;
+    }
+
+    private async Task LoadBadgesAsync()
+    {
+        _unreadMessages = await NotifService.GetUnreadMessageCountAsync();
+        _unreadNotifs = await NotifService.GetUnreadNotifCountAsync();
+        _activePannes = await NotifService.GetActivePannesCountAsync();
+    }
+
+    private void OnNewNotification(NotificationDto notif)
+    {
+        _notifications.Insert(0, notif);
+        _unreadNotifs++;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnNewMessage(ChatMessageDto msg)
+    {
+        _unreadMessages++;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private async Task MarkAllNotificationsRead()
+    {
+        await NotifService.MarkAllReadAsync();
+        _unreadNotifs = 0;
+        foreach (var n in _notifications) n.IsRead = true;
+    }
+
+    private void ToggleSidebar() => _sidebarOpen = !_sidebarOpen;
+    private void ToggleNotifications() => _showNotifs = !_showNotifs;
+
+    private async Task HandleSearch(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(_searchQuery))
+            Nav.NavigateTo($"/search?q={Uri.EscapeDataString(_searchQuery)}");
+    }
+
+    private async Task LogoutAsync()
+    {
+        await Auth.LogoutAsync();
+        Nav.NavigateTo("/login");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        NotifService.OnNotificationReceived -= OnNewNotification;
+        NotifService.OnMessageReceived -= OnNewMessage;
+        await NotifService.DisconnectAsync();
+    }
+}

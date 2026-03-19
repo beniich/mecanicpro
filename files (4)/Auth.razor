@@ -1,0 +1,465 @@
+@* ============================================================
+   AUTH PAGES : Login, Register, Verify2FA, ForgotPassword
+   ============================================================ *@
+
+@* Pages/Auth/Login.razor *@
+@page "/login"
+@layout AuthLayout
+@inject AuthService Auth
+@inject NavigationManager Nav
+@inject ToastService Toast
+
+<PageTitle>Connexion — MecaPro</PageTitle>
+
+<div class="auth-card fade-in">
+    <div class="auth-logo">
+        <span class="auth-logo-icon">⬡</span>
+        <span class="auth-logo-text">MecaPro</span>
+    </div>
+    <h1 class="auth-title">Connexion</h1>
+    <p class="auth-subtitle">Accédez à votre espace mécanicien</p>
+
+    @if (!string.IsNullOrEmpty(_errorMsg))
+    {
+        <div class="auth-error">⚠ @_errorMsg</div>
+    }
+
+    @if (!_need2Fa)
+    {
+        <EditForm Model="_loginForm" OnValidSubmit="HandleLogin">
+            <DataAnnotationsValidator />
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <InputText @bind-Value="_loginForm.Email" type="email"
+                           class="form-input" placeholder="vous@garage.com"
+                           autocomplete="email" />
+                <ValidationMessage For="() => _loginForm.Email" class="form-error" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Mot de passe</label>
+                <div class="input-with-toggle">
+                    <InputText @bind-Value="_loginForm.Password"
+                               type="@(_showPwd ? "text" : "password")"
+                               class="form-input" placeholder="••••••••••"
+                               autocomplete="current-password" />
+                    <button type="button" class="pwd-toggle"
+                            @onclick="() => _showPwd = !_showPwd">
+                        @(_showPwd ? "🙈" : "👁")
+                    </button>
+                </div>
+                <ValidationMessage For="() => _loginForm.Password" class="form-error" />
+            </div>
+
+            <div class="form-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" @bind="_rememberMe" />
+                    <span>Se souvenir de moi</span>
+                </label>
+                <a href="/forgot-password" class="forgot-link">Mot de passe oublié ?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary full-width" disabled="@_loading">
+                @if (_loading)
+                {
+                    <span class="btn-spinner"></span>
+                    <span>Connexion…</span>
+                }
+                else
+                {
+                    <span>Se connecter</span>
+                }
+            </button>
+        </EditForm>
+
+        <div class="auth-divider">
+            <span>ou</span>
+        </div>
+
+        <div class="oauth-buttons">
+            <button class="btn btn-ghost full-width" @onclick="LoginWithGoogle">
+                <img src="/images/google.svg" alt="Google" width="18" />
+                Continuer avec Google
+            </button>
+            <button class="btn btn-ghost full-width" @onclick="LoginWithMicrosoft">
+                <img src="/images/microsoft.svg" alt="Microsoft" width="18" />
+                Continuer avec Microsoft
+            </button>
+        </div>
+
+        <p class="auth-footer">
+            Pas encore de compte ? <a href="/register" class="auth-link">Créer un compte</a>
+        </p>
+    }
+    else
+    {
+        @* 2FA Step *@
+        <div class="twofa-section">
+            <div class="twofa-icon">📱</div>
+            <h2 class="twofa-title">Vérification à 2 facteurs</h2>
+            <p class="twofa-desc">Entrez le code de votre application d'authentification (Google Authenticator)</p>
+
+            <div class="otp-inputs">
+                @for (int i = 0; i < 6; i++)
+                {
+                    var idx = i;
+                    <input type="text" maxlength="1"
+                           class="otp-input @(_otpError ? "error" : "")"
+                           @bind="_otpDigits[idx]"
+                           @onkeyup="(e) => HandleOtpKey(e, idx)"
+                           @ref="_otpRefs[idx]"
+                           inputmode="numeric" pattern="[0-9]*" />
+                }
+            </div>
+
+            @if (_otpError)
+            {
+                <div class="auth-error">Code invalide. Réessayez.</div>
+            }
+
+            <button class="btn btn-primary full-width" @onclick="HandleVerify2FA"
+                    disabled="@(_loading || _otpDigits.Any(d => string.IsNullOrEmpty(d)))">
+                Vérifier
+            </button>
+
+            <button class="btn btn-ghost full-width" @onclick="BackToLogin">
+                ← Retour à la connexion
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    private LoginModel _loginForm = new();
+    private bool _loading;
+    private bool _showPwd;
+    private bool _rememberMe;
+    private string _errorMsg = "";
+    private bool _need2Fa;
+    private string _tempToken = "";
+
+    // 2FA OTP
+    private string[] _otpDigits = new string[6];
+    private ElementReference[] _otpRefs = new ElementReference[6];
+    private bool _otpError;
+
+    private async Task HandleLogin()
+    {
+        _loading = true;
+        _errorMsg = "";
+        try
+        {
+            var result = await Auth.LoginAsync(_loginForm.Email, _loginForm.Password);
+            if (result.Success)
+            {
+                Nav.NavigateTo("/");
+            }
+            else if (result.Need2Fa)
+            {
+                _need2Fa = true;
+                _tempToken = result.TempToken!;
+            }
+            else
+            {
+                _errorMsg = result.ErrorMessage ?? "Erreur de connexion.";
+            }
+        }
+        finally { _loading = false; }
+    }
+
+    private async Task HandleVerify2FA()
+    {
+        _loading = true;
+        _otpError = false;
+        var code = string.Join("", _otpDigits);
+        var result = await Auth.Verify2FAAsync(_tempToken, code);
+        if (result.Success)
+            Nav.NavigateTo("/");
+        else
+        {
+            _otpError = true;
+            Array.Clear(_otpDigits, 0, 6);
+        }
+        _loading = false;
+    }
+
+    private async Task HandleOtpKey(KeyboardEventArgs e, int idx)
+    {
+        if (!string.IsNullOrEmpty(_otpDigits[idx]) && idx < 5)
+        {
+            // Auto-focus next
+        }
+        if (string.Join("", _otpDigits).Length == 6)
+            await HandleVerify2FA();
+    }
+
+    private void BackToLogin()
+    {
+        _need2Fa = false;
+        _tempToken = "";
+        Array.Clear(_otpDigits, 0, 6);
+    }
+
+    private void LoginWithGoogle()
+        => Nav.NavigateTo("/api/v1/auth/external/google", forceLoad: true);
+
+    private void LoginWithMicrosoft()
+        => Nav.NavigateTo("/api/v1/auth/external/microsoft", forceLoad: true);
+
+    private class LoginModel
+    {
+        [Required(ErrorMessage = "Email requis")]
+        [EmailAddress(ErrorMessage = "Email invalide")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "Mot de passe requis")]
+        [MinLength(6, ErrorMessage = "Minimum 6 caractères")]
+        public string Password { get; set; } = "";
+    }
+}
+
+
+@* Pages/Auth/Register.razor *@
+@page "/register"
+@layout AuthLayout
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<PageTitle>Créer un compte — MecaPro</PageTitle>
+
+<div class="auth-card fade-in">
+    <div class="auth-logo">
+        <span class="auth-logo-icon">⬡</span>
+        <span class="auth-logo-text">MecaPro</span>
+    </div>
+    <h1 class="auth-title">Créer votre compte</h1>
+    <p class="auth-subtitle">14 jours d'essai gratuit — sans carte bancaire</p>
+
+    @if (!string.IsNullOrEmpty(_errorMsg))
+    {
+        <div class="auth-error">⚠ @_errorMsg</div>
+    }
+
+    <EditForm Model="_form" OnValidSubmit="HandleRegister">
+        <DataAnnotationsValidator />
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Prénom</label>
+                <InputText @bind-Value="_form.FirstName" class="form-input" placeholder="Jean" />
+                <ValidationMessage For="() => _form.FirstName" class="form-error" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Nom</label>
+                <InputText @bind-Value="_form.LastName" class="form-input" placeholder="Dupont" />
+                <ValidationMessage For="() => _form.LastName" class="form-error" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Email professionnel</label>
+            <InputText @bind-Value="_form.Email" type="email" class="form-input" placeholder="jean@mongarage.fr" />
+            <ValidationMessage For="() => _form.Email" class="form-error" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <InputText @bind-Value="_form.Password" type="password" class="form-input" placeholder="Min. 10 caractères" />
+            <ValidationMessage For="() => _form.Password" class="form-error" />
+            <PasswordStrength Password="@_form.Password" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Confirmer le mot de passe</label>
+            <InputText @bind-Value="_form.ConfirmPassword" type="password" class="form-input" placeholder="Répéter le mot de passe" />
+            <ValidationMessage For="() => _form.ConfirmPassword" class="form-error" />
+        </div>
+
+        <div class="form-group">
+            <label class="checkbox-label">
+                <InputCheckbox @bind-Value="_form.AcceptTerms" />
+                <span>J'accepte les <a href="/terms" class="auth-link">CGU</a> et la <a href="/privacy" class="auth-link">politique de confidentialité</a></span>
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary full-width" disabled="@(_loading || !_form.AcceptTerms)">
+            @if (_loading)
+            {
+                <span class="btn-spinner"></span>
+                <span>Création du compte…</span>
+            }
+            else
+            {
+                <span>Créer mon compte gratuitement</span>
+            }
+        </button>
+    </EditForm>
+
+    <p class="auth-footer">
+        Déjà un compte ? <a href="/login" class="auth-link">Se connecter</a>
+    </p>
+</div>
+
+@code {
+    private RegisterModel _form = new();
+    private bool _loading;
+    private string _errorMsg = "";
+
+    private async Task HandleRegister()
+    {
+        _loading = true;
+        _errorMsg = "";
+        try
+        {
+            var result = await Auth.RegisterAsync(new RegisterRequest(
+                _form.FirstName, _form.LastName, _form.Email,
+                _form.Password, _form.ConfirmPassword));
+
+            if (result.Success)
+                Nav.NavigateTo("/dashboard?welcome=true");
+            else
+                _errorMsg = result.ErrorMessage ?? "Erreur lors de la création du compte.";
+        }
+        finally { _loading = false; }
+    }
+
+    private class RegisterModel
+    {
+        [Required] public string FirstName { get; set; } = "";
+        [Required] public string LastName { get; set; } = "";
+        [Required, EmailAddress] public string Email { get; set; } = "";
+        [Required, MinLength(10)] public string Password { get; set; } = "";
+        [Required, Compare(nameof(Password), ErrorMessage = "Les mots de passe ne correspondent pas")]
+        public string ConfirmPassword { get; set; } = "";
+        public bool AcceptTerms { get; set; }
+    }
+}
+
+
+@* Layout/AuthLayout.razor *@
+@inherits LayoutComponentBase
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MecaPro</title>
+    <link rel="stylesheet" href="css/mecapro.css" />
+</head>
+<body class="auth-body">
+    <div class="auth-bg">
+        <div class="auth-bg-grid"></div>
+        <div class="auth-bg-glow"></div>
+    </div>
+    <div class="auth-container">
+        @Body
+    </div>
+</body>
+</html>
+
+@* Components/PasswordStrength.razor *@
+@if (!string.IsNullOrEmpty(Password))
+{
+    <div class="pwd-strength">
+        <div class="pwd-bar">
+            @for (int i = 0; i < 4; i++)
+            {
+                <div class="pwd-segment @(GetStrengthClass(i))"></div>
+            }
+        </div>
+        <span class="pwd-label @GetLabelClass()">@GetLabel()</span>
+    </div>
+}
+
+@code {
+    [Parameter] public string Password { get; set; } = "";
+
+    private int GetStrength()
+    {
+        int s = 0;
+        if (Password.Length >= 10) s++;
+        if (Password.Any(char.IsUpper)) s++;
+        if (Password.Any(char.IsDigit)) s++;
+        if (Password.Any(c => !char.IsLetterOrDigit(c))) s++;
+        return s;
+    }
+
+    private string GetStrengthClass(int seg)
+    {
+        var s = GetStrength();
+        if (seg >= s) return "";
+        return s switch { 1 => "weak", 2 => "fair", 3 => "good", 4 => "strong", _ => "" };
+    }
+
+    private string GetLabel() => GetStrength() switch
+    {
+        1 => "Faible", 2 => "Moyen", 3 => "Bon", 4 => "Fort", _ => ""
+    };
+
+    private string GetLabelClass() => GetStrength() switch
+    {
+        1 => "text-danger", 2 => "text-warn", 3 => "text-green", 4 => "text-green", _ => ""
+    };
+}
+
+/* ── AUTH CSS (ajouter dans mecapro.css) ──────────────────── */
+/*
+.auth-body { background: var(--void); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+
+.auth-bg { position: fixed; inset: 0; pointer-events: none; }
+.auth-bg-glow { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(245,166,35,.06) 0%, transparent 70%); }
+.auth-bg-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 40px 40px; opacity: .3; }
+
+.auth-container { position: relative; z-index: 1; width: 100%; max-width: 440px; padding: 20px; }
+
+.auth-card { background: var(--card); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 36px; box-shadow: 0 24px 64px rgba(0,0,0,.5); }
+
+.auth-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+.auth-logo-icon { font-size: 24px; }
+.auth-logo-text { font-family: var(--font-cond); font-size: 24px; font-weight: 800; letter-spacing: 2px; background: linear-gradient(135deg, var(--amber), var(--amber2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.auth-title { font-family: var(--font-cond); font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+.auth-subtitle { font-size: 13px; color: var(--text2); margin-bottom: 24px; }
+
+.auth-error { background: var(--red-d); border: 1px solid rgba(239,68,68,.3); border-radius: var(--radius); padding: 10px 14px; font-size: 13px; color: var(--red); margin-bottom: 16px; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.input-with-toggle { position: relative; }
+.pwd-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 14px; }
+
+.form-options { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.forgot-link, .auth-link { color: var(--amber); font-size: 13px; transition: opacity .15s; }
+.forgot-link:hover, .auth-link:hover { opacity: .8; }
+
+.btn-spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.3); border-top-color: white; border-radius: 50%; animation: spin .8s linear infinite; }
+
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; color: var(--text3); font-size: 12px; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.oauth-buttons { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+
+.auth-footer { text-align: center; font-size: 13px; color: var(--text2); margin-top: 20px; }
+
+.twofa-section { text-align: center; }
+.twofa-icon { font-size: 48px; margin-bottom: 12px; }
+.twofa-title { font-family: var(--font-cond); font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.twofa-desc { font-size: 13px; color: var(--text2); margin-bottom: 24px; }
+
+.otp-inputs { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+.otp-input { width: 48px; height: 56px; text-align: center; font-size: 22px; font-weight: 700; font-family: var(--font-mono); background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius); color: var(--text); outline: none; transition: border-color .15s; }
+.otp-input:focus { border-color: var(--amber); }
+.otp-input.error { border-color: var(--red); }
+
+.pwd-strength { margin-top: 8px; display: flex; align-items: center; gap: 10px; }
+.pwd-bar { display: flex; gap: 4px; flex: 1; }
+.pwd-segment { height: 4px; flex: 1; border-radius: 99px; background: var(--border2); transition: all .3s; }
+.pwd-segment.weak   { background: var(--red); }
+.pwd-segment.fair   { background: var(--orange); }
+.pwd-segment.good   { background: var(--amber); }
+.pwd-segment.strong { background: var(--green); }
+.pwd-label { font-size: 11px; font-weight: 600; min-width: 50px; }
+.text-green { color: var(--green); }
+*/

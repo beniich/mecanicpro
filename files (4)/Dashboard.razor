@@ -1,0 +1,294 @@
+@* Pages/Dashboard.razor *@
+@page "/"
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>Tableau de bord — MecaPro</PageTitle>
+
+<div class="dashboard fade-in">
+
+    @* ── HEADER ────────────────────────────────────────── *@
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Bonjour, @_firstName 👋</h1>
+            <p class="page-subtitle">@DateTime.Now.ToString("dddd dd MMMM yyyy") — @_garage</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-ghost" @onclick='() => Nav.NavigateTo("/vehicles/new")'>
+                ＋ Nouveau véhicule
+            </button>
+            <button class="btn btn-primary" @onclick="GenerateReportAsync">
+                📊 Rapport journalier
+            </button>
+        </div>
+    </div>
+
+    @if (_loading)
+    {
+        <div class="skeleton-grid">
+            @for (int i = 0; i < 8; i++)
+            {
+                <div class="skeleton-card"></div>
+            }
+        </div>
+    }
+    else
+    {
+        @* ── KPI CARDS ──────────────────────────────────── *@
+        <div class="kpi-grid">
+            <KpiCard Icon="🚗" Value="@_stats!.VehiclesInProgress.ToString()"
+                     Label="Véhicules en cours" Trend="+3" TrendUp="true"
+                     Color="amber" OnClick='() => Nav.NavigateTo("/vehicles?status=inprogress")' />
+            <KpiCard Icon="⚠" Value="@_stats.ActiveDiagnostics.ToString()"
+                     Label="Pannes actives" Trend="-2" TrendUp="false"
+                     Color="red" OnClick='() => Nav.NavigateTo("/diagnostics")' />
+            <KpiCard Icon="✅" Value="@_stats.CompletedRevisions.ToString()"
+                     Label="Révisions complètes" Trend="+8" TrendUp="true"
+                     Color="green" OnClick='() => Nav.NavigateTo("/revisions?status=completed")' />
+            <KpiCard Icon="💶" Value='@($"{_stats.MonthlyRevenue:N0} €")'
+                     Label="CA du mois" Trend="+12%" TrendUp="true"
+                     Color="blue" OnClick='() => Nav.NavigateTo("/invoices")' />
+            <KpiCard Icon="👥" Value="@_stats.TotalClients.ToString()"
+                     Label="Clients actifs" Trend="+4" TrendUp="true"
+                     Color="purple" OnClick='() => Nav.NavigateTo("/customers")' />
+            <KpiCard Icon="⚙" Value="@_stats.LowStockParts.ToString()"
+                     Label="Pièces en rupture" Trend="!" TrendUp="false"
+                     Color="orange" OnClick='() => Nav.NavigateTo("/parts?filter=lowstock")' />
+            <KpiCard Icon="📅" Value="@_stats.TodayRevisions.ToString()"
+                     Label="Révisions aujourd'hui" Trend="→" TrendUp="true"
+                     Color="cyan" OnClick='() => Nav.NavigateTo("/revisions?date=today")' />
+            <KpiCard Icon="💬" Value="@_stats.UnreadMessages.ToString()"
+                     Label="Messages non lus" Trend="!" TrendUp="false"
+                     Color="pink" OnClick='() => Nav.NavigateTo("/chat")' />
+        </div>
+
+        @* ── MAIN GRID ──────────────────────────────────── *@
+        <div class="dash-grid">
+
+            @* Recent Vehicles *@
+            <div class="dash-card span-2">
+                <div class="card-header">
+                    <h3 class="card-title">🚗 Véhicules récents</h3>
+                    <a href="/vehicles" class="card-link">Voir tout →</a>
+                </div>
+                <div class="card-body p0">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Immatriculation</th>
+                                <th>Marque / Modèle</th>
+                                <th>Client</th>
+                                <th>Statut</th>
+                                <th>Prochaine révision</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var v in _recentVehicles)
+                            {
+                                <tr @onclick="() => Nav.NavigateTo($&quot;/vehicles/{v.Id}&quot;)"
+                                    class="table-row clickable">
+                                    <td>
+                                        <span class="plate-badge">@v.LicensePlate</span>
+                                    </td>
+                                    <td>
+                                        <strong>@v.Make</strong> @v.Model
+                                    </td>
+                                    <td>@v.CustomerName</td>
+                                    <td>
+                                        <StatusBadge Status="@v.Status" />
+                                    </td>
+                                    <td>
+                                        @if (v.NextRevisionDate.HasValue)
+                                        {
+                                            <span class="@(v.NextRevisionDate < DateTime.Now.AddDays(7) ? "text-warn" : "")">
+                                                @v.NextRevisionDate.Value.ToString("dd/MM/yyyy")
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button class="icon-btn-sm" @onclick:stopPropagation="true"
+                                                @onclick="() => ShowQrCode(v.Id)">⊞</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @* Alerts *@
+            <div class="dash-card">
+                <div class="card-header">
+                    <h3 class="card-title">🔔 Alertes urgentes</h3>
+                    <span class="badge danger">@_alerts.Count active(s)</span>
+                </div>
+                <div class="card-body">
+                    <div class="alerts-list">
+                        @foreach (var alert in _alerts)
+                        {
+                            <div class="alert-item @alert.Type">
+                                <div class="alert-dot"></div>
+                                <div class="alert-content">
+                                    <div class="alert-title">@alert.Title</div>
+                                    <div class="alert-desc">@alert.Description</div>
+                                </div>
+                                <button class="alert-action" @onclick="() => HandleAlert(alert)">
+                                    →
+                                </button>
+                            </div>
+                        }
+                        @if (!_alerts.Any())
+                        {
+                            <div class="empty-state-sm">
+                                <span>✅ Aucune alerte</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @* Today's Schedule *@
+            <div class="dash-card">
+                <div class="card-header">
+                    <h3 class="card-title">📅 Planning du jour</h3>
+                    <a href="/revisions" class="card-link">Planifier →</a>
+                </div>
+                <div class="card-body">
+                    <div class="schedule-list">
+                        @foreach (var rev in _todayRevisions)
+                        {
+                            <div class="schedule-item">
+                                <div class="schedule-time">@rev.ScheduledDate.ToString("HH:mm")</div>
+                                <div class="schedule-bar @rev.StatusClass"></div>
+                                <div class="schedule-info">
+                                    <div class="schedule-title">@rev.Type</div>
+                                    <div class="schedule-sub">@rev.VehiclePlate — @rev.CustomerName</div>
+                                    <div class="schedule-meta">
+                                        <span>⏱ @rev.EstimatedMinutes min</span>
+                                        <span>💶 @rev.EstimatedCost.ToString("N0") €</span>
+                                    </div>
+                                </div>
+                                <StatusBadge Status="@rev.Status" Small="true" />
+                            </div>
+                        }
+                        @if (!_todayRevisions.Any())
+                        {
+                            <div class="empty-state-sm">Aucune révision aujourd'hui</div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @* Revenue Chart *@
+            <div class="dash-card span-2">
+                <div class="card-header">
+                    <h3 class="card-title">📈 Revenus — 6 derniers mois</h3>
+                    <div class="chart-legend">
+                        <span class="legend-dot amber"></span> Révisions
+                        <span class="legend-dot blue"></span> Pièces
+                    </div>
+                </div>
+                <div class="card-body">
+                    <RevenueChart Data="_revenueData" />
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+@* QR Modal *@
+@if (_showQr && _selectedVehicleId != Guid.Empty)
+{
+    <Modal Title="Code QR Véhicule" OnClose="() => _showQr = false">
+        <QrCodeViewer VehicleId="_selectedVehicleId" />
+    </Modal>
+}
+
+@code {
+    private bool _loading = true;
+    private string _firstName = "";
+    private string _garage = "";
+    private DashboardStatsDto? _stats;
+    private List<VehicleSummaryDto> _recentVehicles = new();
+    private List<AlertDto> _alerts = new();
+    private List<RevisionSummaryDto> _todayRevisions = new();
+    private List<RevenueDataPoint> _revenueData = new();
+    private bool _showQr;
+    private Guid _selectedVehicleId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAllAsync();
+    }
+
+    private async Task LoadAllAsync()
+    {
+        _loading = true;
+        try
+        {
+            var tasks = new[]
+            {
+                LoadStatsAsync(),
+                LoadVehiclesAsync(),
+                LoadAlertsAsync(),
+                LoadTodayRevisionsAsync(),
+                LoadRevenueAsync()
+            };
+            await Task.WhenAll(tasks);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task LoadStatsAsync()
+    {
+        _stats = await Api.GetAsync<DashboardStatsDto>("/api/v1/dashboard/stats");
+    }
+
+    private async Task LoadVehiclesAsync()
+    {
+        var result = await Api.GetAsync<PagedResult<VehicleSummaryDto>>("/api/v1/vehicles?page=1&pageSize=6");
+        _recentVehicles = result?.Items.ToList() ?? new();
+    }
+
+    private async Task LoadAlertsAsync()
+    {
+        _alerts = await Api.GetAsync<List<AlertDto>>("/api/v1/dashboard/alerts") ?? new();
+    }
+
+    private async Task LoadTodayRevisionsAsync()
+    {
+        _todayRevisions = await Api.GetAsync<List<RevisionSummaryDto>>("/api/v1/revisions?date=today") ?? new();
+    }
+
+    private async Task LoadRevenueAsync()
+    {
+        _revenueData = await Api.GetAsync<List<RevenueDataPoint>>("/api/v1/dashboard/revenue") ?? new();
+    }
+
+    private void ShowQrCode(Guid vehicleId)
+    {
+        _selectedVehicleId = vehicleId;
+        _showQr = true;
+    }
+
+    private async Task HandleAlert(AlertDto alert)
+    {
+        Nav.NavigateTo(alert.ActionUrl);
+    }
+
+    private async Task GenerateReportAsync()
+    {
+        var bytes = await Api.GetBytesAsync("/api/v1/dashboard/report");
+        // trigger download
+    }
+}

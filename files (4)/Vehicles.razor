@@ -1,0 +1,447 @@
+@* Pages/Vehicles/VehicleList.razor *@
+@page "/vehicles"
+@attribute [Authorize(Policy = "RequireMechanic")]
+@inject ApiClient Api
+@inject NavigationManager Nav
+@inject ToastService Toast
+
+<PageTitle>Véhicules — MecaPro</PageTitle>
+
+<div class="page fade-in">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">🚗 Véhicules</h1>
+            <p class="page-subtitle">@_total véhicule(s) enregistré(s)</p>
+        </div>
+        <button class="btn btn-primary" @onclick='() => Nav.NavigateTo("/vehicles/new")'>
+            ＋ Nouveau véhicule
+        </button>
+    </div>
+
+    @* Filters *@
+    <div class="filter-bar">
+        <div class="search-wrap">
+            <input type="text" class="search-field" placeholder="Rechercher immat., VIN, client…"
+                   @bind="_search" @bind:event="oninput" @onkeyup="OnSearchKeyUp" />
+            <span class="search-ico">⌕</span>
+        </div>
+        <select class="filter-select" @bind="_statusFilter">
+            <option value="">Tous les statuts</option>
+            <option value="InProgress">En cours</option>
+            <option value="Scheduled">Planifié</option>
+            <option value="Completed">Terminé</option>
+            <option value="Urgent">Urgent</option>
+        </select>
+        <select class="filter-select" @bind="_makeFilter">
+            <option value="">Toutes marques</option>
+            <option>Peugeot</option>
+            <option>Renault</option>
+            <option>Citroën</option>
+            <option>BMW</option>
+            <option>Volkswagen</option>
+            <option>Mercedes</option>
+            <option>Audi</option>
+            <option>Toyota</option>
+        </select>
+        <button class="btn btn-ghost" @onclick="ApplyFilters">Filtrer</button>
+        <button class="btn btn-ghost" @onclick="ResetFilters">✕ Reset</button>
+    </div>
+
+    @* Table *@
+    @if (_loading)
+    {
+        <TableSkeleton Rows="8" />
+    }
+    else if (!_vehicles.Any())
+    {
+        <EmptyState Icon="🚗" Title="Aucun véhicule"
+                    Description="Commencez par enregistrer un nouveau véhicule."
+                    ActionLabel="Ajouter un véhicule" ActionUrl="/vehicles/new" />
+    }
+    else
+    {
+        <div class="data-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th @onclick='() => Sort("plate")' class="sortable">
+                            Immatriculation @SortIcon("plate")
+                        </th>
+                        <th @onclick='() => Sort("make")' class="sortable">
+                            Marque / Modèle @SortIcon("make")
+                        </th>
+                        <th>Client</th>
+                        <th @onclick='() => Sort("mileage")' class="sortable">
+                            Kilométrage @SortIcon("mileage")
+                        </th>
+                        <th>Statut</th>
+                        <th>Prochaine révision</th>
+                        <th>Pannes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in _vehicles)
+                    {
+                        <tr class="table-row @(v.HasCriticalDiagnostic ? "row-critical" : "")"
+                            @onclick="() => ViewVehicle(v.Id)">
+                            <td>
+                                <div class="plate-wrap">
+                                    <span class="plate-badge">@v.LicensePlate</span>
+                                    @if (v.HasCriticalDiagnostic)
+                                    {
+                                        <span class="crit-dot" title="Panne critique"></span>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="vehicle-info">
+                                    <strong>@v.Make @v.Model</strong>
+                                    <span class="text-muted">@v.Year</span>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="/customers/@v.CustomerId" class="customer-link"
+                                   @onclick:stopPropagation="true">
+                                    @v.CustomerName
+                                </a>
+                            </td>
+                            <td>
+                                <span class="mono">@v.Mileage.ToString("N0") km</span>
+                            </td>
+                            <td><StatusBadge Status="@v.CurrentStatus" /></td>
+                            <td>
+                                @if (v.NextRevisionDate.HasValue)
+                                {
+                                    var daysLeft = (v.NextRevisionDate.Value - DateTime.Now).Days;
+                                    <span class="@(daysLeft < 7 ? "text-warn" : daysLeft < 0 ? "text-danger" : "")">
+                                        @v.NextRevisionDate.Value.ToString("dd/MM/yy")
+                                        @if (daysLeft < 7 && daysLeft >= 0)
+                                        {
+                                            <span class="days-left"> (@daysLeft j)</span>
+                                        }
+                                    </span>
+                                }
+                                else { <span class="text-muted">—</span> }
+                            </td>
+                            <td>
+                                @if (v.ActiveDiagnosticsCount > 0)
+                                {
+                                    <span class="diag-count danger">@v.ActiveDiagnosticsCount</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">0</span>
+                                }
+                            </td>
+                            <td @onclick:stopPropagation="true">
+                                <div class="action-btns">
+                                    <button class="icon-btn-sm" title="Voir fiche"
+                                            @onclick="() => ViewVehicle(v.Id)">👁</button>
+                                    <button class="icon-btn-sm" title="QR Code"
+                                            @onclick="() => ShowQr(v)">⊞</button>
+                                    <button class="icon-btn-sm" title="Nouvelle révision"
+                                            @onclick='() => Nav.NavigateTo($"/revisions/new?vehicleId={v.Id}")'>📅</button>
+                                    <button class="icon-btn-sm" title="Diagnostic"
+                                            @onclick='() => Nav.NavigateTo($"/diagnostics/new?vehicleId={v.Id}")'>⚠</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <Pagination CurrentPage="_page" TotalPages="_totalPages"
+                        OnPageChanged="ChangePage" />
+        </div>
+    }
+</div>
+
+@* QR Modal *@
+@if (_showQrModal && _selectedVehicle != null)
+{
+    <Modal Title=@($"QR Code — {_selectedVehicle.LicensePlate}") OnClose="CloseQr">
+        <div class="qr-modal-body">
+            <QrCodeViewer VehicleId="_selectedVehicle.Id"
+                          LicensePlate="_selectedVehicle.LicensePlate"
+                          Make="_selectedVehicle.Make"
+                          Model="_selectedVehicle.Model" />
+        </div>
+    </Modal>
+}
+
+@code {
+    [SupplyParameterFromQuery] public string? Status { get; set; }
+
+    private List<VehicleSummaryDto> _vehicles = new();
+    private bool _loading = true;
+    private string _search = "";
+    private string _statusFilter = "";
+    private string _makeFilter = "";
+    private string _sortBy = "plate";
+    private bool _sortAsc = true;
+    private int _page = 1;
+    private int _pageSize = 15;
+    private int _total;
+    private int _totalPages;
+    private bool _showQrModal;
+    private VehicleSummaryDto? _selectedVehicle;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(Status))
+            _statusFilter = Status;
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _loading = true;
+        var url = $"/api/v1/vehicles?page={_page}&pageSize={_pageSize}" +
+                  $"&search={Uri.EscapeDataString(_search)}" +
+                  $"&status={_statusFilter}&make={_makeFilter}" +
+                  $"&sortBy={_sortBy}&sortAsc={_sortAsc}";
+        var result = await Api.GetAsync<PagedResult<VehicleSummaryDto>>(url);
+        _vehicles = result?.Items.ToList() ?? new();
+        _total = result?.Total ?? 0;
+        _totalPages = result?.TotalPages ?? 1;
+        _loading = false;
+    }
+
+    private async Task OnSearchKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await ApplyFilters();
+    }
+
+    private async Task ApplyFilters() { _page = 1; await LoadAsync(); }
+    private async Task ResetFilters()
+    {
+        _search = ""; _statusFilter = ""; _makeFilter = "";
+        _page = 1;
+        await LoadAsync();
+    }
+
+    private async Task Sort(string column)
+    {
+        if (_sortBy == column) _sortAsc = !_sortAsc;
+        else { _sortBy = column; _sortAsc = true; }
+        await LoadAsync();
+    }
+
+    private string SortIcon(string column)
+        => _sortBy == column ? (_sortAsc ? "↑" : "↓") : "";
+
+    private void ViewVehicle(Guid id) => Nav.NavigateTo($"/vehicles/{id}");
+    private void ShowQr(VehicleSummaryDto v) { _selectedVehicle = v; _showQrModal = true; }
+    private void CloseQr() { _showQrModal = false; _selectedVehicle = null; }
+    private async Task ChangePage(int page) { _page = page; await LoadAsync(); }
+}
+
+
+@* ─────────────────────────────────────────────────────── *@
+@* Pages/Vehicles/VehicleDetail.razor                      *@
+@* ─────────────────────────────────────────────────────── *@
+
+@page "/vehicles/{Id:guid}"
+@attribute [Authorize(Policy = "RequireMechanic")]
+@inject ApiClient Api
+@inject NavigationManager Nav
+@inject ToastService Toast
+
+<PageTitle>@(_vehicle?.LicensePlate ?? "Véhicule") — MecaPro</PageTitle>
+
+@if (_loading)
+{
+    <DetailSkeleton />
+}
+else if (_vehicle == null)
+{
+    <EmptyState Icon="🚗" Title="Véhicule introuvable" ActionLabel="Retour" ActionUrl="/vehicles" />
+}
+else
+{
+    <div class="vehicle-detail fade-in">
+
+        @* Header *@
+        <div class="detail-header">
+            <div class="detail-header-left">
+                <button class="back-btn" @onclick='() => Nav.NavigateTo("/vehicles")'>← Retour</button>
+                <div class="detail-title-wrap">
+                    <h1 class="detail-title">@_vehicle.Make @_vehicle.Model</h1>
+                    <span class="plate-badge lg">@_vehicle.LicensePlate</span>
+                    <StatusBadge Status="@_vehicle.CurrentStatus" />
+                </div>
+            </div>
+            <div class="detail-actions">
+                <button class="btn btn-ghost" @onclick="ShowQrModal">⊞ QR Code</button>
+                <button class="btn btn-ghost" @onclick='() => Nav.NavigateTo($"/revisions/new?vehicleId={Id}")'>
+                    📅 Planifier révision
+                </button>
+                <button class="btn btn-ghost" @onclick='() => Nav.NavigateTo($"/diagnostics/new?vehicleId={Id}")'>
+                    ⚠ Ajouter panne
+                </button>
+                <button class="btn btn-primary" @onclick="EditVehicle">✏ Modifier</button>
+            </div>
+        </div>
+
+        @* Info grid *@
+        <div class="detail-grid">
+
+            @* Vehicle info card *@
+            <div class="detail-card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Informations véhicule</h3>
+                </div>
+                <div class="card-body">
+                    <div class="info-grid">
+                        <InfoField Label="Immatriculation" Value="@_vehicle.LicensePlate" Mono="true" />
+                        <InfoField Label="VIN" Value="@(_vehicle.VIN ?? "—")" Mono="true" />
+                        <InfoField Label="Marque" Value="@_vehicle.Make" />
+                        <InfoField Label="Modèle" Value="@_vehicle.Model" />
+                        <InfoField Label="Année" Value="@_vehicle.Year.ToString()" />
+                        <InfoField Label="Kilométrage" Value='@($"{_vehicle.Mileage:N0} km")' Mono="true" />
+                        <InfoField Label="Carburant" Value="@(_vehicle.FuelType ?? "—")" />
+                        <InfoField Label="Couleur" Value="@(_vehicle.Color ?? "—")" />
+                    </div>
+                </div>
+            </div>
+
+            @* Customer card *@
+            <div class="detail-card">
+                <div class="card-header">
+                    <h3 class="card-title">👤 Propriétaire</h3>
+                    <a href="/customers/@_vehicle.CustomerId" class="card-link">Voir fiche →</a>
+                </div>
+                <div class="card-body">
+                    <div class="customer-preview">
+                        <div class="cust-avatar">@_vehicle.CustomerInitials</div>
+                        <div class="cust-info">
+                            <div class="cust-name">@_vehicle.CustomerName</div>
+                            <div class="cust-email">@_vehicle.CustomerEmail</div>
+                            <div class="cust-phone">@_vehicle.CustomerPhone</div>
+                        </div>
+                    </div>
+                    <div class="cust-stats">
+                        <div class="cust-stat">
+                            <span class="cust-stat-val">@_vehicle.CustomerVehicleCount</span>
+                            <span class="cust-stat-label">Véhicules</span>
+                        </div>
+                        <div class="cust-stat">
+                            <span class="cust-stat-val">@_vehicle.CustomerLoyaltyPoints</span>
+                            <span class="cust-stat-label">Points fidélité</span>
+                        </div>
+                        <div class="cust-stat">
+                            <span class="cust-stat-val">@_vehicle.CustomerTotalSpent.ToString("N0") €</span>
+                            <span class="cust-stat-label">CA total</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-ghost full-width" @onclick="OpenChat">💬 Contacter</button>
+                </div>
+            </div>
+
+            @* Active diagnostics *@
+            <div class="detail-card">
+                <div class="card-header">
+                    <h3 class="card-title">⚠ Pannes actives</h3>
+                    <span class="badge @(_vehicle.ActiveDiagnostics.Any() ? "danger" : "success")">
+                        @_vehicle.ActiveDiagnostics.Count()
+                    </span>
+                </div>
+                <div class="card-body p0">
+                    @foreach (var d in _vehicle.ActiveDiagnostics)
+                    {
+                        <div class="diag-item severity-@d.Severity.ToLower()"
+                             @onclick="() => ShowDiagDetail(d)">
+                            <div class="diag-severity-bar"></div>
+                            <div class="diag-content">
+                                <div class="diag-code">@d.FaultCode</div>
+                                <div class="diag-desc">@d.Description</div>
+                                <div class="diag-meta">
+                                    <StatusBadge Status="@d.Status" Small="true" />
+                                    <span class="diag-date">@d.DiagnosedAt.ToString("dd/MM")</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (!_vehicle.ActiveDiagnostics.Any())
+                    {
+                        <div class="empty-state-sm">✅ Aucune panne active</div>
+                    }
+                </div>
+            </div>
+
+            @* Revision timeline *@
+            <div class="detail-card">
+                <div class="card-header">
+                    <h3 class="card-title">📅 Historique révisions</h3>
+                    <a href="/revisions/new?vehicleId=@Id" class="card-link">＋ Planifier</a>
+                </div>
+                <div class="card-body">
+                    <RevisionTimeline Revisions="_vehicle.RevisionHistory" />
+                </div>
+            </div>
+
+            @* Images gallery *@
+            <div class="detail-card span-2">
+                <div class="card-header">
+                    <h3 class="card-title">📸 Photos</h3>
+                    <button class="btn btn-ghost btn-sm" @onclick="ShowUploadModal">⬆ Importer</button>
+                </div>
+                <div class="card-body">
+                    <ImageGallery VehicleId="Id" Images="_vehicle.Images"
+                                  OnImageAdded="RefreshVehicle" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* QR Modal *@
+    @if (_showQr)
+    {
+        <Modal Title=@($"QR Code — {_vehicle.LicensePlate}") OnClose="() => _showQr = false">
+            <QrCodeViewer VehicleId="Id" LicensePlate="@_vehicle.LicensePlate"
+                          Make="@_vehicle.Make" Model="@_vehicle.Model" />
+        </Modal>
+    }
+
+    @* Upload Modal *@
+    @if (_showUpload)
+    {
+        <Modal Title="Importer des photos" OnClose="() => _showUpload = false">
+            <ImageUploader VehicleId="Id" OnUploaded="OnImagesUploaded" />
+        </Modal>
+    }
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private VehicleDetailDto? _vehicle;
+    private bool _loading = true;
+    private bool _showQr;
+    private bool _showUpload;
+
+    protected override async Task OnInitializedAsync() => await RefreshVehicle();
+
+    private async Task RefreshVehicle()
+    {
+        _loading = true;
+        _vehicle = await Api.GetAsync<VehicleDetailDto>($"/api/v1/vehicles/{Id}");
+        _loading = false;
+    }
+
+    private void ShowQrModal() => _showQr = true;
+    private void ShowUploadModal() => _showUpload = true;
+    private void EditVehicle() => Nav.NavigateTo($"/vehicles/{Id}/edit");
+    private void OpenChat() => Nav.NavigateTo($"/chat?userId={_vehicle?.CustomerId}");
+
+    private void ShowDiagDetail(DiagnosticDto d)
+        => Nav.NavigateTo($"/diagnostics/{d.Id}");
+
+    private async Task OnImagesUploaded()
+    {
+        _showUpload = false;
+        Toast.Show("Photos importées avec succès", ToastType.Success);
+        await RefreshVehicle();
+    }
+}

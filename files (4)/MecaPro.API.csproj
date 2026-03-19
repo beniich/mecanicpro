@@ -1,0 +1,87 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>MecaPro.API</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Core -->
+    <PackageReference Include="MediatR" Version="12.3.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Carter" Version="8.1.0" />
+    <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
+
+    <!-- EF Core + SQL Server -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+
+    <!-- Identity & Auth -->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.3" />
+    <PackageReference Include="OtpNet" Version="1.4.0" />
+
+    <!-- Cache -->
+    <PackageReference Include="StackExchange.Redis" Version="2.7.33" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.3" />
+
+    <!-- Payment -->
+    <PackageReference Include="Stripe.net" Version="45.5.0" />
+
+    <!-- Messaging -->
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.3" />
+
+    <!-- Jobs -->
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.12" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.12" />
+
+    <!-- Logging -->
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="7.0.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+
+    <!-- Observability -->
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.8.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.8.1" />
+
+    <!-- QR Code -->
+    <PackageReference Include="QRCoder" Version="1.4.3" />
+
+    <!-- PDF -->
+    <PackageReference Include="SkiaSharp" Version="2.88.8" />
+    <PackageReference Include="Scriban" Version="5.10.0" />
+
+    <!-- Resilience -->
+    <PackageReference Include="Polly" Version="8.3.1" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.3.0" />
+
+    <!-- SignalR -->
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+
+    <!-- Docs -->
+    <PackageReference Include="Scalar.AspNetCore" Version="1.9.18" />
+
+    <!-- Security -->
+    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.22.0" />
+
+    <!-- Health Checks -->
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="8.0.1" />
+
+    <!-- Email -->
+    <PackageReference Include="SendGrid" Version="9.29.3" />
+
+    <!-- SMS -->
+    <PackageReference Include="Twilio" Version="7.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MecaPro.Application\MecaPro.Application.csproj" />
+    <ProjectReference Include="..\MecaPro.Infrastructure\MecaPro.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

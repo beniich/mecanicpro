@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MecaPro — Guide Déploiement Complet</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0f0b;
+  --bg2: #111611;
+  --bg3: #161d16;
+  --surface: #1a221a;
+  --panel: #1f281f;
+  --border: #263026;
+  --border2: #2e3d2e;
+  --green: #39ff6e;
+  --green2: #00c94a;
+  --green-dim: rgba(57,255,110,.1);
+  --yellow: #f5e642;
+  --yellow-dim: rgba(245,230,66,.1);
+  --red: #ff4444;
+  --red-dim: rgba(255,68,68,.1);
+  --blue: #4db8ff;
+  --blue-dim: rgba(77,184,255,.1);
+  --orange: #ff8c42;
+  --orange-dim: rgba(255,140,66,.1);
+  --purple: #c084fc;
+  --purple-dim: rgba(192,132,252,.1);
+  --text: #d4e8d4;
+  --text2: #6b8a6b;
+  --text3: #344834;
+  --mono: 'Space Mono', monospace;
+  --sans: 'Barlow', sans-serif;
+  --cond: 'Barlow Condensed', sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Scanline effect */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* LAYOUT */
+.wrap { display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; bottom: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.logo-area {
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.logo-area::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--green), transparent);
+}
+
+.logo-main {
+  font-family: var(--cond);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--green);
+  text-transform: uppercase;
+}
+
+.logo-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 3px;
+  margin-top: 3px;
+}
+
+.server-info {
+  margin: 12px 20px;
+  padding: 10px;
+  background: var(--green-dim);
+  border: 1px solid rgba(57,255,110,.2);
+  border-radius: 6px;
+}
+
+.server-info-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--green);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.server-info-item {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text2);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.server-info-item span { color: var(--green); }
+
+.nav { padding: 16px 12px; flex: 1; }
+
+.nav-section { margin-bottom: 22px; }
+
+.nav-section-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0 8px;
+  margin-bottom: 6px;
+}
+
+.nitem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  transition: all .15s;
+  border: 1px solid transparent;
+  margin-bottom: 2px;
+}
+
+.nitem:hover { background: var(--surface); color: var(--text); }
+
+.nitem.active {
+  background: var(--green-dim);
+  border-color: rgba(57,255,110,.2);
+  color: var(--green);
+}
+
+.nitem .num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  min-width: 18px;
+}
+
+.nitem.active .num { color: var(--green); }
+
+.progress-sidebar {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.progress-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.progress-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ps-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.ps-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border2);
+  flex-shrink: 0;
+}
+
+.ps-dot.done { background: var(--green); }
+.ps-dot.active { background: var(--yellow); animation: pulse 1.5s infinite; }
+
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+
+/* MAIN */
+.main { margin-left: 280px; flex: 1; }
+
+.topbar {
+  height: 54px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 16px;
+  position: sticky; top: 0; z-index: 50;
+}
+
+.topbar-title {
+  font-family: var(--cond);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+
+.tb-badges { display: flex; gap: 8px; margin-left: auto; }
+
+.tbadge {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.tb-green { color: var(--green); border-color: rgba(57,255,110,.3); background: var(--green-dim); }
+.tb-yellow { color: var(--yellow); border-color: rgba(245,230,66,.3); background: var(--yellow-dim); }
+.tb-blue { color: var(--blue); border-color: rgba(77,184,255,.3); background: var(--blue-dim); }
+
+/* CONTENT */
+.content { padding: 32px; }
+
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; animation: fadein .25s ease-out; }
+
+@keyframes fadein { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* SECTION HEADER */
+.sec-head { margin-bottom: 28px; }
+
+.sec-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.sec-title {
+  font-family: var(--cond);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.sec-desc { font-size: 14px; color: var(--text2); }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.card-head {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-family: var(--cond);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-body { padding: 20px; }
+
+/* CODE BLOCKS */
+.code-wrap {
+  background: #060f06;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.code-bar {
+  padding: 8px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.code-filename {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.code-lang {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.code-copy {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.code-copy:hover { color: var(--green); border-color: var(--green); }
+
+pre {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+  padding: 18px 20px;
+  overflow-x: auto;
+  color: #7aad7a;
+}
+
+/* Syntax */
+.k { color: #c084fc; } /* keyword */
+.c { color: #344834; } /* comment */
+.s { color: #f5e642; } /* string */
+.n { color: #ff8c42; } /* number */
+.f { color: #4db8ff; } /* function */
+.v { color: #39ff6e; } /* variable */
+.p { color: #ff4444; } /* path/special */
+
+/* STEP CARDS */
+.step-card {
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: all .2s;
+}
+
+.step-card:hover { border-color: var(--border2); }
+.step-card.warn { border-color: rgba(245,230,66,.2); background: rgba(245,230,66,.03); }
+.step-card.danger { border-color: rgba(255,68,68,.2); background: rgba(255,68,68,.03); }
+.step-card.success { border-color: rgba(57,255,110,.2); background: rgba(57,255,110,.03); }
+
+.step-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  background: var(--green-dim);
+  border: 1px solid rgba(57,255,110,.2);
+  width: 36px; height: 36px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-content { flex: 1; }
+
+.step-title {
+  font-family: var(--cond);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  margin-bottom: 4px;
+}
+
+.step-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+/* GRIDS */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 20px; }
+
+/* ALERT BOXES */
+.alert {
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+.alert-icon { font-size: 18px; flex-shrink: 0; }
+.alert-body strong { display: block; font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+
+.alert-warn { background: var(--yellow-dim); border: 1px solid rgba(245,230,66,.25); color: var(--yellow); }
+.alert-danger { background: var(--red-dim); border: 1px solid rgba(255,68,68,.25); color: var(--red); }
+.alert-info { background: var(--blue-dim); border: 1px solid rgba(77,184,255,.25); color: var(--blue); }
+.alert-success { background: var(--green-dim); border: 1px solid rgba(57,255,110,.25); color: var(--green); }
+
+/* CHECKLIST */
+.checklist { display: flex; flex-direction: column; gap: 8px; }
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.check-item .ck {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  background: var(--green-dim);
+  border: 1px solid rgba(57,255,110,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  color: var(--green);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.check-item .ck.warn { background: var(--yellow-dim); border-color: rgba(245,230,66,.3); color: var(--yellow); }
+.check-item .ck.danger { background: var(--red-dim); border-color: rgba(255,68,68,.3); color: var(--red); }
+
+/* TABLE */
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+td { padding: 10px 14px; font-size: 12px; border-bottom: 1px solid rgba(38,48,38,.5); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(57,255,110,.02); }
+
+/* BADGES */
+.badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-family: var(--mono); font-size: 10px; font-weight: 700; }
+.bg { background: var(--green-dim); color: var(--green); border: 1px solid rgba(57,255,110,.2); }
+.by { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(245,230,66,.2); }
+.br { background: var(--red-dim); color: var(--red); border: 1px solid rgba(255,68,68,.2); }
+.bb { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(77,184,255,.2); }
+.bo { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(255,140,66,.2); }
+.bp { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(192,132,252,.2); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+/* DIVIDER */
+.div { height: 1px; background: var(--border); margin: 24px 0; }
+
+/* TIMELINE */
+.tl { position: relative; padding-left: 24px; }
+.tl::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--green), var(--border)); }
+.tl-item { position: relative; margin-bottom: 20px; }
+.tl-dot { position: absolute; left: -21px; top: 4px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--green); background: var(--bg); }
+.tl-dot.done { background: var(--green); }
+.tl-time { font-family: var(--mono); font-size: 10px; color: var(--text3); margin-bottom: 3px; }
+.tl-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.tl-desc { font-size: 12px; color: var(--text2); }
+
+/* ENV TABLE */
+.env-row { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 11px; }
+.env-row:last-child { border-bottom: none; }
+.env-key { color: var(--blue); min-width: 260px; }
+.env-val { color: var(--yellow); flex: 1; }
+.env-note { color: var(--text3); font-size: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo-main">MecaPro</div>
+    <div class="logo-sub">// DEPLOYMENT GUIDE v2.0</div>
+  </div>
+
+  <div class="server-info">
+    <div class="server-info-title">// SERVER CONFIG</div>
+    <div class="server-info-item">OS: <span>CentOS / AlmaLinux 8+</span></div>
+    <div class="server-info-item">Panel: <span>cPanel + Root</span></div>
+    <div class="server-info-item">Stack: <span>.NET 8 + Nginx</span></div>
+    <div class="server-info-item">DB: <span>SQL Server / PostgreSQL</span></div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-section">
+      <div class="nav-section-title">// SETUP SERVEUR</div>
+      <div class="nitem active" onclick="go('server', this)"><span class="num">01</span>Préparer le serveur</div>
+      <div class="nitem" onclick="go('dotnet', this)"><span class="num">02</span>Installer .NET 8</div>
+      <div class="nitem" onclick="go('database', this)"><span class="num">03</span>Base de données</div>
+      <div class="nitem" onclick="go('redis', this)"><span class="num">04</span>Redis + RabbitMQ</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">// APPLICATION</div>
+      <div class="nitem" onclick="go('publish', this)"><span class="num">05</span>Build & Publish</div>
+      <div class="nitem" onclick="go('config', this)"><span class="num">06</span>Configuration .env</div>
+      <div class="nitem" onclick="go('service', this)"><span class="num">07</span>Service Systemd</div>
+      <div class="nitem" onclick="go('nginx', this)"><span class="num">08</span>Nginx + SSL</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">// CI/CD & AUTO</div>
+      <div class="nitem" onclick="go('cicd', this)"><span class="num">09</span>GitHub Actions CI/CD</div>
+      <div class="nitem" onclick="go('deploy', this)"><span class="num">10</span>Script déploiement</div>
+      <div class="nitem" onclick="go('migrations', this)"><span class="num">11</span>Migrations DB auto</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">// SÉCURITÉ PROD</div>
+      <div class="nitem" onclick="go('hardening', this)"><span class="num">12</span>Hardening serveur</div>
+      <div class="nitem" onclick="go('firewall', this)"><span class="num">13</span>Firewall & Fail2ban</div>
+      <div class="nitem" onclick="go('backup', this)"><span class="num">14</span>Backups automatiques</div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">// MONITORING</div>
+      <div class="nitem" onclick="go('monitoring', this)"><span class="num">15</span>Logs & Monitoring</div>
+      <div class="nitem" onclick="go('health', this)"><span class="num">16</span>Health Checks</div>
+      <div class="nitem" onclick="go('checklist', this)"><span class="num">✓</span>Checklist Go-Live</div>
+    </div>
+  </nav>
+
+  <div class="progress-sidebar">
+    <div class="progress-title">// PROGRESSION</div>
+    <div class="progress-steps">
+      <div class="ps-item"><div class="ps-dot active"></div>Setup Serveur</div>
+      <div class="ps-item"><div class="ps-dot"></div>Application</div>
+      <div class="ps-item"><div class="ps-dot"></div>CI/CD</div>
+      <div class="ps-item"><div class="ps-dot"></div>Sécurité</div>
+      <div class="ps-item"><div class="ps-dot"></div>Monitoring</div>
+      <div class="ps-item"><div class="ps-dot"></div>Go-Live ✓</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <span class="topbar-title" id="ptitle">01 — PRÉPARER LE SERVEUR</span>
+    <div class="tb-badges">
+      <span class="tbadge tb-green">Serveur Dédié</span>
+      <span class="tbadge tb-yellow">cPanel + Root</span>
+      <span class="tbadge tb-blue">.NET 8 LTS</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== 01 SERVER ===== -->
+    <div id="p-server" class="page active">
+      <div class="sec-head">
+        <div class="sec-eyebrow">// ÉTAPE 01</div>
+        <div class="sec-title">PRÉPARER LE SERVEUR</div>
+        <div class="sec-desc">Mise à jour système, utilisateur dédié, dossiers, prérequis</div>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-body"><strong>Avant de commencer</strong> Connecte-toi en SSH avec ton accès Root. Toutes les commandes suivantes sont à exécuter en tant que root ou avec sudo.</div>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-bar">
+          <div class="code-filename">🖥️ SSH Connection</div>
+          <div class="code-lang">BASH</div>
+        </div>
+        <pre><span class="c"># Connexion SSH à ton serveur dédié</span>
+ssh root@<span class="s">TON_IP_SERVEUR</span> -p 22
+
+<span class="c"># Ou avec clé SSH (recommandé)</span>
+ssh -i ~/.ssh/mecapro_key root@<span class="s">TON_IP_SERVEUR</span></pre>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-bar">
+          <div class="code-filename">📦 Mise à jour système</div>
+          <div class="code-lang">BASH</div>
+        </div>
+        <pre><span class="c"># ── CentOS / AlmaLinux / Rocky Linux ─────────────────</span>
+dnf update -y && dnf upgrade -y
+
+<span class="c"># ── Ubuntu / Debian ───────────────────────────────────</span>
+apt update && apt upgrade -y && apt dist-upgrade -y
+
+<span class="c"># ── Outils essentiels ────────────────────────────────</span>
+dnf install -y curl wget git vim htop net-tools unzip \
+              openssl ca-certificates gnupg2 lsof
+
+<span class="c"># ── Désactiver SELinux si problèmes (optionnel) ───────</span>
+setenforce 0
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config</pre>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-bar">
+          <div class="code-filename">👤 Créer utilisateur dédié (sécurité)</div>
+          <div class="code-lang">BASH</div>
+        </div>
+        <pre><span class="c"># Créer un utilisateur sans privilège root pour l'app</span>
+useradd -m -s /bin/bash mecapro
+passwd mecapro   <span class="c"># définir un mot de passe fort</span>
+
+<span class="c"># Créer les dossiers de l'application</span>
+mkdir -p /var/www/mecapro/api
+mkdir -p /var/www/mecapro/blazor
+mkdir -p /var/www/mecapro/logs
+mkdir -p /var/www/mecapro/uploads
+mkdir -p /var/backups/mecapro
+
+<span class="c"># Donner les permissions</span>
+chown -R mecapro:mecapro /var/www/mecapro
+chmod -R 755 /var/www/mecapro
+
+<span class="c"># Dossier uploads avec permissions d'écriture</span>
+chmod -R 777 /var/www/mecapro/uploads</pre>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-bar">
+          <div class="code-filename">🔑 Configurer SSH Key (désactiver password auth)</div>
+          <div class="code-lang">BASH</div>
+        </div>
+        <pre><span class="c"># Sur ta machine locale — générer clé SSH</span>
+ssh-keygen -t ed25519 -C "mecapro-deploy" -f ~/.ssh/mecapro_key
+
+<span class="c"># Copier la clé publique sur le serveur</span>
+ssh-copy-id -i ~/.ssh/mecapro_key.pub root@TON_IP
+
+<span class="c"># Sur le serveur — désactiver authentification par mot de passe</span>
+vim /etc/ssh/sshd_config
+
+<span class="c"># Modifier ces lignes :</span>
+PasswordAuthentication no
+PermitRootLogin prohibit-password
+PubkeyAuthentication yes
+Port 2222    <span class="c"># changer le port par défaut (optionnel mais recommandé)</span>
+
+systemctl restart sshd</pre>
+      </div>
+    </div>
+
+    <!-- ===== 02 DOTNET ===== -->
+    <div id="p-dotnet" class="page">
+      <div class="sec-head">
+        <div class="sec-eyebrow">// ÉTAPE 02</div>
+        <div class="sec-title">INSTALLER .NET 8</div>
+        <div class="sec-desc">Runtime ASP.NET Core 8 sur Linux</div>
+      </div>
+
+      <div class="g2">
+        <div>
+          <div class="card">
+            <div class="card-head"><div class="card-title" style="color:var(--purple)">🐧 CentOS / AlmaLinux / RHEL</div></div>
+            <div class="card-body">
+              <div class="code-wrap" style="margin-bottom:0">
+                <pre><span class="c"># Ajouter le repo Microsoft</span>
+rpm -Uvh https://packages.microsoft.com/config/\
+centos/8/packages-microsoft-prod.rpm
+
+<span class="c"># Installer Runtime ASP.NET Core 8</span>
+dnf install -y aspnetcore-runtime-8.0
+
+<span class="c"># Installer aussi le SDK (pour build sur serveur)</span>
+dnf install -y dotnet-sdk-8.0
+
+<span class="c"># Vérifier</span>
+dotnet --version
+<span class="c"># ➜ 8.0.x</span>
+
+dotnet --list-runtimes
+<span class="c"># ➜ Microsoft.AspNetCore.App 8.0.x</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-head"><div class="card-title" style="color:var(--orange)">🐧 Ubuntu 22.04 / Debian 12</div></div>
+            <div class="card-body">
+              <div class="code-wrap" style="margin-bottom:0">
+                <pre><span class="c"># Ajouter repo Microsoft</span>
+wget https://packages.microsoft.com/config/\
+ubuntu/22.04/packages-microsoft-prod.deb -O pkg.deb
+dpkg -i pkg.deb
+rm pkg.deb
+
+apt update
+
+<span class="c"># Installer Runtime + SDK</span>
+apt install -y aspnetcore-runtime-8.0
+apt install -y dotnet-sdk-8.0
+
+<span class="c"># Vérifier</span>
+dotnet --version
+<span class="c"># ➜ 8.0.x</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-bar">
+          <div class="code-filename">🧪 Tester .NET fonctionne</div>
+          <div class="code-lang">BASH</div>
+        </div>
+        <pre><span class="c"># Créer une app test minimale</span>
+cd /tmp
+dotnet new web -n test-app
+cd test-app
+dotnet run --urls="http://localhost:5001" &
+curl http://localhost:5001
+<span class="c"># ➜ Hello World!</span>
+
+<span class="c"># Nettoyer</span>
+kill %1
+cd / && rm -rf /tmp/test-app</pre>
+      </div>
+    </div>
+
+    <!-- ===== 03 DATABASE ===== -->
+    <div id="p-database" class="page">
+      <div class="sec-head">
+        <div class="sec-eyebrow">// ÉTAPE 03</div>
+        <div class="sec-title">BASE DE DONNÉES</div>
+        <div class="sec-desc">SQL Server ou PostgreSQL selon la RAM disponible</div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div class="alert-body"><strong>Choix de la base de données</strong> SQL Server nécessite minimum 2 GB RAM dédiés. Si ton serveur a moins de 6 GB RAM total, utilise PostgreSQL — EF Core supporte les deux avec juste un changement de provider.</div>
+      </div>
+
+      <div class="g2">
+        <div class="card">
+          <div class="card-head"><div class="card-title" style="color:var(--blue)">🔵 Option A — SQL Server 2022</div><span class="badge by">RAM 6GB+</span></div>
+          <div class="card-body">
+            <div class="code-wrap" style="margin-bottom:0">
+              <pre><span class="c"># Ajouter repo SQL Server</span>
+curl https://packages.microsoft.com/config/rhel/8/\
+mssql-server-2022.repo > /etc/yum.repos.d/mssql.repo
+
+dnf install -y mssql-server
+
+<span class="c"># Configuration initiale</span>
+/opt/mssql/bin/mssql-conf setup
+<span class="c"># → Choisir: 2 (Developer edition - gratuit)</span>
+<span class="c"># → Définir mot de passe SA fort</span>
+
+<span class="c"># Démarrer et activer</span>
+systemctl enable mssql-server --now
+systemctl status mssql-server
+
+<span class="c"># Installer sqlcmd</span>
+curl https://packages.microsoft.com/config/rhel/8/\
+prod.repo > /etc/yum.repos.d/msprod.repo
+dnf install -y mssql-tools unixODBC-devel
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+source ~/.bashrc
+
+<span class="c"># Créer la base de données</span>
+sqlcmd -S localhost -U SA -P 'TonMotDePasse!' -Q \
+  "CREATE DATABASE MecaProDb; GO"
+
+<span class="c"># Créer utilisateur dédié (pas SA en prod!)</span>
+sqlcmd -S localhost -U SA -P 'TonMotDePasse!' -Q \
+  "CREATE LOGIN mecapro_user WITH PASSWORD='AppPass123!';
+   USE MecaProDb;
+   CREATE USER mecapro_user FOR LOGIN mecapro_user;
+   EXEC sp_addrolemember 'db_owner', 'mecapro_user'; GO"</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title" style="color:var(--green)">🐘 Option B — PostgreSQL 16</div><span class="badge bg">RAM 2GB+</span></div>
+          <div class="card-body">
+            <div class="code-wrap" style="margin-bottom:0">
+              <pre><span class="c"># Installer PostgreSQL 16</span>
+dnf install -y https://download.postgresql.org/\
+pub/repos/yum/reporpms/EL-8-x86_64/\
+pgdg-redhat-repo-latest.noarch.rpm
+dnf -qy module disable postgresql
+dnf install -y postgresql16-server postgresql16
+
+<span class="c"># Initialiser et démarrer</span>
+/usr/pgsql-16/bin/postgresql-16-setup initdb
+systemctl enable postgresql-16 --now
+
+<span class="c"># Créer DB et utilisateur</span>
+sudo -u postgres psql << 'EOF'
+CREATE USER mecapro_user WITH PASSWORD 'AppPass123!';
+CREATE DATABASE mecaprodb OWNER mecapro_user;
+GRANT ALL PRIVILEGES ON DATABASE mecaprodb TO mecapro_user;
+\q
+EOF
+
+<span class="c"># Changer provider EF Core dans ton projet :</span>
+<span class="c"># Npgsql.EntityFrameworkCore.PostgreSQL</span>
+<span class="c"># Connection string :</span>
+<span class="c"># Host=localhost;Database=mecaprodb;</span>
+<span class="c"># Username=mecapro_user;Password=AppPass123!</span></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 04 REDIS ===== -->
+    <div id="p-redis" class="page">
+      <div class="sec-head">
+        <div class="sec-eyebrow">// ÉTAPE 04</div>
+        <div class="sec-title">REDIS + RABBITMQ</div>
+        <div class="sec-desc">Cache, sessions, rate limiting, et messaging</div>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-bar"><div class="code-filename">🔴 Installer Redis 7</div><div class="code-lang">BASH</div></div>
+        <pre><span class="c"># CentOS/AlmaLinux</span>
+dnf install -y redis
+<span class="c"># Ubuntu</span>
+apt install -y redis-server
+
+<span class="c"># Sécuriser Redis — éditer la config</span>
+vim /etc/redis/redis.conf
+
+<span class="c"># Modifier ces lignes :</span>
+bind 127.0.0.1          <span class="c"># écouter uniquement en local</span>
+requirepass TonMotDePasseRedisForte123!
+maxmemory 512mb
+maxmemory-policy allkeys-lru
+
+<span class="c"># Démarrer Redis</span>
+systemctl enable redis --now
+systemctl status redis
+
+<span class="c"># Tester</span>
+redis-cli -a TonMotDePasseRedisForte123! ping
+<span class="c"># ➜ PONG ✅</span></pre>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-bar"><div class="code-filename">🐰 Installer RabbitMQ (optionnel —
