@@ -1,0 +1,9 @@
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Infrastructure\Services\Services.cs(67,123): error CS1503: Argument 1 : conversion impossible de 'void' en 'SendGrid.Helpers.Mail.SendGridMessage' [C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Infrastructure\MecaPro.Infrastructure.csproj]
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Infrastructure\Services\Services.cs(31,39): error CS1929: 'Customer' ne contient pas de définition pour 'ToDto' et la meilleure surcharge de méthode d'extension 'MappingExtensions.ToDto(Vehicle)' nécessite un récepteur de type 'MecaPro.Domain.Common.Vehicle' [C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Infrastructure\MecaPro.Infrastructure.csproj]
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Infrastructure\Services\Services.cs(120,27): error CS0104: 'Invoice' est une référence ambiguë entre 'MecaPro.Infrastructure.Persistence.Invoice' et 'Stripe.Invoice' [C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Infrastructure\MecaPro.Infrastructure.csproj]
+
+ÉCHEC de la build.
+    11 Avertissement(s)
+    3 Erreur(s)
+
+Temps écoulé 00:00:26.46

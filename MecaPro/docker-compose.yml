@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  api:
+    image: mecapro-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mecapro_api
+    restart: always
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=MecaProDb;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;
+      - ConnectionStrings__Redis=redis:6379
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - mecapro_net
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mecapro_sql
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "${DB_PASSWORD}", "-Q", "SELECT 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mecapro_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: mecapro_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - mecapro_net
+
+  seq:
+    image: datalust/seq:latest
+    container_name: mecapro_seq
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:5341" # Ingestion port
+      - "8081:80"   # UI port
+    volumes:
+      - seq_data:/data
+    networks:
+      - mecapro_net
+
+volumes:
+  sqlserver_data:
+  redis_data:
+  seq_data:
+
+networks:
+  mecapro_net:
+    driver: bridge

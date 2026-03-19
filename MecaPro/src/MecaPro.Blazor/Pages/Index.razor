@@ -1,0 +1,128 @@
+@page "/"
+@attribute [Authorize]
+
+<PageTitle>Tableau de bord — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(245,166,35,.12)">🚗</div>
+      <div class="kpi-value" style="color:var(--accent)">47</div>
+      <div class="kpi-label">Véhicules en cours</div>
+      <div class="kpi-trend trend-up">↑ +3 cette semaine</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(239,68,68,.12)">⚠️</div>
+      <div class="kpi-value" style="color:var(--red)">12</div>
+      <div class="kpi-label">Pannes diagnostiquées</div>
+      <div class="kpi-trend trend-down">↓ -2 vs hier</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(34,197,94,.12)">✅</div>
+      <div class="kpi-value" style="color:var(--green)">183</div>
+      <div class="kpi-label">Révisions complètes</div>
+      <div class="kpi-trend trend-up">↑ +8 ce mois</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(59,130,246,.12)">💶</div>
+      <div class="kpi-value" style="color:var(--blue)">42k</div>
+      <div class="kpi-label">CA mensuel (€)</div>
+      <div class="kpi-trend trend-up">↑ +12% vs M-1</div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <!-- Véhicules actifs -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🚗 Véhicules Actifs</div>
+        <button class="btn btn-ghost" style="font-size:11px;padding:5px 10px">Voir tout</button>
+      </div>
+      <table>
+        <tr><th>Immatriculation</th><th>Marque</th><th>Client</th><th>Statut</th><th>Révision</th></tr>
+        <tr>
+          <td><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent)">AB-123-CD</span></td>
+          <td>Peugeot 308</td><td>M. Dupont</td>
+          <td><span class="badge badge-orange">En cours</span></td>
+          <td>15/03/25</td>
+        </tr>
+        <tr>
+          <td><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent)">EF-456-GH</span></td>
+          <td>Renault Clio</td><td>Mme. Martin</td>
+          <td><span class="badge badge-blue">Diagnostic</span></td>
+          <td>18/03/25</td>
+        </tr>
+        <tr>
+          <td><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent)">IJ-789-KL</span></td>
+          <td>BMW Série 3</td><td>M. Bernard</td>
+          <td><span class="badge badge-green">Terminé</span></td>
+          <td>12/03/25</td>
+        </tr>
+        <tr>
+          <td><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent)">MN-012-OP</span></td>
+          <td>Volkswagen Golf</td><td>Mme. Leroy</td>
+          <td><span class="badge badge-red">Urgent</span></td>
+          <td>20/03/25</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Stats rapides -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📊 Statistiques Semaine</div>
+      </div>
+      <div class="card-body">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Taux de retour client</span>
+          <span class="stat-pill-value" style="color:var(--green)">94%</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Durée moy. révision</span>
+          <span class="stat-pill-value">2h 40m</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Pièces commandées</span>
+          <span class="stat-pill-value">34</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Coût moy. intervention</span>
+          <span class="stat-pill-value" style="color:var(--accent)">287 €</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Messages non lus</span>
+          <span class="stat-pill-value" style="color:var(--red)">7</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">QR scannés aujourd'hui</span>
+          <span class="stat-pill-value" style="color:var(--blue)">23</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alertes -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🔔 Alertes & Urgences</div>
+      <span class="badge badge-red">4 actives</span>
+    </div>
+    <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+      <div style="padding:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;display:flex;align-items:center;gap:12px;font-size:13px">
+        <span style="color:var(--red);font-size:20px">🔴</span>
+        <div><strong>MN-012-OP</strong> — Fuite de frein critique. Intervention immédiate requise.</div>
+        <button class="btn btn-ghost" style="margin-left:auto;font-size:11px">Voir</button>
+      </div>
+      <div style="padding:12px;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.2);border-radius:8px;display:flex;align-items:center;gap:12px;font-size:13px">
+        <span style="font-size:20px">🟡</span>
+        <div><strong>Stock critique</strong> — Plaquettes de frein Bosch en rupture (2 restantes).</div>
+        <button class="btn btn-ghost" style="margin-left:auto;font-size:11px">Commander</button>
+      </div>
+      <div style="padding:12px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;display:flex;align-items:center;gap:12px;font-size:13px">
+        <span style="font-size:20px">🔵</span>
+        <div><strong>5 révisions</strong> programmées demain. Préparer les dossiers clients.</div>
+        <button class="btn btn-ghost" style="margin-left:auto;font-size:11px">Planifier</button>
+      </div>
+    </div>
+  </div>
+</div>

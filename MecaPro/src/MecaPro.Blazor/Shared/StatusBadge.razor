@@ -1,0 +1,9 @@
+@* Shared/StatusBadge.razor *@
+<span class="status-badge status-@Status.ToLower().Replace(" ", "-") @(Small ? "sm" : "")">
+    @Status
+</span>
+
+@code {
+    [Parameter] public string Status { get; set; } = "";
+    [Parameter] public bool Small { get; set; }
+}

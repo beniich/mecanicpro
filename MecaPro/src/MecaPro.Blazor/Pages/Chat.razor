@@ -1,0 +1,86 @@
+@page "/chat"
+@attribute [Authorize]
+
+<PageTitle>Chat Client — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="section-header">
+    <div>
+      <div class="section-title">💬 Chat avec le Client</div>
+      <div class="section-desc">Messagerie instantanée mécanicien ↔ client</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <!-- Liste des conversations -->
+    <div class="card" style="max-height:560px;overflow:hidden;display:flex;flex-direction:column">
+      <div class="card-header">
+        <div class="card-title">📬 Conversations</div>
+        <span class="badge badge-red">7 non lus</span>
+      </div>
+      <div style="flex:1;overflow-y:auto">
+        <div style="padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;background:rgba(245,166,35,.05);border-left:2px solid var(--accent)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <strong style="font-size:13px">M. Dupont Pierre</strong>
+            <span style="font-size:10px;color:var(--text3)">14:32</span>
+          </div>
+          <div style="font-size:12px;color:var(--text2)">AB-123-CD — "Quand sera prête ma voiture ?"</div>
+          <div style="display:flex;gap:6px;margin-top:6px"><span class="badge badge-orange" style="font-size:10px">1 non lu</span></div>
+        </div>
+        <div style="padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <strong style="font-size:13px">Mme. Martin Sophie</strong>
+            <span style="font-size:10px;color:var(--text3)">11:15</span>
+          </div>
+          <div style="font-size:12px;color:var(--text2)">EF-456-GH — "Devis reçu, c'est OK"</div>
+        </div>
+        <div style="padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <strong style="font-size:13px">M. Bernard Alain</strong>
+            <span style="font-size:10px;color:var(--text3)">Hier</span>
+          </div>
+          <div style="font-size:12px;color:var(--text2)">IJ-789-KL — "Merci pour le travail !"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conversation active -->
+    <div class="card" style="display:flex;flex-direction:column;max-height:560px">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="avatar" style="width:28px;height:28px;font-size:11px">PD</div>
+          M. Dupont Pierre — AB-123-CD
+        </div>
+        <span class="badge badge-green">En ligne</span>
+      </div>
+      <div class="chat-wrapper">
+        <div class="chat-messages">
+          <div>
+            <div class="msg msg-client">Bonjour, j'ai déposé ma Peugeot ce matin. Pouvez-vous me dire ce qui a été trouvé ?</div>
+            <div class="msg-meta">Pierre — 09:15</div>
+          </div>
+          <div style="align-self:flex-end">
+            <div class="msg msg-meca">Bonjour M. Dupont ! Nous avons effectué le diagnostic. Le code P0301 indique un raté d'allumage sur le cylindre 1. Très probablement une bougie à remplacer.</div>
+            <div class="msg-meta" style="text-align:right">Vous — 09:42</div>
+          </div>
+          <div>
+            <div class="msg msg-client">D'accord. Est-ce grave ? Combien ça coûte ?</div>
+            <div class="msg-meta">Pierre — 10:05</div>
+          </div>
+          <div style="align-self:flex-end">
+            <div class="msg msg-meca">Ce n'est pas urgent mais à traiter rapidement. Je vous envoie un devis : 4 bougies NGK + main d'œuvre = 125 €. Durée 1h environ.</div>
+            <div class="msg-meta" style="text-align:right">Vous — 10:18</div>
+          </div>
+          <div>
+            <div class="msg msg-client">Quand sera prête ma voiture ?</div>
+            <div class="msg-meta">Pierre — 14:32</div>
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <input class="chat-input" type="text" placeholder="Votre message…">
+          <button class="btn btn-primary">Envoyer ➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

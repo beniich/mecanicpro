@@ -1,0 +1,83 @@
+@page "/pannes"
+@attribute [Authorize]
+
+<PageTitle>Pannes — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="section-header">
+    <div>
+      <div class="section-title">⚠️ Désignation des Pannes</div>
+      <div class="section-desc">Diagnostic et classification des défaillances</div>
+    </div>
+    <button class="btn btn-primary" style="margin-left:auto">⊕ Nouvelle panne</button>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📋 Pannes Actives</div>
+        <span class="badge badge-red">12 en cours</span>
+      </div>
+      <table>
+        <tr><th>Sévérité</th><th>Code</th><th>Désignation</th><th>Véhicule</th><th>Statut</th></tr>
+        <tr>
+          <td><span class="panne-severity" style="background:var(--red)"></span>Critique</td>
+          <td style="font-family:JetBrains Mono,monospace;font-size:11px;color:var(--red)">P0301</td>
+          <td>Raté allumage cylindre 1</td>
+          <td style="color:var(--accent)">MN-012</td>
+          <td><span class="badge badge-red">Urgent</span></td>
+        </tr>
+        <tr>
+          <td><span class="panne-severity" style="background:var(--accent)"></span>Majeure</td>
+          <td style="font-family:JetBrains Mono,monospace;font-size:11px;color:var(--accent)">C0034</td>
+          <td>Circuit frein avant gauche</td>
+          <td style="color:var(--accent)">MN-012</td>
+          <td><span class="badge badge-orange">En cours</span></td>
+        </tr>
+        <tr>
+          <td><span class="panne-severity" style="background:var(--blue)"></span>Mineure</td>
+          <td style="font-family:JetBrains Mono,monospace;font-size:11px;color:var(--blue)">B1234</td>
+          <td>Capteur température habitacle</td>
+          <td style="color:var(--accent)">EF-456</td>
+          <td><span class="badge badge-blue">Diagnostic</span></td>
+        </tr>
+        <tr>
+          <td><span class="panne-severity" style="background:var(--green)"></span>Info</td>
+          <td style="font-family:JetBrains Mono,monospace;font-size:11px;color:var(--green)">U0100</td>
+          <td>Perte communication ECU</td>
+          <td style="color:var(--accent)">AB-123</td>
+          <td><span class="badge badge-green">Résolu</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🔍 Détail Panne — P0301</div>
+      </div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="padding:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:8px">
+            <div style="font-size:11px;color:var(--red);margin-bottom:4px;font-weight:700">⚠ CRITIQUE — Code P0301</div>
+            <div style="font-size:14px;font-weight:600">Raté d'allumage détecté — Cylindre 1</div>
+          </div>
+          <div class="stat-pill"><span class="stat-pill-label">Système affecté</span><span class="stat-pill-value">Allumage / Injection</span></div>
+          <div class="stat-pill"><span class="stat-pill-label">Détecté le</span><span class="stat-pill-value">17/03/2025</span></div>
+          <div class="stat-pill"><span class="stat-pill-label">Outil diagnostic</span><span class="stat-pill-value">Launch X431</span></div>
+          <div class="stat-pill"><span class="stat-pill-label">Mécanicien</span><span class="stat-pill-value">Jean-Luc M.</span></div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--text2)">
+            <strong style="color:var(--text)">💡 Causes probables :</strong><br><br>
+            • Bougie d'allumage défectueuse<br>
+            • Bobine d'allumage HS<br>
+            • Injecteur encrassé<br>
+            • Compression cylindre insuffisante
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary">✅ Marquer résolu</button>
+            <button class="btn btn-ghost">📝 Rapport</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

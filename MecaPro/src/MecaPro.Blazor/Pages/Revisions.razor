@@ -1,0 +1,141 @@
+@page "/revisions"
+@attribute [Authorize]
+
+<PageTitle>Révisions — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="section-header">
+    <div>
+      <div class="section-title">📅 Révisions</div>
+      <div class="section-desc">Planification, durée et coûts des révisions</div>
+    </div>
+    <button class="btn btn-primary" style="margin-left:auto">⊕ Planifier révision</button>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(59,130,246,.12)">📅</div>
+      <div class="kpi-value" style="color:var(--blue)">8</div>
+      <div class="kpi-label">Prochaine semaine</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(34,197,94,.12)">⏱️</div>
+      <div class="kpi-value" style="color:var(--green)">2h40</div>
+      <div class="kpi-label">Durée moy. révision</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(245,166,35,.12)">💶</div>
+      <div class="kpi-value" style="color:var(--accent)">287€</div>
+      <div class="kpi-label">Coût moy. révision</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(168,85,247,.12)">📊</div>
+      <div class="kpi-value" style="color:var(--purple)">94%</div>
+      <div class="kpi-label">Taux satisfaction</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📋 Révisions Planifiées</div>
+      </div>
+      <table>
+        <tr><th>Date</th><th>Véhicule</th><th>Type</th><th>Durée Est.</th><th>Coût Est.</th><th>Statut</th></tr>
+        <tr>
+          <td style="font-family:JetBrains Mono,monospace;font-size:12px">20/03</td>
+          <td style="color:var(--accent)">MN-012</td><td>Révision complète</td>
+          <td>4h 00</td><td style="color:var(--green);font-weight:700">480 €</td>
+          <td><span class="badge badge-orange">Planifiée</span></td>
+        </tr>
+        <tr>
+          <td style="font-family:JetBrains Mono,monospace;font-size:12px">21/03</td>
+          <td style="color:var(--accent)">AB-123</td><td>Vidange + filtres</td>
+          <td>1h 30</td><td style="color:var(--green);font-weight:700">120 €</td>
+          <td><span class="badge badge-blue">Confirmée</span></td>
+        </tr>
+        <tr>
+          <td style="font-family:JetBrains Mono,monospace;font-size:12px">22/03</td>
+          <td style="color:var(--accent)">EF-456</td><td>Freins avant</td>
+          <td>2h 00</td><td style="color:var(--green);font-weight:700">290 €</td>
+          <td><span class="badge badge-blue">Confirmée</span></td>
+        </tr>
+        <tr>
+          <td style="font-family:JetBrains Mono,monospace;font-size:12px">25/03</td>
+          <td style="color:var(--accent)">IJ-789</td><td>Distribution</td>
+          <td>6h 00</td><td style="color:var(--green);font-weight:700">850 €</td>
+          <td><span class="badge badge-purple">Devis envoyé</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">💶 Détail Coûts — Révision Complète</div>
+      </div>
+      <div class="card-body">
+        <div class="cost-row">
+          <span class="cost-label">Main d'œuvre (3h)</span>
+          <div class="cost-bar"><div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div></div>
+          <span class="cost-val">180 €</span>
+        </div>
+        <div class="cost-row">
+          <span class="cost-label">Huile moteur 5L</span>
+          <div class="cost-bar"><div class="progress-bar"><div class="progress-fill" style="width:25%;background:linear-gradient(90deg,var(--blue),var(--purple))"></div></div></div>
+          <span class="cost-val">55 €</span>
+        </div>
+        <div class="cost-row">
+          <span class="cost-label">Filtre à huile</span>
+          <div class="cost-bar"><div class="progress-bar"><div class="progress-fill" style="width:10%;background:linear-gradient(90deg,var(--green),var(--blue))"></div></div></div>
+          <span class="cost-val">18 €</span>
+        </div>
+        <div class="cost-row">
+          <span class="cost-label">Filtre air + habitacle</span>
+          <div class="cost-bar"><div class="progress-bar"><div class="progress-fill" style="width:14%;background:linear-gradient(90deg,var(--green),var(--blue))"></div></div></div>
+          <span class="cost-val">34 €</span>
+        </div>
+        <div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;font-weight:700;font-size:16px">
+          <span>Total TTC</span>
+          <span style="color:var(--accent)">287 €</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button class="btn btn-primary" style="flex:1">📄 Générer facture</button>
+          <button class="btn btn-ghost" style="flex:1">📧 Envoyer devis</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline révisions -->
+  <div class="card">
+    <div class="card-header"><div class="card-title">⏳ Historique Révisions — Peugeot 308</div></div>
+    <div class="card-body">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot done"></div>
+          <div class="tl-date">15/01/2025 — 87 450 km</div>
+          <div class="tl-title">Révision complète</div>
+          <div class="tl-sub">Vidange, filtres, bougies — 287 € — 2h30</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done"></div>
+          <div class="tl-date">07/08/2024 — 75 000 km</div>
+          <div class="tl-title">Distribution + Courroie accessoires</div>
+          <div class="tl-sub">Remplacement kit distribution complet — 720 € — 5h</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done"></div>
+          <div class="tl-date">12/02/2024 — 62 000 km</div>
+          <div class="tl-title">Freins complets 4 roues</div>
+          <div class="tl-sub">Plaquettes + disques — 640 € — 3h30</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot upcoming"></div>
+          <div class="tl-date" style="color:var(--blue)">Prochaine — 97 000 km (~6 mois)</div>
+          <div class="tl-title" style="color:var(--blue)">Révision 100 000 km</div>
+          <div class="tl-sub">Distribution + vidange + révision complète — Est. 950 €</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

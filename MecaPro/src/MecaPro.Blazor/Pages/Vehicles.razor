@@ -1,0 +1,122 @@
+@page "/vehicles"
+@attribute [Authorize]
+
+<PageTitle>Véhicules & QR Codes — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🚗 Véhicules & Codes QR</div>
+      <div class="section-desc">Générer et scanner des QR codes pour accéder aux fiches véhicules</div>
+    </div>
+    <button class="btn btn-primary" style="margin-left:auto">⊕ Nouveau véhicule</button>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📋 Fiche Véhicule</div>
+        <span class="badge badge-orange">En cours</span>
+      </div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+            <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Immatriculation</div>
+            <div style="font-family:JetBrains Mono,monospace;font-weight:700;color:var(--accent)">AB-123-CD</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+            <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Marque / Modèle</div>
+            <div style="font-weight:600">Peugeot 308 GT</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+            <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Année</div>
+            <div style="font-weight:600">2021</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+            <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Kilométrage</div>
+            <div style="font-weight:600;font-family:JetBrains Mono,monospace">87 450 km</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+            <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">VIN</div>
+            <div style="font-weight:600;font-family:JetBrains Mono,monospace;font-size:11px">VF3LBHZTXJS123456</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+            <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Propriétaire</div>
+            <div style="font-weight:600">M. Dupont Pierre</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary" style="flex:1">✏️ Modifier</button>
+          <button class="btn btn-ghost" style="flex:1">📄 Historique</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">⊞ Code QR — AB-123-CD</div>
+        <button class="btn btn-ghost" style="font-size:11px">⬇ Imprimer</button>
+      </div>
+      <div class="qr-container">
+        <!-- QR Code partiel CSS -->
+        <div class="qr-code">
+          @for (int i=0; i<64; i++) {
+            <div class="qr-cell" style="background:@RandomColor()"></div>
+          }
+        </div>
+        <div class="qr-label">mecapro.app/v/AB-123-CD</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary">📥 Télécharger QR</button>
+          <button class="btn btn-ghost">🔄 Regénérer</button>
+        </div>
+        <div style="font-size:11px;color:var(--text3);text-align:center;max-width:240px">
+          Scanner ce QR code pour accéder directement à la fiche complète du véhicule, historique et révisions.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🚗 Tous les Véhicules</div>
+      <div style="display:flex;gap:8px">
+        <input type="text" placeholder="Rechercher…" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text);font-size:12px;outline:none">
+        <button class="btn btn-ghost" style="font-size:11px">Filtrer</button>
+      </div>
+    </div>
+    <table>
+      <tr><th>Immat.</th><th>Marque</th><th>Modèle</th><th>Année</th><th>Client</th><th>Km</th><th>Statut</th><th>QR</th></tr>
+      <tr>
+        <td style="font-family:JetBrains Mono,monospace;color:var(--accent)">AB-123-CD</td>
+        <td>Peugeot</td><td>308 GT</td><td>2021</td><td>M. Dupont</td>
+        <td style="font-family:JetBrains Mono,monospace">87 450</td>
+        <td><span class="badge badge-orange">En cours</span></td>
+        <td><button class="btn btn-ghost" style="font-size:10px;padding:3px 8px">⊞ QR</button></td>
+      </tr>
+      <tr>
+        <td style="font-family:JetBrains Mono,monospace;color:var(--accent)">EF-456-GH</td>
+        <td>Renault</td><td>Clio V</td><td>2022</td><td>Mme Martin</td>
+        <td style="font-family:JetBrains Mono,monospace">34 200</td>
+        <td><span class="badge badge-blue">Diagnostic</span></td>
+        <td><button class="btn btn-ghost" style="font-size:10px;padding:3px 8px">⊞ QR</button></td>
+      </tr>
+      <tr>
+        <td style="font-family:JetBrains Mono,monospace;color:var(--accent)">IJ-789-KL</td>
+        <td>BMW</td><td>Série 3</td><td>2019</td><td>M. Bernard</td>
+        <td style="font-family:JetBrains Mono,monospace">112 000</td>
+        <td><span class="badge badge-green">Terminé</span></td>
+        <td><button class="btn btn-ghost" style="font-size:10px;padding:3px 8px">⊞ QR</button></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+@code {
+    private static Random rnd = new Random();
+    
+    // Simuler le QR avec des div random comme dans le JS fourni
+    private string RandomColor()
+    {
+        return rnd.NextDouble() > 0.5 ? "#111" : "#fff";
+    }
+}

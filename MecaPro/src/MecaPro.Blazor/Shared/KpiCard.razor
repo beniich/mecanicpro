@@ -1,0 +1,19 @@
+@* Shared/KpiCard.razor *@
+<div class="kpi-card color-@Color" @onclick="OnClick">
+    <div class="kpi-icon-wrap">@Icon</div>
+    <div class="kpi-info">
+        <div class="kpi-value">@Value</div>
+        <div class="kpi-label">@Label</div>
+        <div class="kpi-trend @(TrendUp ? "trend-up" : "trend-down")">@Trend</div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Icon { get; set; } = "";
+    [Parameter] public string Value { get; set; } = "";
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public string Trend { get; set; } = "";
+    [Parameter] public bool TrendUp { get; set; }
+    [Parameter] public string Color { get; set; } = "amber";
+    [Parameter] public EventCallback OnClick { get; set; }
+}

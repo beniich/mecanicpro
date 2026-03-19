@@ -1,0 +1,46 @@
+@page "/images"
+@attribute [Authorize]
+
+<PageTitle>Galerie Images — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🖼️ Galerie Images</div>
+      <div class="section-desc">Photos et documents liés aux véhicules</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-title">⬆ Importer des images</div></div>
+      <div class="card-body">
+        <div class="upload-zone">
+          <div class="upload-icon">📸</div>
+          <div class="upload-text">Glisser-déposer vos images ici</div>
+          <div class="upload-sub">ou cliquer pour sélectionner • PNG, JPG, HEIC, PDF • max 25 MB</div>
+          <button class="btn btn-primary" style="margin-top:16px">Parcourir…</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🖼 Photos récentes — AB-123-CD</div>
+        <button class="btn btn-ghost" style="font-size:11px">Voir tout</button>
+      </div>
+      <div class="card-body">
+        <div class="img-grid">
+          <div class="img-thumb">🔧</div>
+          <div class="img-thumb">🚗</div>
+          <div class="img-thumb">⚙️</div>
+          <div class="img-thumb">🔩</div>
+          <div class="img-thumb">📋</div>
+          <div class="img-thumb">🔋</div>
+          <div class="img-thumb">💨</div>
+          <div class="img-thumb" style="background:linear-gradient(135deg,rgba(245,166,35,.1),rgba(232,93,4,.1));border-style:dashed;color:var(--accent)">+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

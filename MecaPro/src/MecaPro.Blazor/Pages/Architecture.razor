@@ -1,0 +1,124 @@
+@page "/architecture"
+@attribute [Authorize]
+
+<PageTitle>Architecture .NET — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🏗️ Architecture Technique .NET</div>
+      <div class="section-desc">Stack complet — Backend, Frontend, Mobile, Infrastructure</div>
+    </div>
+  </div>
+
+  <div class="net-arch" style="margin-bottom:24px">
+    <div class="net-layer layer-blue">
+      <div class="net-layer-header">
+        📱 Couche Présentation — Frontend & Mobile
+      </div>
+      <div class="net-layer-body">
+        <span class="tech-pill">Blazor WebAssembly</span>
+        <span class="tech-pill">MAUI (iOS/Android)</span>
+        <span class="tech-pill">Tailwind CSS</span>
+        <span class="tech-pill">SignalR (Chat temps réel)</span>
+        <span class="tech-pill">QRCoder.NET</span>
+        <span class="tech-pill">Radzen UI Components</span>
+      </div>
+    </div>
+
+    <div class="net-layer layer-orange">
+      <div class="net-layer-header">
+        ⚙️ Couche API — Backend ASP.NET Core 8
+      </div>
+      <div class="net-layer-body">
+        <span class="tech-pill">ASP.NET Core 8 Web API</span>
+        <span class="tech-pill">MediatR (CQRS)</span>
+        <span class="tech-pill">FluentValidation</span>
+        <span class="tech-pill">AutoMapper</span>
+        <span class="tech-pill">JWT Bearer Auth</span>
+        <span class="tech-pill">Swagger / OpenAPI</span>
+        <span class="tech-pill">SignalR Hub</span>
+        <span class="tech-pill">Hangfire (jobs)</span>
+      </div>
+    </div>
+
+    <div class="net-layer layer-green">
+      <div class="net-layer-header">
+        🗄️ Couche Données — Persistance & Cache
+      </div>
+      <div class="net-layer-body">
+        <span class="tech-pill">Entity Framework Core 8</span>
+        <span class="tech-pill">SQL Server 2022</span>
+        <span class="tech-pill">Redis (Cache)</span>
+        <span class="tech-pill">Azure Blob Storage</span>
+        <span class="tech-pill">Dapper (requêtes opt.)</span>
+      </div>
+    </div>
+
+    <div class="net-layer layer-purple">
+      <div class="net-layer-header">
+        ☁️ Infrastructure & DevOps
+      </div>
+      <div class="net-layer-body">
+        <span class="tech-pill">Azure App Service</span>
+        <span class="tech-pill">Docker + Docker Compose</span>
+        <span class="tech-pill">Azure DevOps CI/CD</span>
+        <span class="tech-pill">Application Insights</span>
+        <span class="tech-pill">Azure Key Vault</span>
+        <span class="tech-pill">Stripe API (Paiements)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="arch-container">
+    <div class="arch-layer">
+      <div class="arch-layer-title">🔑 Modules Mécanicien</div>
+      <div class="arch-item">🚗 VehicleModule — Gestion véhicules</div>
+      <div class="arch-item">⊞ QRCodeModule — Génération QR</div>
+      <div class="arch-item">⚠️ DiagnosticModule — Codes pannes</div>
+      <div class="arch-item">📅 RevisionModule — Planning & coûts</div>
+      <div class="arch-item">✅ TaskModule — Tâches effectuées</div>
+      <div class="arch-item">🖼️ MediaModule — Images véhicules</div>
+    </div>
+
+    <div class="arch-layer">
+      <div class="arch-layer-title">💬 Modules Communication</div>
+      <div class="arch-item">💬 ChatModule — SignalR temps réel</div>
+      <div class="arch-item">📧 NotificationModule — Email/SMS</div>
+      <div class="arch-item">👤 ClientModule — Portail client</div>
+      <div class="arch-item">📄 InvoiceModule — Factures PDF</div>
+      <div class="arch-item">📊 ReportModule — Rapports</div>
+    </div>
+
+    <div class="arch-layer">
+      <div class="arch-layer-title">🛒 Modules E-Commerce</div>
+      <div class="arch-item">🏪 CatalogModule — Catalogue pièces</div>
+      <div class="arch-item">🛒 CartModule — Panier d'achat</div>
+      <div class="arch-item">💳 PaymentModule — Stripe / CB</div>
+      <div class="arch-item">📦 OrderModule — Commandes</div>
+      <div class="arch-item">🏭 SupplierModule — Fournisseurs</div>
+      <div class="arch-item">📊 AnalyticsModule — CA / Marges</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-header"><div class="card-title">📁 Structure Solution .NET</div></div>
+    <div class="card-body">
+      <pre style="font-family:JetBrains Mono,monospace;font-size:11px;color:var(--text2);line-height:1.8;overflow-x:auto">
+<span style="color:var(--accent)">MecaPro.sln</span>
+├── <span style="color:var(--blue)">src/</span>
+│   ├── <span style="color:var(--blue)">MecaPro.Domain/</span>          <span style="color:var(--text3)">← Entités, Value Objects, Interfaces</span>
+│   ├── <span style="color:var(--blue)">MecaPro.Application/</span>      <span style="color:var(--text3)">← CQRS Commands/Queries, Validators</span>
+│   ├── <span style="color:var(--blue)">MecaPro.Infrastructure/</span>   <span style="color:var(--text3)">← EF Core, Repos, Services externes</span>
+│   ├── <span style="color:var(--blue)">MecaPro.API/</span>              <span style="color:var(--text3)">← ASP.NET Core 8, Controllers, Hubs</span>
+│   ├── <span style="color:var(--blue)">MecaPro.Blazor/</span>           <span style="color:var(--text3)">← UI Web (Blazor WASM)</span>
+│   └── <span style="color:var(--blue)">MecaPro.Mobile/</span>           <span style="color:var(--text3)">← App iOS/Android (.NET MAUI)</span>
+├── <span style="color:var(--green)">tests/</span>
+│   ├── <span style="color:var(--green)">MecaPro.Domain.Tests/</span>
+│   ├── <span style="color:var(--green)">MecaPro.Application.Tests/</span>
+│   └── <span style="color:var(--green)">MecaPro.API.IntegrationTests/</span>
+└── <span style="color:var(--purple)">docker-compose.yml</span>           <span style="color:var(--text3)">← API + SQL Server + Redis</span>
+      </pre>
+    </div>
+  </div>
+</div>

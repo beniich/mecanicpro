@@ -1,0 +1,117 @@
+@page "/ecommerce"
+@attribute [Authorize]
+
+<PageTitle>E-Commerce — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🛒 E-Commerce — Achats & Ventes</div>
+      <div class="section-desc">Boutique en ligne, commandes fournisseurs et ventes clients</div>
+    </div>
+    <button class="btn btn-primary" style="margin-left:auto">⊕ Nouvelle commande</button>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active">🏪 Boutique</button>
+    <button class="tab-btn">📦 Commandes</button>
+    <button class="tab-btn">🏭 Fournisseurs</button>
+    <button class="tab-btn">📊 Analytique</button>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(34,197,94,.12)">💶</div>
+      <div class="kpi-value" style="color:var(--green)">18.4k</div>
+      <div class="kpi-label">Ventes ce mois (€)</div>
+      <div class="kpi-trend trend-up">↑ +22%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(59,130,246,.12)">📦</div>
+      <div class="kpi-value" style="color:var(--blue)">234</div>
+      <div class="kpi-label">Commandes reçues</div>
+      <div class="kpi-trend trend-up">↑ +18</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(245,166,35,.12)">🏭</div>
+      <div class="kpi-value" style="color:var(--accent)">12.1k</div>
+      <div class="kpi-label">Achats fournisseurs (€)</div>
+      <div class="kpi-trend trend-down">↓ -5%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:rgba(168,85,247,.12)">📈</div>
+      <div class="kpi-value" style="color:var(--purple)">34%</div>
+      <div class="kpi-label">Marge brute</div>
+      <div class="kpi-trend trend-up">↑ +2.1pt</div>
+    </div>
+  </div>
+
+  <div class="shop-grid">
+    <div class="shop-card">
+      <div class="shop-img">🔩</div>
+      <div class="shop-info">
+        <div class="shop-name">Kit Plaquettes Frein Premium</div>
+        <div class="shop-cat">Freinage • Bosch</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="shop-price">96 €</div>
+          <button class="btn btn-primary" style="font-size:11px;padding:5px 10px">Acheter</button>
+        </div>
+      </div>
+    </div>
+    <div class="shop-card">
+      <div class="shop-img">🛢️</div>
+      <div class="shop-info">
+        <div class="shop-name">Pack Vidange Complet 5W40</div>
+        <div class="shop-cat">Moteur • Castrol Edge</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="shop-price">68 €</div>
+          <button class="btn btn-primary" style="font-size:11px;padding:5px 10px">Acheter</button>
+        </div>
+      </div>
+    </div>
+    <div class="shop-card">
+      <div class="shop-img">⚡</div>
+      <div class="shop-info">
+        <div class="shop-name">Batterie 100Ah AGM Start/Stop</div>
+        <div class="shop-cat">Électrique • Varta</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="shop-price">235 €</div>
+          <button class="btn btn-primary" style="font-size:11px;padding:5px 10px">Acheter</button>
+        </div>
+      </div>
+    </div>
+    <div class="shop-card">
+      <div class="shop-img">🌀</div>
+      <div class="shop-info">
+        <div class="shop-name">Kit Amortisseurs Avant x2</div>
+        <div class="shop-cat">Suspension • Monroe</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="shop-price">310 €</div>
+          <button class="btn btn-primary" style="font-size:11px;padding:5px 10px">Acheter</button>
+        </div>
+      </div>
+    </div>
+    <div class="shop-card">
+      <div class="shop-img">🔌</div>
+      <div class="shop-info">
+        <div class="shop-name">Kit Distribution Complet</div>
+        <div class="shop-cat">Moteur • Dayco</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="shop-price">189 €</div>
+          <button class="btn btn-primary" style="font-size:11px;padding:5px 10px">Acheter</button>
+        </div>
+      </div>
+    </div>
+    <div class="shop-card">
+      <div class="shop-img">❄️</div>
+      <div class="shop-info">
+        <div class="shop-name">Compresseur Clim. Universel</div>
+        <div class="shop-cat">Climatisation • Denso</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="shop-price">420 €</div>
+          <button class="btn btn-primary" style="font-size:11px;padding:5px 10px">Acheter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

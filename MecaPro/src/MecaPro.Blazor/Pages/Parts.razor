@@ -1,0 +1,93 @@
+@page "/parts"
+@attribute [Authorize]
+
+<PageTitle>Pièces Détachées — MecaPro</PageTitle>
+
+<div class="fade-in">
+  <div class="section-header">
+    <div>
+      <div class="section-title">⚙️ Catalogue Pièces Détachées</div>
+      <div class="section-desc">Types de véhicules et références numérotées</div>
+    </div>
+    <button class="btn btn-primary" style="margin-left:auto">⊕ Ajouter pièce</button>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active">🚗 Toutes</button>
+    <button class="tab-btn">⚡ Moteur</button>
+    <button class="tab-btn">🛑 Freinage</button>
+    <button class="tab-btn">💨 Suspension</button>
+    <button class="tab-btn">🔌 Électrique</button>
+    <button class="tab-btn">❄️ Climatisation</button>
+    <button class="tab-btn">⚙️ Transmission</button>
+  </div>
+
+  <div class="parts-grid">
+    <div class="part-card">
+      <div class="part-img">🔩</div>
+      <div class="part-ref">REF: BRK-PLA-001</div>
+      <div class="part-name">Plaquettes de frein Avant</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Peugeot 308 / Citroën C4 — 2015-2023</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="part-price">48 €</div>
+        <div class="part-stock">📦 Stock: 12</div>
+      </div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:11px">➕ Ajouter au devis</button>
+    </div>
+    <div class="part-card">
+      <div class="part-img">🛢️</div>
+      <div class="part-ref">REF: OIL-FLT-220</div>
+      <div class="part-name">Filtre à huile</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Universel — Renault / Peugeot / VW</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="part-price">18 €</div>
+        <div class="part-stock">📦 Stock: 38</div>
+      </div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:11px">➕ Ajouter au devis</button>
+    </div>
+    <div class="part-card">
+      <div class="part-img">⚡</div>
+      <div class="part-ref">REF: IGN-COL-114</div>
+      <div class="part-name">Bobine d'allumage</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">BMW 3-5 Série — 2010-2022</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="part-price">125 €</div>
+        <div class="part-stock" style="color:var(--red)">📦 Stock: 2</div>
+      </div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:11px">➕ Ajouter au devis</button>
+    </div>
+    <div class="part-card">
+      <div class="part-img">💨</div>
+      <div class="part-ref">REF: AIR-FLT-033</div>
+      <div class="part-name">Filtre à air</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Volkswagen Golf 7/8 — 2013-2024</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="part-price">22 €</div>
+        <div class="part-stock">📦 Stock: 25</div>
+      </div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:11px">➕ Ajouter au devis</button>
+    </div>
+    <div class="part-card">
+      <div class="part-img">🔋</div>
+      <div class="part-ref">REF: BAT-STD-770</div>
+      <div class="part-name">Batterie 77Ah AGM</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Bosch — Universel Start/Stop</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="part-price">189 €</div>
+        <div class="part-stock">📦 Stock: 6</div>
+      </div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:11px">➕ Ajouter au devis</button>
+    </div>
+    <div class="part-card">
+      <div class="part-img">🌀</div>
+      <div class="part-ref">REF: SUS-AMO-508</div>
+      <div class="part-name">Amortisseur avant Droit</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Renault Clio IV/V — 2012-2024</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="part-price">95 €</div>
+        <div class="part-stock" style="color:var(--accent)">📦 Stock: 4</div>
+      </div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:11px">➕ Ajouter au devis</button>
+    </div>
+  </div>
+</div>

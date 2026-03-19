@@ -1,0 +1,23 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">@Title</MudText>
+    </TitleContent>
+    <DialogContent>
+        <div class="d-flex flex-column align-center justify-center pa-4">
+            <img src="@QrCodeSrc" style="width: 250px; height: 250px; border: 4px solid #f0f0f0; border-radius: 8px;" />
+            <MudText Typo="Typo.body2" Class="mt-4 text-center">Scannez ce code pour accéder au suivi et diagnostic en direct.</MudText>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit">Fermer</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public string QrCodeSrc { get; set; }
+    [Parameter] public string Title { get; set; }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+}

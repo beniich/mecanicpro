@@ -1,0 +1,55 @@
+@page "/login"
+@layout EmptyLayout
+@using MecaPro.Blazor.Services
+@inject NavigationManager Navigation
+@inject AuthService AutoAuth
+@inject ApiClient Api
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center justify-center" Style="height: 100vh;">
+    <MudPaper Elevation="4" Class="pa-8" Style="width: 100%; border-radius: 16px;">
+        <div class="text-center mb-6">
+            <MudIcon Icon="@Icons.Material.Filled.Build" Color="MudBlazor.Color.Primary" Size="Size.Large" Class="mb-2" />
+            <MudText Typo="Typo.h4" Style="font-weight: 700;">MecaPro</MudText>
+            <MudText Typo="Typo.body2" Color="MudBlazor.Color.Secondary">Gestion Automobile Intelligente</MudText>
+        </div>
+
+        <MudForm @ref="form">
+            <MudTextField @bind-Value="email" Label="Email" Required="true" InputType="MudBlazor.InputType.Email" Class="mb-4" />
+            <MudTextField @bind-Value="password" Label="Mot de passe" Required="true" InputType="MudBlazor.InputType.Password" Class="mb-6" />
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <MudAlert Severity="MudBlazor.Severity.Error" Class="mb-4">@errorMessage</MudAlert>
+            }
+
+            <MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" FullWidth="true" Size="Size.Large" 
+                       OnClick="HandleLogin" Disabled="@loading" Class="mb-4 py-3">
+                @if (loading) { <MudProgressCircular Size="Size.Small" Indeterminate="true" /> }
+                else { <MudText>Se connecter</MudText> }
+            </MudButton>
+        </MudForm>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private string email = "";
+    private string password = "";
+    private bool loading = false;
+    private string? errorMessage;
+    private MudForm? form;
+
+    async Task HandleLogin()
+    {
+        loading = true;
+        errorMessage = null;
+        if (await AutoAuth.LoginAsync(email, password))
+        {
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = "Email ou mot de passe incorrect.";
+        }
+        loading = false;
+    }
+}

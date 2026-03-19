@@ -1,0 +1,16 @@
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\bin\Debug\net9.0\MecaPro.Application.deps.json
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\bin\Debug\net9.0\MecaPro.Application.dll
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\bin\Debug\net9.0\MecaPro.Application.pdb
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\bin\Debug\net9.0\MecaPro.Domain.dll
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\bin\Debug\net9.0\MecaPro.Domain.pdb
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro.Application.csproj.AssemblyReference.cache
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro.Application.AssemblyInfoInputs.cache
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro.Application.AssemblyInfo.cs
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro.Application.csproj.CoreCompileInputs.cache
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro.Application.sourcelink.json
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro..122BFCE1.Up2Date
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro.Application.dll
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\refint\MecaPro.Application.dll
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\MecaPro.Application.pdb
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\obj\Debug\net9.0\ref\MecaPro.Application.dll

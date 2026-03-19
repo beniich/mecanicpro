@@ -1,0 +1,48 @@
+/* ============================================================
+   MecaPro — Design System CSS
+   Industrial / Precision — Dark Theme
+   Font: Barlow + Space Mono
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --void:    #07090e;
+  --base:    #0d1018;
+  --surface: #121720;
+  --panel:   #181f2d;
+  --card:    #1d2538;
+  --border:  #232e42;
+  --border2: #2d3d5a;
+
+  --amber:  #f5a623;
+  --amber2: #e8890a;
+  --amber-d: rgba(245,166,35,.12);
+  --green:  #22c55e;
+  --red:    #ef4444;
+  --blue:   #3b82f6;
+
+  --text:   #dde4f0;
+  --text2:  #6b7d96;
+
+  --font-sans: 'Barlow', sans-serif;
+  --font-cond: 'Barlow Condensed', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  
+  --radius: 8px;
+  --radius-lg: 14px;
+}
+
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--font-sans);
+}
+
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.kpi-card { background: var(--card); border: 1px solid var(--border); padding: 18px; border-radius: var(--radius-lg); }
+.kpi-value { font-family: var(--font-cond); font-size: 30px; font-weight: 800; }
+.kpi-label { font-size: 12px; color: var(--text2); }
+
+.plate-badge { font-family: var(--font-mono); font-size: 12px; background: var(--amber-d); color: var(--amber); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(245,166,35,.2); }
+.btn-primary { background: linear-gradient(135deg, var(--amber), var(--amber2)); color: var(--base); padding: 8px 16px; border-radius: var(--radius); font-weight: 600; }

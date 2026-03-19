@@ -1,0 +1,24 @@
+<AuthorizeView>
+    <Authorized>
+        <MudMenu Icon="@Icons.Material.Filled.AccountCircle" Color="MudBlazor.Color.Inherit" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight">
+            <MudMenuItem Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Settings" Href="/billing">Mon Abonnement</MudMenuItem>
+            <MudMenuItem Icon="@Icons.Material.Filled.Logout" OnClick="BeginLogout" Color="MudBlazor.Color.Error">Déconnexion</MudMenuItem>
+        </MudMenu>
+    </Authorized>
+    <NotAuthorized>
+        <MudButton Variant="Variant.Text" Color="MudBlazor.Color.Inherit" Href="/login">Connexion</MudButton>
+    </NotAuthorized>
+</AuthorizeView>
+
+@using MecaPro.Blazor.Services
+@inject NavigationManager Navigation
+@inject AuthStateProvider AuthProvider
+
+@code {
+    private async Task BeginLogout()
+    {
+        await AuthProvider.LogoutAsync();
+        Navigation.NavigateTo("/login");
+    }
+}
