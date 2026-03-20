@@ -1,0 +1,123 @@
+@page "/securite/audit"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Amber Safety Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-amber-600/20 flex items-center justify-center border border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-amber-500 text-3xl animate-pulse">security</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-amber-500"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Safety <span class="text-amber-500 font-light italic uppercase shadow-none border-none">Audit</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">GRILLE DE CONTRÔLE RÉGLEMENTAIRE QSE & HYGIÈNE SÉCURITÉ</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-[2rem] flex items-center gap-8">
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Prochain Audit</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0">22 MAR 2026</p>
+                 </div>
+                 <div class="w-[1px] h-10 bg-white/10"></div>
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Score Préc.</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-emerald-500 uppercase tracking-widest leading-relaxed">92<span class="text-xs text-white/50 lowercase italic">%</span></p>
+                 </div>
+             </div>
+             <button class="bg-amber-600 text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">add_task</span> DÉMARRER AUDIT
+             </button>
+        </div>
+    </div>
+
+    <!-- Active Audit Checklist Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        @foreach (var cat in auditCategories)
+        {
+            <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 hover:bg-white/[0.04] transition-all group overflow-hidden relative shadow-2xl flex flex-col">
+                 <div class="absolute -right-8 -top-8 w-24 h-24 bg-amber-600/10 blur-3xl opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity"></div>
+                 
+                 <div class="flex justify-between items-center mb-10">
+                      <div class="w-12 h-12 rounded-xl bg-black border border-white/10 flex items-center justify-center font-black text-xs italic uppercase">@cat.Icon</div>
+                      <span class="bg-amber-500/10 text-amber-500 text-[8px] font-black px-2 py-0.5 rounded-full border border-amber-500/30 italic">CONFORMITÉ: @cat.Compliance%</span>
+                 </div>
+                 
+                 <h3 class="text-2xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-8 italic uppercase tracking-widest leading-relaxed">@cat.Name</h3>
+                 
+                 <!-- Tasks list -->
+                 <div class="space-y-6 flex-grow">
+                      @foreach (var task in cat.Checklist)
+                      {
+                          <div class="flex items-center gap-4 group/task cursor-pointer">
+                               <div class="w-6 h-6 rounded-lg @(task.IsChecked ? "bg-amber-500" : "bg-white/5 border border-white/10") flex items-center justify-center transition-all group-hover/task:scale-110">
+                                    @if(task.IsChecked) { <span class="material-symbols-outlined text-black text-xs font-black">check</span> }
+                               </div>
+                               <p class="text-[11px] @(task.IsChecked ? "text-white" : "text-gray-500") font-black uppercase tracking-widest italic shadow-none border-none italic leading-relaxed">@task.Label</p>
+                               @if(task.IsCritical && !task.IsChecked) { <span class="material-symbols-outlined text-red-500 text-xs animate-pulse">report</span> }
+                          </div>
+                      }
+                 </div>
+
+                 <!-- Footer Stats for category -->
+                 <div class="mt-12 pt-8 border-t border-white/5 flex gap-10 items-center">
+                      <div class="flex-grow h-1 bg-white/5 rounded-full overflow-hidden">
+                           <div class="h-full bg-amber-600" style="width: @(cat.Compliance)%"></div>
+                      </div>
+                      <button class="bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl text-[8px] font-black uppercase tracking-widest border border-white/10 transition-all font-outfit uppercase tracking-widest">RAPPORT</button>
+                 </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<AuditCategory> auditCategories = new()
+    {
+        new AuditCategory { 
+            Name = "INFRASTRUCTURE & LOCAUX", 
+            Icon = "🏢", 
+            Compliance = 100,
+            Checklist = new() {
+                new AuditItem { Label = "EXTINCTEURS VALIDÉS (DATE)", IsChecked = true, IsCritical = true },
+                new AuditItem { Label = "SIGNALÉTIQUE ÉVACUATION", IsChecked = true, IsCritical = false },
+                new AuditItem { Label = "ÉCLAIRAGE DE SÉCURITÉ", IsChecked = true, IsCritical = true }
+            }
+        },
+        new AuditCategory { 
+            Name = "PROTECTION INDIVIDUELLE (EPI)", 
+            Icon = "🥽", 
+            Compliance = 66,
+            Checklist = new() {
+                new AuditItem { Label = "MASQUES FFP3 PEINTURE", IsChecked = true, IsCritical = true },
+                new AuditItem { Label = "CHAUSSURES DE SÉCURITÉ", IsChecked = true, IsCritical = true },
+                new AuditItem { Label = "GANTS NITRILE DISPONIBLES", IsChecked = false, IsCritical = false }
+            }
+        },
+        new AuditCategory { 
+            Name = "REMBUS DE FLUIDES (DREAL)", 
+            Icon = "🛢️", 
+            Compliance = 100,
+            Checklist = new() {
+                new AuditItem { Label = "BACS DE RÉTENTION HUILES", IsChecked = true, IsCritical = true },
+                new AuditItem { Label = "BAC ABSORBANT DISPONIBLE", IsChecked = true, IsCritical = false },
+                new AuditItem { Label = "SÉPARATEUR HYDROCARBURES", IsChecked = true, IsCritical = true }
+            }
+        }
+    };
+
+    public class AuditCategory {
+        public string Name { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public int Compliance { get; set; }
+        public List<AuditItem> Checklist { get; set; } = new();
+    }
+
+    public class AuditItem {
+        public string Label { get; set; } = "";
+        public bool IsChecked { get; set; }
+        public bool IsCritical { get; set; }
+    }
+}

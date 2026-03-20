@@ -1,0 +1,85 @@
+@page "/marketing/promotions"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Catalogue Promotions d'Hiver</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 h-20 w-full fixed top-0 z-50">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='/'">
+            <span class="material-symbols-outlined text-[#f5a623]" data-icon="settings_input_component">settings_input_component</span>
+            <h1 class="font-headline uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex gap-6 mr-6 uppercase font-technical text-sm">
+                 <a class="text-[#e2e2e8]/60 hover:text-[#f5a623]" href="/marketing">Marketing</a>
+                 <a class="text-[#f5a623] font-bold" href="/marketing/promotions">Promotions</a>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/30 overflow-hidden">
+                <img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi_YMi17Lil_PNg7ag7eGNozjvW97l7e0ZoRhFZmtJVMRR3cJPc-Vn0H0jgrMSfl7Q3r1iA2WSkrfLQ1hndYjeSfJrw0PTRsXJrI6CFATSR8Wgd2ITx-MshUeOycw-PWpP7wZkJpffSgzdLGs8DPm_xmNQC8WIfykMGp5iHWh1AOsq8E8dLdDjT-sILFDG_OSlnSGRsYZZMZxDuIbQ49LYedtSML-YGCDdjZmG0d_JhKBdzZT8GEaLDt61MHenOmkufFn8TLm9VsQk"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-28 pb-32 px-6 max-w-7xl mx-auto">
+        <!-- Hero Section -->
+        <section class="mb-12">
+            <div class="relative overflow-hidden rounded-xl bg-surface-container-low p-8 md:p-12 border border-outline-variant/10">
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-end gap-8">
+                    <div class="max-w-2xl">
+                        <span class="font-technical text-primary text-sm tracking-widest mb-4 block uppercase whitespace-nowrap">CATALOGUE_MARKETING_V2.4</span>
+                        <h2 class="font-headline text-6xl md:text-8xl text-on-surface leading-none tracking-tight mb-6 uppercase">OFFRES DE SAISON</h2>
+                        <p class="text-on-surface-variant text-lg max-w-md">Optimisez les performances de votre flotte avec nos forfaits de maintenance industrielle et remises exclusives sur les pièces d'origine.</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-primary-container to-secondary-container p-6 rounded-xl flex flex-col items-center justify-center min-w-[200px] shadow-[0_0_40px_rgba(242,100,17,0.2)]">
+                        <span class="font-headline text-5xl text-on-primary-container">-40%</span>
+                        <span class="font-technical text-[10px] uppercase tracking-tighter text-on-primary-container/80 text-center">Sur toute la gamme filtration</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bento Grid Promotions -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="md:col-span-2 relative bg-surface-container-high rounded-xl overflow-hidden p-8 flex flex-col justify-between border-l-4 border-secondary-container">
+                <div>
+                    <div class="flex justify-between items-start mb-8">
+                        <span class="px-3 py-1 bg-primary/10 text-primary font-technical text-xs rounded border border-primary/20 uppercase">FORFAIT_SAISONNIER</span>
+                        <span class="material-symbols-outlined text-on-surface-variant/40" data-icon="ac_unit">ac_unit</span>
+                    </div>
+                    <h3 class="font-headline text-4xl mb-2 uppercase">CHECK-UP ÉTÉ ÉTENDU</h3>
+                    <p class="text-on-surface-variant mb-6 max-w-sm">32 points de contrôle incluant climatisation, fluides et système de freinage.</p>
+                </div>
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex flex-col">
+                        <span class="text-on-surface-variant text-xs line-through">129.00 €</span>
+                        <span class="font-technical text-3xl text-primary font-bold font-headline">89.00 €</span>
+                    </div>
+                    <button class="bg-surface-container-highest hover:bg-surface-bright text-on-surface px-6 py-3 rounded-lg font-technical text-sm transition-all flex items-center gap-2 border border-outline-variant/20 uppercase font-bold tracking-widest">
+                        RÉSERVER <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-surface-container-lowest border border-dashed border-outline-variant/50 rounded-xl p-8 flex flex-col justify-center items-center text-center">
+                <span class="material-symbols-outlined text-secondary text-5xl mb-4" data-icon="confirmation_number">confirmation_number</span>
+                <h4 class="font-headline text-2xl mb-2 uppercase">FREINAGE EXPERT</h4>
+                <p class="text-on-surface-variant text-sm mb-6 uppercase">Valable sur le remplacement disques et plaquettes Brembo®.</p>
+                <div class="bg-surface-container-high py-3 px-6 rounded-lg w-full font-technical text-xl tracking-tighter text-secondary border border-outline-variant/20 uppercase">STOP-2024-XP</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="bg-[#0c0e12] fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 z-50 h-20 border-t border-[#524534]/15 md:hidden">
+        <a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1" href="/">
+            <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            <span class="font-technical text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411]" href="/marketing/promotions">
+            <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+            <span class="font-technical text-[10px] uppercase tracking-tighter">REPORTS</span>
+        </a>
+    </nav>
+</div>

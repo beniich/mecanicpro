@@ -1,0 +1,226 @@
+@page "/stock/inventaire-stock"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Gestion des Stocks</PageTitle>
+
+<div class="bg-[#111318] text-[#e2e2e8] font-body min-h-screen pb-24 text-white">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318]/80 backdrop-blur-xl flex justify-between items-center px-6 py-4 w-full border-b border-white/5 sticky top-0 z-50">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-primary text-3xl">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-[0.2em] text-primary headline-font uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="flex flex-col items-end">
+                <span class="text-[8px] font-black text-primary uppercase tracking-widest">INVENTORY_CONTROL_ACTIVE</span>
+                <span class="text-xs font-technical text-white/40">NODE_ID: STOCK_@(DateTime.Now.DayOfYear)_DELTA</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest border border-white/5 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary">inventory_2</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pt-12 space-y-12">
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-10">
+            <div>
+                <span class="text-primary text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">LOGISTIC_RESOURCE_PLANNER</span>
+                <h2 class="text-7xl font-black tracking-tighter text-white uppercase italic leading-none">Inventaire Stock</h2>
+                <p class="text-white/30 font-technical text-sm mt-4 uppercase tracking-widest">Central Warehouse Analytics // Real-time Tracking</p>
+            </div>
+            <div class="flex gap-4">
+                <div class="bg-white/5 p-2 rounded-2xl flex items-center gap-2 border border-white/5">
+                    @foreach(var cat in categories)
+                    {
+                        <button @onclick='() => SelectCategory(cat)' class="px-6 py-3 rounded-xl font-black uppercase italic text-xs tracking-widest transition-all @(selectedCategory == cat ? "bg-primary text-on-primary shadow-lg shadow-primary/20" : "text-white/40 hover:bg-white/5")">
+                            @cat
+                        </button>
+                    }
+                    <button @onclick='() => SelectCategory(null)' class="px-6 py-3 rounded-xl font-black uppercase italic text-xs tracking-widest transition-all @(selectedCategory == null ? "bg-primary text-on-primary shadow-lg shadow-primary/20" : "text-white/40 hover:bg-white/5")">
+                        ALL_MODS
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="bg-surface-container p-8 rounded-[40px] border border-white/5 relative overflow-hidden group shadow-2xl">
+                 <div class="absolute top-0 left-0 w-2 h-full bg-error/20"></div>
+                <p class="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] mb-4 italic">STOCK_CRITIQUE</p>
+                <p class="text-6xl font-black text-error italic tracking-tighter leading-none">@(pagedResult?.Items.Count(p => p.IsLowStock) ?? 0)</p>
+                <div class="mt-4 flex items-center gap-2 text-error text-[10px] font-black">
+                    <span class="material-symbols-outlined text-sm">warning</span>
+                    REAPPRO_REQUIS
+                </div>
+            </div>
+             <div class="bg-surface-container p-8 rounded-[40px] border border-white/5 relative overflow-hidden group shadow-2xl">
+                <div class="absolute top-0 left-0 w-2 h-full bg-primary/20"></div>
+                <p class="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] mb-4 italic">TOTAL_UNITES</p>
+                <p class="text-6xl font-black text-primary italic tracking-tighter leading-none">@(pagedResult?.Total ?? 0)</p>
+                <div class="mt-4 flex items-center gap-2 text-primary text-[10px] font-black">
+                    <span class="material-symbols-outlined text-sm">database</span>
+                    BASE_STABLE
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Table -->
+        <div class="bg-surface-container rounded-[40px] border border-white/5 shadow-2xl overflow-hidden relative">
+            <div class="absolute inset-0 bg-primary/2 blur-3xl -z-10 rounded-full"></div>
+            
+            <!-- Table Controls -->
+            <div class="p-8 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 bg-[#111318]/40 backdrop-blur-md">
+                <h3 class="font-black text-3xl italic tracking-tighter uppercase text-white">Listing Composants</h3>
+                <div class="flex gap-4">
+                    <div class="bg-[#111318] px-6 py-4 rounded-2xl border border-white/5 flex items-center gap-4 w-96 group focus-within:border-primary/50 transition-all shadow-xl">
+                        <span class="material-symbols-outlined text-white/30 group-focus-within:text-primary transition-colors">search</span>
+                        <input type="text" @bind="searchQuery" @bind:event="oninput" @onkeyup="HandleSearch" placeholder="SCAN_SERIAL_OR_REF..." class="bg-transparent border-none focus:ring-0 font-technical text-sm font-black w-full placeholder:text-white/10 uppercase italic text-white"/>
+                    </div>
+                </div>
+            </div>
+
+            @if (loading)
+            {
+                <div class="p-24 flex justify-center">
+                    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary"></div>
+                </div>
+            }
+            else
+            {
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="text-white/30 text-[10px] font-black uppercase tracking-[0.4em] bg-white/[0.02]">
+                                <th class="px-8 py-6">Reference_ID</th>
+                                <th class="px-8 py-6">Designation_Label</th>
+                                <th class="px-8 py-6">Stock_Status</th>
+                                <th class="px-8 py-6">Price_Unit_HT</th>
+                                <th class="px-8 py-6 text-right">Actions_Node</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5">
+                            @foreach (var p in pagedResult?.Items ?? Enumerable.Empty<PartDto>())
+                            {
+                                <tr class="hover:bg-white/[0.03] transition-all group">
+                                    <td class="px-8 py-8 font-technical text-sm text-primary font-black italic"># @p.Reference</td>
+                                    <td class="px-8 py-8">
+                                        <div class="flex flex-col">
+                                            <span class="text-lg font-black italic text-white uppercase tracking-tight">@p.Name</span>
+                                            <span class="text-[10px] text-white/30 font-black uppercase tracking-widest mt-1">BRAND: @(p.Brand ?? "OEM_SPEC")</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-8">
+                                        <div class="flex items-center gap-4">
+                                            <div class="flex flex-col w-32 gap-2">
+                                                 <div class="flex justify-between items-end">
+                                                    <span class="text-[10px] font-black @(p.IsLowStock ? "text-error" : "text-white/40") uppercase tracking-widest">@p.StockQuantity UNITÉS</span>
+                                                    <span class="text-[8px] font-technical text-white/20">MAX_CAP: 100</span>
+                                                </div>
+                                                <div class="h-1.5 w-full bg-[#111318] rounded-full overflow-hidden border border-white/5">
+                                                    <div class="h-full transition-all duration-1000 @(p.IsLowStock ? "bg-error shadow-[0_0_10px_rgba(255,100,100,0.5)]" : "bg-primary shadow-[0_0_10px_rgba(245,166,35,0.5)]")" style="width: @(Math.Min(p.StockQuantity, 100))%"></div>
+                                                </div>
+                                            </div>
+                                            @if (p.IsLowStock)
+                                            {
+                                                <span class="px-3 py-1 bg-error/10 text-error border border-error/30 rounded-lg text-[8px] font-black uppercase tracking-widest animate-pulse">CRITIQUE</span>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-8">
+                                        <span class="font-black italic text-xl text-white">@p.UnitPrice.ToString("N2") €</span>
+                                    </td>
+                                    <td class="px-8 py-8 text-right">
+                                        <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button @onclick="() => AdjustStock(p.Id, 1)" class="w-10 h-10 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all">
+                                                <span class="material-symbols-outlined text-sm">add</span>
+                                            </button>
+                                            <button @onclick="() => AdjustStock(p.Id, -1)" class="w-10 h-10 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center hover:bg-white/10 text-white transition-all">
+                                                <span class="material-symbols-outlined text-sm">remove</span>
+                                            </button>
+                                            <button class="px-5 bg-white/10 text-white rounded-xl text-[10px] font-black uppercase italic tracking-widest border border-white/10 hover:bg-white/20">
+                                                DETAILS
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="p-10 border-t border-white/5 bg-[#111318]/40 flex justify-between items-center">
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">PAGE_ID: 0@(page)_SYSTEM_CURSOR</span>
+                    <div class="flex gap-4 items-center">
+                        <button @onclick="PrevPage" disabled="@(page <= 1)" class="w-14 h-14 rounded-2xl bg-[#111318] border border-white/5 flex items-center justify-center hover:border-primary transition-all disabled:opacity-20 active:scale-90">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <div class="bg-primary/10 border border-primary/30 px-8 py-3 rounded-2xl font-technical font-black text-primary italic">
+                            @(page) / @(pagedResult?.TotalPages ?? 1)
+                        </div>
+                         <button @onclick="NextPage" disabled="@(!pagedResult?.HasNext ?? true)" class="w-14 h-14 rounded-2xl bg-[#111318] border border-white/5 flex items-center justify-center hover:border-primary transition-all disabled:opacity-20 active:scale-90">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </main>
+</div>
+
+@code {
+    private PagedResult<PartDto>? pagedResult;
+    private List<string> categories = new();
+    private string? selectedCategory;
+    private string? searchQuery;
+    private int page = 1;
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCategories();
+        await LoadData();
+    }
+
+    private async Task LoadCategories()
+    {
+        categories = await Api.GetAsync<List<string>>("/api/v1/parts/categories") ?? new();
+    }
+
+    private async Task LoadData()
+    {
+        loading = true;
+        var url = $"/api/v1/parts?page={page}&pageSize=10&search={searchQuery}";
+        if (!string.IsNullOrEmpty(selectedCategory)) url += $"&category={selectedCategory}";
+        
+        pagedResult = await Api.GetAsync<PagedResult<PartDto>>(url);
+        loading = false;
+    }
+
+    private async Task HandleSearch()
+    {
+        page = 1;
+        await LoadData();
+    }
+
+    private async Task SelectCategory(string? cat)
+    {
+        selectedCategory = cat;
+        page = 1;
+        await LoadData();
+    }
+
+    private async Task AdjustStock(Guid id, int delta)
+    {
+        var result = await Api.PostAsync<bool>($"/api/v1/parts/{id}/stock", new { Delta = delta });
+        await LoadData();
+    }
+
+    private async Task NextPage() { page++; await LoadData(); }
+    private async Task PrevPage() { page--; await LoadData(); }
+}

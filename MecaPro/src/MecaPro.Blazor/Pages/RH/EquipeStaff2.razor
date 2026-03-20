@@ -1,0 +1,64 @@
+@page "/rh/equipe-staff-2"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Profil Staff</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 h-20 w-full fixed top-0 z-50 italic">
+        <div class="flex items-center gap-4 font-industrial">
+            <span class="material-symbols-outlined text-[#f5a623] scale-125">settings_input_component</span>
+            <h1 class="uppercase tracking-[0.05em] text-2xl text-[#f5a623] font-black leading-none">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6 font-industrial text-sm tracking-widest italic font-bold">
+            <nav class="hidden md:flex gap-8 text-[#e2e2e8]/60">
+                <span class="hover:text-[#f5a623] transition-colors cursor-pointer">DASHBOARD</span>
+                <span class="text-[#f5a623]">REPORTS</span>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-28 pb-32 px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+        <!-- Profile Header -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end italic">
+            <div class="lg:col-span-8 flex flex-col md:flex-row items-center md:items-end gap-8">
+                <div class="relative group">
+                    <div class="w-32 h-32 rounded-xl bg-surface-container-high overflow-hidden border-2 border-primary/20 p-1">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF_SXCHD6_agFZl9qtiIAFzki3IzFu6g_7Ujek32Vf6RA6VBXvU75ZKusgrMqjNg1q2r_DkwPocvXtrq2-mPPnQx1XlqfbJ8Lwmg9tgzy-6ZtbT6XjkHtGeaeocW7M_4lCCI5vMquD40NCRnnGtqBF7ZfxQ8lnH08-oc8UxO_TNxF4Xa8jjRTbI_AeRHddIawR0Z-OJ6MjueWlsk9W_vTNZsXn_3_xhBoo4DSRJgWOuCYi-oJH1MppEUc-A4CNOpZokUX2J3HQEn-l" alt="Marcus V. Stein" class="w-full h-full object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all"/>
+                    </div>
+                </div>
+                <div class="text-center md:text-left space-y-2">
+                    <div class="flex items-center justify-center md:justify-start gap-3">
+                        <span class="bg-primary/10 text-primary text-[10px] font-technical px-2 py-0.5 rounded border border-primary/20 font-black tracking-widest">TECH_ID_8829</span>
+                        <span class="flex items-center gap-1 text-on-surface-variant text-[10px] font-black tracking-widest uppercase">ACTIVE_ON_SHIFT</span>
+                    </div>
+                    <h2 class="text-6xl font-industrial tracking-tighter leading-none font-black italic">MARCUS V. STEIN</h2>
+                </div>
+            </div>
+            <!-- Stats -->
+            <div class="lg:col-span-4 flex gap-4 italic font-industrial">
+                <div class="bg-surface-container-low p-4 rounded-xl flex-1 text-center border border-outline-variant/10">
+                    <p class="text-[10px] text-on-surface-variant/60 font-black tracking-widest mb-1 font-technical">CUST_SAT</p>
+                    <p class="text-4xl text-primary font-black tracking-tighter">4.92<span class="text-lg opacity-50">/5</span></p>
+                </div>
+                <div class="bg-surface-container-low p-4 rounded-xl flex-1 text-center border border-outline-variant/10">
+                    <p class="text-[10px] text-on-surface-variant/60 font-black tracking-widest mb-1 font-technical">TASKS_WTD</p>
+                    <p class="text-4xl text-secondary font-black tracking-tighter">142</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 italic">
+            <div class="bg-surface-container-high rounded-xl p-6 relative overflow-hidden group border border-outline-variant/10">
+                <div class="absolute left-0 top-0 w-1 h-full bg-secondary"></div>
+                <span class="font-technical text-[10px] uppercase text-on-surface-variant/60 tracking-[0.3em] font-black block mb-4">TAUX_D'OCCUPATION</span>
+                <div class="text-6xl text-on-surface font-industrial font-black leading-none">94.8%</div>
+                <div class="mt-4 w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-[94.8%]"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

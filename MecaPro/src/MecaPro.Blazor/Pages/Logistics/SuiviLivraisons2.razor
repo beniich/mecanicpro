@@ -1,0 +1,59 @@
+@page "/logistics/suivi-livraisons-2"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Suivi Live</PageTitle>
+
+<div class="bg-background text-on-surface font-body selection:bg-primary-container min-h-screen">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 h-16 shadow-none border-b border-outline-variant/10">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[#f5a623]">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-tighter text-[#f5a623] font-headline uppercase italic">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="text-on-surface/50 hover:bg-white/5 active:scale-95 duration-200 p-2 rounded-lg">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-16 pb-24 min-h-screen">
+        <!-- Map Background -->
+        <div class="relative w-full h-64 overflow-hidden">
+            <img class="w-full h-full object-cover opacity-40 grayscale contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6Ay-0--RjA0zg34kNZZznqeRWU5pRpB26djfBjUSeIOBF4evKNYO6MbP9UbvpD0BBqOl3-zarTejqSK6WQHMQkk9jwy5ql4TRrElY3K2SDUVeRllrWJlScxnOudO_ji4HYmpRznKmCLb4edP7zEJFSWtu3AaI6MLLr_7qvPzxu_4RBIfTmjWPI1qDF9pjyE38LRSw-5Ah0dKEeRU01C1Sk2huFHgsN38sXsT6xlKpdSbPzOROvglSJnd_2QcmSOYfSljvcyed2W6C" alt="Live Map"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+            <!-- Live Status -->
+            <div class="absolute top-4 left-6 flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1 rounded-full">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                <span class="font-industrial text-primary tracking-widest text-sm uppercase italic">LIVE TRACKING</span>
+            </div>
+        </div>
+
+        <div class="px-6 -mt-20 relative z-10 space-y-6">
+            <!-- Hero Card -->
+            <div class="bg-surface-container-high rounded-xl p-6 shadow-2xl relative overflow-hidden border border-outline-variant/10">
+                <div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+                <div class="flex justify-between items-start mb-6 uppercase font-industrial italic">
+                    <div>
+                        <h2 class="text-4xl text-on-surface tracking-tight leading-none mb-1">EN ROUTE</h2>
+                        <p class="text-on-surface-variant text-sm font-medium not-italic">LIVRAISON ESTIMÉE</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-technical text-2xl text-primary font-bold not-italic">14:45</p>
+                        <p class="text-on-surface-variant text-[10px] tracking-widest">AUJOURD'HUI</p>
+                    </div>
+                </div>
+                <!-- Progress -->
+                <div class="relative py-4">
+                    <div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-3/4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

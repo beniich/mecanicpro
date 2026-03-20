@@ -1,0 +1,97 @@
+@page "/rh/detail-formation"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Détail Formation</PageTitle>
+
+<div class="bg-surface text-on-surface font-body min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full sticky top-0 z-50 bg-[#0c0e12] shadow-none border-none">
+        <div class="flex items-center gap-4">
+            <button class="text-[#f5a623] hover:bg-[#282a2e] transition-colors p-2 rounded-lg">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <h1 class="text-3xl font-black text-[#f5a623] tracking-widest font-headline uppercase leading-none">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="text-right hidden md:block">
+                <p class="text-xs font-mono text-on-surface-variant uppercase tracking-tighter">Technicien Senior</p>
+                <p class="text-sm font-bold">Jean-Luc Picard</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest border-2 border-primary-container overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9_j9SWWNGqYbsLhyGWahpwyRc0pgpGtl3MegpLZ8Ca7yW60m6P-Y9jsZF8vzjCXnfaotrstbMbB1VNu0CxhB4G7mvg6qn0sUWX1cPfM_9HrT-QDr54xxF_SHvfylk6eS7S1Q7r2hZM5cKYFsis_QJJWuymt_luEiVHA-jSYRNMKNSW3Y86_YzaKGwYqG6yiA8fTIiSCVbNeYCbI8ICY-_nD-WM6TfKiM9t1SIRoVJRT9zGvVTfK4N7UmwPBXsUOr_X7MHmm5RzxgK" alt="Avatar"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 mt-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-8 space-y-8">
+                <!-- Course Hero -->
+                <div class="relative h-[400px] w-full rounded-xl overflow-hidden group">
+                    <img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHfV_HqF-5nncR63M3tpPZkjDLQUHJD9Q1tmBwB2u885PQuO_M9EERPEGX5UeKUcmA7HmqAiBnpyV2q4fmzopMkfpWzLbr3J3115RKF-6piX23jqRMZx1GLMHH1sZZSlWKDDRlOXmFxynfI875omPinaaJkorjNkZkz9UtNOESINcV1XPWAgnAtKeBYv4Ppy_syMmoqRVR7j1H4dhfGGf6RKx7oeTYXGZp-ytYV8h09LLY_h0PCwEb_ejrq5sgKLS-3_IqpUsR539-" alt="Diagnostic EV"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-8 left-8 right-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-primary-container text-on-primary-container text-[10px] font-bold px-3 py-1 rounded uppercase tracking-widest">Niveau 3 - Expert</span>
+                            <span class="bg-surface-container-highest/60 backdrop-blur-md text-on-surface text-[10px] font-bold px-3 py-1 rounded uppercase tracking-widest">Module EV-042</span>
+                        </div>
+                        <h2 class="text-5xl md:text-7xl font-headline tracking-wider text-on-surface uppercase leading-none">Diagnostic Systèmes HT</h2>
+                        <p class="mt-4 text-on-surface-variant max-w-2xl font-medium">Analyse avancée des chaînes de traction électrique et protocoles de mise en sécurité.</p>
+                    </div>
+                </div>
+
+                <!-- Learning Path -->
+                <div class="bg-surface-container-low rounded-xl p-8">
+                    <h3 class="font-headline text-3xl mb-6 tracking-wide text-primary uppercase">Programme de Formation</h3>
+                    <div class="space-y-4">
+                        <div class="group flex items-center justify-between p-5 bg-surface-container-highest rounded-lg border-l-4 border-secondary-container transition-all cursor-pointer relative overflow-hidden">
+                            <div class="flex items-center gap-6">
+                                <span class="font-mono text-2xl text-secondary-container">02</span>
+                                <div>
+                                    <h4 class="font-bold text-lg text-on-surface uppercase font-headline tracking-wide">Intervention sur Onduleur AC/DC</h4>
+                                    <p class="text-sm text-on-surface-variant uppercase text-xs">Diagnostic des semi-conducteurs de puissance</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs text-secondary-container animate-pulse uppercase font-bold tracking-tighter">En cours</span>
+                                <span class="material-symbols-outlined text-secondary-container">play_arrow</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-surface-container-high rounded-xl p-8 relative overflow-hidden text-on-surface">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h4 class="text-xs uppercase tracking-widest text-on-surface-variant">Progression Globale</h4>
+                            <p class="font-headline text-5xl text-primary mt-1">45%</p>
+                        </div>
+                        <span class="material-symbols-outlined text-4xl text-primary-container/20">query_stats</span>
+                    </div>
+                    <div class="w-full h-3 bg-surface-container-lowest rounded-full overflow-hidden mb-6">
+                        <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container" style="width: 45%;"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-surface-container-low p-3 rounded">
+                            <p class="text-[10px] uppercase text-on-surface-variant mb-1">Score actuel</p>
+                            <p class="text-lg font-bold">88/100</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 right-0 flex justify-around items-center px-4 pb-safe bg-[#0c0e12] z-50 h-20 rounded-t-xl shadow-lg shadow-primary/5">
+        <a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#282a2e]/40 rounded-lg px-3 py-1 border-l-2 border-[#f26411] font-mono text-[10px] uppercase font-bold" href="/rh/detail-formation">
+            <span class="material-symbols-outlined">engineering</span>
+            <span>Planning</span>
+        </a>
+    </nav>
+</div>

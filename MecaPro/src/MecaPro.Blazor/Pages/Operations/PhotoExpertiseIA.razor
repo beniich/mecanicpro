@@ -1,0 +1,125 @@
+@page "/diagnostic/expertise-photo"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#06070a] text-white p-8 font-['Outfit']">
+    <!-- Purple/Cyber Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-purple-600/20 flex items-center justify-center border border-purple-500/30 shadow-[0_0_30px_rgba(168,85,247,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-purple-400 text-3xl animate-pulse">vision_proximity</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-purple-600"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter italic">Expertise <span class="text-purple-500 italic uppercase">Vision IA</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">ANALYSE DES DOMMAGES CORROSSERIE & STRUCTURE PAR COMPUTER VISION</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-2xl flex items-center gap-6">
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic">Traitement Image</p>
+                      <p class="text-xl font-black italic text-purple-500 italic">800<span class="text-xs text-white/50 lowercase italic">ms</span></p>
+                 </div>
+                 <div class="w-[1px] h-8 bg-white/10"></div>
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic">Précision Carrosserie</p>
+                      <p class="text-xl font-black italic shadow-none border-none border-0">94<span class="text-xs text-white/50 lowercase italic">%</span></p>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Dropzone Area -->
+    <div class="bg-[#111318]/80 backdrop-blur-3xl border-2 border-dashed border-purple-500/30 rounded-[3.5rem] p-20 mb-12 flex flex-col items-center justify-center group hover:bg-white/[0.02] transition-all cursor-pointer relative overflow-hidden">
+         <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent pointer-events-none"></div>
+         
+         <div class="w-24 h-24 rounded-[2rem] bg-purple-600/10 flex items-center justify-center border border-purple-500/40 mb-8 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-purple-500 text-5xl">add_a_photo</span>
+         </div>
+         <h2 class="text-3xl font-black italic uppercase italic tracking-tighter mb-4 italic shadow-none border-none">Glissez les photos du véhicule</h2>
+         <p class="text-gray-500 text-[10px] font-black uppercase tracking-[0.3em] font-outfit uppercase tracking-widest italic leading-relaxed">PNG, JPG — Analyse instantanée via OpenAI Vision v4o</p>
+    </div>
+
+    <!-- Analysis Visualization Hub -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <!-- Photo Analysis Detail -->
+        <div class="bg-black/60 border border-white/10 rounded-[4rem] p-12 flex flex-col relative overflow-hidden group">
+             <div class="flex justify-between items-center mb-10">
+                  <h3 class="text-xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none">Analyse du Châssis AB-123-CD</h3>
+                  <div class="flex gap-2">
+                       <span class="px-3 py-1 bg-red-600/20 text-red-500 border border-red-500/30 text-[8px] font-black rounded-full italic shadow-none border-none">SÉVÉRITÉ: HAUTE</span>
+                  </div>
+             </div>
+
+             <!-- Mock Photo Overlays -->
+             <div class="relative w-full aspect-video bg-white/5 rounded-[3rem] overflow-hidden mb-10">
+                  <div class="absolute inset-0 flex items-center justify-center font-black text-white/10 italic text-4xl italic shadow-none border-none">SCAN_PHOTO_01.JPG</div>
+                  
+                  <!-- Detection Pins -->
+                  <div class="absolute top-[40%] left-[30%] w-12 h-12 border-2 border-red-500 rounded-lg flex items-center justify-center animate-pulse">
+                       <span class="text-[8px] font-black text-red-500 absolute -top-4 italic shadow-none border-none">CRASH_ZONE_1</span>
+                  </div>
+                  <div class="absolute top-[55%] left-[60%] w-16 h-10 border-2 border-orange-500 rounded-lg flex items-center justify-center">
+                       <span class="text-[8px] font-black text-orange-500 absolute -top-4 italic shadow-none border-none">CORROSION_DETECT</span>
+                  </div>
+             </div>
+
+             <div class="space-y-4">
+                  <div class="bg-white/5 p-6 rounded-3xl border border-white/5">
+                       <p class="text-[9px] text-gray-500 font-bold uppercase italic shadow-none border-none italic leading-relaxed">Diagnostic Vision IA</p>
+                       <p class="text-sm font-medium italic text-gray-300 italic uppercase italic tracking-widest leading-relaxed mt-2 italic shadow-none border-none">Déformation majeure du longeron avant gauche (>15cm). Rupture du support moteur visible. Carrosserie à redresser sur aile AV-G.</p>
+                  </div>
+             </div>
+        </div>
+
+        <!-- Parts & Cost Estimation -->
+        <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[4rem] p-12">
+             <h3 class="text-xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-10">Estimation des Réparations</h3>
+             
+             <div class="space-y-6 mb-12">
+                  @foreach (var part in estimatedParts)
+                  {
+                      <div class="flex justify-between items-center p-4 bg-black/40 border border-white/5 rounded-2xl">
+                           <div>
+                                <p class="text-xs font-black italic uppercase italic tracking-tight uppercase tracking-widest leading-relaxed">@part.Name</p>
+                                <p class="text-[9px] text-gray-500 font-medium font-outfit uppercase tracking-widest italic leading-relaxed">CONFIDENCE: @part.Confidence%</p>
+                           </div>
+                           <p class="text-sm font-black italic">@part.Price <span class="text-[10px] text-gray-500">€</span></p>
+                      </div>
+                  }
+             </div>
+
+             <div class="bg-purple-600/10 border border-purple-500/20 rounded-[2.5rem] p-8">
+                  <div class="flex justify-between items-end">
+                       <div>
+                            <p class="text-[10px] text-purple-400 font-black tracking-widest mb-1 italic shadow-none border-none border-0">MONTANT TOTAL ESTIMÉ (TTC)</p>
+                            <p class="text-4xl font-black italic tracking-tighter italic shadow-none border-none">2,482.50 <span class="text-sm text-white/50">€</span></p>
+                       </div>
+                       <div class="text-right">
+                            <p class="text-[9px] text-gray-500 font-bold italic shadow-none border-none mb-4 italic leading-relaxed uppercase tracking-widest">Temps de Travail</p>
+                            <p class="text-xl font-black italic shadow-none border-none border-0">12.5<span class="text-xs">h</span></p>
+                       </div>
+                  </div>
+             </div>
+             
+             <button class="w-full mt-10 bg-purple-600 text-black py-4 rounded-2xl font-black uppercase text-sm tracking-widest shadow-xl shadow-purple-900/40 italic">VALIDER EXPERTISE VISION</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<EstimatedPart> estimatedParts = new()
+    {
+        new EstimatedPart { Name = "SUPPORT MOTEUR AVANT GAUCHE", Price = "142.00", Confidence = 98 },
+        new EstimatedPart { Name = "AILE AVANT GAUCHE (REMPLACEMENT)", Price = "285.50", Confidence = 92 },
+        new EstimatedPart { Name = "OPTIC AVANT GAUCHE (MATRICE LED)", Price = "1,120.00", Confidence = 100 },
+        new EstimatedPart { Name = "PEINTURE & FINITIONS CORPS", Price = "450.00", Confidence = 75 }
+    };
+
+    public class EstimatedPart {
+        public string Name { get; set; } = "";
+        public string Price { get; set; } = "";
+        public int Confidence { get; set; }
+    }
+}

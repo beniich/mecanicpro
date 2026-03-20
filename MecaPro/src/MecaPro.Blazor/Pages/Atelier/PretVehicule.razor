@@ -1,0 +1,89 @@
+@page "/atelier/pret-vehicule"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Prêt de Véhicule</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="flex justify-between items-center px-6 h-20 w-full bg-[#111318] border-b border-[#524534]/15 fixed top-0 z-50">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623] text-3xl">settings_input_component</span>
+            <h1 class="font-headline uppercase tracking-[0.05em] text-2xl text-[#f5a623] italic">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6 font-headline tracking-widest text-sm uppercase">
+            <nav class="hidden md:flex gap-8">
+                <a class="text-[#f5a623]" href="#">Dashboard</a>
+                <a class="text-[#e2e2e8]/60" href="#">Planning</a>
+                <a class="text-[#e2e2e8]/60" href="#">Contrats</a>
+            </nav>
+            <div class="h-10 w-10 rounded-full bg-surface-container-highest border border-outline-variant/30 overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN1grqBjoeI5R9Awr5i2JiRa-TkS4jEZBHHsfPxfap0aWPn4mYGPX3bM7m2158g5CG0WSKkHEznpbOhXCuuIjaoDGWkEb1x_GMfHxSJfaEpcyjNJcPk2KmQV6EgnrLxwm-Uk6LjYqJJh3VWGXrW2ppuh8KlHa7vIBwtiUCmRMxc7ff4LFQHCIE437BhY0TthoRIS34HmedDg3CKJjYhBnfMB_5l0I2nGALJbQyQ4MW-nvXQPkW2KnWOPmblYHtK480aayKPPpjtRuH" alt="Operator" class="w-full h-full object-cover"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-28 px-4 md:px-12 max-w-7xl mx-auto">
+        <!-- Dashboard Stats -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 uppercase font-headline">
+            <div class="bg-surface-container-high p-6 rounded-xl relative overflow-hidden border-l-4 border-secondary-container shadow-2xl">
+                <p class="text-[#e2e2e8]/60 tracking-wider text-xs mb-2 italic">VÉHICULES EN COURS</p>
+                <div class="flex items-end gap-3">
+                    <span class="text-6xl text-primary-container font-black tracking-tighter leading-none italic">08</span>
+                    <span class="font-technical text-on-surface-variant text-[10px] mb-1">/ 12 TOTAL</span>
+                </div>
+            </div>
+            <div class="bg-surface-container-high p-6 rounded-xl relative overflow-hidden border-l-4 border-primary shadow-2xl">
+                <p class="text-[#e2e2e8]/60 tracking-wider text-xs mb-2 italic">RETOURS PRÉVUS JOUR</p>
+                <div class="flex items-end gap-3">
+                    <span class="text-6xl text-primary font-black tracking-tighter leading-none italic">03</span>
+                </div>
+            </div>
+            <div class="bg-surface-container-high p-6 flex flex-col justify-between border-l-4 border-tertiary">
+                <div class="flex justify-between items-start">
+                    <p class="text-[#e2e2e8]/60 tracking-wider text-xs italic">FLOTTE OPÉRATIONNELLE</p>
+                    <span class="material-symbols-outlined text-primary-container">verified</span>
+                </div>
+                <div class="font-technical text-4xl text-on-surface font-black">94.2%</div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div class="lg:col-span-1 space-y-4">
+                <h3 class="font-headline text-xl tracking-widest text-[#f5a623] mb-4 uppercase italic">VÉHICULES DISPONIBLES</h3>
+                <div class="bg-surface-container-high p-4 rounded-xl border border-outline-variant/10 hover:border-primary/40 transition-all cursor-pointer group">
+                    <div class="flex justify-between items-start mb-2 uppercase">
+                        <span class="font-technical text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded">VHC-8829</span>
+                    </div>
+                    <h3 class="font-headline text-2xl text-on-surface tracking-tight uppercase italic font-bold">RENAULT CLIO IV</h3>
+                    <p class="font-technical text-[10px] text-on-surface-variant mb-4 uppercase">AB-123-CD | 42,590 KM</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div class="bg-surface-container-high p-8 rounded-xl shadow-2xl border-t-4 border-primary transition-all">
+                    <h2 class="font-headline text-4xl text-on-surface tracking-wide mb-8 uppercase italic italic">MISE À DISPOSITION</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 uppercase font-headline">
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-[10px] text-on-surface-variant mb-2 tracking-widest font-black">CLIENT / LOCATAIRE</label>
+                                <input type="text" class="w-full bg-surface-container-lowest border-none py-4 px-4 rounded-xl font-bold text-on-surface" placeholder="Nom du client..."/>
+                            </div>
+                        </div>
+                        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10">
+                            <div class="flex justify-between items-center mb-4 italic">
+                                <span class="tracking-widest text-xs text-on-surface/60">ÉTAT DES LIEUX</span>
+                                <span class="bg-error/10 text-error px-2 py-0.5 text-[10px] font-technical font-bold">2 SIGNALEMENTS</span>
+                            </div>
+                            <div class="aspect-video bg-[#1a1c20] rounded-xl overflow-hidden flex items-center justify-center p-4 relative">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQNTuQ1c4r03kGg1d6_vXwgce0Z9KsMgR1Wj0Zk_Z6JvVlGSOkP_fW90DJI8fCrzg2ipltPZlgrPHJLci45rK3Qn4UikjLbrVwait6KzI1VC0wrH1urZvpWWMNzhPv6UOneLkl33QVr4owXe4ls4Z9yI7L73Moi2OhsKw0GosCUwwFIrGuZXctuTReR1-dPKmVbbzzuy5XMtE-HQ15IRWUuJNILLRrG3_bzfjbAslA3suTg5gyemKiP1Y5dtotp4_lHzs_OhmalxiG" alt="Car Layout" class="opacity-30 mix-blend-screen w-full h-full object-contain"/>
+                                <div class="absolute top-1/4 left-1/3 w-6 h-6 bg-error/90 rounded-full border-2 border-surface animate-pulse flex items-center justify-center text-[10px] font-black text-white">1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

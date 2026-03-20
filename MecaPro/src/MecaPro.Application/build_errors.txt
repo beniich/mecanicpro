@@ -1,0 +1,12 @@
+﻿  Identification des projets ├á restaurer...
+  Tous les projets sont ├á jour pour la restauration.
+  MecaPro.Domain -> C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Domain\bin\Debug\net9.0\MecaPro.Domain.dll
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\CQRS.cs(196,19): error CS1061: 'ICustomerRepository' ne contient pas de d├®finition pour 'Add' et aucune m├®thode d'extension accessible 'Add' acceptant un premier argument de type 'ICustomerRepository' n'a ├®t├® trouv├®e (une directive using ou une r├®f├®rence d'assembly est-elle manquante┬á?) [C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\MecaPro.Application.csproj]
+
+├ëCHEC de la build.
+
+C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\CQRS.cs(196,19): error CS1061: 'ICustomerRepository' ne contient pas de d├®finition pour 'Add' et aucune m├®thode d'extension accessible 'Add' acceptant un premier argument de type 'ICustomerRepository' n'a ├®t├® trouv├®e (une directive using ou une r├®f├®rence d'assembly est-elle manquante┬á?) [C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\MecaPro.Application.csproj]
+    0 Avertissement(s)
+    1 Erreur(s)
+
+Temps ├®coul├® 00:00:18.72

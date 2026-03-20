@@ -1,0 +1,58 @@
+@page "/finance/comparatif-devis-2"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Comparatif Devis Premium</PageTitle>
+
+<div class="bg-surface pb-24 min-h-screen font-body">
+    <!-- TopAppBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 h-16 border-b border-outline-variant/10">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='/'">
+            <span class="material-symbols-outlined text-[#f5a623]" style="font-size: 24px;">precision_manufacturing</span>
+            <span class="text-2xl font-black tracking-tighter text-[#f5a623] font-headline uppercase leading-none">MECAPRO</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-slate-500">notifications</span>
+        </div>
+    </nav>
+
+    <main class="pt-20 px-4 space-y-6">
+        <!-- Header Section -->
+        <header class="space-y-1">
+            <div class="flex items-center gap-2 text-[#f5a623] text-xs font-bold tracking-widest uppercase">
+                <span class="material-symbols-outlined text-sm">analytics</span>
+                <span>Diagnostic & Comparison</span>
+            </div>
+            <h1 class="font-headline text-5xl tracking-tight text-on-surface uppercase leading-none">Comparatif Devis</h1>
+            <p class="font-technical text-xs text-on-surface-variant opacity-70 uppercase">VIN: VF33H9HXC81234567</p>
+        </header>
+
+        <!-- Comparison Bento Grid -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Standard Column -->
+            <div class="bg-surface-container-low p-4 rounded-xl space-y-4 border border-outline-variant/10">
+                <h2 class="font-headline text-2xl text-on-surface uppercase">STANDARD</h2>
+                <div class="font-technical text-2xl font-bold text-on-surface">489.00€</div>
+                <button class="w-full py-3 bg-surface-container-highest text-on-surface text-xs font-bold uppercase rounded-lg active:scale-95 transition-transform">Sélectionner</button>
+            </div>
+            <!-- Premium Column -->
+            <div class="bg-surface-container-high p-4 rounded-xl space-y-4 border border-primary/20 shadow-lg shadow-primary/5">
+                <h2 class="font-headline text-2xl text-primary uppercase">PREMIUM</h2>
+                <div class="font-technical text-2xl font-bold text-primary">745.50€</div>
+                <button class="w-full py-3 bg-gradient-to-r from-primary-container to-secondary-container text-on-primary text-xs font-bold uppercase rounded-lg active:scale-95 transition-transform shadow-md shadow-primary/20">Choisir Premium</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full bg-[#0c0e12] flex justify-around items-center px-4 py-3 pb-safe z-50 rounded-t-xl border-t border-white/5">
+        <a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] font-mono text-[10px] uppercase tracking-tighter" href="/">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span>Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-lg px-4 py-1.5 font-mono text-[10px] uppercase tracking-tighter font-bold" href="/finance/comparatif-devis-2">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span>Planning</span>
+        </a>
+    </nav>
+</div>

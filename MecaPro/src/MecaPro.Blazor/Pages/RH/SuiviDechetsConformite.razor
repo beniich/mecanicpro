@@ -1,0 +1,139 @@
+@page "/rh/suivi-dechets-conformite"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Green Eco/Compliance Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 flex items-center justify-center border border-emerald-500/30 shadow-[0_0_30px_rgba(16,185,129,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-emerald-400 text-3xl animate-bounce">eco</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-emerald-600"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Eco <span class="text-emerald-500 font-light italic uppercase shadow-none border-none">Compliance</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">TABLEAU DE BORD DE CONFORMITÉ DES REJETS & DÉCHETS (ICPE)</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-3xl flex items-center gap-8 shadow-xl shadow-black/40">
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Conformité Global</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-emerald-500 uppercase tracking-widest leading-relaxed">98<span class="text-xs text-white/50 lowercase italic">%</span></p>
+                 </div>
+                 <div class="w-[1px] h-10 bg-white/10"></div>
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Dernière Evac.</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 uppercase tracking-widest leading-relaxed">12 MAR 2026</p>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Eco KPI Dashboard Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10 mb-12">
+        @foreach (var waste in wasteKpis)
+        {
+            <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-10 hover:bg-white/[0.04] transition-all group overflow-hidden relative shadow-2xl flex flex-col">
+                 <div class="absolute -right-8 -top-8 w-24 h-24 bg-emerald-600/10 blur-3xl opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity"></div>
+                 
+                 <div class="flex justify-between items-center mb-8">
+                      <div class="w-10 h-10 rounded-xl bg-black border border-white/10 flex items-center justify-center font-black text-xs uppercase italic tracking-tighter">@waste.Symbol</div>
+                      <span class="px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-tighter border @(waste.AlertLevel == "CRITIQUE" ? "border-red-500 text-red-500" : "border-emerald-500/30 text-emerald-500") italic shadow-none border-none">@waste.Status</span>
+                 </div>
+                 
+                 <h3 class="text-base font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-2 italic">@waste.Type</h3>
+                 <p class="text-[9px] text-gray-500 font-black uppercase italic shadow-none border-none border-0 mb-8 uppercase tracking-widest leading-relaxed uppercase tracking-widest leading-relaxed leading-relaxed">STOCKAGE SUR SITE</p>
+                 
+                 <div class="mt-auto space-y-6">
+                      <div class="flex justify-between items-end pb-2 border-b border-white/5">
+                           <div>
+                                <p class="text-[8px] text-gray-600 font-black uppercase mb-1 italic shadow-none border-none border-0 italic leading-relaxed">Quantité en Fûts</p>
+                                <p class="text-2xl font-black italic italic @(waste.FillLevel > 80 ? "text-orange-500" : "text-emerald-500")">@waste.CurrentQty <span class="text-xs text-white/50">L</span></p>
+                           </div>
+                           <p class="text-[10px] text-gray-400 font-black italic shadow-none border-none shadow-none border-0 italic">SEUIL @waste.Threshold L</p>
+                      </div>
+                      
+                      <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                           <div class="h-full @(waste.FillLevel > 80 ? "bg-orange-600" : "bg-emerald-600")" style="width: @(waste.FillLevel)%"></div>
+                      </div>
+                 </div>
+            </div>
+        }
+    </div>
+
+    <!-- Regulatory Activity Feed -->
+    <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3.5rem] p-12 overflow-hidden shadow-2xl relative">
+        <h3 class="text-xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-10">Bordereaux de Suivi de Déchets (BSD)</h3>
+        
+        <table class="w-full text-left border-collapse">
+            <thead>
+                 <tr class="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] bg-black/20">
+                      <th class="px-10 py-5">N° BSD (TRAÇABILITÉ)</th>
+                      <th class="px-10 py-5">Nature du Déchet</th>
+                      <th class="px-10 py-5">Collecteur Agréé</th>
+                      <th class="px-10 py-5 text-center">Volume Evac.</th>
+                      <th class="px-10 py-5 text-right">Certification</th>
+                 </tr>
+            </thead>
+            <tbody class="divide-y divide-white/[0.05]">
+                 @foreach (var bsd in bsdHistory)
+                 {
+                     <tr class="hover:bg-white/[0.01] transition-all group overflow-hidden border-none text-[11px]">
+                          <td class="px-10 py-8">
+                               <p class="text-emerald-500 font-black italic">#BSD-2026-@bsd.Id</p>
+                               <p class="text-[9px] text-gray-600 font-black mt-0.5 italic">DATE : @bsd.Date</p>
+                          </td>
+                          <td class="px-10 py-8">
+                               <p class="text-white font-black italic">@bsd.WasteType</p>
+                          </td>
+                          <td class="px-10 py-8">
+                               <p class="text-gray-400 font-medium italic italic">@bsd.Contractor</p>
+                          </td>
+                          <td class="px-10 py-8 text-center">
+                               <p class="text-lg font-black italic">@bsd.Volume <span class="text-[10px] text-gray-600">KG</span></p>
+                          </td>
+                          <td class="px-10 py-8 text-right">
+                               <span class="px-3 py-1 bg-white/5 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase italic shadow-none border-none border-0">VALIDE</span>
+                          </td>
+                     </tr>
+                 }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private List<WasteKpi> wasteKpis = new()
+    {
+        new WasteKpi { Type = "HUILES USAGÉES", Symbol = "🛢️", CurrentQty = 850, Threshold = 1000, Status = "OK (DYNAM)", FillLevel = 85, AlertLevel = "PRÉVENTIF" },
+        new WasteKpi { Type = "LIQUIDE DE REFROID.", Symbol = "🧪", CurrentQty = 120, Threshold = 500, Status = "OK", FillLevel = 24, AlertLevel = "NORMAL" },
+        new WasteKpi { Type = "BATTERIES PLOMB", Symbol = "🔋", CurrentQty = 14, Threshold = 15, Status = "PLEIN", FillLevel = 93, AlertLevel = "CRITIQUE" },
+        new WasteKpi { Type = "SOLVANTS / PEINTURE", Symbol = "🎨", CurrentQty = 45, Threshold = 200, Status = "OK", FillLevel = 22, AlertLevel = "NORMAL" }
+    };
+
+    private List<BsdRecord> bsdHistory = new()
+    {
+        new BsdRecord { Id = "4491", WasteType = "HUILE MOTEUR MINÉRALE", Contractor = "RECY-OIL FR", Date = "12 MARS 2026", Volume = 800 },
+        new BsdRecord { Id = "4485", WasteType = "PNEUMATIQUES HORS USAGE", Contractor = "RUBBER-RECYCLING", Date = "28 FÉVR 2026", Volume = 450 },
+        new BsdRecord { Id = "4472", WasteType = "FILTRES À HUILE / GOUDRONS", Contractor = "ECO-CHIMIE", Date = "10 JANV 2026", Volume = 120 }
+    };
+
+    public class WasteKpi {
+        public string Type { get; set; } = "";
+        public string Symbol { get; set; } = "";
+        public int CurrentQty { get; set; }
+        public int Threshold { get; set; }
+        public string Status { get; set; } = "";
+        public int FillLevel { get; set; }
+        public string AlertLevel { get; set; } = "";
+    }
+
+    public class BsdRecord {
+        public string Id { get; set; } = "";
+        public string WasteType { get; set; } = "";
+        public string Contractor { get; set; } = "";
+        public string Date { get; set; } = "";
+        public int Volume { get; set; }
+    }
+}

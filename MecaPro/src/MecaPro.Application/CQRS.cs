@@ -1,91 +1,81 @@
-using MediatR;
-using FluentValidation;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Caching.Distributed;
-using MecaPro.Domain.Common;
-using QRCoder;
+// ============================================================
+// PHASE 1 — APPLICATION LAYER (CQRS + PIPELINES)
+// ============================================================
+
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using FluentValidation;
+using MecaPro.Domain.Common;
+using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 
-namespace MecaPro.Application.Common;
-
-public interface ICurrentUserService { string? UserId { get; } string? IpAddress { get; } bool IsAuthenticated { get; } }
+namespace MecaPro.Application;
 
 public class Result<T>
 {
     public bool IsSuccess { get; }
     public T? Value { get; }
     public string? Error { get; }
-    public List<string> Errors { get; } = new();
+    public string[]? Errors { get; }
 
-    private Result(T value) { IsSuccess = true; Value = value; }
-    private Result(string error) { IsSuccess = false; Error = error; Errors.Add(error); }
-    private Result(List<string> errors) { IsSuccess = false; Errors = errors; Error = errors.FirstOrDefault(); }
+    protected Result(bool success, T? value, string? error, string[]? errors = null)
+    {
+        IsSuccess = success;
+        Value = value;
+        Error = error;
+        Errors = errors;
+    }
 
-    public static Result<T> Success(T value) => new(value);
-    public static Result<T> Failure(string error) => new(error);
-    public static Result<T> ValidationFailure(List<string> errors) => new(errors);
-    public static implicit operator Result<T>(T value) => Success(value);
+    public static Result<T> Success(T value) => new(true, value, null);
+    public static Result<T> Failure(string error) => new(false, default, error);
+    public static Result<T> Failure(string[] errors) => new(false, default, null, errors);
 }
 
 public record PagedResult<T>(IEnumerable<T> Items, int Total, int Page, int PageSize)
 {
     public int TotalPages => (int)Math.Ceiling(Total / (double)PageSize);
     public bool HasNext => Page < TotalPages;
-    public bool HasPrev => Page > 1;
+    public bool HasPrevious => Page > 1;
 }
 
 // ─────────────────────────────────────────────────────────────
-// MEDIATR PIPELINE BEHAVIORS
+// PIPELINES
 // ─────────────────────────────────────────────────────────────
 
-public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public class LoggingBehavior<TRequest, TResponse>(ILogger<TRequest> logger) : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
-    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => _validators = validators;
-
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
     {
-        if (!_validators.Any()) return await next();
+        logger.LogInformation("[PROJET DASH] Handling {Name}", typeof(TRequest).Name);
+        var response = await next();
+        logger.LogInformation("[PROJET DASH] Handled {Name}", typeof(TRequest).Name);
+        return response;
+    }
+}
+
+public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+{
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
+    {
         var context = new ValidationContext<TRequest>(request);
-        var failures = _validators.Select(v => v.Validate(context)).SelectMany(r => r.Errors).Where(f => f != null).ToList();
-        if (failures.Any()) throw new ValidationException(failures);
+        var failures = validators.Select(v => v.Validate(context)).SelectMany(r => r.Errors).Where(f => f != null).ToList();
+        if (failures.Count != 0) throw new ValidationException(failures);
         return await next();
     }
 }
 
-public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public interface ICacheableRequest
 {
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
-    {
-        var name = typeof(TRequest).Name;
-        logger.LogInformation("[START] {RequestName} {@Request}", name, request);
-        var sw = System.Diagnostics.Stopwatch.StartNew();
-        try
-        {
-            var response = await next();
-            sw.Stop();
-            logger.LogInformation("[END] {RequestName} ({ElapsedMs}ms)", name, sw.ElapsedMilliseconds);
-            return response;
-        }
-        catch (Exception ex)
-        {
-            sw.Stop();
-            logger.LogError(ex, "[ERROR] {RequestName} ({ElapsedMs}ms)", name, sw.ElapsedMilliseconds);
-            throw;
-        }
-    }
+    string CacheKey { get; }
+    TimeSpan CacheDuration { get; }
 }
 
-public interface ICacheableQuery { string CacheKey { get; } TimeSpan CacheDuration { get; } }
-
-public class CachingBehavior<TRequest, TResponse>(IDistributedCache cache, ILogger<CachingBehavior<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public class CachingBehavior<TRequest, TResponse>(IDistributedCache cache, ILogger<TRequest> logger) : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
     {
-        if (request is not ICacheableQuery cacheable) return await next();
+        if (request is not ICacheableRequest cacheable) return await next();
         var cached = await cache.GetStringAsync(cacheable.CacheKey, ct);
         if (cached != null)
         {
@@ -99,111 +89,270 @@ public class CachingBehavior<TRequest, TResponse>(IDistributedCache cache, ILogg
     }
 }
 
-
-public interface IQuery { }
-
 // ─────────────────────────────────────────────────────────────
-// MODULE VÉHICULES
+// DTOs (SOURCE DE VÉRITÉ UNIQUE)
 // ─────────────────────────────────────────────────────────────
 
-public record CreateVehicleCommand(Guid CustomerId, string LicensePlate, string? VIN, string Make, string Model, int Year, int Mileage, string? FuelType, string? Color) : IRequest<Result<VehicleDto>>;
-public record UpdateVehicleCommand(Guid VehicleId, string Make, string Model, int Mileage, string? FuelType, string? Color) : IRequest<Result<VehicleDto>>;
-public record GenerateQrCodeCommand(Guid VehicleId) : IRequest<Result<QrCodeDto>>;
-public record DeleteVehicleCommand(Guid VehicleId) : IRequest<Result<bool>>;
+public record VehicleDto(Guid Id, string LicensePlate, string Make, string Model, int Year, string Status, int Mileage = 0);
+public record VehicleDetailDto(Guid Id, string LicensePlate, string? VIN, string Make, string Model, int Year, int Mileage, string? FuelType, string? Color, string Status, string QrCodeToken, DateTime CreatedAt, string? CustomerName);
+public record QrCodeDto(string Token, string Url, string Image, string LicensePlate);
+public record DiagnosticDto(Guid Id, Guid VehicleId, string FaultCode, string Description, string Severity, string Status, DateTime CreatedAt);
+public record RevisionDto(Guid Id, Guid VehicleId, string Type, DateTime ScheduledDate, string Status, decimal EstimatedCost, int EstimatedDuration);
+public record InvoiceDto(Guid Id, string Number, decimal Amount, DateTime Date, string Status, string? PdfUrl);
+public record DashboardStatsDto(int VehiclesInProgress, int ActiveDiagnostics, int TotalClients, int TodayRevisions);
+public record UserProfileDto(string Id, string Name, string Email, string Role, string? Avatar, string? GarageId);
+public record PartDto(Guid Id, string Reference, string Name, string Category, string? Brand, decimal UnitPrice, int StockQuantity, bool IsLowStock);
 
-public record GetVehicleByIdQuery(Guid VehicleId) : IRequest<Result<VehicleDetailDto>>;
-public record GetVehicleByQrQuery(string QrToken) : IRequest<Result<VehicleDetailDto>>;
-public record GetVehiclesByCustomerQuery(Guid CustomerId) : IRequest<Result<IEnumerable<VehicleDto>>>;
-public record GetVehiclesPagedQuery(int Page, int PageSize, string? Search, Guid? GarageId) : IRequest<Result<PagedResult<VehicleDto>>>, ICacheableQuery
+public record CustomerDto(Guid Id, string FirstName, string LastName, string Email, string? Phone, string Segment, int LoyaltyPoints, DateTime CreatedAt, bool IsBusiness = false, string? CompanyName = null);
+
+public record CustomerDetailDto(
+    Guid Id, string FirstName, string LastName, string Email, string? Phone, string? Street, string? City, string? PostalCode,
+    string Segment, int LoyaltyPoints, string? Notes, string? Tags, string PreferredContact, DateTime CreatedAt,
+    List<VehicleDto> Vehicles, List<LoyaltyTransactionDto> LoyaltyHistory, List<RevisionDto> Revisions,
+    bool IsBusiness = false, string? CompanyName = null, string? TaxId = null
+);
+public record LoyaltyTransactionDto(int Points, string Reason, DateTime Date);
+
+public record RevisionTaskDto(Guid Id, string Description, int EstimatedMinutes, int? ActualMinutes, bool IsCompleted);
+public record RevisionPartDto(Guid Id, string PartName, int Quantity, decimal UnitPrice, decimal Total);
+
+public record RevisionDetailDto(
+    Guid Id, Guid VehicleId, string Type, DateTime ScheduledDate, DateTime? CompletedDate,
+    string Status, decimal EstimatedCost, decimal? ActualCost, string? Notes,
+    List<RevisionTaskDto> Tasks, List<RevisionPartDto> Parts
+);
+
+public record WorkshopScheduleDto(DateTime Date, List<AppointmentDto> Appointments);
+public record AppointmentDto(Guid Id, string Title, string Description, string Status, DateTime Start, int DurationMinutes, string? ResourceName);
+
+// ─────────────────────────────────────────────────────────────
+// MAPPING EXTENSIONS
+// ─────────────────────────────────────────────────────────────
+
+public static class MappingExtensions
 {
-    public string CacheKey => $"vehicles:paged:{Page}:{PageSize}:{Search}:{GarageId}";
-    public TimeSpan CacheDuration => TimeSpan.FromMinutes(2);
+    public static VehicleDto ToDto(this Vehicle v) => new(v.Id, v.LicensePlate.Value, v.Make, v.Model, v.Year, v.Status.ToString(), v.Mileage);
+    public static VehicleDetailDto ToDetailDto(this Vehicle v, string? customerName = null) => new(v.Id, v.LicensePlate.Value, v.VIN?.Value, v.Make, v.Model, v.Year, v.Mileage, v.FuelType, v.Color, v.Status.ToString(), v.QrCodeToken, v.CreatedAt, customerName);
+    public static DiagnosticDto ToDto(this Diagnostic d) => new(d.Id, d.VehicleId, d.FaultCode, d.Description, d.Severity.ToString(), d.Status.ToString(), d.CreatedAt);
+    public static RevisionDto ToDto(this Revision r) => new(r.Id, r.VehicleId, r.Type, r.ScheduledDate, r.Status.ToString(), r.EstimatedCost.Amount, r.EstimatedDurationMinutes);
+    public static InvoiceDto ToDto(this Invoice i) => new(i.Id, i.Number, i.TotalTTC, i.IssuedAt, i.Status ?? "Issued", i.PdfBlobUrl);
+    public static PartDto ToDto(this Part p) => new(p.Id, p.Reference, p.Name, p.Category, p.Brand, p.UnitPrice.Amount, p.StockQuantity, p.IsLowStock);
+    public static CustomerDto ToDto(this Customer c) => new(c.Id, c.Name.FirstName, c.Name.LastName, c.Email.Value, c.Phone?.Value, c.Segment.ToString(), c.Loyalty.Points, c.CreatedAt, c.IsBusiness, c.CompanyName);
+
+    public static CustomerDetailDto ToDetailDto(this Customer c, List<Revision> revs) => new(
+        c.Id, c.Name.FirstName, c.Name.LastName, c.Email.Value, c.Phone?.Value, c.Address?.Street, c.Address?.City, c.Address?.PostalCode,
+        c.Segment.ToString(), c.Loyalty.Points, c.Notes, c.Tags, c.PreferredContact.ToString(), c.CreatedAt,
+        c.Vehicles.Select(v => v.ToDto()).ToList(),
+        c.Loyalty.Transactions.Select(t => new LoyaltyTransactionDto(t.Points, t.Reason, t.Date)).ToList(),
+        revs.Select(r => r.ToDto()).ToList(),
+        c.IsBusiness, c.CompanyName, c.TaxId
+    );
+
+    public static RevisionDetailDto ToDetailDto(this Revision r) => new(
+        r.Id, r.VehicleId, r.Type, r.ScheduledDate, r.CompletedDate,
+        r.Status.ToString(), r.EstimatedCost.Amount, r.ActualCost?.Amount, r.Notes,
+        r.Tasks.Select(t => new RevisionTaskDto(t.Id, t.Description, t.EstimatedMinutes, t.ActualMinutes, t.IsCompleted)).ToList(),
+        r.Parts.Select(p => new RevisionPartDto(p.Id, p.PartName, p.Quantity, p.UnitPrice.Amount, p.Total)).ToList()
+    );
 }
 
-public class CreateVehicleHandler(IVehicleRepository vehicles, ICustomerRepository customers, IUnitOfWork uow) : IRequestHandler<CreateVehicleCommand, Result<VehicleDto>>
+// ─────────────────────────────────────────────────────────────
+// COMMANDES & QUERIES
+// ─────────────────────────────────────────────────────────────
+
+public record CreateCustomerCommand(string FirstName, string LastName, string Email, string? Phone, bool IsBusiness = false, string? CompanyName = null, string? TaxId = null) : IRequest<Result<CustomerDto>>;
+public record UpdateCustomerCommand(Guid Id, string FirstName, string LastName, string Email, string? Phone, string? Street, string? City, string? PostalCode, string? Notes, string? Tags, string PreferredContact, string? CompanyName = null, string? TaxId = null) : IRequest<Result<CustomerDto>>;
+public record GetCustomerByIdQuery(Guid Id) : IRequest<Result<CustomerDetailDto>>;
+public record GetCustomersPagedQuery(int Page, int PageSize, string? Search) : IRequest<Result<PagedResult<CustomerDto>>>;
+public record AddLoyaltyPointsCommand(Guid CustomerId, int Points, string Reason) : IRequest<Result<bool>>;
+
+public record GetRevisionDetailQuery(Guid Id) : IRequest<Result<RevisionDetailDto>>;
+public record UpdateRevisionStatusCommand(Guid Id, string Status) : IRequest<Result<bool>>;
+public record GetWorkshopScheduleQuery(DateTime Start, DateTime End) : IRequest<Result<List<WorkshopScheduleDto>>>;
+
+public record CreateVehicleCommand(Guid CustomerId, string LicensePlate, string Make, string Model, int Year, int Mileage) : IRequest<Result<VehicleDto>>;
+public record GetVehiclesByCustomerQuery(Guid CustomerId) : IRequest<Result<List<VehicleDto>>>;
+
+public record GetPartsPagedQuery(int Page, int PageSize, string? Search = null, string? Category = null) : IRequest<Result<PagedResult<PartDto>>>;
+public record GetPartByReferenceQuery(string Reference) : IRequest<Result<PartDto>>;
+public record AdjustStockCommand(Guid Id, int Delta) : IRequest<Result<bool>>;
+public record GetPartCategoriesQuery() : IRequest<Result<List<string>>>;
+
+// ─────────────────────────────────────────────────────────────
+// HANDLERS
+// ─────────────────────────────────────────────────────────────
+
+public class CreateCustomerHandler(ICustomerRepository customers, IUnitOfWork uow) : IRequestHandler<CreateCustomerCommand, Result<CustomerDto>>
+{
+    public async Task<Result<CustomerDto>> Handle(CreateCustomerCommand cmd, CancellationToken ct)
+    {
+        var existing = await customers.GetByEmailAsync(cmd.Email, ct);
+        if (existing != null) return Result<CustomerDto>.Failure("Un client avec cet email existe déjà.");
+
+        var customer = cmd.IsBusiness 
+            ? Customer.CreateBusiness(cmd.CompanyName ?? "Entité Professionnelle", cmd.TaxId ?? "", Email.Create(cmd.Email), !string.IsNullOrEmpty(cmd.Phone) ? Phone.Create(cmd.Phone) : null)
+            : Customer.Create(FullName.Create(cmd.FirstName, cmd.LastName), Email.Create(cmd.Email), !string.IsNullOrEmpty(cmd.Phone) ? Phone.Create(cmd.Phone) : null);
+
+        await customers.AddAsync(customer, ct);
+        await uow.SaveChangesAsync(ct);
+        return Result<CustomerDto>.Success(customer.ToDto());
+    }
+}
+
+public class UpdateCustomerHandler(ICustomerRepository customers, IUnitOfWork uow) : IRequestHandler<UpdateCustomerCommand, Result<CustomerDto>>
+{
+    public async Task<Result<CustomerDto>> Handle(UpdateCustomerCommand cmd, CancellationToken ct)
+    {
+        var customer = await customers.GetByIdAsync(cmd.Id, ct);
+        if (customer == null) return Result<CustomerDto>.Failure("Client introuvable.");
+        
+        var name = FullName.Create(cmd.FirstName, cmd.LastName);
+        var email = Email.Create(cmd.Email);
+        var phone = !string.IsNullOrEmpty(cmd.Phone) ? Phone.Create(cmd.Phone) : null;
+        var addr = !string.IsNullOrEmpty(cmd.Street) ? Address.Create(cmd.Street, cmd.City ?? "", cmd.PostalCode ?? "") : null;
+        Enum.TryParse<ContactChannel>(cmd.PreferredContact, out var contact);
+
+        customer.UpdateContact(name, email, phone, addr, cmd.Notes, cmd.Tags, contact, cmd.CompanyName, cmd.TaxId);
+        await uow.SaveChangesAsync(ct);
+        return Result<CustomerDto>.Success(customer.ToDto());
+    }
+}
+
+public class GetCustomersPagedHandler(ICustomerRepository customers) : IRequestHandler<GetCustomersPagedQuery, Result<PagedResult<CustomerDto>>>
+{
+    public async Task<Result<PagedResult<CustomerDto>>> Handle(GetCustomersPagedQuery query, CancellationToken ct)
+    {
+        var (items, total) = await customers.GetPagedAsync(query.Page, query.PageSize, query.Search, ct);
+        return Result<PagedResult<CustomerDto>>.Success(new PagedResult<CustomerDto>(items.Select(c => c.ToDto()), total, query.Page, query.PageSize));
+    }
+}
+
+public class GetCustomerByIdHandler(ICustomerRepository customers, IRevisionRepository revisions) : IRequestHandler<GetCustomerByIdQuery, Result<CustomerDetailDto>>
+{
+    public async Task<Result<CustomerDetailDto>> Handle(GetCustomerByIdQuery query, CancellationToken ct)
+    {
+        var customer = await customers.GetWithVehiclesAsync(query.Id, ct);
+        if (customer == null) return Result<CustomerDetailDto>.Failure("Client introuvable.");
+        
+        var revs = new List<Revision>();
+        foreach (var v in customer.Vehicles)
+        {
+            var vRevs = await revisions.GetByVehicleIdAsync(v.Id, ct);
+            revs.AddRange(vRevs);
+        }
+
+        return Result<CustomerDetailDto>.Success(customer.ToDetailDto(revs.OrderByDescending(r => r.ScheduledDate).ToList()));
+    }
+}
+
+public class AddLoyaltyPointsHandler(ICustomerRepository customers, IUnitOfWork uow) : IRequestHandler<AddLoyaltyPointsCommand, Result<bool>>
+{
+    public async Task<Result<bool>> Handle(AddLoyaltyPointsCommand cmd, CancellationToken ct)
+    {
+        var customer = await customers.GetByIdAsync(cmd.CustomerId, ct);
+        if (customer == null) return Result<bool>.Failure("Client introuvable.");
+        customer.AddLoyaltyPoints(cmd.Points, cmd.Reason);
+        await uow.SaveChangesAsync(ct);
+        return Result<bool>.Success(true);
+    }
+}
+
+public class CreateVehicleHandler(IVehicleRepository vehicles, IUnitOfWork uow) : IRequestHandler<CreateVehicleCommand, Result<VehicleDto>>
 {
     public async Task<Result<VehicleDto>> Handle(CreateVehicleCommand cmd, CancellationToken ct)
     {
-        var customer = await customers.GetByIdAsync(cmd.CustomerId, ct);
-        if (customer == null) return Result<VehicleDto>.Failure($"Client {cmd.CustomerId} introuvable.");
-        var existing = await vehicles.GetByLicensePlateAsync(cmd.LicensePlate, ct);
-        if (existing != null) return Result<VehicleDto>.Failure($"Immatriculation '{cmd.LicensePlate}' déjà enregistrée.");
-        var plate = LicensePlate.Create(cmd.LicensePlate);
-        var vehicle = Vehicle.Create(cmd.CustomerId, plate, cmd.Make, cmd.Model, cmd.Year, cmd.Mileage);
+        var vehicle = Vehicle.Create(cmd.CustomerId, LicensePlate.Create(cmd.LicensePlate), cmd.Make, cmd.Model, cmd.Year, cmd.Mileage);
         await vehicles.AddAsync(vehicle, ct);
         await uow.SaveChangesAsync(ct);
         return Result<VehicleDto>.Success(vehicle.ToDto());
     }
 }
 
-public class GenerateQrCodeHandler(IVehicleRepository vehicles, IUnitOfWork uow) : IRequestHandler<GenerateQrCodeCommand, Result<QrCodeDto>>
+public class GetVehiclesByCustomerHandler(IVehicleRepository vehicles) : IRequestHandler<GetVehiclesByCustomerQuery, Result<List<VehicleDto>>>
 {
-    public async Task<Result<QrCodeDto>> Handle(GenerateQrCodeCommand cmd, CancellationToken ct)
+    public async Task<Result<List<VehicleDto>>> Handle(GetVehiclesByCustomerQuery query, CancellationToken ct)
     {
-        var vehicle = await vehicles.GetByIdAsync(cmd.VehicleId, ct);
-        if (vehicle == null) return Result<QrCodeDto>.Failure("Véhicule introuvable.");
-        vehicle.RegenerateQrToken();
-        vehicles.Update(vehicle);
+        var list = await vehicles.GetByCustomerIdAsync(query.CustomerId, ct);
+        return Result<List<VehicleDto>>.Success(list.Select(v => v.ToDto()).ToList());
+    }
+}
+
+public class GetRevisionDetailHandler(IRevisionRepository revisions) : IRequestHandler<GetRevisionDetailQuery, Result<RevisionDetailDto>>
+{
+    public async Task<Result<RevisionDetailDto>> Handle(GetRevisionDetailQuery query, CancellationToken ct)
+    {
+        var rev = await revisions.GetWithDetailsAsync(query.Id, ct);
+        return rev == null ? Result<RevisionDetailDto>.Failure("Intervention introuvable.") : Result<RevisionDetailDto>.Success(rev.ToDetailDto());
+    }
+}
+
+public class UpdateRevisionStatusHandler(IRevisionRepository revisions, IUnitOfWork uow) : IRequestHandler<UpdateRevisionStatusCommand, Result<bool>>
+{
+    public async Task<Result<bool>> Handle(UpdateRevisionStatusCommand cmd, CancellationToken ct)
+    {
+        var rev = await revisions.GetByIdAsync(cmd.Id, ct);
+        if (rev == null) return Result<bool>.Failure("Intervention introuvable.");
+        
+        if (Enum.TryParse<RevisionStatus>(cmd.Status, out var status))
+        {
+            rev.SetStatus(status);
+            await uow.SaveChangesAsync(ct);
+            return Result<bool>.Success(true);
+        }
+        return Result<bool>.Failure("Statut invalide.");
+    }
+}
+
+public class GetWorkshopScheduleHandler(IRevisionRepository revisions) : IRequestHandler<GetWorkshopScheduleQuery, Result<List<WorkshopScheduleDto>>>
+{
+    public async Task<Result<List<WorkshopScheduleDto>>> Handle(GetWorkshopScheduleQuery query, CancellationToken ct)
+    {
+        var (items, _) = await revisions.GetPagedAsync(1, 1000, null, ct);
+        
+        var groups = items.Where(r => r.ScheduledDate >= query.Start && r.ScheduledDate <= query.End)
+            .GroupBy(r => r.ScheduledDate.Date)
+            .Select(g => new WorkshopScheduleDto(g.Key, g.Select(r => new AppointmentDto(
+                r.Id, r.Type, "Intervention maintenance", r.Status.ToString(), r.ScheduledDate, r.EstimatedDurationMinutes, "PONT_" + (Math.Abs(r.Id.GetHashCode()) % 3 + 1)
+            )).ToList()))
+            .OrderBy(s => s.Date)
+            .ToList();
+            
+        return Result<List<WorkshopScheduleDto>>.Success(groups);
+    }
+}
+
+public class GetPartsPagedHandler(IPartRepository parts) : IRequestHandler<GetPartsPagedQuery, Result<PagedResult<PartDto>>>
+{
+    public async Task<Result<PagedResult<PartDto>>> Handle(GetPartsPagedQuery query, CancellationToken ct)
+    {
+        var all = await parts.GetAllAsync(ct);
+        var filtered = all.Where(p => (string.IsNullOrEmpty(query.Search) || p.Name.Contains(query.Search, StringComparison.OrdinalIgnoreCase) || p.Reference.Contains(query.Search, StringComparison.OrdinalIgnoreCase))
+                                   && (string.IsNullOrEmpty(query.Category) || p.Category == query.Category));
+        
+        var total = filtered.Count();
+        var items = filtered.Skip((query.Page - 1) * query.PageSize).Take(query.PageSize).Select(p => p.ToDto());
+        
+        return Result<PagedResult<PartDto>>.Success(new PagedResult<PartDto>(items, total, query.Page, query.PageSize));
+    }
+}
+
+public class AdjustStockHandler(IPartRepository parts, IUnitOfWork uow) : IRequestHandler<AdjustStockCommand, Result<bool>>
+{
+    public async Task<Result<bool>> Handle(AdjustStockCommand cmd, CancellationToken ct)
+    {
+        var part = await parts.GetByIdAsync(cmd.Id, ct);
+        if (part == null) return Result<bool>.Failure("Pièce introuvable.");
+        part.AdjustStock(cmd.Delta);
         await uow.SaveChangesAsync(ct);
-        using var qrGenerator = new QRCodeGenerator();
-        var url = $"https://mecapro.app/v/{vehicle.QrCodeToken}";
-        var qrData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
-        using var qrCode = new PngByteQRCode(qrData);
-        var base64 = Convert.ToBase64String(qrCode.GetGraphic(10));
-        return Result<QrCodeDto>.Success(new QrCodeDto(vehicle.QrCodeToken, url, $"data:image/png;base64,{base64}", vehicle.LicensePlate.Value));
+        return Result<bool>.Success(true);
     }
 }
 
-// ─────────────────────────────────────────────────────────────
-// MODULE DIAGNOSTICS
-// ─────────────────────────────────────────────────────────────
-
-public record AddDiagnosticCommand(Guid VehicleId, string FaultCode, string Description, int Severity, string? DiagnosticTool, string? ProbableCauses) : IRequest<Result<DiagnosticDto>>;
-public record ResolveDiagnosticCommand(Guid DiagnosticId, string Resolution) : IRequest<Result<DiagnosticDto>>;
-
-public class AddDiagnosticHandler(IVehicleRepository v, ICurrentUserService u, IUnitOfWork uow) : IRequestHandler<AddDiagnosticCommand, Result<DiagnosticDto>>
+public class GetPartCategoriesHandler(IPartRepository parts) : IRequestHandler<GetPartCategoriesQuery, Result<List<string>>>
 {
-    public async Task<Result<DiagnosticDto>> Handle(AddDiagnosticCommand cmd, CancellationToken ct)
+    public async Task<Result<List<string>>> Handle(GetPartCategoriesQuery query, CancellationToken ct)
     {
-        var vehicle = await v.GetByIdAsync(cmd.VehicleId, ct);
-        if (vehicle == null) return Result<DiagnosticDto>.Failure("Véhicule introuvable.");
-        var mechanicId = Guid.Parse(u.UserId ?? Guid.Empty.ToString());
-        var diag = Diagnostic.Create(vehicle.Id, mechanicId, cmd.FaultCode, cmd.Description, (DiagnosticSeverity)cmd.Severity, cmd.DiagnosticTool, cmd.ProbableCauses);
-        vehicle.AddDiagnostic(diag);
-        v.Update(vehicle);
-        await uow.SaveChangesAsync(ct);
-        return Result<DiagnosticDto>.Success(diag.ToDto());
+        var all = await parts.GetAllAsync(ct);
+        return Result<List<string>>.Success(all.Select(p => p.Category).Distinct().ToList());
     }
-}
-
-// ─────────────────────────────────────────────────────────────
-// VALIDATORS
-// ─────────────────────────────────────────────────────────────
-
-public class CreateVehicleCommandValidator : AbstractValidator<CreateVehicleCommand>
-{
-    public CreateVehicleCommandValidator()
-    {
-        RuleFor(x => x.CustomerId).NotEmpty();
-        RuleFor(x => x.LicensePlate).NotEmpty().MaximumLength(20);
-        RuleFor(x => x.Make).NotEmpty().MaximumLength(100);
-        RuleFor(x => x.Model).NotEmpty().MaximumLength(100);
-        RuleFor(x => x.Year).InclusiveBetween(1900, DateTime.UtcNow.Year + 1);
-        RuleFor(x => x.Mileage).GreaterThanOrEqualTo(0);
-    }
-}
-
-// ─────────────────────────────────────────────────────────────
-// DTOs & MAPPING
-// ─────────────────────────────────────────────────────────────
-
-public record VehicleDto(Guid Id, string LicensePlate, string? VIN, string Make, string Model, int Year, int Mileage, string? FuelType, string? Color, string Status, string QrCodeToken, DateTime CreatedAt);
-public record VehicleDetailDto(VehicleDto Vehicle, IEnumerable<DiagnosticDto> ActiveDiagnostics, object? NextRevision, IEnumerable<object> RevisionHistory, IEnumerable<object> Images, object Customer);
-public record DiagnosticDto(Guid Id, string FaultCode, string Description, string Severity, string Status, string? Tool, string? ProbableCauses, string? Resolution, DateTime DiagnosedAt, DateTime? ResolvedAt);
-public record QrCodeDto(string Token, string Url, string ImageBase64, string LicensePlate);
-
-public static class MappingExtensions
-{
-    public static VehicleDto ToDto(this Vehicle v) => new(v.Id, v.LicensePlate.Value, v.VIN?.Value, v.Make, v.Model, v.Year, v.Mileage, v.FuelType, v.Color, v.Status.ToString(), v.QrCodeToken, v.CreatedAt);
-    public static DiagnosticDto ToDto(this Diagnostic d) => new(d.Id, d.FaultCode, d.Description, d.Severity.ToString(), d.Status.ToString(), d.DiagnosticTool, d.ProbableCauses, d.Resolution, d.DiagnosedAt, d.ResolvedAt);
 }

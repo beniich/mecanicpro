@@ -1,0 +1,97 @@
+@page "/planning/planning-conges"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Planning Congés</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container/30 min-h-screen flex flex-col">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 h-20 w-full border-b border-[#524534]/15 z-50 sticky top-0">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+            <h1 class="font-headline uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex gap-4 font-technical text-xs uppercase font-bold">
+                <span class="text-[#e2e2e8]/60">STATUS: NOMINAL</span>
+                <span class="text-[#f5a623]">SYNC: ACTIVE</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/30 overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCZ8I5B0M7lOY3y1N7vqqa-QCxXlcKdyNphOaOq8bKtT9wrp9cCiVvPK_h90ZYA4I38S3-t8ddES8tLMFxMBDw8OfgEkIAp_NxTNQmNbSsy9ya9iqaeO1lhASgJCYz96Zjx7Nj032h6-7dqoqOiHZ6iXZZHPi7iZSd2GcKvRaxnbmeMFyFzvF2zzPZ2WizkSTY3j621F0WQzs8TeNLXoqyPbVlgCrd8jRP1jeqfSUMmJxzbRZHbGTfjk1ylsY27VIigASj4qdakLRt" alt="User avatar"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full pb-32">
+        <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <h2 class="font-headline text-5xl tracking-wider text-primary mb-2 uppercase">PLANNING_CONGÉS</h2>
+                <p class="font-technical text-sm text-on-surface-variant/70 uppercase">Team Availability & Technical Replacement Matrix</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="bg-primary-container text-on-primary-container px-6 py-2 rounded font-bold flex items-center gap-2 hover:scale-[0.98] transition-transform uppercase">
+                    <span class="material-symbols-outlined">add_box</span>
+                    Nouvelle Demande
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Calendar Section -->
+            <div class="lg:col-span-8 bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/10">
+                <div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container uppercase">
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-primary">calendar_month</span>
+                        <h3 class="font-headline text-2xl tracking-tight">OCTOBRE 2023</h3>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse font-technical text-[10px] uppercase">
+                        <thead>
+                            <tr class="bg-surface-container-lowest text-on-surface-variant font-bold tracking-widest">
+                                <th class="p-4 text-left border-r border-outline-variant/5">TECHNICIEN</th>
+                                <th class="p-2 text-center w-12">16</th>
+                                <th class="p-2 text-center w-12">17</th>
+                                <th class="p-2 text-center w-12">18</th>
+                                <th class="p-2 text-center w-12">19</th>
+                                <th class="p-2 text-center w-12">20</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant/5 text-sm font-body">
+                            <tr class="hover:bg-surface-container-high transition-colors">
+                                <td class="p-4 border-r border-outline-variant/5">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-secondary-container/20 flex items-center justify-center text-secondary-container font-bold text-[10px]">M.L</div>
+                                        <span class="font-medium">Marc Lefebvre</span>
+                                    </div>
+                                </td>
+                                <td class="p-1"><div class="h-8 bg-primary/10 border-l-2 border-primary rounded-sm flex items-center justify-center text-[10px] font-technical text-primary font-bold">VAC</div></td>
+                                <td class="p-1"><div class="h-8 bg-primary/10 rounded-sm"></div></td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Replacement Monitoring -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <div class="bg-surface-container-high rounded-xl p-6 border-l-4 border-secondary-container shadow-lg">
+                    <h4 class="font-headline text-xl text-secondary-container uppercase mb-4">REMPLACEMENTS ACTIFS</h4>
+                    <div class="space-y-4">
+                        <div class="bg-surface-container-low p-3 rounded border border-outline-variant/10 font-technical uppercase">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] text-on-surface-variant font-bold">Poste Alpha</span>
+                                <span class="material-symbols-outlined text-sm text-primary">swap_horiz</span>
+                            </div>
+                            <div class="flex items-center justify-between text-[10px] font-bold">
+                                <span class="text-on-surface-variant opacity-60">ABS: M. Lefebvre</span>
+                                <span class="text-primary">REP: A. Khan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,126 @@
+@page "/diagnostic/vin-pro"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Blue/Silver Automotive Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-slate-500/20 flex items-center justify-center border border-slate-500/30">
+                    <span class="material-symbols-outlined text-slate-400">qr_code</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">VIN <span class="text-slate-400 font-light">PRO DECODER</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.4em]">ACCÈS AUX BASES DE DONNÉES CONSTRUCTEURS (NHTSA / DEKRA)</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-3 px-6 rounded-2xl flex items-center gap-6">
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase">Cache Redis</p>
+                      <p class="text-xl font-black italic text-green-500 italic">ACTIF</p>
+                 </div>
+                 <div class="w-[1px] h-8 bg-white/10"></div>
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase">Temps d'accès</p>
+                      <p class="text-xl font-black italic shadow-none border-none border-0">42<span class="text-xs text-white/50 lowercase italic">ms</span></p>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="bg-[#111318]/80 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-12 mb-12 shadow-2xl relative overflow-hidden">
+         <!-- Blueprint Mesh Back -->
+         <div class="absolute inset-0 bg-gradient-to-br from-slate-500/5 to-transparent pointer-events-none"></div>
+         
+         <div class="max-w-3xl mx-auto text-center relative z-10">
+              <h2 class="text-3xl font-black italic uppercase italic tracking-tighter mb-8 italic shadow-none border-none">Identification du Châssis</h2>
+              <div class="relative bg-black/40 rounded-[2.5rem] p-4 border border-white/10 flex flex-col md:flex-row gap-4 items-center group focus-within:ring-2 ring-slate-500/30 transition-all">
+                   <div class="w-16 h-16 rounded-[1.5rem] bg-white/5 flex items-center justify-center text-slate-500 font-black text-xl italic uppercase font-outfit uppercase tracking-widest">VIN</div>
+                   <input type="text" placeholder="Entrez le n° de série (17 caractères)..." class="bg-transparent border-none flex-grow p-4 text-2xl font-black tracking-[0.2em] focus:outline-none placeholder:text-gray-800 uppercase italic">
+                   <button class="bg-slate-400 hover:bg-white text-black px-10 py-5 rounded-[1.5rem] font-black uppercase text-sm tracking-widest transition-all shadow-xl shadow-black/40 font-outfit uppercase tracking-widest">DÉCODER</button>
+              </div>
+              <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-6 italic shadow-none border-none">Exemple: 1HGCM82633A004352</p>
+         </div>
+    </div>
+
+    <!-- Results Visualization (Mock data shown if decoded) -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <!-- Specs Sheet -->
+        <div class="lg:col-span-2 space-y-10">
+             <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[3.5rem] p-10">
+                  <h3 class="text-xl font-black italic uppercase tracking-tighter mb-10 italic shadow-none border-none">Fiche Technique Officielle</h3>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                       @foreach (var spec in technicalSpecs)
+                       {
+                           <div class="flex justify-between items-end border-b border-white/5 pb-3">
+                                <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest italic shadow-none border-none">@spec.Label</span>
+                                <span class="text-sm font-black italic text-slate-300 italic uppercase">@spec.Value</span>
+                           </div>
+                       }
+                  </div>
+             </div>
+             
+             <div class="bg-red-600/10 border border-red-500/20 rounded-[3rem] p-10">
+                   <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xs font-black uppercase text-red-500 tracking-[0.3em] font-outfit uppercase tracking-widest italic leading-relaxed shadow-none border-none">RAPPELS CONSTRUCTEURS EN COURS (2)</h3>
+                        <span class="material-symbols-outlined text-red-500 text-3xl">priority_high</span>
+                   </div>
+                   <div class="space-y-4">
+                        <div class="p-4 bg-black/40 rounded-2xl border border-white/5">
+                             <p class="text-xs font-black uppercase italic tracking-tight uppercase tracking-widest italic leading-relaxed text-red-400">NHTSA ID: 23V441 — FUEL PUMP ASSEMBLY</p>
+                             <p class="text-[10px] text-gray-600 mt-2 font-medium leading-relaxed italic">Le rotor de la pompe à carburant peut se fissurer et entraîner une panne du moteur. Risque élevé de calage en circulation.</p>
+                        </div>
+                   </div>
+             </div>
+        </div>
+
+        <!-- Vehicle Blueprint Mock -->
+        <div class="bg-black/60 border border-white/5 rounded-[4rem] p-12 flex flex-col items-center justify-center relative overflow-hidden group">
+             <span class="absolute right-0 top-0 material-symbols-outlined text-[20rem] text-white/[0.02] -translate-y-1/2 translate-x-1/2 pointer-events-none select-none">build</span>
+             
+             <div class="w-full relative z-10 mb-10">
+                  <div class="w-full h-[240px] bg-slate-500/5 border border-slate-500/10 rounded-[2.5rem] flex items-center justify-center filter grayscale group-hover:grayscale-0 transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-8xl text-slate-400 opacity-20 group-hover:opacity-40 transition-opacity">directions_car</span>
+                  </div>
+             </div>
+
+             <div class="text-center relative z-10">
+                  <h4 class="text-2xl font-black italic uppercase italic tracking-tighter mb-2 italic shadow-none border-none">HONDA CIVIC SI</h4>
+                  <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest italic shadow-none border-none">Production : Alliston, Canada (2020)</p>
+             </div>
+             
+             <div class="grid grid-cols-2 gap-4 mt-10 w-full z-10">
+                  <div class="bg-white/5 p-4 rounded-2xl border border-white/5 text-center">
+                       <p class="text-[8px] text-gray-500 font-bold uppercase mb-1">MOTEUR</p>
+                       <p class="text-xs font-black italic uppercase tracking-widest">1.5T I4 L15B7</p>
+                  </div>
+                  <div class="bg-white/5 p-4 rounded-2xl border border-white/5 text-center">
+                       <p class="text-[8px] text-gray-500 font-bold uppercase mb-1">TRANSMISSION</p>
+                       <p class="text-xs font-black italic uppercase tracking-widest">6MT MANUAL</p>
+                  </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<SpecEntry> technicalSpecs = new()
+    {
+        new SpecEntry { Label = "Marque", Value = "HONDA" },
+        new SpecEntry { Label = "Modèle", Value = "CIVIC" },
+        new SpecEntry { Label = "Année Modèle", Value = "2020" },
+        new SpecEntry { Label = "Carrosserie", Value = "SEDAN 4D" },
+        new SpecEntry { Label = "Finition", Value = "Si (High Grade)" },
+        new SpecEntry { Label = "Carburant", Value = "GASOLINE" },
+        new SpecEntry { Label = "Pays d'Origine", Value = "CANADA (1)" },
+        new SpecEntry { Label = "Poids à vide", Value = "1,310 KG" }
+    };
+
+    public class SpecEntry {
+        public string Label { get; set; } = "";
+        public string Value { get; set; } = "";
+    }
+}

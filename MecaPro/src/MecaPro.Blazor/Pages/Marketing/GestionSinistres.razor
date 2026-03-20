@@ -1,0 +1,80 @@
+@page "/marketing/gestion-sinistres"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Gestion des Sinistres</PageTitle>
+
+<div class="bg-[#111318] text-[#e2e2e8] font-body selection:bg-primary/30 min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#0c0e12] sticky top-0 z-40">
+        <div class="flex justify-between items-center px-6 py-4 w-full">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-[#f5a623]">menu</span>
+                <h1 class="font-headline tracking-widest uppercase text-[#f5a623] text-3xl font-black">MECAPRO</h1>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-[#282a2e] border border-outline-variant/30 overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyDjE3ms_RG-apsVSOSQedH6SC9YyeWeCH-xrNuZhSmEO3QIuyJ_IUmh0YAsTnAkaTZZJMJc0vLtIbg3UpcwkRGL8jBR5Wn_tKI-e3OS0SUgVaJUNltSkA4GWgJgvWGce0WqUOrCY2ykqCC9eT0Gvj_WxCVSut88Ks9xvIxr9Onv2B3Oc34kU1060HTW2vWKrS4YEp1dYuIYiP6nYuPBIDxA5rsDZ0f8lQSUwGIy45UQrwd6RBHNeen8zC7EjVM3hyeZ0Ws7xL1KY8" alt="Operator"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+        <section class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="space-y-2">
+                <h2 class="font-headline text-5xl tracking-wide text-on-surface uppercase">Gestion des Sinistres</h2>
+                <p class="text-on-surface-variant max-w-md">Suivi technique et administratif des dossiers d'accidents.</p>
+            </div>
+            <button class="bg-gradient-to-r from-primary to-secondary-container text-on-primary font-headline text-xl px-8 py-4 rounded-xl flex items-center gap-3 active:scale-95 transition-transform uppercase tracking-widest shadow-xl shadow-primary/10">
+                <span class="material-symbols-outlined">add_circle</span>
+                DÉCLARER UN SINISTRE
+            </button>
+        </section>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-headline uppercase font-bold">
+            <div class="bg-[#282a2e] p-6 rounded-xl border-l-2 border-secondary-container relative overflow-hidden">
+                <p class="text-on-surface-variant text-xs opacity-60 tracking-widest mb-2">Dossiers Ouverts</p>
+                <h3 class="text-6xl text-primary leading-none">12</h3>
+                <span class="material-symbols-outlined absolute top-4 right-4 text-6xl opacity-10">folder_open</span>
+            </div>
+            <div class="bg-[#282a2e] p-6 rounded-xl border-l-2 border-primary relative overflow-hidden">
+                <p class="text-on-surface-variant text-xs opacity-60 tracking-widest mb-2">En Attente Expert</p>
+                <h3 class="text-6xl text-on-surface leading-none">04</h3>
+                <span class="material-symbols-outlined absolute top-4 right-4 text-6xl opacity-10">engineering</span>
+            </div>
+            <div class="bg-[#282a2e] p-6 rounded-xl border-l-2 border-error-container relative overflow-hidden">
+                <p class="text-on-surface-variant text-xs opacity-60 tracking-widest mb-2">Litiges Assureur</p>
+                <h3 class="text-6xl text-error leading-none uppercase">02</h3>
+                <span class="material-symbols-outlined absolute top-4 right-4 text-6xl opacity-10">gavel</span>
+            </div>
+        </div>
+
+        <!-- Claims List -->
+        <div class="space-y-4">
+            <h4 class="font-headline text-2xl tracking-widest text-on-surface/70 uppercase">Dossiers Récents</h4>
+            <div class="grid grid-cols-1 gap-4">
+                <div class="bg-[#1a1c20] rounded-xl overflow-hidden group hover:bg-[#1e2024] transition-colors p-6 flex flex-col md:flex-row md:items-center gap-6">
+                    <div class="w-full md:w-32 h-24 rounded-lg overflow-hidden bg-[#282a2e] shrink-0">
+                        <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqIlCjDaDD6bJtquJxVZeQVQEELiSZBbNUo5r--K6rCDwUKk5Pm6CMJaj77ohdargktkFcp02Lv-l1FaFgJrYfXWe6Xoza1JS5YbVNCGtlqkkSJVNgpzQmh1UZB0LzsYgdTdhPxDbwDkeqhzeJb3_gibxk_iqsPwYH94IGiMFHqaj4M2080hAh0YFivii-_NTZy6vDGCNzWY67CL8F0YPbZJtburTSfFku8tZgT1i7Dq2c4WZqvl7lKVRZv1MRdzip5oLisWGJX3TT" alt="Damage"/>
+                    </div>
+                    <div class="flex-grow space-y-1">
+                        <div class="flex items-center gap-3">
+                            <span class="font-technical text-primary-fixed-dim text-sm">VIN: WBA123456...</span>
+                            <span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded font-bold uppercase">Collision</span>
+                        </div>
+                        <h5 class="text-xl font-bold text-on-surface uppercase font-headline tracking-wide">BMW Série 3 - Choc Latéral</h5>
+                        <p class="text-sm text-on-surface-variant uppercase font-bold text-[10px]">14 OCT 2023 // Allianz Pro</p>
+                    </div>
+                    <div class="flex flex-col items-end gap-2 shrink-0 font-headline uppercase">
+                        <div class="flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs animate-pulse">
+                            Expertise en cours
+                        </div>
+                        <button class="text-on-surface-variant hover:text-primary flex items-center gap-1 text-sm font-bold tracking-widest">
+                            Détails <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

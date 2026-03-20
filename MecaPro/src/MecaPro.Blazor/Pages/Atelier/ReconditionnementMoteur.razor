@@ -1,0 +1,62 @@
+@page "/atelier/reconditionnement-moteur"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Reconditionnement Moteur</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 h-20 w-full sticky top-0 z-50 border-b border-[#524534]/15">
+        <div class="flex items-center gap-3 font-industrial italic">
+            <span class="material-symbols-outlined text-[#f5a623] text-3xl">terminal</span>
+            <span class="text-[#f5a623] tracking-[0.2em] text-2xl font-black leading-none">DIAGNOSTIC_CONSOLE</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex gap-8 font-industrial text-xl tracking-widest italic font-bold">
+                <span class="text-[#f5a623] cursor-pointer">WORKFLOW</span>
+            </div>
+            <div class="h-10 w-10 rounded-full border border-outline-variant/30 overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMcqcasliFrVpKWOm3_1ORsO_Cz38rybq6kwArMYjt4WgWrTjFtj7yN0JBs-6H8Vx6wQusLTkDAGqyR5Lz7doLJ7jdmehaB9zXDxmSLwEC84qOvCS1XNjwkrgbREF9z9R-LS4zwok2Zg9zOlhrR65aqTdaP2JpTOKPN_RLXdKU0ABlNn3GxHAlhJIcQ88PUW-dGiv3TWF_mUSckLP7ahxLJHkXIB6zKeaKSe0pVsMK4VQhbqNZRd4miZ6YFo1TgjCZ805SQwFAiX2I" alt="Operator" class="w-full h-full object-cover"/>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex min-h-[calc(100vh-80px)] uppercase font-headline italic">
+        <!-- Sidebar -->
+        <aside class="hidden lg:flex flex-col w-80 bg-[#0c0e12] py-8 px-6 gap-2 sticky top-20 border-r border-outline-variant/10">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center border-l-4 border-secondary shadow-lg">
+                    <span class="material-symbols-outlined text-primary">biotech</span>
+                </div>
+                <div>
+                    <h3 class="text-xl tracking-tight text-on-surface font-black leading-none">CHIEF_OPERATOR</h3>
+                    <p class="font-technical text-[10px] text-primary not-italic">STATION_04 • ONLINE</p>
+                </div>
+            </div>
+            <nav class="flex flex-col gap-2 font-industrial italic text-xl">
+                <div class="flex items-center gap-3 py-4 px-5 rounded bg-surface-container-high text-primary border-l-4 border-secondary shadow-2xl">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <span>INVENTORY</span>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8 space-y-12 bg-surface">
+            <!-- Hero -->
+            <section class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-primary/20 text-primary px-3 py-1 rounded text-[10px] font-black font-technical not-italic tracking-widest uppercase">STEP 04/09</span>
+                    </div>
+                    <h1 class="text-7xl tracking-tighter leading-none font-black italic">CYLINDER HEAD INSPECTION</h1>
+                </div>
+                <div class="flex gap-4">
+                    <div class="p-6 bg-surface-container-high rounded border-l-4 border-secondary shadow-2xl">
+                        <p class="text-[10px] font-technical text-on-surface-variant not-italic uppercase mb-1 tracking-widest">STATUS</p>
+                        <p class="text-3xl font-black text-primary tracking-widest">IN_PROGRESS</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>

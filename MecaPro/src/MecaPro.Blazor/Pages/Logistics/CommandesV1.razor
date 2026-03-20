@@ -1,0 +1,114 @@
+@page "/stock/commandes-1"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Orange Logistics Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-orange-600/20 flex items-center justify-center border border-orange-500/30 shadow-[0_0_30px_rgba(249,115,22,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-orange-500 text-3xl">shopping_cart</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-orange-500"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Supplier <span class="text-orange-500">Orders</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">GESTION DES APPROVISIONNEMENTS & BONS DE COMMANDE</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-3 px-6 rounded-2xl flex items-center gap-6">
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase">Encours Achat</p>
+                      <p class="text-xl font-black italic text-orange-500">12,450<span class="text-xs text-white/50 lowercase">€</span></p>
+                 </div>
+                 <div class="w-[1px] h-8 bg-white/10"></div>
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase">Commandes Actives</p>
+                      <p class="text-xl font-black italic">8</p>
+                 </div>
+             </div>
+             <button class="bg-orange-600 text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">add_shopping_cart</span> NOUVEAU BON
+             </button>
+        </div>
+    </div>
+
+    <!-- Active Orders Table -->
+    <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl relative">
+        <div class="p-8 border-b border-white/5 flex justify-between items-center">
+            <h3 class="text-xl font-black italic uppercase tracking-tighter">Historique des Approvisionnements</h3>
+            <div class="flex gap-2">
+                 <button class="px-4 py-2 rounded-xl bg-orange-500/10 text-orange-500 border border-orange-500/20 text-[10px] font-black uppercase tracking-widest">En cours</button>
+                 <button class="px-4 py-2 rounded-xl bg-white/5 text-gray-500 border border-white/10 text-[10px] font-black uppercase tracking-widest hover:text-white transition-all">Reçus</button>
+            </div>
+        </div>
+
+        <div class="p-0">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] bg-black/20">
+                        <th class="px-10 py-5">Référence BC</th>
+                        <th class="px-10 py-5">Fournisseur</th>
+                        <th class="px-10 py-5">Date / Échéance</th>
+                        <th class="px-10 py-5">Statut</th>
+                        <th class="px-10 py-5 text-right">Montant HT</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/[0.05]">
+                    @foreach (var order in activeOrders)
+                    {
+                        <tr class="hover:bg-white/[0.02] transition-colors cursor-pointer group">
+                            <td class="px-10 py-8">
+                                <span class="text-sm font-black italic text-orange-500">#@order.Id</span>
+                            </td>
+                            <td class="px-10 py-8">
+                                <div class="flex items-center gap-4">
+                                     <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center font-black text-xs">@order.Supplier.Substring(0, 2)</div>
+                                     <p class="text-sm font-black italic uppercase tracking-tight">@order.Supplier</p>
+                                </div>
+                            </td>
+                            <td class="px-10 py-8">
+                                <p class="text-xs font-black italic">@order.Date</p>
+                                <p class="text-[10px] text-gray-500 font-medium">ETA: @order.ExpectedDate</p>
+                            </td>
+                            <td class="px-10 py-8">
+                                <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter border @(GetStatusColor(order.Status))">@order.Status</span>
+                            </td>
+                            <td class="px-10 py-8 text-right">
+                                <p class="text-xl font-black italic">@order.Amount <span class="text-xs text-gray-500">€</span></p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<OrderEntry> activeOrders = new()
+    {
+        new OrderEntry { Id = "BC-2026-001", Supplier = "M-AUTO DISTRI", Date = "18 Mar 2026", ExpectedDate = "22 Mar 2026", Status = "EN TRANSIT", Amount = "4,250.00" },
+        new OrderEntry { Id = "BC-2026-002", Supplier = "VALEO PRO SERVICE", Date = "19 Mar 2026", ExpectedDate = "20 Mar 2026", Status = "URGENT", Amount = "1,120.40" },
+        new OrderEntry { Id = "BC-2026-003", Supplier = "BOSCH AUTOMOTIVE", Date = "20 Mar 2026", ExpectedDate = "25 Mar 2026", Status = "VALIDÉ", Amount = "840.15" },
+        new OrderEntry { Id = "BC-2025-998", Supplier = "RENAULT PIÈCES", Date = "15 Mar 2026", ExpectedDate = "18 Mar 2026", Status = "RETARD", Amount = "3,400.00" }
+    };
+
+    private string GetStatusColor(string status) => status switch
+    {
+        "RETARD" => "border-red-500/30 text-red-500 bg-red-500/10",
+        "URGENT" => "border-orange-500/30 text-orange-500 bg-orange-500/10",
+        "EN TRANSIT" => "border-sky-500/30 text-sky-500 bg-sky-500/10",
+        "VALIDÉ" => "border-green-500/30 text-green-500 bg-green-500/10",
+        _ => "border-white/20 text-gray-400 bg-white/5"
+    };
+
+    public class OrderEntry {
+        public string Id { get; set; } = "";
+        public string Supplier { get; set; } = "";
+        public string Date { get; set; } = "";
+        public string ExpectedDate { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string Amount { get; set; } = "";
+    }
+}

@@ -1,0 +1,117 @@
+@page "/technique/diagnostic-avance"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Diagnostic Avancé</PageTitle>
+
+<div class="bg-[#111318] text-[#e2e2e8] font-body min-h-screen pb-32 selection:bg-primary/30 selection:text-on-primary">
+    <!-- TopAppBar -->
+    <header class="w-full top-0 sticky z-50 bg-[#111318] shadow-[0_4px_20px_rgba(0,0,0,0.5)] border-none">
+        <div class="flex justify-between items-center px-6 py-4 w-full bg-[#111318]">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+                <h1 class="font-headline text-[#f5a623] tracking-[0.05em] uppercase text-2xl">MecaPro</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="text-[#e2e2e8] hover:bg-[#282a2e] transition-colors p-2 rounded-lg active:scale-95 duration-200">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 pt-6 space-y-6">
+        <!-- Header Section -->
+        <section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div>
+                <span class="text-primary font-technical text-xs tracking-widest uppercase mb-1 block">Live Telemetry System v2.4</span>
+                <h2 class="font-headline text-5xl md:text-6xl tracking-wider uppercase text-on-surface leading-none">Diagnostic Avancé</h2>
+            </div>
+            <div class="bg-surface-container-low px-4 py-2 rounded border-l-2 border-secondary-container">
+                <p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Chassis ID</p>
+                <p class="font-technical text-primary text-sm">VIN: WBA8E310X0K129384</p>
+            </div>
+        </section>
+
+        <!-- Main Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <!-- RPM Gauge -->
+            <div class="md:col-span-8 bg-[#282a2e] rounded-xl p-6 relative overflow-hidden group border-none">
+                <div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <h3 class="font-headline text-2xl text-on-surface tracking-wide uppercase">Régime Moteur (RPM)</h3>
+                        <p class="text-on-surface-variant text-xs font-technical uppercase">Sensor: Crankshaft_Pos_A</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-technical text-4xl text-primary leading-none">6,842</span>
+                        <span class="text-on-surface-variant text-xs font-technical block">MAX: 8,500</span>
+                    </div>
+                </div>
+                <!-- Chart Placeholder -->
+                <div class="h-64 bg-[#0c0e12] rounded-lg relative overflow-hidden opacity-90 flex items-end">
+                     <svg class="w-full h-full" viewBox="0 0 1000 200">
+                        <line stroke="#524534" stroke-dasharray="8 4" stroke-width="1" x1="0" x2="1000" y1="100" y2="100"></line>
+                        <path d="M0 180 Q 100 150, 200 170 T 400 120 T 600 60 T 800 40 T 1000 30" fill="none" stroke="#f5a623" stroke-width="3"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Side Metrics -->
+            <div class="md:col-span-4 flex flex-col gap-6">
+                 <div class="bg-[#282a2e] rounded-xl p-5 relative overflow-hidden border-none flex-1">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-headline text-xl text-on-surface uppercase">Turbo Boost</h3>
+                        <span class="material-symbols-outlined text-on-surface-variant text-sm">speed</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="font-technical text-3xl text-primary">2.14</span>
+                        <span class="text-on-surface-variant font-technical text-sm">BAR</span>
+                    </div>
+                </div>
+                <div class="bg-[#282a2e] rounded-xl p-5 relative overflow-hidden border-none flex-1">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-error-container"></div>
+                    <h3 class="font-headline text-xl text-on-surface uppercase mb-4">Huile Moteur</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span class="font-technical text-3xl text-on-surface">104.5</span>
+                        <span class="text-on-surface-variant font-technical text-sm">°C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="md:col-span-12 bg-[#1a1c20] rounded-xl overflow-hidden border-none">
+            <div class="bg-[#1e2024] px-6 py-4 flex justify-between items-center">
+                <h3 class="font-headline text-xl text-on-surface tracking-wider uppercase">Comparatif Valeurs Nominales</h3>
+            </div>
+            <table class="w-full text-left">
+                <thead class="bg-[#0c0e12] text-on-surface-variant font-technical text-[10px] uppercase tracking-widest">
+                    <tr>
+                        <th class="px-6 py-3">Paramètre</th>
+                        <th class="px-6 py-3">Actuel</th>
+                        <th class="px-6 py-3">Référence</th>
+                        <th class="px-6 py-3 text-right">Statut</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/10">
+                    <tr class="hover:bg-[#282a2e] transition-all">
+                        <td class="px-6 py-4 font-body font-medium">Pression Carburant (HP)</td>
+                        <td class="px-6 py-4 font-technical text-primary">1,420 PSI</td>
+                        <td class="px-6 py-4 font-technical text-on-surface-variant">1,400 PSI</td>
+                        <td class="px-6 py-4 text-right"><span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase">Stable</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-[#111318]/80 backdrop-blur-xl border-t border-[#524534]/15 h-20 flex justify-around items-center px-4">
+        <a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1" href="/technique/diagnostic-avance">
+            <span class="material-symbols-outlined">precision_manufacturing</span>
+            <span class="font-technical text-[10px] uppercase tracking-tighter">Diagnostic</span>
+        </a>
+    </nav>
+</div>

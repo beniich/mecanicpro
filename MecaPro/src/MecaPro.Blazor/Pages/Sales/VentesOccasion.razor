@@ -1,0 +1,95 @@
+@page "/sales/ventes-occasion"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Ventes Occasion</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] border-b border-[#524534]/15 fixed top-0 w-full z-[60] flex justify-between items-center px-6 h-20">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+            <h1 class="font-headline uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <nav class="hidden md:flex gap-8 font-technical text-sm tracking-widest uppercase">
+                <a class="text-[#f5a623]" href="#">Inventory</a>
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">Analytics</a>
+            </nav>
+            <div class="h-10 w-10 rounded-full border border-primary/20 bg-surface-container-high flex items-center justify-center overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnAKwAOevyg15wZgE8Z9QiqOC6negebbpzOwyzfXGoIx7oBQNuI4-bG3J98EbGIIQwT2fYtiy74Rcu3IxAuj5H8Ie5sQY8-aNDO1COzRszSMnxioNY7TXWlHTYRyeo1zqzBmieZCCPv30BK55pQ62qKYBkHbeZpkTHY9KipWoGT6qFYUnuVw_pp96d3KD_7ERxb5Dmc9kJeuEkF392xnitkh-XbuVImm42I4ebqul4q6IDmDzKK5y9bSl1MfS3soz5nyvkmLIBMmxb" alt="Operator" class="w-full h-full object-cover"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+        <!-- Hero Section -->
+        <section class="mb-12">
+            <div class="relative rounded-xl overflow-hidden aspect-[21/9] bg-surface-container-low group">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA10T-5an_gVetpZm1nN7FtCZWK0L7Zaq0AF3ksQlW809O7E1hXgT3FsTp1sZjc2fQ2JhpfFPcbguAo5vqIrmyUlzeGP4EaW4Kz6eabF_mOa6OxdijyR7q27O-0YmWXriRu_hNoh4apr0aGb4Am1-vADmdQeTRHXdqyMI6IB8nXBL4NHVLEp4ab1raK-4_j0PMyBHEWnr_giKNHwNKyBt--9RtXs4ktshZedwvloQ0u06H_fT-Yl9CJubW0lIPr4-CvK9UptVa-4464" alt="Featured Porsche" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-all duration-700"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+                <div class="absolute bottom-8 left-8 right-8 flex flex-col md:flex-row justify-between items-end gap-6">
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded-full bg-primary-container/20 text-primary font-technical text-xs tracking-widest mb-4 border border-primary/30 uppercase">Premium_Stock_001</span>
+                        <h2 class="font-headline text-5xl md:text-7xl uppercase tracking-tight text-on-surface">PORSCHE 911 GT3 RS</h2>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="font-technical text-3xl text-primary mb-4 italic">189.500 €</span>
+                        <button class="bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container px-8 py-4 rounded-xl font-headline text-xl tracking-wider active:scale-95 transition-all flex items-center gap-3 shadow-lg shadow-primary-container/20">
+                            RÉSERVER ESSAI
+                            <span class="material-symbols-outlined">speed</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <aside class="space-y-8">
+                <div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-secondary-container shadow-xl">
+                    <h3 class="font-headline text-2xl mb-6 flex items-center gap-2 italic uppercase">
+                        <span class="material-symbols-outlined text-secondary-container">filter_alt</span>
+                        FILTRER_STOCK
+                    </h3>
+                    <div class="space-y-6 uppercase font-technical">
+                        <div>
+                            <label class="block text-[10px] text-on-surface-variant mb-2 tracking-widest font-bold">MARQUE</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button class="bg-surface-container-highest px-4 py-2 rounded text-[10px] text-primary border border-primary/40 font-bold tracking-tighter">ALL</button>
+                                <button class="bg-surface-container px-4 py-2 rounded text-[10px] text-on-surface-variant border border-outline-variant/15 font-bold tracking-tighter">PORSCHE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Vehicle Card -->
+                <div class="bg-surface-container-low rounded-xl overflow-hidden group border border-outline-variant/10 hover:border-primary/30 transition-all duration-300">
+                    <div class="aspect-video relative overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpQyJ3MBloc_kCZrzXU0wS56Omn3bIvSSkSf8INpz19ySo9naP6EIw5kkm5a2UeZnmhe2rdrrD_9jRy3w4cI2sI1p2huO6TeH7v3hR7ezQ20NppVS4ZImm76W9YfT2oTvOq7TxoR6qeHS_5DjJzNnbCHqKdNrOFMRPrPMNV5CXMJs7EGEIOyQbyMMLgH6OcCZ4sCFbuDxgyTPSDfL8_wYHsACaEnC9ciqtbATgZS0aqBbSZqP6GrjQALNMH5of14DMwe2LqmNkwfL8" alt="Audi RS6" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"/>
+                        <div class="absolute top-4 right-4 bg-surface-container-highest/80 backdrop-blur px-3 py-1 rounded-full border border-outline-variant/20">
+                            <span class="font-technical text-[10px] text-primary uppercase font-bold">Nouveau</span>
+                        </div>
+                    </div>
+                    <div class="p-6 uppercase">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-headline text-2xl tracking-wide italic">Audi RS6 Avant</h4>
+                            <span class="font-technical text-lg text-secondary-container font-black">115.900 €</span>
+                        </div>
+                        <div class="flex gap-4 text-[10px] font-technical text-on-surface-variant mb-6 font-bold tracking-widest">
+                            <span>2022</span>
+                            <span>•</span>
+                            <span>38.000 KM</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="bg-surface-container-highest text-[10px] font-technical font-bold py-3 rounded-xl hover:bg-surface-bright transition-colors tracking-widest">DÉTAILS</button>
+                            <button class="bg-primary/10 text-primary text-[10px] font-technical font-bold py-3 rounded-xl border border-primary/20 hover:bg-primary/20 transition-colors tracking-widest">ESSAI</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

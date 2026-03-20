@@ -1,0 +1,169 @@
+@page "/planning/planning-atelier"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Planning Atelier</PageTitle>
+
+<div class="bg-[#111318] text-on-surface font-body min-h-screen text-white">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/80 backdrop-blur-xl flex justify-between items-center px-6 py-4 border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-primary text-2xl">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-[0.2em] text-primary headline-font uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-6">
+             <div class="flex flex-col items-end">
+                <span class="text-[8px] font-black text-primary uppercase tracking-widest">REALTIME_WORKSHOP_FEED</span>
+                <span class="text-xs font-technical text-white/40">RESOURCE_COUNT: 03_BRIDGE_SYSTEM</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest border border-white/5 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary">engineering</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-32 px-4 md:px-8 max-w-[1600px] mx-auto">
+        <!-- Dashboard Header -->
+        <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div>
+                <span class="text-primary text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">WORKSHOP_LOGISTICS_HUB</span>
+                <h2 class="text-6xl font-black tracking-tighter text-white uppercase italic">Planning Atelier</h2>
+                <div class="flex items-center gap-4 text-white/40 mt-4">
+                    <span class="font-technical text-primary bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-xl uppercase tracking-widest text-xs">WEEK_@(GetIsoWeek(currentStart))</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span>
+                    <span class="font-black italic uppercase tracking-widest text-sm">@currentStart.ToString("dd MMMM") - @currentStart.AddDays(6).ToString("dd MMMM yyyy")</span>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <button @onclick="PrevWeek" class="flex items-center gap-2 bg-white/5 px-6 py-3 rounded-2xl border border-white/5 hover:bg-white/10 transition-all active:scale-95">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                    <span class="font-black uppercase italic tracking-widest text-xs">PRECEDENT</span>
+                </button>
+                <button @onclick="GoToday" class="flex items-center gap-2 bg-primary text-on-primary px-8 py-3 rounded-2xl font-black uppercase italic tracking-widest text-xs shadow-xl shadow-primary/20 transition-all active:scale-95">
+                    <span>AUJOURD'HUI</span>
+                </button>
+                <button @onclick="NextWeek" class="flex items-center gap-2 bg-white/5 px-6 py-3 rounded-2xl border border-white/5 hover:bg-white/10 transition-all active:scale-95">
+                    <span class="font-black uppercase italic tracking-widest text-xs">SUIVANT</span>
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
+
+        @if (loading)
+        {
+             <div class="grid grid-cols-4 gap-6 h-[600px]">
+                @foreach (var i in Enumerable.Range(0, 4))
+                {
+                    <div class="bg-surface-container-high animate-pulse rounded-[40px] opacity-20"></div>
+                }
+            </div>
+        }
+        else
+        {
+            <!-- Dynamic Schedule Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-[100px_1fr_1fr_1fr] gap-8">
+                <!-- Time Axis -->
+                <div class="hidden md:flex flex-col pt-24 uppercase">
+                    @foreach (var hour in Enumerable.Range(8, 11))
+                    {
+                        <div class="h-32 flex items-start justify-end pr-8 text-white/20 font-technical text-sm border-r border-white/5">@hour:00</div>
+                    }
+                </div>
+
+                @foreach (var resource in new[] { ("PONT_1", "LIFTING_BRIDGE_ALPHA"), ("PONT_2", "LIFTING_BRIDGE_BETA"), ("PONT_3", "LIFTING_BRIDGE_GAMMA") })
+                {
+                    <div class="flex flex-col gap-6">
+                        <div class="bg-surface-container-high p-8 rounded-[35px] border border-white/5 shadow-xl relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <h3 class="font-black text-2xl tracking-tighter text-primary uppercase italic">@resource.Item1</h3>
+                            <p class="text-[10px] uppercase text-white/30 font-technical mt-1 tracking-widest">@resource.Item2</p>
+                        </div>
+                        
+                        <div class="relative min-h-[800px] bg-white/[0.02] rounded-[40px] border border-white/5 p-4">
+                            @foreach (var app in schedule.SelectMany(s => s.Appointments).Where(a => a.ResourceName == resource.Item1))
+                            {
+                                <div @onclick='() => Nav.NavigateTo($"/clients/detail-intervention/{app.Id}")' class="absolute left-4 right-4 bg-[#111318] p-6 rounded-3xl border border-primary/20 border-l-8 border-l-primary hover:bg-primary/10 transition-all hover:scale-[1.02] cursor-pointer group shadow-2xl z-20" 
+                                     style="top: @(GetTopOffset(app.Start))px; height: @(GetHeight(app.DurationMinutes))px;">
+                                    
+                                    <div class="flex justify-between items-start mb-4">
+                                        <span class="font-technical text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded italic">@app.Start.ToString("HH:mm") - @app.Start.AddMinutes(app.DurationMinutes).ToString("HH:mm")</span>
+                                        <span class="material-symbols-outlined text-white/20 group-hover:text-primary transition-colors">analytics</span>
+                                    </div>
+                                    <h4 class="font-black text-white italic uppercase tracking-tighter text-lg leading-tight">@app.Title</h4>
+                                    <p class="text-[10px] text-white/40 mt-2 font-technical mb-4 truncate">@app.Description</p>
+                                    
+                                    <div class="flex items-center gap-2 mt-auto">
+                                        <div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+                                            <span class="material-symbols-outlined text-xs text-primary">engineering</span>
+                                        </div>
+                                        <span class="text-[8px] font-black uppercase tracking-widest text-primary">ASSIGNED_TECH_0@((Math.Abs(app.Id.GetHashCode()) % 5) + 1)</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </main>
+</div>
+
+<style>
+    .headline-font { font-family: 'Outfit', sans-serif; }
+    .font-technical { font-family: 'JetBrains Mono', monospace; }
+</style>
+
+@code {
+    private DateTime currentStart;
+    private List<WorkshopScheduleDto> schedule = new();
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentStart = GetStartOfWeek(DateTime.Today);
+        await LoadSchedule();
+    }
+
+    private async Task LoadSchedule()
+    {
+        loading = true;
+        var end = currentStart.AddDays(7);
+        var result = await Api.GetAsync<List<WorkshopScheduleDto>>($"/api/v1/revisions/schedule?start={currentStart:yyyy-MM-dd}&end={end:yyyy-MM-dd}");
+        if (result != null)
+        {
+            schedule = result;
+        }
+        loading = false;
+    }
+
+    private async Task NextWeek() { currentStart = currentStart.AddDays(7); await LoadSchedule(); }
+    private async Task PrevWeek() { currentStart = currentStart.AddDays(-7); await LoadSchedule(); }
+    private async Task GoToday() { currentStart = GetStartOfWeek(DateTime.Today); await LoadSchedule(); }
+
+    private DateTime GetStartOfWeek(DateTime dt)
+    {
+        int diff = (7 + (dt.DayOfWeek - DayOfWeek.Monday)) % 7;
+        return dt.AddDays(-1 * diff).Date;
+    }
+
+    private int GetIsoWeek(DateTime dt)
+    {
+        DayOfWeek day = System.Globalization.CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(dt);
+        if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday) dt = dt.AddDays(3);
+        return System.Globalization.CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(dt, System.Globalization.NumberFormatInfo.CurrentInfo, System.Globalization.CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+    }
+
+    private int GetTopOffset(DateTime start)
+    {
+        // 8:00 is offset 0. Each hour is 128px (h-32 = 8rem = 128px)
+        var totalMinutesFrom8 = (start.Hour - 8) * 60 + start.Minute;
+        return (totalMinutesFrom8 * 128) / 60;
+    }
+
+    private int GetHeight(int minutes)
+    {
+        return (minutes * 128) / 60;
+    }
+}

@@ -1,128 +1,120 @@
 @page "/"
 @attribute [Authorize]
+@inject MecaPro.Blazor.Services.ApiClient Api
 
 <PageTitle>Tableau de bord — MecaPro</PageTitle>
 
-<div class="fade-in">
-  <div class="kpi-row">
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(245,166,35,.12)">🚗</div>
-      <div class="kpi-value" style="color:var(--accent)">47</div>
-      <div class="kpi-label">Véhicules en cours</div>
-      <div class="kpi-trend trend-up">↑ +3 cette semaine</div>
+<div class="fade-in space-y-8 animate-in fade-in duration-700">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-surface-container-high p-6 rounded-xl border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-2xl">directions_car</span>
+        </div>
+        <div class="font-technical text-3xl font-bold text-on-surface">@(stats?.VehiclesInProgress ?? 47)</div>
+      </div>
+      <div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Véhicules en cours</div>
+      <div class="mt-2 text-[10px] text-primary font-bold uppercase">↑ +3 cette semaine</div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(239,68,68,.12)">⚠️</div>
-      <div class="kpi-value" style="color:var(--red)">12</div>
-      <div class="kpi-label">Pannes diagnostiquées</div>
-      <div class="kpi-trend trend-down">↓ -2 vs hier</div>
+
+    <div class="bg-surface-container-high p-6 rounded-xl border-l-4 border-secondary shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center text-secondary">
+          <span class="material-symbols-outlined text-2xl">report_problem</span>
+        </div>
+        <div class="font-technical text-3xl font-bold text-on-surface">@(stats?.ActiveDiagnostics ?? 12)</div>
+      </div>
+      <div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Pannes diagnostiquées</div>
+      <div class="mt-2 text-[10px] text-secondary font-bold uppercase">↓ -2 vs hier</div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(34,197,94,.12)">✅</div>
-      <div class="kpi-value" style="color:var(--green)">183</div>
-      <div class="kpi-label">Révisions complètes</div>
-      <div class="kpi-trend trend-up">↑ +8 ce mois</div>
+
+    <div class="bg-surface-container-high p-6 rounded-xl border-l-4 border-tertiary shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 bg-tertiary/10 rounded-lg flex items-center justify-center text-tertiary">
+          <span class="material-symbols-outlined text-2xl">check_circle</span>
+        </div>
+        <div class="font-technical text-3xl font-bold text-on-surface">183</div>
+      </div>
+      <div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Révisions complètes</div>
+      <div class="mt-2 text-[10px] text-tertiary font-bold uppercase">↑ +8 ce mois</div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(59,130,246,.12)">💶</div>
-      <div class="kpi-value" style="color:var(--blue)">42k</div>
-      <div class="kpi-label">CA mensuel (€)</div>
-      <div class="kpi-trend trend-up">↑ +12% vs M-1</div>
+
+    <div class="bg-surface-container-high p-6 rounded-xl border-l-4 border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 bg-outline-variant/10 rounded-lg flex items-center justify-center text-on-surface">
+          <span class="material-symbols-outlined text-2xl">payments</span>
+        </div>
+        <div class="font-technical text-3xl font-bold text-on-surface">42k</div>
+      </div>
+      <div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">CA mensuel (€)</div>
+      <div class="mt-2 text-[10px] text-on-surface-variant font-bold uppercase">↑ +12% vs M-1</div>
     </div>
   </div>
 
-  <div class="grid-3">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
     <!-- Véhicules actifs -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">🚗 Véhicules Actifs</div>
-        <button class="btn btn-ghost" style="font-size:11px;padding:5px 10px">Voir tout</button>
+    <div class="lg:col-span-8 bg-surface-container-low p-6 rounded-xl border border-outline-variant/10 shadow-sm">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-headline text-2xl tracking-widest uppercase italic text-on-surface">Véhicules Actifs</h3>
+        <button class="px-4 py-2 bg-surface-container-highest text-[10px] font-bold uppercase tracking-widest rounded transition-colors hover:bg-surface-bright">Voir tout</button>
       </div>
-      <table>
-        <tr><th>Immatriculation</th><th>Marque</th><th>Client</th><th>Statut</th><th>Révision</th></tr>
-        <tr>
-          <td><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent)">AB-123-CD</span></td>
-          <td>Peugeot 308</td><td>M. Dupont</td>
-          <td><span class="badge badge-orange">En cours</span></td>
-          <td>15/03/25</td>
-        </tr>
-        <tr>
-          <td><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent)">EF-456-GH</span></td>
-          <td>Renault Clio</td><td>Mme. Martin</td>
-          <td><span class="badge badge-blue">Diagnostic</span></td>
-          <td>18/03/25</td>
-        </tr>
-        <tr>
-          <td><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent)">IJ-789-KL</span></td>
-          <td>BMW Série 3</td><td>M. Bernard</td>
-          <td><span class="badge badge-green">Terminé</span></td>
-          <td>12/03/25</td>
-        </tr>
-        <tr>
-          <td><span style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent)">MN-012-OP</span></td>
-          <td>Volkswagen Golf</td><td>Mme. Leroy</td>
-          <td><span class="badge badge-red">Urgent</span></td>
-          <td>20/03/25</td>
-        </tr>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b border-outline-variant/10">
+                    <th class="py-3 text-[10px] font-bold uppercase text-on-surface-variant tracking-widest">Immatriculation</th>
+                    <th class="py-3 text-[10px] font-bold uppercase text-on-surface-variant tracking-widest">Modèle</th>
+                    <th class="py-3 text-[10px] font-bold uppercase text-on-surface-variant tracking-widest">Client</th>
+                    <th class="py-3 text-[10px] font-bold uppercase text-on-surface-variant tracking-widest uppercase">Statut</th>
+                    <th class="py-3 text-[10px] font-bold uppercase text-on-surface-variant tracking-widest">Révision</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/5">
+                <tr>
+                    <td class="py-4 font-technical text-primary font-bold">AB-123-CD</td>
+                    <td class="py-4 text-sm">Peugeot 308</td>
+                    <td class="py-4 text-sm">M. Dupont</td>
+                    <td class="py-4"><span class="bg-secondary/10 text-secondary px-2 py-0.5 rounded text-[10px] font-bold uppercase">En cours</span></td>
+                    <td class="py-4 text-[10px] font-technical">15/03/25</td>
+                </tr>
+                <tr>
+                    <td class="py-4 font-technical text-primary font-bold">EF-456-GH</td>
+                    <td class="py-4 text-sm">Renault Clio</td>
+                    <td class="py-4 text-sm">Mme. Martin</td>
+                    <td class="py-4"><span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px] font-bold uppercase">Diagnostic</span></td>
+                    <td class="py-4 text-[10px] font-technical">18/03/25</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Stats rapides -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">📊 Statistiques Semaine</div>
-      </div>
-      <div class="card-body">
-        <div class="stat-pill">
-          <span class="stat-pill-label">Taux de retour client</span>
-          <span class="stat-pill-value" style="color:var(--green)">94%</span>
+    <div class="lg:col-span-4 bg-surface-container-low p-6 rounded-xl border border-outline-variant/10 shadow-sm">
+      <h3 class="font-headline text-2xl tracking-widest uppercase italic text-on-surface mb-6">Statistiques Semaine</h3>
+      <div class="space-y-4">
+        <div class="flex justify-between items-center p-3 bg-surface-container-high rounded-lg border border-outline-variant/5">
+          <span class="text-[10px] font-bold uppercase text-on-surface-variant">Taux retour client</span>
+          <span class="font-technical text-primary font-bold">94%</span>
         </div>
-        <div class="stat-pill">
-          <span class="stat-pill-label">Durée moy. révision</span>
-          <span class="stat-pill-value">2h 40m</span>
+        <div class="flex justify-between items-center p-3 bg-surface-container-high rounded-lg border border-outline-variant/5">
+          <span class="text-[10px] font-bold uppercase text-on-surface-variant">Durée moy. révision</span>
+          <span class="font-technical text-on-surface font-bold">2h 40m</span>
         </div>
-        <div class="stat-pill">
-          <span class="stat-pill-label">Pièces commandées</span>
-          <span class="stat-pill-value">34</span>
+        <div class="flex justify-between items-center p-3 bg-surface-container-high rounded-lg border border-outline-variant/5">
+          <span class="text-[10px] font-bold uppercase text-on-surface-variant">Pièces commandées</span>
+          <span class="font-technical text-secondary font-bold">34</span>
         </div>
-        <div class="stat-pill">
-          <span class="stat-pill-label">Coût moy. intervention</span>
-          <span class="stat-pill-value" style="color:var(--accent)">287 €</span>
-        </div>
-        <div class="stat-pill">
-          <span class="stat-pill-label">Messages non lus</span>
-          <span class="stat-pill-value" style="color:var(--red)">7</span>
-        </div>
-        <div class="stat-pill">
-          <span class="stat-pill-label">QR scannés aujourd'hui</span>
-          <span class="stat-pill-value" style="color:var(--blue)">23</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Alertes -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">🔔 Alertes & Urgences</div>
-      <span class="badge badge-red">4 actives</span>
-    </div>
-    <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
-      <div style="padding:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;display:flex;align-items:center;gap:12px;font-size:13px">
-        <span style="color:var(--red);font-size:20px">🔴</span>
-        <div><strong>MN-012-OP</strong> — Fuite de frein critique. Intervention immédiate requise.</div>
-        <button class="btn btn-ghost" style="margin-left:auto;font-size:11px">Voir</button>
-      </div>
-      <div style="padding:12px;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.2);border-radius:8px;display:flex;align-items:center;gap:12px;font-size:13px">
-        <span style="font-size:20px">🟡</span>
-        <div><strong>Stock critique</strong> — Plaquettes de frein Bosch en rupture (2 restantes).</div>
-        <button class="btn btn-ghost" style="margin-left:auto;font-size:11px">Commander</button>
-      </div>
-      <div style="padding:12px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;display:flex;align-items:center;gap:12px;font-size:13px">
-        <span style="font-size:20px">🔵</span>
-        <div><strong>5 révisions</strong> programmées demain. Préparer les dossiers clients.</div>
-        <button class="btn btn-ghost" style="margin-left:auto;font-size:11px">Planifier</button>
       </div>
     </div>
   </div>
 </div>
+
+@code {
+    private MecaPro.Blazor.Services.DashboardStatsDto? stats;
+
+    protected override async Task OnInitializedAsync()
+    {
+        stats = await Api.GetAsync<MecaPro.Blazor.Services.DashboardStatsDto>("/api/v1/dashboard/stats");
+    }
+}

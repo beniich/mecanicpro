@@ -1,0 +1,128 @@
+@page "/logistics/suivi-livraisons-2"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#06070a] text-white p-8 font-['Outfit']">
+    <!-- Logistics Reception Hub Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-teal-600/20 flex items-center justify-center border border-teal-500/30">
+                    <span class="material-symbols-outlined text-teal-400">inventory_2</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Dock <span class="text-teal-500 font-light italic">RECEPTION</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">GESTION DES RÉCEPTIONS PHYSIQUES & SCAN DE QUAI</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-[2rem] flex items-center gap-8">
+                 <div class="text-center">
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Attente Quai</p>
+                      <p class="text-2xl font-black italic italic shadow-none border-none border-0">3 <span class="text-xs text-white/50 lowercase">colis</span></p>
+                 </div>
+                 <div class="w-[1px] h-10 bg-white/10"></div>
+                 <div class="text-center">
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Scan Today</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-teal-500">14</p>
+                 </div>
+             </div>
+             <button class="bg-teal-600 text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">qr_code_scanner</span> DÉMARRER SCAN
+             </button>
+        </div>
+    </div>
+
+    <!-- Active Receptions Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        @foreach (var pkg in pendingReceptions)
+        {
+            <div class="bg-[#111318]/80 backdrop-blur-3xl border border-white/10 rounded-[3.5rem] p-10 hover:bg-white/[0.04] transition-all group overflow-hidden relative shadow-2xl">
+                 <div class="absolute -right-12 -top-12 w-48 h-48 bg-teal-600/10 blur-3xl opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity"></div>
+                 
+                 <div class="flex justify-between items-start mb-8">
+                      <div>
+                           <div class="flex items-center gap-4 mb-2">
+                                <span class="px-3 py-1 bg-teal-600/20 text-teal-500 text-[8px] font-black uppercase tracking-widest rounded-full border border-teal-500/30 italic shadow-none border-none">LIVRAISON EN COURS</span>
+                                <h3 class="text-3xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none">@pkg.Supplier</h3>
+                           </div>
+                           <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest italic shadow-none border-none border-0 italic leading-relaxed">MODES : @pkg.Carrier — @pkg.TrackingID</p>
+                      </div>
+                      <div class="w-16 h-16 rounded-[1.5rem] bg-black border border-white/10 flex items-center justify-center font-black text-xl italic uppercase">@pkg.Carrier.Substring(0, 1)</div>
+                 </div>
+
+                 <div class="bg-black/40 p-10 rounded-[2.5rem] border border-white/5 mb-10 overflow-hidden relative">
+                      <div class="flex flex-col md:flex-row justify-between gap-10">
+                           <div class="flex-grow">
+                                <p class="text-[10px] text-gray-600 font-extrabold uppercase mb-4 italic shadow-none border-none italic leading-relaxed">Contenu du Colis</p>
+                                <div class="space-y-4">
+                                     @foreach (var item in pkg.Items)
+                                     {
+                                         <div class="flex items-center gap-4 group/item">
+                                              <div class="w-2 h-2 rounded-full @(item.IsScanned ? "bg-teal-500 shadow-[0_0_10px_rgba(20,184,166,0.6)]" : "bg-gray-700")"></div>
+                                              <p class="text-xs font-black uppercase italic @(item.IsScanned ? "text-white" : "text-gray-500")">@item.Label</p>
+                                              <span class="ml-auto text-[10px] font-black italic text-gray-700">@item.Qty x</span>
+                                         </div>
+                                     }
+                                </div>
+                           </div>
+                           
+                           <div class="flex flex-col items-center justify-center gap-4 bg-teal-600/5 px-8 py-4 rounded-3xl border border-teal-500/20">
+                                <p class="text-[9px] text-teal-400 font-black italic shadow-none border-none italic leading-relaxed"> Progression Réception</p>
+                                <div class="w-24 h-24 rounded-full border-[10px] border-white/5 flex items-center justify-center relative">
+                                     <span class="text-2xl font-black italic text-white shadow-none border-none italic">@pkg.Progress%</span>
+                                     <!-- Simple Circle CSS via style for demo -->
+                                     <div class="absolute inset-[-10px] rounded-full border-[10px] border-teal-500 opacity-40 border-t-transparent animate-spin-slow"></div>
+                                </div>
+                           </div>
+                      </div>
+                 </div>
+
+                 <div class="flex gap-4">
+                      <button class="flex-grow bg-white/5 hover:bg-white/10 border border-white/10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl font-outfit uppercase tracking-widest">SIGNALER ÉCART (RMA)</button>
+                      <button class="bg-teal-600 text-black px-12 py-5 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-teal-900/40">VALIDER COLIS</button>
+                 </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<DockPackage> pendingReceptions = new()
+    {
+        new DockPackage { 
+            Supplier = "VALEO PRO SERVICE", 
+            Carrier = "CHRONOPOST", 
+            TrackingID = "CH-9921-X", 
+            Progress = 66,
+            Items = new() {
+                new DockItem { Label = "ESSUIE-GLACE SILENCIO X2", Qty = 12, IsScanned = true },
+                new DockItem { Label = "CAPTEUR ABS BMW SERIE 1", Qty = 4, IsScanned = true },
+                new DockItem { Label = "POMPE À EAU MASTER ZE", Qty = 2, IsScanned = false }
+            }
+        },
+        new DockPackage { 
+            Supplier = "BOSCH AUTOMOTIVE", 
+            Carrier = "DHL EXPRESS", 
+            TrackingID = "DH-4410-L", 
+            Progress = 0,
+            Items = new() {
+                new DockItem { Label = "UNITÉ DE CONTRÔLE ECU", Qty = 1, IsScanned = false },
+                new DockItem { Label = "KIT DISTRIBUTION V8", Qty = 2, IsScanned = false }
+            }
+        }
+    };
+
+    public class DockPackage {
+        public string Supplier { get; set; } = "";
+        public string Carrier { get; set; } = "";
+        public string TrackingID { get; set; } = "";
+        public int Progress { get; set; }
+        public List<DockItem> Items { get; set; } = new();
+    }
+
+    public class DockItem {
+        public string Label { get; set; } = "";
+        public int Qty { get; set; }
+        public bool IsScanned { get; set; }
+    }
+}

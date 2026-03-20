@@ -1,0 +1,68 @@
+@page "/planning/revisions-plannings"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Révisions Planifiées</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full border-b border-[#524534]/15 z-40 sticky top-0">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[#f5a623] text-2xl">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] font-headline uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#e2e2e8]/60">notifications</span>
+            <div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center">
+                <span class="material-symbols-outlined text-sm">person</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Hero Section / KPI -->
+        <div class="mb-10 grid grid-cols-1 md:grid-cols-3 gap-6 uppercase font-headline">
+            <div class="md:col-span-2 bg-surface-container-low p-8 rounded-xl border-l-2 border-secondary-container flex flex-col justify-between">
+                <div>
+                    <h2 class="text-5xl tracking-wider text-on-surface mb-2 italic">Révisions Planifiées</h2>
+                    <p class="text-on-surface-variant font-body normal-case">Suivi technique et maintenance préventive de la flotte.</p>
+                </div>
+                <div class="mt-8 flex gap-12">
+                    <div>
+                        <p class="font-technical text-primary text-4xl font-bold tracking-tighter">12</p>
+                        <p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-label">En attente</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-surface-container-high p-6 rounded-xl flex flex-col items-center justify-center text-center">
+                <div class="relative w-32 h-32 mb-4">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle class="text-surface-container-lowest" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+                        <circle class="text-primary-container" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="100" stroke-width="8"></circle>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <span class="font-technical text-2xl font-bold text-primary">72%</span>
+                        <span class="text-[8px] uppercase font-bold tracking-tighter">Performance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revision Cards List -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-8 space-y-4">
+                <div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col md:flex-row border-l-4 border-primary group">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-4 uppercase">
+                            <div>
+                                <span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px] font-bold font-technical mb-2 inline-block">DISTRIBUTION</span>
+                                <h4 class="text-xl font-bold font-body normal-case">Volkswagen Golf VIII</h4>
+                                <p class="font-technical text-sm text-on-surface-variant tracking-wider">VIN: WVWZZZCDZLW123456</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

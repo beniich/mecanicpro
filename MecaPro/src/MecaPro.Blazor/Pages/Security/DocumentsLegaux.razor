@@ -1,0 +1,103 @@
+@page "/securite/documents-legaux"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Indigo/Cyber GED Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 flex items-center justify-center border border-indigo-500/30 shadow-[0_0_30px_rgba(79,70,229,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-indigo-400 text-3xl">folder_managed</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-indigo-600"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Legal <span class="text-indigo-500 font-light italic uppercase shadow-none border-none">ARCHIVE</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">GESTION ÉLECTRONIQUE DES DOCUMENTS (GED) & CONFORMITÉ KBIS/ASSURANCES</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-3xl flex items-center gap-8 shadow-xl shadow-black/40">
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Docs Expire</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-red-500 uppercase tracking-widest leading-relaxed">2</p>
+                 </div>
+                 <div class="w-[1px] h-10 bg-white/10"></div>
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Total Archivé</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 uppercase tracking-widest leading-relaxed">42</p>
+                 </div>
+             </div>
+             <button class="bg-indigo-600 text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">upload_file</span> NOUVEAU DOC
+             </button>
+        </div>
+    </div>
+
+    <!-- GED Document Matrix Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        @foreach (var doc in legalDocs)
+        {
+            <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 hover:bg-white/[0.04] transition-all cursor-pointer group shadow-2xl relative overflow-hidden flex flex-col">
+                 <div class="absolute -right-8 -top-8 w-24 h-24 bg-indigo-600/5 blur-3xl opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity"></div>
+                 
+                 <div class="flex justify-between items-start mb-8">
+                      <div class="w-12 h-12 rounded-xl bg-black border border-white/10 flex items-center justify-center font-black text-xs uppercase italic tracking-tighter">@doc.Extension</div>
+                      <span class="px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-tighter border @(GetExpiryStyle(doc.DaysUntilExpiry)) overflow-hidden italic shadow-none border-none">@(doc.DaysUntilExpiry < 0 ? "EXPIRÉ" : (doc.DaysUntilExpiry < 30 ? "EXPIRE BIENTÔT" : "VALIDE"))</span>
+                 </div>
+                 
+                 <h3 class="text-base font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-2 italic">@doc.Name</h3>
+                 <p class="text-[9px] text-gray-500 font-black uppercase italic shadow-none border-none border-0 mb-8 uppercase tracking-widest leading-relaxed uppercase tracking-widest leading-relaxed">Catégorie : @doc.Category</p>
+                 
+                 <div class="mt-auto space-y-4 pt-6 border-t border-white/5">
+                      <div class="flex justify-between items-center text-[9px]">
+                           <span class="text-gray-600 font-black uppercase italic shadow-none border-none border-0 lowercase tracking-widest leading-relaxed italic">Échéance</span>
+                           <span class="font-black italic text-gray-300">@doc.ExpiryDate</span>
+                      </div>
+                      <button class="w-full bg-white/5 hover:bg-indigo-600 hover:text-black py-4 rounded-xl border border-white/10 transition-all text-[9px] font-black uppercase tracking-widest italic shadow-xl shadow-black/40">VISUALISER RESSOUCE</button>
+                 </div>
+            </div>
+        }
+    </div>
+
+    <!-- Cloud Storage / Activity Bar -->
+    <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 flex flex-col md:flex-row justify-between items-center gap-10 shadow-2xl">
+         <div class="flex items-center gap-6">
+              <span class="material-symbols-outlined text-indigo-500 text-3xl">cloud_done</span>
+              <div>
+                   <p class="text-[9px] text-gray-600 font-extrabold uppercase mb-1 italic shadow-none border-none shadow-none border-0 lowercase tracking-widest leading-relaxed">Espace Utilisé Cloud (Azure Blob)</p>
+                   <p class="text-xl font-black italic italic shadow-none border-none border-0 uppercase tracking-widest leading-relaxed">842.1 <span class="text-xs text-indigo-500">MB</span> / 5 GB</p>
+              </div>
+         </div>
+         <div class="flex-grow max-w-lg h-2 bg-white/5 rounded-full overflow-hidden">
+              <div class="h-full bg-indigo-600" style="width: 18%"></div>
+         </div>
+         <button class="bg-indigo-600 text-black px-12 py-5 rounded-3xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-indigo-900/40 italic">CONFORMITÉ REPORTING</button>
+    </div>
+</div>
+
+@code {
+    private List<LegalDoc> legalDocs = new()
+    {
+        new LegalDoc { Name = "EXTRAIT KBIS 2026", Category = "ENTREPRISE", Extension = "PDF", ExpiryDate = "12 MAR 2027", DaysUntilExpiry = 356 },
+        new LegalDoc { Name = "RC PROFESSIONNELLE - ALLIANZ", Category = "ASSURANCE", Extension = "PDF", ExpiryDate = "31 DÉC 2026", DaysUntilExpiry = 285 },
+        new LegalDoc { Name = "CONFORMITÉ ICPE 95 (DREAL)", Category = "HYGIÈNE ENV.", Extension = "DOCX", ExpiryDate = "18 MAR 2026", DaysUntilExpiry = -2 },
+        new LegalDoc { Name = "ACCRÉDITATION RENAULT EV", Category = "CONSTRUCTEUR", Extension = "PDF", ExpiryDate = "04 AVR 2026", DaysUntilExpiry = 14 },
+        new LegalDoc { Name = "CONTRAT BAIL COMMERCIAL", Category = "LOCAUX", Extension = "PDF", ExpiryDate = "15 JUIN 2030", DaysUntilExpiry = 1500 },
+        new LegalDoc { Name = "URSSAF VIGILANCE Q1-2026", Category = "SOCIAL", Extension = "PDF", ExpiryDate = "31 MAR 2026", DaysUntilExpiry = 11 }
+    };
+
+    private string GetExpiryStyle(int days) => days switch
+    {
+        < 0 => "border-red-500/30 text-red-500 bg-red-500/10 shadow-[0_0_10px_rgba(239,68,68,0.2)]",
+        < 30 => "border-orange-500/30 text-orange-500 bg-orange-500/10",
+        _ => "border-emerald-500/30 text-emerald-500 bg-emerald-500/10"
+    };
+
+    public class LegalDoc {
+        public string Name { get; set; } = "";
+        public string Category { get; set; } = "";
+        public string Extension { get; set; } = "";
+        public string ExpiryDate { get; set; } = "";
+        public int DaysUntilExpiry { get; set; }
+    }
+}

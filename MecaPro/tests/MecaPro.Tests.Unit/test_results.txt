@@ -1,0 +1,41 @@
+﻿  Identification des projets ├á restaurer...
+  Tous les projets sont ├á jour pour la restauration.
+  MecaPro.Domain -> C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Domain\bin\Debug\net9.0\MecaPro.Domain.dll
+  MecaPro.Application -> C:\Users\pc gold\projet dash\mecanicpro\MecaPro\src\MecaPro.Application\bin\Debug\net9.0\MecaPro.Application.dll
+  MecaPro.Tests.Unit -> C:\Users\pc gold\projet dash\mecanicpro\MecaPro\tests\MecaPro.Tests.Unit\bin\Debug\net9.0\MecaPro.Tests.Unit.dll
+S├®rie de tests pour C:\Users\pc gold\projet dash\mecanicpro\MecaPro\tests\MecaPro.Tests.Unit\bin\Debug\net9.0\MecaPro.Tests.Unit.dll (.NETCoreApp,Version=v9.0)
+Version de VSTest 17.14.0 (x64)
+
+D├®marrage de l'ex├®cution de tests, patientez...
+Au total, 1 fichiers de test ont correspondu au mod├¿le sp├®cifi├®.
+  ├ëchou├® MecaPro.Tests.Unit.DomainTests.Part_DecrementStock_Should_Throw_If_Stock_Insufficient [285 ms]
+  Message d'erreur┬á:
+   Expected part.StockQuantity to be -10, but found 20 (difference of 30).
+  Arborescence des appels de proc├®dure┬á:
+     at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Numeric.NumericAssertions`2.Be(T expected, String because, Object[] becauseArgs)
+   at MecaPro.Tests.Unit.DomainTests.Part_DecrementStock_Should_Throw_If_Stock_Insufficient() in C:\Users\pc gold\projet dash\mecanicpro\MecaPro\tests\MecaPro.Tests.Unit\UnitTests.cs:line 49
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  ├ëchou├® MecaPro.Tests.Unit.DomainTests.Vehicle_UpdateMileage_Should_Throw_If_Mileage_Lower_Than_Current [15 ms]
+  Message d'erreur┬á:
+   Expected a <System.InvalidOperationException> to be thrown, but no exception was thrown.
+  Arborescence des appels de proc├®dure┬á:
+     at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+   at FluentAssertions.Specialized.DelegateAssertionsBase`2.ThrowInternal[TException](Exception exception, String because, Object[] becauseArgs)
+   at FluentAssertions.Specialized.DelegateAssertions`2.Throw[TException](String because, Object[] becauseArgs)
+   at MecaPro.Tests.Unit.DomainTests.Vehicle_UpdateMileage_Should_Throw_If_Mileage_Lower_Than_Current() in C:\Users\pc gold\projet dash\mecanicpro\MecaPro\tests\MecaPro.Tests.Unit\UnitTests.cs:line 38
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+├ëchou├®!  - ├®chec┬á:     2, r├®ussite┬á:    17, ignor├®e(s)┬á:     0, total┬á:    19, dur├®e┬á: 351 ms - MecaPro.Tests.Unit.dll (net9.0)

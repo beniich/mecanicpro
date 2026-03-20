@@ -1,0 +1,125 @@
+@page "/diagnostic/batterie-ev"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Analyse Batterie EV</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen pb-24 overflow-x-hidden relative">
+
+    <!-- Glowing Lines Decor -->
+    <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-sky-500/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-sky-400">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-sky-400 uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="bg-sky-400/10 border border-sky-400/30 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase text-sky-400 tracking-widest flex items-center gap-2 shadow-[0_0_20px_rgba(56,189,248,0.15)]">
+                <span class="material-symbols-outlined text-sm">battery_charging_full</span> BMS_LINK_ENCRYPTED
+            </span>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-6xl mx-auto space-y-12 relative z-10">
+
+        <!-- Title Section -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+            <div>
+                <span class="text-sky-400 text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">ELECTRIC_DRIVE_DIAGNOSTICS</span>
+                <h2 class="text-7xl font-black tracking-tighter italic uppercase leading-none text-white">Analyse Accu EV</h2>
+                <div class="flex gap-4 mt-6">
+                    <span class="px-4 py-1.5 bg-white/5 border border-white/5 rounded-full text-[10px] uppercase font-black tracking-widest text-[#00FF66] flex items-center gap-2 shadow-none">TESLA MODEL S PLAID</span>
+                    <span class="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-[10px] uppercase font-black tracking-widest text-white/40">VIN: 5YJSA1E2...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-surface-container rounded-[32px] p-8 border border-white/5 shadow-2xl relative overflow-hidden flex flex-col items-center">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-6">SOH — ÉTAT SANTÉ</p>
+                <div class="relative w-32 h-32 flex items-center justify-center">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="64" cy="64" r="58" stroke="rgba(0,255,102,0.05)" stroke-width="12" fill="transparent" />
+                        <circle cx="64" cy="64" r="58" stroke="#00FF66" stroke-width="12" fill="transparent" stroke-dasharray="364" stroke-dashoffset="36.4" />
+                    </svg>
+                    <span class="absolute text-5xl font-black italic text-white font-technical leading-none">90%</span>
+                </div>
+                <p class="text-[9px] font-black text-[#00FF66] uppercase mt-6 tracking-widest">DÉGRADATION NORMALE</p>
+            </div>
+            
+            <div class="bg-surface-container rounded-[32px] p-8 border border-white/5 shadow-2xl relative overflow-hidden flex flex-col items-center">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-6">AUTONOMIE MAX (PROJ.)</p>
+                <div class="flex flex-col items-center justify-center h-32">
+                    <p class="text-6xl font-black italic text-sky-400 font-technical leading-none tracking-tighter">542</p>
+                    <p class="text-xl font-black text-white/30 italic uppercase mt-2">KM TOTAL</p>
+                </div>
+                <p class="text-[9px] font-black text-white/20 uppercase mt-6 tracking-widest">VS 600KM CONSTRUC.</p>
+            </div>
+
+            <div class="bg-surface-container rounded-[32px] p-8 border border-white/5 shadow-2xl relative overflow-hidden flex flex-col items-center">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-6">CYCLES DE CHARGE</p>
+                <div class="flex flex-col items-center justify-center h-32">
+                    <p class="text-6xl font-black italic text-white font-technical leading-none tracking-tighter">142</p>
+                    <div class="flex gap-2 mt-4">
+                        <span class="w-1 h-3 bg-white/10 rounded-full"></span><span class="w-1 h-3 bg-white/10 rounded-full"></span><span class="w-1 h-3 bg-white/30 rounded-full"></span><span class="w-1 h-3 bg-white/5 rounded-full"></span>
+                    </div>
+                </div>
+                <p class="text-[9px] font-black text-white/20 uppercase mt-6 tracking-widest">LIFE EXPECTANCY: 85%</p>
+            </div>
+
+            <div class="bg-surface-container rounded-[32px] p-8 border border-white/5 shadow-2xl relative overflow-hidden flex flex-col items-center">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-6">TÉMPERATURE MOY.</p>
+                <div class="flex flex-col items-center justify-center h-32">
+                    <div class="text-6xl font-black italic text-[#FFD700] font-technical leading-none tracking-tighter">24.5<span class="text-2xl text-white/30 opacity-50">°C</span></div>
+                    <div class="w-full max-w-[120px] h-1 bg-white/10 rounded-full mt-6 overflow-hidden"><div class="w-1/2 h-full bg-[#FFD700]"></div></div>
+                </div>
+                <p class="text-[9px] font-black text-[#FFD700] uppercase mt-6 tracking-widest italic">OPTIMAL WORKING RANGE</p>
+            </div>
+        </div>
+
+        <!-- Advanced Analysis -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 bg-surface-container rounded-[40px] border border-white/5 p-10 flex flex-col shadow-2xl h-[450px]">
+                <h3 class="font-black text-2xl italic uppercase tracking-tight text-white mb-8">Déséquilibre Cellules (Volts)</h3>
+                <div class="flex-grow flex items-end justify-between gap-1 relative pt-12">
+                   @for (int i = 0; i < 32; i++)
+                   {
+                       var h = 60 + Random.Shared.Next(0, 40);
+                       <div class="flex-grow bg-sky-400 group relative @(h > 95 ? "bg-red-400 animate-pulse" : "bg-sky-400/30 hover:bg-sky-400")" 
+                            style="height: @(h)%;">
+                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white text-black text-[6px] px-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap">3.6@(i)V</div>
+                       </div>
+                   }
+                </div>
+                <div class="grid grid-cols-2 mt-8 py-4 border-t border-white/5">
+                    <div class="text-[8px] font-black uppercase text-white/30">DELTA MAX: 0.04V</div>
+                    <div class="text-[8px] font-black uppercase text-right text-[#00FF66]">ÉQUILIBRE CELLULES OK</div>
+                </div>
+            </div>
+
+            <div class="bg-[#111318] rounded-[40px] border border-white/5 p-10 flex flex-col justify-center gap-6 shadow-2xl">
+                <h3 class="font-black text-xl italic uppercase tracking-tight text-white">Rapport Diagnostic IA</h3>
+                <div class="bg-white/5 p-6 rounded-2xl border border-white/5 space-y-4">
+                    <p class="text-xs font-bold leading-loose text-white/60 uppercase tracking-widest italic">
+                       "Batterie Li-Ion de type 18650 affichant une dégradation linéaire conforme à son âge. Aucun point chaud détecté lors du stress test. Cycle de vie estimé : 840,000 KM."
+                    </p>
+                    <div class="w-1/2 h-px bg-white/10"></div>
+                    <p class="text-[10px] font-black uppercase text-sky-400">SIGNATURE NUMÉRIQUE APX-V2</p>
+                </div>
+                <button class="w-full bg-sky-500 text-white font-black uppercase text-[10px] tracking-widest py-4 rounded-xl hover:bg-sky-600 transition-all shadow-lg shadow-sky-500/10">IMPRIMER RAPPORT SANTÉ</button>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+@code {
+    
+}

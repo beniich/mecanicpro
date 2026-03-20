@@ -1,0 +1,155 @@
+@page "/clients/portail-flotte-b2b"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Portal Header (Client Side View) -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-4 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-500 flex items-center justify-center shadow-[0_0_20px_rgba(14,165,233,0.3)]">
+                    <span class="material-symbols-outlined text-black font-black">business</span>
+                </div>
+                <div>
+                   <h2 class="text-sm font-black uppercase text-sky-500 tracking-[0.3em] mb-1 italic shadow-none border-none">PORTAIL CLIENT PROFESSIONNEL</h2>
+                   <h1 class="text-4xl font-black italic uppercase italic tracking-tighter">TRANS-LOGISTIX <span class="text-gray-500 uppercase font-light">FLEET PORTAL</span></h1>
+                </div>
+            </div>
+            
+            <div class="flex gap-6 pt-4">
+                 <div class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl">
+                     <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">PARC TOTAL</p>
+                     <p class="text-2xl font-black italic">142 <span class="text-xs">U.</span></p>
+                 </div>
+                 <div class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl">
+                     <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">FACTURATION MOIS</p>
+                     <p class="text-2xl font-black italic text-sky-400">12,840 <span class="text-xs">€</span></p>
+                 </div>
+            </div>
+        </div>
+
+        <div class="bg-black/60 border border-white/5 rounded-[2rem] p-4 flex gap-8 items-center">
+             <div class="text-right">
+                 <p class="text-xs font-bold uppercase italic text-sky-500">M. Richard (Fleet Mgr)</p>
+                 <p class="text-[9px] text-gray-500 font-medium">Session valide — 04:52:10h</p>
+             </div>
+             <button class="bg-white/5 hover:bg-red-500/20 w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center transition-all group">
+                 <span class="material-symbols-outlined text-gray-500 group-hover:text-red-500">logout</span>
+             </button>
+        </div>
+    </div>
+
+    <!-- Quick Links for B2B portal -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        @foreach (var action in portalActions)
+        {
+            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 hover:bg-white/[0.04] transition-all cursor-pointer group hover:scale-105">
+                <div class="w-12 h-12 rounded-[1.5rem] @(action.BgColor) flex items-center justify-center border @(action.BorderColor) mb-6 mb-8 mt-2 ml-2">
+                    <span class="material-symbols-outlined @(action.TextColor) text-2xl font-black">@(action.Icon)</span>
+                </div>
+                <h3 class="text-lg font-black italic uppercase italic tracking-tighter mb-2 italic">@action.Title</h3>
+                <p class="text-[10px] text-gray-500 font-medium uppercase font-outfit uppercase tracking-widest leading-relaxed">@action.Description</p>
+            </div>
+        }
+    </div>
+
+    <!-- Fleet Status Grid for portal -->
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-12">
+        <!-- Main Fleet Map / Table -->
+        <div class="xl:col-span-2 bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10 relative overflow-hidden">
+             <h3 class="text-2xl font-black italic uppercase tracking-tighter mb-10">État du Parc à l'Instant T</h3>
+             
+             <div class="space-y-4 max-h-[400px] overflow-y-auto pr-4 no-scrollbar">
+                  @foreach (var car in fleetSnapshot)
+                  {
+                      <div class="p-6 bg-black/40 border border-white/5 rounded-[2.5rem] flex items-center gap-6 group hover:bg-white/[0.02]">
+                           <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center relative shadow-none border-none border-0">
+                                <span class="material-symbols-outlined text-gray-600 text-2xl">directions_car</span>
+                                <div class="absolute -top-1 -right-1 w-4 h-4 rounded-full @(car.StatusColor) border-2 border-[#1a1c24]"></div>
+                           </div>
+                           
+                           <div class="flex-grow">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-base font-black italic uppercase tracking-tight">@car.Plate</h4>
+                                    <span class="text-[10px] font-black italic uppercase @(car.StatusTextColor)">@car.Status</span>
+                                </div>
+                                <div class="flex gap-4 text-[10px] text-gray-500 font-bold uppercase tracking-widest font-outfit uppercase tracking-widest">
+                                     <span>MODEL: @car.Model</span>
+                                     <span>MILEAGE: @car.Km KM</span>
+                                     <span class="text-sky-500">NEXT: @car.NextService</span>
+                                </div>
+                           </div>
+                           
+                           <button class="bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:border-sky-500/50 transition-all font-outfit uppercase tracking-widest">Documents</button>
+                      </div>
+                  }
+             </div>
+        </div>
+
+        <!-- Right Col: Approvals & Financials -->
+        <div class="space-y-8">
+             <div class="bg-red-600/10 border border-red-500/20 rounded-[3rem] p-10">
+                  <h3 class="text-xs font-black uppercase text-red-500 tracking-[0.3em] mb-6 italic shadow-none border-none">DÉCISIONS ATTENDUES</h3>
+                  <div class="space-y-6">
+                       <div class="p-4 bg-black/40 rounded-2xl border border-white/5">
+                            <p class="text-[10px] text-gray-500 font-black uppercase mb-1">DEVIS #D-9921 — @fleetSnapshot[0].Plate</p>
+                            <p class="text-sm font-bold uppercase italic tracking-tight mb-4">REMPLACEMENT EMBRAYAGE — 1,120 €</p>
+                            <div class="flex gap-2">
+                                 <button class="flex-grow bg-red-600 text-white py-2 rounded-xl text-[9px] font-black uppercase tracking-widest shadow-lg shadow-red-900/40">APPROUVER</button>
+                                 <button class="bg-white/5 py-2 px-4 rounded-xl text-[9px] font-black uppercase tracking-widest border border-white/10 font-outfit uppercase tracking-widest">Détails</button>
+                            </div>
+                       </div>
+                  </div>
+             </div>
+
+             <div class="bg-sky-600/10 border border-sky-500/20 rounded-[3rem] p-10">
+                  <h3 class="text-xs font-black uppercase text-sky-500 tracking-[0.3em] mb-6 italic shadow-none border-none">SERVICE CLIENT DÉDIÉ</h3>
+                  <div class="flex items-center gap-4">
+                       <div class="w-14 h-14 rounded-2xl bg-sky-500 flex items-center justify-center shadow-[0_0_20px_rgba(14,165,233,0.3)]">
+                            <span class="material-symbols-outlined text-black text-2xl font-black">support_agent</span>
+                       </div>
+                       <div>
+                            <p class="text-xs font-black uppercase tracking-tight">Kévine (Votre Expert)</p>
+                            <p class="text-[10px] text-gray-500 italic mt-0.5 font-outfit uppercase tracking-widest">Disponible au 04.99.22.44.11</p>
+                       </div>
+                  </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<PortalAction> portalActions = new()
+    {
+        new PortalAction { Title = "Rendez-vous", Description = "Planifier une maintenance parc", Icon = "calendar_month", BgColor = "bg-sky-600/10", BorderColor = "border-sky-500/20", TextColor = "text-sky-500" },
+        new PortalAction { Title = "Devis", Description = "Approuver les interventions", Icon = "request_quote", BgColor = "bg-orange-600/10", BorderColor = "border-orange-500/20", TextColor = "text-orange-500" },
+        new PortalAction { Title = "Factures", Description = "Télécharger vos factures B2B", Icon = "receipt_long", BgColor = "bg-green-600/10", BorderColor = "border-green-500/20", TextColor = "text-green-500" },
+        new PortalAction { Title = "Archives", Description = "Consulter l'historique technique", Icon = "folder_zip", BgColor = "bg-white/5", BorderColor = "border-white/10", TextColor = "text-gray-400" }
+    };
+
+    private List<PortalCar> fleetSnapshot = new()
+    {
+        new PortalCar { Plate = "AB-123-CD", Model = "MASTER ZE", Km = 142090, NextService = "15-Avr", Status = "EN ATELIER", StatusColor = "bg-orange-500", StatusTextColor = "text-orange-500" },
+        new PortalCar { Plate = "XY-987-ZZ", Model = "CLIO V", Km = 42800, NextService = "01-Mai", Status = "EN CIRCULATION", StatusColor = "bg-green-500", StatusTextColor = "text-green-500" },
+        new PortalCar { Plate = "KM-442-PT", Model = "MASTER ZE", Km = 199402, NextService = "IMMEDIAT", Status = "CRITIQUE", StatusColor = "bg-red-500", StatusTextColor = "text-red-500" },
+        new PortalCar { Plate = "ER-003-XX", Model = "CLIO V", Km = 31000, NextService = "12-Juin", Status = "DISPONIBLE", StatusColor = "bg-green-500", StatusTextColor = "text-green-500" }
+    };
+
+    public class PortalAction {
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public string BgColor { get; set; } = "";
+        public string BorderColor { get; set; } = "";
+        public string TextColor { get; set; } = "";
+    }
+
+    public class PortalCar {
+        public string Plate { get; set; } = "";
+        public string Model { get; set; } = "";
+        public int Km { get; set; }
+        public string NextService { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string StatusColor { get; set; } = "";
+        public string StatusTextColor { get; set; } = "";
+    }
+}

@@ -1,0 +1,85 @@
+@page "/stock/gestion-retours-2"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Gestion Retours Pro</PageTitle>
+
+<div class="bg-[#111318] text-[#e2e2e8] font-body selection:bg-primary/30 min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 h-20 w-full border-b border-[#524534]/15 sticky top-0 z-40">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623] text-2xl font-bold">settings_input_component</span>
+            <h1 class="font-headline uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex gap-8 items-center text-sm font-technical tracking-wider">
+                <span class="text-[#f5a623] font-bold">RECORDS_SYNC: ACTIVE</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-[#333539] border border-outline-variant/20 overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADzQgIoOE4d-aBCX7yv-4gTLxI-mvoq2jSgN9AvyhPAnK-_Gk2YFs0wnSwr0n3kTfB81SjNU3zG3PcAexWNbo3v1MU4tG5fhHQOhM6T5DRw_jd6KPKy2ZvA6G2dVJj-TS8qBGS5jmPly80Ntf-1l7XLu-26mBEPsPQBLUqspYs5wGbkqC2iBVpuIVZNmUbvO-iva3sfgjf3H7ShV5L11KhYI3HwAOhecJVDzrbNHoWAmFSmhX28eIA9FIk2k9RCyEWMrIGba5-rW1t" alt="Operator"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pt-8">
+        <!-- Scan Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+            <div class="lg:col-span-8 bg-[#282a2e] rounded-xl p-8 relative overflow-hidden group">
+                <div class="relative z-10 font-headline uppercase font-bold">
+                    <h2 class="text-3xl tracking-wide mb-2">SCANNER_UNIT_01</h2>
+                    <p class="text-on-surface-variant mb-8 font-technical text-sm lowercase tracking-normal font-normal">En attente d'entrée... [Mode: Retour_Fournisseur]</p>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-grow bg-[#0c0e12] rounded-xl p-4 border border-outline-variant/10">
+                            <label class="block text-[10px] text-primary uppercase font-technical mb-1">Identification de la Pièce (SKU/VIN)</label>
+                            <input class="w-full bg-transparent border-none focus:ring-0 font-technical text-xl text-on-surface placeholder:text-on-surface/20" placeholder="SCN-994-X8..." type="text"/>
+                        </div>
+                        <button class="bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container px-10 py-4 rounded-xl flex items-center justify-center gap-3 active:scale-95 transition-transform tracking-widest text-xl">
+                            <span class="material-symbols-outlined uppercase">camera</span>
+                            VALIDER_LE_SCAN
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <div class="bg-[#1a1c20] p-6 rounded-xl border-l-4 border-secondary-container flex flex-col justify-between font-headline">
+                    <p class="text-xs font-technical uppercase text-on-surface-variant mb-1 lowercase tracking-normal">Total Retours En Attente</p>
+                    <div class="flex items-end justify-between">
+                        <span class="text-5xl text-primary leading-none uppercase">24</span>
+                        <span class="text-xs font-technical text-secondary mb-1 lowercase tracking-normal font-normal">pièces</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="mb-12 font-headline uppercase font-bold">
+            <h3 class="text-2xl tracking-widest text-on-surface-variant mb-6">LISTE_DES_RETOURS_EN_COURS</h3>
+            <div class="bg-[#0c0e12] rounded-xl border border-outline-variant/10 overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-[#282a2e] text-on-surface-variant font-technical text-[10px] tracking-widest uppercase font-normal border-b border-outline-variant/20">
+                        <tr>
+                            <th class="px-6 py-4">ID_Retour</th>
+                            <th class="px-6 py-4">Désignation</th>
+                            <th class="px-6 py-4">Fournisseur</th>
+                            <th class="px-6 py-4">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant/5">
+                        <tr class="hover:bg-[#1a1c20] transition-colors group font-bold">
+                            <td class="px-6 py-5 font-technical text-sm text-primary">#RET-8842</td>
+                            <td class="px-6 py-5">
+                                <div class="text-on-surface uppercase">Injecteur Rail-Common HighP</div>
+                                <div class="text-[10px] font-technical text-on-surface-variant/60 font-normal">VIN: XJ772-991-L</div>
+                            </td>
+                            <td class="px-6 py-5 text-sm uppercase">BOSCH_INDUSTRIAL_FR</td>
+                            <td class="px-6 py-5 flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                                <span class="text-xs font-technical uppercase font-normal tracking-tighter">En attente scan</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>

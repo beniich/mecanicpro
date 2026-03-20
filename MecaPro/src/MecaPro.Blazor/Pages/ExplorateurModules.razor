@@ -1,0 +1,254 @@
+@page "/explorateur-modules"
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Explorateur de Modules</PageTitle>
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+    
+    .font-inter { font-family: 'Inter', sans-serif; }
+    
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+</style>
+
+<!-- Global container for the extreme dark violet theme -->
+<div class="min-h-screen p-4 md:p-8 bg-[#2b145d] text-white font-inter selection:bg-[#02e1f2] selection:text-black">
+    <div class="max-w-[1600px] mx-auto space-y-12 pb-24">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <span class="text-[#02e1f2] text-[10px] tracking-[0.4em] uppercase mb-2 block font-black">SYSTÈME GLOBAL MECAPRO_OS</span>
+                <h2 class="text-4xl md:text-5xl lg:text-7xl font-black italic tracking-wider text-white uppercase leading-none drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                    CENTRE DE CONTRÔLE
+                </h2>
+            </div>
+            <div class="bg-[#352372] px-6 py-4 rounded-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center gap-4 group hover:border-[#02e1f2]/50 transition-colors">
+                 <span class="material-symbols-outlined text-[#02e1f2] text-3xl group-hover:scale-110 transition-transform">pageview</span>
+                 <input type="text" placeholder="LOCALISER UN MODULE..." class="bg-transparent border-none focus:ring-0 text-sm font-black w-64 placeholder:text-white/30 uppercase italic text-white outline-none"/>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 md:gap-10">
+            @foreach (var cat in categories)
+            {
+                <div class="bg-[#352372] rounded-[32px] p-6 md:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.5)] border border-white/5 relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+                    
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-4 md:gap-5">
+                            <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center shadow-inner" style="background-color: @cat.BgIconBox;">
+                                <span class="material-symbols-outlined text-3xl md:text-4xl" style="color: @cat.IconColor;">@cat.Icon</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg md:text-2xl font-black uppercase tracking-widest text-white leading-tight">@cat.Title</h3>
+                                <p class="text-[#a69ece] text-[9px] md:text-[11px] font-bold uppercase tracking-wider mt-1 opacity-90">@cat.Subtitle</p>
+                            </div>
+                        </div>
+                        <!-- Dots like in image -->
+                        <div class="flex gap-1.5 md:gap-2">
+                            <div class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full shadow-[0_0_10px_currentColor]" style="background-color: @cat.IconColor; color: @cat.IconColor"></div>
+                            <div class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full" style="background-color: @cat.BgIconBox;"></div>
+                        </div>
+                    </div>
+
+                    <hr class="border-[#a69ece]/10 mb-8" />
+
+                    <!-- KPIs -->
+                    <div class="grid grid-cols-3 gap-3 md:gap-4 mb-8">
+                        <!-- Metric 1 -->
+                        <div class="bg-[#453380] rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-[#4d3a8d] transition-colors border border-white/5 shadow-inner">
+                            <span class="text-[#a69ece] text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T1</span>
+                            <span class="text-2xl md:text-3xl font-black italic text-white mb-2 leading-none">@cat.Metrics.V1</span>
+                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest mt-1" style="color: @cat.Metrics.SC1;">@cat.Metrics.S1</span>
+                        </div>
+                        <!-- Metric 2 -->
+                        <div class="bg-[#453380] rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-[#4d3a8d] transition-colors border border-white/5 shadow-inner">
+                            <span class="text-[#a69ece] text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T2</span>
+                            <span class="text-2xl md:text-3xl font-black italic text-white mb-2 leading-none">@cat.Metrics.V2</span>
+                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest mt-1" style="color: @cat.Metrics.SC2;">@cat.Metrics.S2</span>
+                        </div>
+                        <!-- Metric 3 -->
+                        <div class="bg-[#453380] rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-[#4d3a8d] transition-colors border border-white/5 shadow-inner">
+                            <span class="text-[#a69ece] text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T3</span>
+                            <span class="text-2xl md:text-3xl font-black italic text-white mb-2 leading-none">@cat.Metrics.V3</span>
+                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest mt-1" style="color: @cat.Metrics.SC3;">@cat.Metrics.S3</span>
+                        </div>
+                    </div>
+
+                    <!-- Links Header -->
+                    <div class="flex items-center justify-between mb-4 px-2">
+                        <h4 class="text-[#a69ece] text-[10px] md:text-xs font-black uppercase tracking-widest">MODULES TEMPS RÉEL</h4>
+                        <span class="text-[#a69ece] tracking-widest font-black text-xl leading-none -mt-2 opacity-50">...</span>
+                    </div>
+
+                    <!-- Links List -->
+                    <div class="space-y-2 max-h-[340px] overflow-y-auto pr-2 custom-scroll">
+                        @foreach (var item in cat.Items)
+                        {
+                            <a href="@item.Url" class="block relative group px-2 py-3 md:px-3 md:py-3 bg-transparent hover:bg-[#453380]/40 rounded-xl transition-all cursor-pointer border border-transparent hover:border-white/5" 
+                               style="--accent: @cat.AccentColor; --accent-alpha: @(cat.AccentColor)66; --accent-bg: @(cat.AccentColor)1A;">
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="relative flex items-center gap-3 md:gap-4 pl-3 md:pl-4">
+                                        <!-- Glowing left arc -->
+                                        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 md:w-5 h-10 md:h-12 border-l-[3px] border-solid rounded-[100%] opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
+                                             style="border-color: var(--accent); box-shadow: -4px 0 12px var(--accent-alpha);"></div>
+                                        
+                                        <!-- Module Icon -->
+                                        <div class="w-9 h-9 md:w-11 md:h-11 rounded-lg flex items-center justify-center border transition-colors group-hover:bg-transparent" 
+                                             style="background-color: var(--accent-bg); border-color: var(--accent-alpha);">
+                                            <span class="material-symbols-outlined text-[18px] md:text-[22px]" style="color: var(--accent);">@item.Icon</span>
+                                        </div>
+                                        
+                                        <!-- Text -->
+                                        <div>
+                                            <h5 class="text-white text-xs md:text-sm font-black uppercase tracking-widest transition-colors duration-300"
+                                                onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='white'">@item.Title</h5>
+                                            <p class="text-[#a69ece] text-[8px] md:text-[9px] uppercase tracking-wider mt-0.5 font-bold">@item.Subtitle</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-white font-black italic text-[10px] md:text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">On</span>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    record ModuleItem(string Title, string Url, string Subtitle, string Icon);
+    record CategoryMetrics(string T1, string V1, string S1, string SC1, string T2, string V2, string S2, string SC2, string T3, string V3, string S3, string SC3);
+    record ModuleCategory(string Title, string Subtitle, string Icon, string IconColor, string BgIconBox, string AccentColor, CategoryMetrics Metrics, List<ModuleItem> Items);
+
+    private List<ModuleCategory> categories = new();
+
+    protected override void OnInitialized()
+    {
+        categories = new List<ModuleCategory>
+        {
+            new ModuleCategory("CLIENTS & VÉHICULES", "GARAGE CENTRAL MECAPRO", "groups", "#02e1f2", "#1f346e", "#f96b0c",
+                new CategoryMetrics("FLUX CLIENTS", "92%", "OPTIMUM", "#02e1f2", "VÉHICULES", "14", "TENSION", "#f96b0c", "STAFF ACTIF", "86", "STABLE", "#00FF66"),
+                new List<ModuleItem> {
+                    new("GESTION CLIENTS", "/clients", "Liste & Recherche CRM", "person"),
+                    new("HISTORIQUE TECHNIQUE", "/clients", "Recherche par dossier", "build"),
+                    new("DÉTAIL FIDÉLITÉ", "/clients/programme-fidelite", "Points et remises", "loyalty"),
+                    new("ONBOARDING CLIENT", "/clients/onboarding", "Nouvelle Inscription", "person_add"),
+                    new("PROGRAMME FIDÉLITÉ", "/clients/programme-fidelite", "Avantages", "card_giftcard"),
+                    new("VENTES OCCASION", "/clients/ventes-occasion", "Parc VO", "directions_car"),
+                    new("PRÊT VÉHICULE", "/clients/pret-vehicule", "Flotte courtoisie", "key"),
+                    new("PARCS B2B", "/clients/flottes", "Gestion Flottes & Parcs", "business_center"),
+                    new("GESTION FLOTTE", "/clients/gestion-flotte", "Parcs B2B", "local_shipping"),
+                    new("PORTAIL FLOTTE B2B", "/clients/portail-flotte-b2b", "Accès professionnel", "business"),
+                    new("PROFIL FLOTTE", "/clients/profil-flotte-b2b", "Paramètres Flotte", "settings_applications")
+                }
+            ),
+
+            new ModuleCategory("PLANNING ATELIER", "GESTION DES OPÉRATIONS", "calendar_month", "#f96b0c", "#4a2211", "#02e1f2",
+                new CategoryMetrics("RENDEMENT", "104%", "MAX", "#02e1f2", "RESTARDS", "0", "PARFAIT", "#00FF66", "EQUIPES", "12", "ACTIFS", "#02e1f2"),
+                new List<ModuleItem> {
+                    new("PLANNING ATELIER", "/planning/planning-atelier", "Vue principale", "event"),
+                    new("PLANNING EQUIPES", "/atelier/planning-equipes", "Ressources humaines", "groups"),
+                    new("PLANNING CONGÉS", "/atelier/planning-conges", "Absences", "beach_access"),
+                    new("FORMATIONS", "/atelier/formations", "Développement", "school"),
+                    new("RÉVISIONS", "/atelier/revisions", "Maintenance programmée", "autorenew"),
+                    new("JOURNAL TÂCHES", "/atelier/journal-taches", "Temps pointés", "receipt_long"),
+                    new("PLAN 2D ATELIER", "/atelier/plan-2d", "Cartographie", "floor"),
+                    new("MONITORING IOT", "/atelier/monitoring-iot", "Télémétrie en direct", "sensors"),
+                    new("MAINTENANCE PRÉV.", "/atelier/maintenance-preventive", "Alertes système", "health_and_safety"),
+                    new("RECOND. MOTEUR", "/atelier/reconditionnement-moteur", "Outils lourds", "plumbing")
+                }
+            ),
+
+            new ModuleCategory("DIAGNOSTIC IA", "ANALYSE PRÉDICTIVE", "memory", "#00FF66", "#0f4024", "#FFD700",
+                new CategoryMetrics("PRÉCISION", "99.2%", "OPTIMUM", "#00FF66", "DIAGS EN COURS", "5", "NORMAL", "#f96b0c", "SCANS IA", "1420", "STABLE", "#00FF66"),
+                new List<ModuleItem> {
+                    new("DIAGNOSTIC AVANCÉ", "/diagnostic/avancer", "OBD & Capteurs", "troubleshoot"),
+                    new("DIAG. BATTERIE EV", "/diagnostic/batterie-ev", "Véhicules électriques", "battery_charging_full"),
+                    new("RAPPORT DIAG.", "/atelier/rapport-diagnostic", "Synthèse automatique", "analytics"),
+                    new("DÉCODEUR VIN PRO", "/diagnostic/vin-pro", "Identification", "barcode_scanner"),
+                    new("RAPPELS CONSTRUCTEUR", "/atelier/rappels-constructeur", "Alertes marques", "warning"),
+                    new("EXPERTISE PHOTO IA", "/diagnostic/expertise-photo", "Reconnaissance visuelle", "camera"),
+                    new("ANALYTIQUE IA", "/diagnostic/analytique-ia", "Modèles prédictifs", "query_stats")
+                }
+            ),
+
+            new ModuleCategory("FINANCE & STATS", "TRÉSORERIE ET COMPTABILITÉ", "point_of_sale", "#FFD700", "#4a4011", "#02e1f2",
+                new CategoryMetrics("CA DU MOIS", "42K", "HAUSSE", "#00FF66", "FACTURES", "12", "ATTENTE", "#FFD700", "MARGE", "34%", "STABLE", "#00FF66"),
+                new List<ModuleItem> {
+                    new("ARCHIVES FACTURES", "/archives-factures", "Historique facturation", "inventory_2"),
+                    new("FACTURES ABONNEMENTS", "/factures-abonnements", "Récurrent", "receipt"),
+                    new("PAIEMENT SÉCURISÉ", "/paiement-securise", "Passerelle bancaire", "security"),
+                    new("EXPORT COMPTABLE", "/export-comptable", "Données brutes", "file_download"),
+                    new("JOURNAL VENTES", "/journal-ventes", "Transactions", "point_of_sale"),
+                    new("PRÉVISIONS REVENU", "/previsions-revenu", "IA Forecasting", "trending_up"),
+                    new("ANALYTIQUE STATS", "/analytique-stats", "Performances globales", "bar_chart"),
+                    new("COMPARATIF DEVIS 1", "/finance/comparatif-devis-1", "Analyse devis A", "compare_arrows"),
+                    new("COMPARATIF DEVIS 2", "/finance/comparatif-devis-2", "Analyse devis B", "compare_arrows"),
+                    new("COMPARATIF DEVIS 3", "/finance/comparatif-devis-3", "Analyse devis C", "compare_arrows"),
+                    new("RAPPORT ANNUEL 1", "/admin/rapport-annuel-1", "Bilan comptable", "summarize"),
+                    new("RAPPORT ANNUEL 2", "/admin/rapport-annuel-2", "Bilan fiscal", "summarize"),
+                    new("SUIVI ÉNERGIE", "/finance/suivi-energie", "Dépenses électriques", "bolt")
+                }
+            ),
+
+            new ModuleCategory("STOCK LOGISTIQUE", "GESTION CHAÎNE APPRO", "inventory", "#FF00FF", "#4a1140", "#f96b0c",
+                new CategoryMetrics("DISPONIBILITÉ", "82%", "BAISSE", "#f96b0c", "RUPTURES", "4", "CRITIQUE", "#FF3333", "RÉASSORT", "15", "EN COURS", "#FFD700"),
+                new List<ModuleItem> {
+                    new("INVENTAIRE STOCK", "/stock/inventaire", "Scan QR/Code", "qr_code_scanner"),
+                    new("COMMANDES FOURNISSEURS", "/stock/commandes-1", "Flux entrants", "local_shipping"),
+                    new("COMMANDES DÉLAIS", "/stock/commandes-2", "Retards", "schedule"),
+                    new("DÉTAIL COMMANDE", "/stock/detail-commande", "Bons de livraison", "description"),
+                    new("SUIVI LIVRAISONS 1", "/logistics/suivi-livraisons-1", "Localisation GPS", "map"),
+                    new("SUIVI LIVRAISONS 2", "/logistics/suivi-livraisons-2", "Hub de tri", "forklift"),
+                    new("GESTION RETOURS 1", "/logistics/gestion-retours-1", "RMA Pièces", "assignment_return"),
+                    new("GESTION RETOURS 2", "/logistics/gestion-retours-2", "Remboursements", "currency_exchange"),
+                    new("CATALOGUE B2B", "/stock/catalogue-pub", "Références fournisseurs", "library_books"),
+                    new("CATALOGUE PROMO", "/stock/catalogue-promo", "Lots et promotions", "sell"),
+                    new("COMPARATIF CARBURANTS", "/stock/comparatif-carburants", "Prix à la pompe", "local_gas_station")
+                }
+            ),
+
+            new ModuleCategory("RH & SÉCURITÉ", "QUALITÉ, SÉCURITÉ & ENVIRONNEMENT", "admin_panel_settings", "#FF3333", "#4a1111", "#02e1f2",
+                new CategoryMetrics("INCIDENTS", "0", "PARFAIT", "#00FF66", "EFFECTIF", "34", "STABLE", "#00FF66", "AUDITS", "2", "PLANIFIÉS", "#FFD700"),
+                new List<ModuleItem> {
+                    new("GESTION EMPLOYÉS", "/rh/gestion-employes", "Dossiers employés", "badge"),
+                    new("ÉQUIPE STAFF 1", "/rh/equipe-staff-1", "Organigramme", "account_tree"),
+                    new("ÉQUIPE STAFF 2", "/rh/equipe-staff-2", "Performances", "trending_up"),
+                    new("MATRICE COMPÉTENCES", "/rh/matrice-competences", "Évaluations", "school"),
+                    new("DÉTAIL FORMATION", "/rh/detail-formation", "Suivi carrière", "workspace_premium"),
+                    new("AUDIT SÉCURITÉ", "/securite/audit", "Normes QSE", "verified_user"),
+                    new("PARAM SÉCURITÉ", "/settings/security", "Configuration", "settings_applications"),
+                    new("JOURNAL AUDIT SYSTEME", "/securite/journal-audit", "Traces", "receipt_long"),
+                    new("ARCHIVE AUDITS", "/securite/archive-audits", "Historique QSE", "folder_open"),
+                    new("DOCUMENTS LÉGAUX", "/securite/documents-legaux", "GED Sécurité", "gavel"),
+                    new("GESTION DÉCHETS", "/securite/gestion-dechets", "Recyclage", "recycling"),
+                    new("SUIVI DÉCHETS (CONFORM.)", "/rh/suivi-dechets-conformite", "Bordereaux de suivi", "description"),
+                    new("HISTORIQUE POLLUTION", "/securite/historique-pollution", "Traces écologiques", "history"),
+                    new("RAPPORT POLLUTION", "/securite/rapport-pollution", "Bilan Carbone", "nature")
+                }
+            ),
+
+            new ModuleCategory("MARKETING SUPPORT", "EXPÉRIENCE CLIENT", "campaign", "#3366FF", "#11224a", "#FF00FF",
+                new CategoryMetrics("SATISFACTION", "9.8", "OPTIMUM", "#00FF66", "TICKETS", "12", "ATTENTE", "#f96b0c", "CAMPAGNES", "3", "ACTIF", "#02e1f2"),
+                new List<ModuleItem> {
+                    new("ANALYSE SATISFACTION", "/marketing/analyse-satisfaction", "NPS & Avis", "sentiment_very_satisfied"),
+                    new("SONDAGE SATISFACTION", "/marketing/sondage-satisfaction", "Formulaires auto", "poll"),
+                    new("ONBOARDING GARAGE", "/garage/onboarding", "Configuration profil", "build_circle"),
+                    new("NOTIFICATIONS CONFIG", "/marketing/notifications-config", "Canaux SMS/Email", "notifications_active"),
+                    new("SUPPORT DIAGNOSTIC", "/atelier/support-diagnostic", "Aide OBD", "help_center"),
+                    new("SUPPORT TECHNIQUE L1", "/marketing/support-1", "Hotline Clients", "support_agent"),
+                    new("SUPPORT TECHNIQUE L2", "/marketing/support-2", "Escalades", "escalator_warning"),
+                    new("GESTION SINISTRES", "/marketing/gestion-sinistres", "Assurances & Experts", "car_crash"),
+                    new("CONFIG IMPRIMANTE", "/settings/config-imprimante", "Terminaux d'édition", "print")
+                }
+            )
+        };
+    }
+}

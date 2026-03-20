@@ -1,0 +1,85 @@
+@page "/finance/journal-ventes"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Journal des Ventes</PageTitle>
+
+<div class="bg-background text-on-surface font-body selection:bg-primary/30 min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full sticky top-0 z-50 shadow-none border-none">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623] cursor-pointer">menu</span>
+            <h1 class="font-headline tracking-[0.05em] uppercase text-on-surface text-3xl font-black text-[#f5a623] tracking-widest">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex gap-6 mr-8 font-technical text-xs uppercase cursor-pointer">
+                <span class="text-[#e2e2e8] hover:bg-surface-container-high transition-colors px-2 py-1">Stock</span>
+                <span class="text-[#f5a623] border-b-2 border-[#f5a623] px-2 py-1">Ventes</span>
+                <span class="text-[#e2e2e8] hover:bg-surface-container-high transition-colors px-2 py-1">Analytique</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant/30 overflow-hidden">
+                <img alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkE6AarsvddacuIgAbNal1iWBjE4zdKm8tlfWttPbxXwRfWr_v15N2pFa0MS8lBnh-ldRN5wmqH1PK2erqYU7cP2Ud6Lgx0XHUk-k0UK1E93hNqhcik6gnWjoOulA92j2xHsMjbkz3v6RXsUrbfc_IAy4vPYXbLCz1s0YwrQwjLNLvvX814R2K4mOF68JeIIUoIHFuGHMjg_pQUoDgRYimEM3SVB_stA0GzifXg7YAUoTp9itfMfrl6j7bw2ZVyozMxRF29AKUo0gZ"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-12">
+            <h2 class="font-headline text-5xl tracking-wider text-on-surface mb-6 uppercase">Journal des Ventes <span class="text-primary-container">VO</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 uppercase font-bold">
+                <!-- KPI Cards -->
+                <div class="bg-surface-container-high p-6 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+                    <p class="text-on-surface-variant font-technical text-[10px] tracking-widest mb-1 font-normal">Volume Mensuel</p>
+                    <p class="font-headline text-4xl text-primary">14 Ventes</p>
+                </div>
+                <div class="bg-surface-container-high p-6 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+                    <p class="text-on-surface-variant font-technical text-[10px] tracking-widest mb-1 font-normal">Marge Brute Totale</p>
+                    <p class="font-headline text-4xl text-primary">42 850 €</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-surface-container-low overflow-hidden font-body">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-surface-container-lowest border-b border-outline-variant/10 uppercase tracking-widest font-technical text-[10px] text-on-surface-variant">
+                    <tr>
+                        <th class="px-6 py-4">Véhicule & VIN</th>
+                        <th class="px-6 py-4 text-right">Prix d'Achat</th>
+                        <th class="px-6 py-4 text-right">Prix de Vente</th>
+                        <th class="px-6 py-4 text-right">Marge Brute</th>
+                        <th class="px-6 py-4">Status</th>
+                        <th class="px-6 py-4"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/5">
+                    <tr class="hover:bg-surface-container transition-colors group">
+                        <td class="px-6 py-5">
+                            <div class="flex flex-col uppercase font-bold">
+                                <span class="text-on-surface">Porsche 911 (991) Carrera S</span>
+                                <span class="font-technical text-xs text-on-surface-variant font-normal tracking-tight">WPOZZZ99ZGS124098</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 text-right font-technical text-on-surface">82 500 €</td>
+                        <td class="px-6 py-5 text-right font-technical text-on-surface font-bold">94 900 €</td>
+                        <td class="px-6 py-5 text-right">
+                            <div class="flex flex-col items-end font-technical">
+                                <span class="text-primary font-bold">+12 400 €</span>
+                                <span class="text-[10px] text-primary/60 font-normal">13.1%</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <span class="bg-primary-container/20 text-primary-container text-[10px] font-technical font-bold px-3 py-1 uppercase rounded border border-primary-container/20">Finalisée</span>
+                        </td>
+                        <td class="px-6 py-5 text-right">
+                            <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity text-outline">open_in_new</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>

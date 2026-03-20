@@ -1,0 +1,89 @@
+@page "/stock/commandes-fournisseurs-2"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Commandes Fournisseurs</PageTitle>
+
+<div class="bg-surface pb-24 min-h-screen font-body">
+    <!-- Top App Bar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 h-16 border-b border-outline-variant/10">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='/'">
+            <span class="material-symbols-outlined text-[#f5a623]" data-icon="precision_manufacturing">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-tighter text-[#f5a623] font-brand uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623]" data-icon="notifications">notifications</span>
+        </div>
+    </header>
+
+    <main class="mt-20 px-4 space-y-6">
+        <!-- Page Title & CTA -->
+        <div class="flex justify-between items-end mb-2">
+            <div>
+                <span class="text-primary font-mono text-xs uppercase tracking-widest">Gestion Flux</span>
+                <h2 class="text-4xl font-headline text-on-surface tracking-wide uppercase">Commandes Fournisseurs</h2>
+            </div>
+        </div>
+
+        <!-- Quick Stats Bento -->
+        <div class="grid grid-cols-2 gap-3">
+            <div class="bg-surface-container-high p-4 rounded-xl border-l-2 border-primary relative overflow-hidden">
+                <div class="absolute -right-2 -top-2 opacity-5">
+                    <span class="material-symbols-outlined text-8xl" data-icon="pending_actions">pending_actions</span>
+                </div>
+                <p class="text-on-surface-variant text-[10px] font-mono uppercase tracking-tighter">En attente</p>
+                <p class="text-3xl font-headline text-primary leading-none mt-2">12</p>
+            </div>
+            <div class="bg-surface-container-high p-4 rounded-xl border-l-2 border-secondary-container relative overflow-hidden">
+                <div class="absolute -right-2 -top-2 opacity-5">
+                    <span class="material-symbols-outlined text-8xl" data-icon="payments">payments</span>
+                </div>
+                <p class="text-on-surface-variant text-[10px] font-mono uppercase tracking-tighter">Budget Mensuel</p>
+                <p class="text-2xl font-headline text-on-surface leading-none mt-2">€42.8K</p>
+            </div>
+        </div>
+
+        <!-- New Order Action -->
+        <button class="w-full bg-gradient-to-r from-primary-container to-secondary-container text-on-primary font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-[0_8px_24px_rgba(245,166,35,0.15)] active:scale-95 transition-all uppercase tracking-tight font-brand">
+            <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+            <span>Nouvelle Commande</span>
+        </button>
+
+        <!-- Filters / Search -->
+        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            <button class="bg-primary/10 text-primary border border-primary/20 px-4 py-1.5 rounded-full text-xs font-mono uppercase whitespace-nowrap">Tous</button>
+            <button class="bg-surface-container text-on-surface-variant px-4 py-1.5 rounded-full text-xs font-mono uppercase whitespace-nowrap">En attente</button>
+            <button class="bg-surface-container text-on-surface-variant px-4 py-1.5 rounded-full text-xs font-mono uppercase whitespace-nowrap">Reçu</button>
+        </div>
+
+        <!-- Orders List -->
+        <div class="space-y-4">
+            <h3 class="text-on-surface-variant font-mono text-[10px] uppercase tracking-[0.2em] border-b border-outline-variant/20 pb-2">Commandes Récentes</h3>
+            <!-- Order Card 1: Pending -->
+            <div class="bg-surface-container-low rounded-xl overflow-hidden group">
+                <div class="p-4 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-on-surface font-bold text-lg leading-tight">MecanoParts Int.</p>
+                            <p class="text-on-surface-variant text-xs font-mono">ID: <span class="text-primary">PO-2024-8842</span></p>
+                        </div>
+                        <span class="bg-primary/10 text-primary text-[10px] font-mono px-2 py-1 rounded border border-primary/20 uppercase">En attente</span>
+                    </div>
+                </div>
+            </div>
+            <!-- More cards omitted for brevity -->
+        </div>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-[#0c0e12] z-50 rounded-t-xl border-t border-white/5 shadow-[0_-8px_24px_rgba(245,166,35,0.05)]">
+        <a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 transition-all font-mono text-[10px] uppercase tracking-tighter" href="/">
+            <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            <span>Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-lg px-4 py-1.5 transition-all duration-300 font-mono text-[10px] uppercase tracking-tighter font-bold" href="/stock/commandes-fournisseurs-2">
+            <span class="material-symbols-outlined" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+            <span>Inventory</span>
+        </a>
+    </nav>
+</div>

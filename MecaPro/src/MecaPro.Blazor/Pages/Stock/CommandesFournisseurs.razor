@@ -1,0 +1,209 @@
+@page "/stock/commandes-1"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Commandes Fournisseurs</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen pb-24">
+
+    <!-- Top Bar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-[#f96b0c]">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-[#f96b0c] uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="bg-[#f96b0c] text-white px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#e65a00] transition-all shadow-[0_0_15px_rgba(249,107,12,0.3)] flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">add_shopping_cart</span> NOUVELLE COMMANDE
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-10">
+
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+            <div>
+                <span class="text-[#f96b0c] text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">SUPPLY_CHAIN_HUB</span>
+                <h2 class="text-6xl md:text-7xl font-black tracking-tighter italic uppercase leading-none drop-shadow-[0_0_15px_rgba(249,107,12,0.15)] text-white">Flux Fournisseurs</h2>
+            </div>
+            
+            <div class="flex bg-white/5 border border-white/10 p-1 rounded-2xl">
+                <button @onclick='() => filter = "ALL"' class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(filter == "ALL" ? "bg-[#f96b0c] text-white" : "text-white/40 hover:text-white hover:bg-white/5")">TOUT</button>
+                <button @onclick='() => filter = "WAITING"' class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(filter == "WAITING" ? "bg-yellow-500 text-black border-yellow-500" : "text-white/40 hover:text-white hover:bg-white/5")">EN ATTENTE (2)</button>
+                <button @onclick='() => filter = "LATE"' class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(filter == "LATE" ? "bg-red-500 text-white border-red-500" : "text-white/40 hover:text-white hover:bg-white/5")">RETARDS (1)</button>
+            </div>
+        </div>
+
+        <!-- KPI Bar -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/40 mb-3">COMMANDES_ACTIVES</p>
+                <p class="text-5xl font-black italic text-[#f96b0c]">8</p>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/40 mb-3">VALEUR_EN_TRANSIT</p>
+                <p class="text-4xl font-technical tracking-tight font-black italic text-white mt-1">12,450<span class="text-2xl text-white/50">€</span></p>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-red-500/20 relative overflow-hidden">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-red-500 mb-3">RUPTURES_CRITIQUES</p>
+                <p class="text-5xl font-black italic text-red-500">3</p>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-[#00FF66] mb-3">RÉCEPTION_JOUR</p>
+                <div class="flex items-center gap-3">
+                    <span class="text-5xl font-black italic text-[#00FF66]">14</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-white/40 mt-3 pt-1">COLIS</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Commande List Table -->
+            <div class="lg:col-span-8 bg-surface-container rounded-[40px] border border-white/5 overflow-hidden shadow-2xl">
+                <div class="p-8 border-b border-white/5 bg-[#111318]/40 flex justify-between items-center">
+                    <h3 class="font-black text-2xl italic uppercase tracking-tight text-white">Bons de Commande</h3>
+                    <div class="bg-white/5 border border-white/5 rounded-2xl flex items-center gap-2 px-3 py-1.5 focus-within:border-white/20 transition-all">
+                        <span class="material-symbols-outlined text-white/30 text-xs">search</span>
+                        <input type="text" placeholder="REF, FOURNISSEUR..." class="bg-transparent border-none outline-none font-technical text-[10px] text-white uppercase italic placeholder:text-white/20 w-48 font-black"/>
+                    </div>
+                </div>
+
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] bg-white/[0.02]">
+                            <th class="px-8 py-5">RÉFÉRENCE</th>
+                            <th class="px-8 py-5">FOURNISSEUR</th>
+                            <th class="px-8 py-5">MONTANT</th>
+                            <th class="px-8 py-5">STATUT</th>
+                            <th class="px-8 py-5">LIVRAISON EXT.</th>
+                            <th class="px-8 py-5 text-center">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        <tr class="hover:bg-white/[0.03] transition-all group">
+                            <td class="px-8 py-5">
+                                <span class="font-technical text-[#f96b0c] font-black text-sm uppercase">#PO-26-842</span>
+                            </td>
+                            <td class="px-8 py-5">
+                                <p class="font-black italic uppercase text-white tracking-widest">OSCARO PRO</p>
+                                <p class="text-[9px] font-bold uppercase tracking-widest text-white/40 mt-1">4 ARTICLES</p>
+                            </td>
+                            <td class="px-8 py-5 font-technical text-white font-black">1,452 €</td>
+                            <td class="px-8 py-5">
+                                <span class="flex items-center gap-2 text-yellow-500 text-[10px] font-black uppercase">
+                                    <span class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span> EXPÉDIÉ
+                                </span>
+                            </td>
+                            <td class="px-8 py-5 font-technical font-black text-white/60">Aujourd'hui</td>
+                            <td class="px-8 py-5 text-center">
+                                <button class="bg-[#111318] border border-[#f96b0c]/30 text-[#f96b0c] px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-[#f96b0c]/20 transition-all opacity-0 group-hover:opacity-100 shadow-[0_0_10px_rgba(249,107,12,0.1)]">RÉCEPTIONNER</button>
+                            </td>
+                        </tr>
+                        
+                        <tr class="hover:bg-white/[0.03] transition-all group">
+                            <td class="px-8 py-5">
+                                <span class="font-technical text-[#f96b0c] font-black text-sm uppercase">#PO-26-841</span>
+                            </td>
+                            <td class="px-8 py-5">
+                                <p class="font-black italic uppercase text-white tracking-widest">MICHELIN B2B</p>
+                                <p class="text-[9px] font-bold uppercase tracking-widest text-white/40 mt-1">12 ARTICLES (PNEUS)</p>
+                            </td>
+                            <td class="px-8 py-5 font-technical text-white font-black">2,100 €</td>
+                            <td class="px-8 py-5">
+                                <span class="flex items-center gap-2 text-red-500 text-[10px] font-black uppercase">
+                                    <span class="material-symbols-outlined text-sm">warning</span> EN RETARD
+                                </span>
+                            </td>
+                            <td class="px-8 py-5 font-technical font-black text-red-500">Hier</td>
+                            <td class="px-8 py-5 text-center">
+                                <button class="bg-white/5 border border-white/10 text-white/60 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all opacity-0 group-hover:opacity-100">RELANCER</button>
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-white/[0.03] transition-all group">
+                            <td class="px-8 py-5">
+                                <span class="font-technical text-[#f96b0c] font-black text-sm uppercase">#PO-26-838</span>
+                            </td>
+                            <td class="px-8 py-5">
+                                <p class="font-black italic uppercase text-white tracking-widest">BOSCH FRANCE</p>
+                                <p class="text-[9px] font-bold uppercase tracking-widest text-white/40 mt-1">1 ARTICLE (OUTIL)</p>
+                            </td>
+                            <td class="px-8 py-5 font-technical text-white font-black">450 €</td>
+                            <td class="px-8 py-5">
+                                <span class="flex items-center gap-2 text-[#00FF66] text-[10px] font-black uppercase">
+                                    <span class="material-symbols-outlined text-sm">check_circle</span> RÉCEPTIONNÉ
+                                </span>
+                            </td>
+                            <td class="px-8 py-5 font-technical font-black text-white/30">—</td>
+                            <td class="px-8 py-5 text-center">
+                                <button class="bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-white/10 transition-all opacity-0 group-hover:opacity-100">VOIR BL</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Focus / Détail / Workflow Rapide -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <!-- Validation Rapide -->
+                <div class="bg-surface-container rounded-[40px] border border-white/5 p-8 shadow-2xl relative overflow-hidden">
+                    <h3 class="font-black text-lg italic uppercase tracking-tight text-white mb-6">À Valider <span class="bg-[#f96b0c] text-white text-[10px] ml-2 px-2 py-0.5 rounded-full not-italic">1</span></h3>
+
+                    <div class="bg-[#111318] border border-white/5 rounded-2xl p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="font-technical text-[#f96b0c] font-black">#REQ-142</p>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-white/40 mt-1">PAR: MARC D. (ATELIER)</p>
+                            </div>
+                            <span class="material-symbols-outlined text-white/20">pending_actions</span>
+                        </div>
+                        <p class="font-black text-sm uppercase text-white mb-4 line-clamp-2">KIT DISTRIBUTION COMPLET VW GOLF VII</p>
+                        
+                        <div class="flex gap-2">
+                            <button class="flex-1 bg-[#00FF66]/10 border border-[#00FF66]/30 text-[#00FF66] py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#00FF66]/20 transition-all">APPROUVER</button>
+                            <button class="flex-1 bg-red-500/10 border border-red-500/30 text-red-500 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-500/20 transition-all">REJETER</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventaire Top Movers -->
+                <div class="bg-surface-container rounded-[40px] border border-white/5 p-8 shadow-2xl flex-grow overflow-hidden flex flex-col">
+                    <h3 class="font-black text-lg italic uppercase tracking-tight text-white mb-6">Ressources Sensibles</h3>
+                    
+                    <div class="space-y-4 flex-grow overflow-y-auto custom-scroll pr-2">
+                        <div class="flex justify-between items-center bg-white/5 border border-white/5 rounded-xl p-4">
+                            <div>
+                                <p class="font-black uppercase text-sm">Huile 5W30 (Fût 200L)</p>
+                                <p class="font-technical font-bold text-[10px] text-white/40 mt-1">STOCK: 12% RESTANT</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-full border-2 border-red-500 text-red-500 flex items-center justify-center font-technical font-black text-xs shadow-[0_0_10px_rgba(239,68,68,0.2)]">!</div>
+                        </div>
+
+                        <div class="flex justify-between items-center bg-white/5 border border-white/5 rounded-xl p-4">
+                            <div>
+                                <p class="font-black uppercase text-sm">Filtre à Huile Purflux</p>
+                                <p class="font-technical font-bold text-[10px] text-white/40 mt-1">STOCK: 2 UNITÉS</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-full border-2 border-yellow-500 text-yellow-500 flex items-center justify-center font-technical font-black text-xs shadow-[0_0_10px_rgba(234,179,8,0.2)]">12</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<style>
+    .custom-scroll::-webkit-scrollbar { width: 4px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+</style>
+
+@code {
+    private string filter = "ALL";
+}

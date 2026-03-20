@@ -1,0 +1,80 @@
+@page "/admin/support-technique-1"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Support Technique (Desktop)</PageTitle>
+
+<div class="bg-background text-on-background min-h-screen pb-24 font-body selection:bg-primary/30">
+    <!-- TopAppBar -->
+    <nav class="w-full top-0 sticky z-[60] flex justify-between items-center px-6 py-4 bg-[#111318] shadow-[0_4px_20px_rgba(0,0,0,0.5)] uppercase">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+            <span class="font-headline text-[#f5a623] tracking-[0.05em] text-2xl italic">MecaPro</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="text-[#e2e2e8] hover:bg-[#282a2e] transition-colors p-2 rounded-lg">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 pt-8">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <!-- Left Column -->
+            <div class="md:col-span-8 space-y-8 uppercase">
+                <!-- System Status -->
+                <section class="bg-surface-container-low p-6 rounded-xl relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-secondary-container shadow-[0_0_15px_rgba(242,100,17,0.4)]"></div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="font-headline text-2xl tracking-wider text-on-surface mb-1 italic">CORE STACK STATUS</h2>
+                            <p class="text-on-surface-variant text-sm font-body normal-case">Surveillance temps réel des systèmes centraux MecaPro OS.</p>
+                        </div>
+                        <div class="flex gap-4 font-technical text-xs tracking-tight">
+                            <div class="flex items-center gap-2 bg-surface-container-highest px-3 py-2 rounded-lg border border-outline-variant/10">
+                                <div class="w-2 h-2 rounded-full bg-[#4CAF50] shadow-[0_0_8px_#4CAF50]"></div>
+                                <span>API_GW</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Open Tickets -->
+                <section>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="font-headline text-3xl tracking-wide italic">TICKETS OUVERTS</h2>
+                        <button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-bold text-sm shadow-[0_4px_12px_rgba(245,166,35,0.3)] hover:scale-[1.02] transition-transform">
+                            NOUVEAU TICKET
+                        </button>
+                    </div>
+                    <!-- Ticket Card -->
+                    <div class="bg-surface-container-high p-5 rounded-xl border-l-4 border-primary transition-all hover:bg-surface-container-highest uppercase">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 font-technical text-xs">
+                                    <span class="text-primary bg-primary/10 px-2 py-0.5 rounded">#TK-88921</span>
+                                    <span class="text-on-surface-variant font-body normal-case italic">OUVERT IL Y A 2H</span>
+                                </div>
+                                <h3 class="font-bold text-lg text-on-surface normal-case">Échec de synchronisation OBD-II sur BMW G20</h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column - Chat -->
+            <div class="md:col-span-4 space-y-6">
+                <div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col h-[600px] shadow-2xl border border-outline-variant/10">
+                    <div class="bg-surface-container-highest p-4 flex items-center gap-3">
+                        <div class="relative w-10 h-10">
+                            <img class="w-full h-full rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAT3KuWZqQqLFYUF36L9TdDyf4uUejA31A2cloD7GW8a5wtc0HZI_6eKtD6LQWc1oN6Z2kDxFgUL6RUf6eQ6B8sb9UGDwF0pog1ovPUgv_8KFajWK7R4QlzLWeIzwpVZrr1LMsthCKJOUzXlGaMG5n5TC9OcDMQJ-8Jr4sm5D0sjbITa0lR2Q0ZufTsHWCzedsNveQxTqMJyxwwLmLsmHySxPOoqe6TuNNvScEBxfjWmttlXwyz5YvkeGP7PcWuJjhU3Z9t1BzKlv9" alt="Agent"/>
+                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-[#4CAF50] rounded-full border-2 border-surface-container-highest"></div>
+                        </div>
+                        <h3 class="font-bold text-on-surface text-sm">Support Live MecaPro</h3>
+                    </div>
+                    <!-- Mock Chat History ... -->
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

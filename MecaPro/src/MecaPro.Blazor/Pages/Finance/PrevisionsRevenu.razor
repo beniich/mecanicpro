@@ -1,0 +1,112 @@
+@page "/finance/previsions-revenu"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Financial Forecast</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary/30 flex h-screen overflow-hidden">
+    <!-- NavigationDrawer (Sidebar) -->
+    <aside class="hidden md:flex flex-col h-full w-80 bg-surface-container-lowest py-8 px-4 gap-2 border-r border-outline-variant/15 flex-shrink-0">
+        <div class="px-4 mb-10 flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary text-3xl">terminal</span>
+            <h1 class="font-headline text-primary text-2xl tracking-[0.2em] uppercase">DIAGNOSTIC_CONSOLE</h1>
+        </div>
+        <div class="flex flex-col gap-1 mb-8">
+            <div class="flex items-center gap-4 px-4 py-3 bg-surface-container rounded-xl">
+                <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center border border-primary/20">
+                    <span class="material-symbols-outlined text-primary">person</span>
+                </div>
+                <div>
+                    <p class="font-headline text-on-surface text-sm tracking-widest uppercase">CHIEF_OPERATOR</p>
+                    <p class="font-technical text-[10px] text-on-surface-variant">STATION_04 | <span class="text-primary uppercase">ONLINE</span></p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex flex-col gap-2 uppercase">
+            <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high hover:pl-6 transition-all duration-300 rounded-lg group" href="#">
+                <span class="material-symbols-outlined text-xl group-hover:text-primary">inventory_2</span>
+                <span class="font-headline tracking-wider">Inventory</span>
+            </a>
+            <a class="flex items-center gap-4 px-4 py-3 bg-surface-container-high text-primary border-l-4 border-secondary-container rounded-r-lg group" href="#">
+                <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">payments</span>
+                <span class="font-headline tracking-wider">Shop Revenue</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <!-- TopAppBar -->
+        <header class="flex justify-between items-center px-6 py-4 w-full bg-surface-container-lowest border-b border-outline-variant/5 flex-shrink-0 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary md:hidden">menu</span>
+                <h2 class="font-headline text-on-surface text-2xl tracking-widest uppercase">FINANCIAL_FORECAST</h2>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex flex-col items-end">
+                    <span class="font-technical text-[10px] text-on-surface-variant uppercase">Local Station Time</span>
+                    <span class="font-technical text-sm text-primary uppercase">14:52:08_UTC</span>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline-variant/20 flex items-center justify-center overflow-hidden">
+                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiiaIekcnbWDhQ-naxtKkB-cxTkbdzJx9BW5yEed5li33SBptP7IbHOORhoODNzMZY2IPjPvtaOF93dF13EphPrcK93zoQK0lqch95CNiAgkz7hdct1e7lTubSeAWHpM0Ake7bSj0lF6RhatZVoDzbqTMpG77R50stZ5EXFnkzHwkS19b4t6ROQuWRqBnIApahkUZra6Yu8Inktn0gBc_Pi4GMEPvGdUknmLnjQcHHrdsOWv4q7oHy2DRcfHQHFeJrs_IZQDuEyeJV" alt="Operator"/>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 md:p-8 flex flex-col gap-8">
+            <!-- Hero Bento Stats -->
+            <section class="grid grid-cols-1 md:grid-cols-4 gap-4 uppercase font-headline">
+                <div class="md:col-span-2 relative bg-surface-container-high p-6 rounded-xl overflow-hidden group border-l-4 border-secondary-container">
+                    <div class="flex justify-between items-start mb-4">
+                        <p class="text-on-surface-variant tracking-widest">PROJECTED_QUARTER_REV</p>
+                        <span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">trending_up</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-5xl text-primary">$412,850</span>
+                        <span class="font-technical text-sm text-secondary">+12.4%</span>
+                    </div>
+                    <div class="mt-4 h-1 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-primary to-secondary-container w-3/4"></div>
+                    </div>
+                </div>
+                <div class="relative bg-surface-container-high p-6 rounded-xl overflow-hidden group border-l-4 border-tertiary">
+                    <p class="text-on-surface-variant tracking-widest mb-4">RESOURCE_EFFICIENCY</p>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl text-on-surface">94.2</span>
+                        <span class="font-technical text-sm text-on-surface-variant">%</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pipeline Table -->
+            <section class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10 uppercase font-headline">
+                <div class="px-6 py-4 bg-surface-container-high border-b border-outline-variant/20 flex justify-between items-center">
+                    <h3 class="text-xl tracking-widest text-on-surface">UPCOMING_REVENUE_PIPELINE</h3>
+                    <span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface-container-low border-b border-outline-variant/10 text-xs tracking-widest text-on-surface-variant">
+                                <th class="px-6 py-4 font-normal">Job_ID</th>
+                                <th class="px-6 py-4 font-normal">Client_Entity</th>
+                                <th class="px-6 py-4 font-normal">Forecast_Val</th>
+                                <th class="px-6 py-4 font-normal">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant/5 font-body normal-case">
+                            <tr class="hover:bg-surface-container-high transition-colors">
+                                <td class="px-6 py-4 font-technical text-sm text-primary">#ORD-88219</td>
+                                <td class="px-6 py-4 text-sm font-medium">Logistics Corp.</td>
+                                <td class="px-6 py-4 font-technical text-sm font-bold">$12,450.00</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-technical uppercase bg-primary-container/20 text-primary border border-primary/30">Confirmed</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>

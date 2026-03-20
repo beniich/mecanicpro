@@ -1,0 +1,159 @@
+@page "/clients/detail-fidelite/{CustomerId:guid}"
+@attribute [Authorize]
+@inject ApiClient Api
+
+<PageTitle>MECAPRO — Détail Fidélité</PageTitle>
+
+@if (loading)
+{
+    <div class="flex items-center justify-center min-h-screen pb-24">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+    </div>
+}
+else if (customer == null)
+{
+    <div class="flex flex-col items-center justify-center min-h-screen pb-24 gap-4">
+        <span class="material-symbols-outlined text-6xl text-error">error</span>
+        <h2 class="text-2xl font-black">CLIENT INTROUVABLE</h2>
+    </div>
+}
+else
+{
+    <div class="text-on-surface font-body custom-scrollbar pb-24">
+    <main class="mt-8 px-6 max-w-5xl mx-auto">
+        <!-- Page Title & Editorial Header -->
+        <section class="mb-8">
+            <h2 class="font-headline text-5xl tracking-wider text-on-surface leading-none uppercase">Fidélité</h2>
+            <p class="font-technical text-primary text-sm tracking-tight mt-1 uppercase">@customer.FirstName @customer.LastName — @customer.Segment</p>
+        </section>
+
+        <!-- Visual Points Gauge - Bento Main Piece -->
+        <div class="bg-surface-container-high rounded-xl p-6 mb-6 relative overflow-hidden border-l-4 border-secondary-container industrial-glow">
+            <div class="relative z-10">
+                <div class="flex justify-between items-end mb-4">
+                    <div>
+                        <span class="text-on-surface-variant font-headline text-lg uppercase tracking-widest">Points Accumulés</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="font-headline text-7xl text-primary leading-none">@customer.LoyaltyPoints.ToString("N0")</span>
+                            <span class="font-technical text-primary-fixed-dim text-xl uppercase">pts</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        @{
+                            var nextGoal = customer.LoyaltyPoints > 2000 ? 5000 : (customer.LoyaltyPoints > 500 ? 2000 : 500);
+                            var progress = (customer.LoyaltyPoints * 100.0 / nextGoal);
+                        }
+                        <span class="block font-technical text-on-surface-variant text-xs mb-1 uppercase tracking-tighter">Prochain Palier</span>
+                        <span class="font-technical text-on-surface text-sm">@nextGoal.ToString("N0") pts</span>
+                    </div>
+                </div>
+                <!-- Industrial Gauge Track -->
+                <div class="h-4 bg-surface-container-lowest rounded-full overflow-hidden flex p-1">
+                    <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container rounded-full" style="width: @(progress)%"></div>
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <div class="flex-1 bg-surface-container-highest/40 backdrop-blur-md p-3 rounded-lg border border-outline-variant/10">
+                        <span class="block text-[10px] text-on-surface-variant uppercase font-technical mb-1">Status</span>
+                        <span class="text-primary font-brand font-bold text-sm uppercase">@customer.Segment</span>
+                    </div>
+                    <div class="flex-1 bg-surface-container-highest/40 backdrop-blur-md p-3 rounded-lg border border-outline-variant/10">
+                        <span class="block text-[10px] text-on-surface-variant uppercase font-technical mb-1">Inscrit depuis</span>
+                        <span class="text-on-surface font-technical text-sm">@customer.CreatedAt.ToString("MM/yyyy")</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Background Graphic -->
+            <div class="absolute -right-8 -bottom-8 opacity-5">
+                <span class="material-symbols-outlined text-[160px]" data-icon="settings_suggest">settings_suggest</span>
+            </div>
+        </div>
+
+        <!-- Section Label: Unlocked Rewards -->
+        <div class="flex items-center gap-3 mb-4">
+            <span class="h-[1px] flex-1 bg-outline-variant/30"></span>
+            <h3 class="font-headline text-xl text-on-surface-variant uppercase tracking-widest">Récompenses Débloquées</h3>
+            <span class="h-[1px] flex-1 bg-outline-variant/30"></span>
+        </div>
+
+        <!-- Rewards Grid (Bento Style) -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/10 flex flex-col justify-between aspect-square group active:scale-95 transition-transform duration-200">
+                <div class="flex justify-between items-start">
+                    <span class="material-symbols-outlined text-secondary text-3xl" data-icon="oil_barrel">oil_barrel</span>
+                    <span class="bg-primary/10 text-primary px-2 py-0.5 rounded font-technical text-[10px] uppercase">@ (customer.LoyaltyPoints > 500 ? "DISPONIBLE" : "BLOQUÉ")</span>
+                </div>
+                <div>
+                    <h4 class="font-headline text-2xl text-on-surface leading-tight uppercase">-10% Vidange</h4>
+                    <p class="text-[10px] text-on-surface-variant font-technical mt-2 uppercase">REQUIS: 500 PTS</p>
+                </div>
+            </div>
+            
+            <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/10 flex flex-col justify-between aspect-square active:scale-95 transition-transform duration-200">
+                <div class="flex justify-between items-start">
+                    <span class="material-symbols-outlined text-primary text-3xl" data-icon="car_repair">car_repair</span>
+                    <span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded font-technical text-[10px] uppercase">@ (customer.LoyaltyPoints > 2000 ? "DISPONIBLE" : "BLOQUÉ")</span>
+                </div>
+                <div>
+                    <h4 class="font-headline text-2xl text-on-surface leading-tight uppercase">Check-up Été</h4>
+                    <p class="text-[10px] text-on-surface-variant font-technical mt-2 uppercase">REQUIS: 2,000 PTS</p>
+                </div>
+            </div>
+
+            <div class="col-span-2 bg-primary-container p-4 rounded-xl flex items-center justify-between group active:scale-[0.98] transition-all cursor-pointer">
+                <div class="flex items-center gap-4">
+                    <div class="bg-on-primary-container/10 p-3 rounded-lg">
+                        <span class="material-symbols-outlined text-on-primary-container text-4xl" data-icon="qr_code_2">qr_code_2</span>
+                    </div>
+                    <div>
+                        <h4 class="font-headline text-2xl text-on-primary-container leading-none uppercase">Générer Pass</h4>
+                        <p class="text-xs text-on-primary-container/80 font-medium mt-1">Scanner en atelier pour utiliser les points</p>
+                    </div>
+                </div>
+                <span class="material-symbols-outlined text-on-primary-container" data-icon="chevron_right">chevron_right</span>
+            </div>
+        </div>
+
+        <!-- Section Label: History -->
+        <div class="flex items-center gap-3 mb-4">
+            <h3 class="font-headline text-xl text-on-surface-variant uppercase tracking-widest whitespace-nowrap">Historique des Gains</h3>
+            <span class="h-[1px] flex-1 bg-outline-variant/30"></span>
+        </div>
+
+        <!-- Transaction List -->
+        <div class="space-y-3 mb-10">
+            @foreach (var t in customer.LoyaltyHistory.OrderByDescending(x => x.Date))
+            {
+                <div class="bg-surface-container-lowest p-4 rounded-lg flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center">
+                            <span class="material-symbols-outlined text-on-surface-variant" data-icon="stars">stars</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm text-on-surface uppercase">@t.Reason</p>
+                            <p class="font-technical text-[10px] text-on-surface-variant uppercase tracking-tighter">@t.Date.ToString("dd/MM/yyyy")</p>
+                        </div>
+                    </div>
+                    <span class="font-technical text-primary font-bold">@(t.Points >= 0 ? "+" : "")@t.Points pts</span>
+                </div>
+            }
+            @if (!customer.LoyaltyHistory.Any())
+            {
+                <p class="text-center py-12 italic opacity-30">Aucun historique de fidélité.</p>
+            }
+        </div>
+    </main>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid CustomerId { get; set; }
+    private CustomerDetailDto? customer;
+    private bool loading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        loading = true;
+        customer = await Api.GetAsync<CustomerDetailDto>($"/api/v1/customers/{CustomerId}");
+        loading = false;
+    }
+}

@@ -1,0 +1,41 @@
+@page "/admin/rapport-annuel-2"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Rapport Annuel Mobile</PageTitle>
+
+<div class="bg-background text-on-surface font-body selection:bg-primary-container min-h-screen">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318] h-16 flex items-center px-6 shadow-2xl border-b border-outline-variant/10">
+        <div class="flex items-center gap-3 font-headline uppercase italic">
+            <span class="material-symbols-outlined text-[#f5a623] text-2xl">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-tighter text-[#f5a623]">MECAPRO</h1>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-32 px-6 space-y-8 max-w-md mx-auto uppercase font-headline">
+        <section class="space-y-1">
+            <h2 class="text-6xl tracking-wider leading-none font-black italic">RAPPORT ANNUEL</h2>
+            <p class="font-technical text-[10px] text-primary tracking-[0.3em] font-black not-italic opacity-70">FISCAL_YEAR_2023_ANALYSIS</p>
+        </section>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-2 gap-4 italic font-black">
+            <div class="col-span-2 bg-surface-container-high p-6 rounded-xl border-l-4 border-secondary-container shadow-2xl relative overflow-hidden">
+                <p class="font-technical text-[10px] text-on-surface-variant tracking-widest font-black mb-2 not-italic opacity-60">TOTAL_REVENUE</p>
+                <div class="flex items-baseline gap-3">
+                    <span class="text-6xl text-primary leading-tight font-black">1.28M</span>
+                    <span class="font-technical text-sm text-primary not-italic">EUR</span>
+                </div>
+            </div>
+            <div class="bg-surface-container-high p-5 rounded-xl border-l-4 border-primary shadow-xl">
+                <p class="font-technical text-[10px] text-on-surface-variant tracking-widest font-black mb-1 not-italic opacity-60">VEHICLES</p>
+                <span class="text-4xl text-on-surface font-black">2,840</span>
+            </div>
+            <div class="bg-surface-container-high p-5 rounded-xl border-l-4 border-tertiary shadow-xl">
+                <p class="font-technical text-[10px] text-on-surface-variant tracking-widest font-black mb-1 not-italic opacity-60">SATISFACTION</p>
+                <span class="text-4xl text-on-surface font-black">4.82</span>
+            </div>
+        </div>
+    </main>
+</div>

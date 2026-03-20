@@ -42,13 +42,14 @@
     {
         loading = true;
         errorMessage = null;
-        if (await AutoAuth.LoginAsync(email, password))
+        var result = await AutoAuth.LoginAsync(email, password);
+        if (result.Success)
         {
             Navigation.NavigateTo("/");
         }
         else
         {
-            errorMessage = "Email ou mot de passe incorrect.";
+            errorMessage = result.Error ?? "Email ou mot de passe incorrect.";
         }
         loading = false;
     }

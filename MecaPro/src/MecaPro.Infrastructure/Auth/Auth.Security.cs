@@ -125,8 +125,18 @@ public class AuthModule : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/v1/auth");
-        group.MapPost("/register", async (RegisterDto dto, IAuthService auth) => await auth.RegisterAsync(dto));
-        group.MapPost("/login", async (LoginDto dto, IAuthService auth) => await auth.LoginAsync(dto));
+        var group = app.MapGroup("/api/v1/auth").WithTags("Auth");
+        
+        group.MapPost("/register", async (RegisterDto dto, IAuthService auth) =>
+        {
+            var result = await auth.RegisterAsync(dto);
+            return result.IsSuccess ? Results.Ok(result.Value) : Results.BadRequest(result.Error);
+        });
+
+        group.MapPost("/login", async (LoginDto dto, IAuthService auth) =>
+        {
+            var result = await auth.LoginAsync(dto);
+            return result.IsSuccess ? Results.Ok(result.Value) : Results.BadRequest(result.Error ?? "Invalid credentials");
+        });
     }
 }

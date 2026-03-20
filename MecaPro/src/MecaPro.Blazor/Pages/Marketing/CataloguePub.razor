@@ -1,0 +1,95 @@
+@page "/marketing/publicite"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Gestion Publicitaire</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen pb-24 md:pb-8">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 h-16 border-b border-outline-variant/10">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='/'">
+            <span class="material-symbols-outlined text-[#f5a623]" data-icon="precision_manufacturing">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-tighter text-[#f5a623] font-headline uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex gap-6 uppercase font-technical text-sm">
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623]" href="/marketing">Marketing</a>
+                <a class="text-[#f5a623] font-bold" href="/marketing/publicite">Campagnes</a>
+            </div>
+            <button class="text-slate-500">
+                <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="mt-20 px-4 max-w-6xl mx-auto space-y-8">
+        <!-- Hero: Current Promotion Canvas -->
+        <section class="relative h-64 w-full rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant/15 shadow-xl">
+            <div class="absolute inset-0 z-0">
+                <img alt="Winter maintenance checkup" class="w-full h-full object-cover opacity-40 mix-blend-luminosity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPhopd846ZSLvqLPRmSQmDuHKYQVza7RE-PGdnENX2HxmAlPsGy8Ei-3TCwAqNZXlexpT4Y-X7UDSjeSOlpp-1zAUaOesCIJpMdh1UnXHl9lFmt69wAf1pCheCsL2HiPL57uc-K52PahcdiWtws3YUmcYx6devlybEY1i4keXjf0Fnp161Z3grVOj1mNE1kO3d_hY6xpHzZG-bESpLHAXAWqWQk4ArSQPNpUau7MCrng0qWLsm7snrqCZHVtZw8AOKmYWqWCL29Ojl"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+            </div>
+            <div class="relative z-10 p-6 flex flex-col justify-end h-full">
+                <span class="inline-block px-3 py-1 bg-secondary-container text-on-surface text-[10px] font-technical uppercase tracking-widest rounded mb-2 w-fit">SEASONAL ACTIVE</span>
+                <h2 class="font-headline text-5xl tracking-wide leading-none text-primary uppercase">WINTER CHECK-UP</h2>
+                <div class="flex justify-between items-end mt-2">
+                    <p class="text-on-surface-variant text-sm max-w-[200px] uppercase">Complete diagnostic for cold climate reliability.</p>
+                    <div class="font-technical text-2xl font-bold text-on-surface">49€<span class="text-xs text-on-surface-variant">.00</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Management Grid -->
+        <div class="grid grid-cols-2 gap-4">
+            <div class="col-span-1 bg-surface-container-high p-4 rounded-xl border-l-4 border-secondary-container">
+                <p class="text-[10px] font-technical text-on-surface-variant uppercase tracking-tighter">Active Ads</p>
+                <h3 class="font-headline text-4xl text-primary mt-1">08</h3>
+            </div>
+            <div class="col-span-1 bg-surface-container-high p-4 rounded-xl border-l-4 border-primary-container">
+                <p class="text-[10px] font-technical text-on-surface-variant uppercase tracking-tighter">CTR Rate</p>
+                <h3 class="font-headline text-4xl text-on-surface mt-1">4.2<span class="text-lg">%</span></h3>
+            </div>
+        </div>
+
+        <!-- Ad List -->
+        <section>
+            <div class="flex items-center justify-between mb-4 px-1">
+                <h3 class="font-headline text-2xl tracking-wider text-on-surface-variant uppercase">OFFER REPOSITORY</h3>
+                <button class="bg-surface-container-high p-2 rounded-lg text-primary border border-outline-variant/10">
+                    <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+                </button>
+            </div>
+            <div class="space-y-3">
+                <!-- Ad Card -->
+                <div class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/10 group hover:border-primary/30 transition-all">
+                    <div class="flex h-24">
+                        <div class="w-24 h-full bg-surface-container-highest">
+                            <img alt="Brake" class="w-full h-full object-cover grayscale opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrOisMc4InvPDvvse7N3xUEeSdgSLgHeWLkOii_0wGyC29w23M3HJllsqkKDmS3ECLjoASeSx8hbLctrzkKp6uLf3oXW0vxxyhndDxfTYImt8EDTELLyz54qB2YNWVpyqgesXmQCjWKQAgQHNyZoiVSdFqdgRbJk3E1oaUov-ee9xi4QFryONk5FcG3MK5zAMNG-MipQ7C2HOlZblynFvtxUC4SLwwj5aKjCVZJrl45xvWJ1itLhWxENWdKomtgycPXJpEohZULIPO"/>
+                        </div>
+                        <div class="flex-1 p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h5 class="font-bold text-xs uppercase text-on-surface">Brake Safety Pack</h5>
+                                    <p class="text-[10px] font-technical text-on-surface-variant">REF: BRK-MOD-02</p>
+                                </div>
+                                <span class="bg-primary/20 text-primary text-[8px] font-bold px-1.5 py-0.5 rounded border border-primary/30 uppercase">PORTAL ACTIVE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full bg-[#0c0e12] flex justify-around items-center px-4 py-3 h-20 z-50 rounded-t-xl border-t border-white/5 md:hidden">
+        <a class="flex flex-col items-center justify-center text-[#e2e2e8]/40" href="/">
+            <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            <span class="font-technical text-[10px] uppercase mt-1">Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1.5 border-l-2 border-[#f26411]" href="/marketing/publicite">
+            <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+            <span class="font-technical text-[10px] uppercase mt-1">Ads</span>
+        </a>
+    </nav>
+</div>

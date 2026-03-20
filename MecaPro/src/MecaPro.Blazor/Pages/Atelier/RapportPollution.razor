@@ -1,0 +1,75 @@
+@page "/atelier/rapport-pollution"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Rapport Pollution</PageTitle>
+
+<div class="bg-surface text-on-surface font-body min-h-screen pb-24 md:pb-0 selection:bg-primary/30">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 h-20 w-full z-50 sticky top-0">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+            <h1 class="font-industrial uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+            <nav class="flex gap-6 font-technical text-xs tracking-widest uppercase font-bold">
+                <a class="text-[#f5a623]" href="#">Dashboard</a>
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">Scanner</a>
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">Reports</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYMcbBfaw5I7E_4p_klk4pnB6nlesahJzaZdz70lEaKxP7MRfOLgBKNPjqB2N-lwdppwQMRednI0HkN-zI1dWyo-4TY6nE9lmEFwYtr-MGMyMVot_DduKE8kVOIZXV6XgIW3prnlyLpdehKceAsSgqoIwWksM2_EfcPhv81vNoIZ2UdTvGh3uEUrC4cP66x8zhPu6rPK-ooKe1UW-L0y9wDFgVOS7OwfCEHUe46n8P358Z5PcBxXenJjKRR9t6cNPLO4HWHnU61BFb" alt="Operator"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6 md:p-10 space-y-10">
+        <!-- Hero Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-end">
+            <div class="lg:col-span-2 space-y-2">
+                <div class="flex items-center gap-3">
+                    <span class="px-3 py-1 bg-primary-container/20 text-primary-container text-xs font-technical rounded border-l-2 border-secondary-container">VIN_VERIFIED</span>
+                    <span class="font-technical text-on-surface-variant/60 text-sm tracking-tighter uppercase">Diagnostic ID: #PX-992-88-L</span>
+                </div>
+                <h2 class="font-industrial text-6xl md:text-8xl tracking-tight text-on-surface leading-none uppercase">RAPPORT_POLLUTION</h2>
+            </div>
+            <div class="bg-surface-container-low p-6 rounded-xl border-l-2 border-primary-container flex flex-col justify-between h-full">
+                <span class="font-technical text-[10px] text-on-surface-variant uppercase">Vehicle_Identity</span>
+                <div class="mt-4">
+                    <p class="font-technical text-2xl text-primary leading-none tracking-tighter uppercase">WBA-7A11-040-CL-5509</p>
+                    <p class="text-sm text-on-surface/60 mt-1 uppercase">Industrial Heavy-Duty Transport • Euro VI-D</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 uppercase">
+            <div class="bg-surface-container-high p-6 rounded relative overflow-hidden shadow-[0_0_24px_-4px_rgba(245,166,35,0.08)]">
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+                <span class="font-technical text-[10px] text-on-surface-variant">CO2_EMISSIONS</span>
+                <div class="flex items-baseline gap-2 mt-4">
+                    <span class="font-industrial text-5xl text-primary">124.8</span>
+                    <span class="font-technical text-sm text-on-surface-variant">g/km</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 uppercase">
+            <div class="lg:col-span-8 bg-surface-container-low rounded-xl p-8 space-y-8">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-industrial text-2xl text-on-surface">MESURES_LAMBDA_REAL-TIME</h3>
+                        <p class="text-xs font-technical text-on-surface-variant/60">Dernières 60 secondes de test dynamique</p>
+                    </div>
+                </div>
+                <!-- Mock SVG Visual -->
+                <div class="h-64 w-full bg-surface-container-lowest border-l border-b border-outline-variant/20 relative">
+                    <svg class="w-full h-full" viewbox="0 0 1000 200">
+                        <path d="M0,120 L50,115 L100,105 L150,110 L200,98 L250,102 L300,95 L350,105 L400,100 L450,90 L500,100 L550,110 L600,100 L650,95 L700,98 L750,102 L800,100 L850,92 L900,100 L950,105 L1000,100" fill="none" stroke="#f5a623" stroke-width="2"></path>
+                    </svg>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

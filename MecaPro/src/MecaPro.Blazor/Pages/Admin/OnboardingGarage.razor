@@ -1,0 +1,99 @@
+@page "/admin/onboarding-garage"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Garage Setup</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container/30">
+    <!-- Top Navigation -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318] h-16 px-6 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary-container">precision_manufacturing</span>
+            <span class="text-2xl font-black tracking-tighter text-[#f5a623] font-headline uppercase">MECAPRO</span>
+        </div>
+        <button class="text-on-surface-variant hover:text-on-surface transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </header>
+
+    <main class="pt-24 pb-32 px-6 max-w-md mx-auto min-h-screen flex flex-col">
+        <!-- Progress Indicator -->
+        <div class="mb-10">
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <span class="text-on-surface-variant font-technical text-xs tracking-widest uppercase block mb-1">Configuration Step</span>
+                    <h1 class="text-4xl font-headline tracking-wider leading-none uppercase">Shop Profile</h1>
+                </div>
+                <div class="text-right">
+                    <span class="font-technical text-primary text-xl">02<span class="text-on-surface-variant text-sm">/04</span></span>
+                </div>
+            </div>
+            <div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-1/2 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Onboarding Form Sections -->
+        <section class="space-y-8 flex-grow">
+            <!-- Location Details -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+                    <h2 class="font-headline font-bold uppercase tracking-tight text-on-surface">Garage Headquarters</h2>
+                </div>
+                <div class="relative">
+                    <label class="absolute -top-2.5 left-4 px-2 bg-surface text-[10px] font-bold text-outline uppercase tracking-widest z-10">Facility Name</label>
+                    <input class="w-full bg-surface-container-highest border-none rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary-container text-on-surface placeholder:text-on-surface-variant/40 transition-all" placeholder="e.g. Precision Auto Works" type="text"/>
+                </div>
+            </div>
+
+            <!-- Capacity Configuration -->
+            <div class="grid grid-cols-2 gap-4 uppercase">
+                <div class="bg-surface-container-high rounded-xl p-5 border-l-2 border-secondary-container flex flex-col justify-between h-32">
+                    <span class="text-on-surface-variant font-technical text-[10px] uppercase tracking-tighter">Total Lifts</span>
+                    <div class="flex items-center justify-between">
+                        <span class="text-4xl font-headline text-primary">08</span>
+                        <div class="flex flex-col gap-1">
+                            <button class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center active:scale-90 transition-transform"><span class="material-symbols-outlined text-xs">add</span></button>
+                            <button class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center active:scale-90 transition-transform"><span class="material-symbols-outlined text-xs">remove</span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-surface-container-high rounded-xl p-5 flex flex-col justify-between h-32">
+                    <span class="text-on-surface-variant font-technical text-[10px] uppercase tracking-tighter">Mechanic Count</span>
+                    <div class="flex items-center justify-between">
+                        <span class="text-4xl font-headline text-secondary-container">14</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operational Hours -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-primary text-sm">schedule</span>
+                    <h2 class="font-headline font-bold uppercase tracking-tight text-on-surface">Shift Schedule</h2>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-surface-container-highest rounded-xl p-4 flex items-center justify-between">
+                        <div>
+                            <span class="block text-[10px] font-technical text-outline uppercase">Opens</span>
+                            <span class="text-lg font-headline">07:00 AM</span>
+                        </div>
+                        <span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fixed Bottom Action Area -->
+        <footer class="fixed bottom-0 left-0 w-full p-6 bg-surface-container-highest/60 backdrop-blur-xl flex gap-4 items-center border-t border-outline-variant/10">
+            <button class="h-14 px-6 rounded-xl border border-outline-variant text-on-surface font-bold uppercase tracking-widest text-xs active:scale-95 transition-all">
+                Back
+            </button>
+            <button class="h-14 flex-grow rounded-xl bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg shadow-primary-container/20">
+                Continue to Inventory
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+        </footer>
+    </main>
+</div>

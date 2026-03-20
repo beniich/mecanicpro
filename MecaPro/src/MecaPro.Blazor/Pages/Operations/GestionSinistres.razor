@@ -1,0 +1,182 @@
+@page "/marketing/gestion-sinistres"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#0d0e12] text-white p-8 font-['Outfit']">
+    <!-- Blue Header with Insurance Aesthetics -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-blue-600/20 flex items-center justify-center border border-blue-500/30">
+                    <span class="material-symbols-outlined text-blue-400">shield</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Gestion <span class="text-blue-500">Sinistres</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">ADMINISTRATION DES DOSSIERS ASSUREURS & EXPERTS</p>
+        </div>
+        
+        <div class="flex gap-4">
+            <div class="bg-white/5 border border-white/10 px-8 py-3 rounded-2xl flex items-center gap-4">
+                <div class="text-right">
+                    <p class="text-[9px] text-gray-500 font-black tracking-widest leading-none">CUMUL INDEMNITÉS</p>
+                    <p class="text-xl font-black text-blue-400">42,850 <span class="text-xs">€</span></p>
+                </div>
+                <div class="w-[1px] h-8 bg-white/10"></div>
+                <div class="text-right">
+                    <p class="text-[9px] text-gray-500 font-black tracking-widest leading-none">DOSSIERS ACTIFS</p>
+                    <p class="text-xl font-black italic">14</p>
+                </div>
+            </div>
+            <button class="bg-blue-600 hover:bg-blue-500 px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-[0_0_30px_rgba(37,99,235,0.3)] flex items-center gap-2">
+                <span class="material-symbols-outlined">add_circle</span> NOUVEAU SINISTRE
+            </button>
+        </div>
+    </div>
+
+    <!-- Active Claims Timeline -->
+    <div class="grid grid-cols-1 gap-6 mb-12">
+        <div class="bg-white/[0.02] border border-white/10 rounded-[2.5rem] p-4 flex gap-4 overflow-x-auto no-scrollbar pb-8">
+            @foreach (var claim in claimCards)
+            {
+                <div class="min-w-[340px] bg-[#1a1c24] border border-white/10 rounded-[2.5rem] p-6 @(claim.IsUrgent ? "ring-2 ring-red-500/50" : "") hover:scale-[1.02] transition-all cursor-pointer group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <p class="text-[10px] text-blue-500 font-black uppercase tracking-widest mb-1">RÉF ASSUREUR @claim.InsuranceRef</p>
+                            <h4 class="text-xl font-black italic uppercase italic tracking-tighter group-hover:text-blue-400 transition-colors">@claim.VehiclePlate</h4>
+                        </div>
+                        <span class="material-symbols-outlined text-gray-600">more_vert</span>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-gray-500 font-bold">TYPE SINISTRE</span>
+                            <span class="font-black uppercase italic tracking-widest text-[10px]">@claim.ClaimType</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-gray-500 font-bold">EXPERT MANDATÉ</span>
+                            <span class="font-black uppercase tracking-widest text-[10px]">@claim.ExpertName</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/40 rounded-2xl p-4 mb-6 border border-white/5">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Progression Dossier</span>
+                            <span class="text-[10px] text-blue-400 font-black">@claim.Progress%</span>
+                        </div>
+                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.6)]" style="width: @claim.Progress%"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button class="flex-grow bg-white/5 hover:bg-white/10 border border-white/5 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">VOIR DOSSIER</button>
+                        <button class="w-12 h-12 flex items-center justify-center bg-blue-600/10 border border-blue-500/20 rounded-xl hover:bg-blue-600 transition-all group/btn">
+                             <span class="material-symbols-outlined text-blue-400 group-hover/btn:text-white text-lg">attachment</span>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Claims Table / Detail -->
+    <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[3rem] overflow-hidden">
+        <div class="p-8 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
+             <h3 class="text-xl font-bold italic uppercase tracking-tighter">Historique des Sinistres</h3>
+             <div class="flex gap-2">
+                 <div class="bg-black/40 border border-white/10 rounded-xl px-4 py-2 flex items-center gap-2">
+                     <span class="material-symbols-outlined text-xs text-gray-500">search</span>
+                     <input type="text" placeholder="Recherche par dossier..." class="bg-transparent border-none text-[10px] font-bold text-gray-300 focus:outline-none w-48">
+                 </div>
+             </div>
+        </div>
+
+        <div class="p-0">
+             <table class="w-full text-left border-collapse">
+                 <thead>
+                     <tr class="text-[10px] text-gray-500 font-black uppercase tracking-widest bg-black/20">
+                         <th class="px-8 py-4">Véhicule</th>
+                         <th class="px-8 py-4">Assureur</th>
+                         <th class="px-8 py-4">Statut</th>
+                         <th class="px-8 py-4">Montant Estimé</th>
+                         <th class="px-8 py-4 text-right">Dernière Action</th>
+                     </tr>
+                 </thead>
+                 <tbody class="divide-y divide-white/[0.05]">
+                     @foreach (var entry in tableEntries)
+                     {
+                         <tr class="hover:bg-white/[0.01] transition-colors cursor-pointer group">
+                             <td class="px-8 py-6">
+                                 <div class="flex gap-4 items-center">
+                                     <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center font-black text-[10px]">VE</div>
+                                     <div>
+                                         <p class="font-bold text-sm tracking-tight">@entry.Vehicle</p>
+                                         <p class="text-[10px] text-gray-500 font-medium">MODÈLE: @entry.VehicleModel</p>
+                                     </div>
+                                 </div>
+                             </td>
+                             <td class="px-8 py-6">
+                                 <p class="text-xs font-black uppercase tracking-widest">@entry.Insurance</p>
+                             </td>
+                             <td class="px-8 py-6">
+                                 <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter border @(GetStatusColor(entry.Status))">@entry.Status</span>
+                             </td>
+                             <td class="px-8 py-6">
+                                 <p class="text-sm font-black italic">@entry.Amount <span class="text-[10px] text-gray-500">€</span></p>
+                             </td>
+                             <td class="px-8 py-6 text-right">
+                                 <p class="text-[10px] text-gray-400 font-bold italic mb-1">@entry.LastUpdate</p>
+                                 <p class="text-[9px] text-blue-500 font-black uppercase tracking-widest bg-blue-500/10 inline-block px-2 py-0.5 rounded-md">@entry.LastAction</p>
+                             </td>
+                         </tr>
+                     }
+                 </tbody>
+             </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<ClaimEntry> claimCards = new()
+    {
+        new ClaimEntry { VehiclePlate = "AB-123-CD", InsuranceRef = "AXA-4491-X", ClaimType = "Collision Frontale", ExpertName = "Cabinet VALORIS", Progress = 75, IsUrgent = true },
+        new ClaimEntry { VehiclePlate = "EF-456-GH", InsuranceRef = "MAIF-0092-B", ClaimType = "Grêle / Carrosserie", ExpertName = "Jean DURAND", Progress = 40, IsUrgent = false },
+        new ClaimEntry { VehiclePlate = "IJ-789-KL", InsuranceRef = "ALLIANZ-882-C", ClaimType = "Vol partiel", ExpertName = "Marie LEGRAND", Progress = 15, IsUrgent = true }
+    };
+
+    private List<TableEntry> tableEntries = new()
+    {
+        new TableEntry { Vehicle = "AB-123-CD", VehicleModel = "RENAULT CLIO V", Insurance = "AXA", Status = "EXPERT MANDATÉ", Amount = "3,450", LastUpdate = "Il y a 2h", LastAction = "Rapport envoyé" },
+        new TableEntry { Vehicle = "XY-987-ZZ", VehicleModel = "BMW SERIE 1", Insurance = "GENERALI", Status = "EN ATTENTE PIÈCES", Amount = "8,120", LastUpdate = "Hier", LastAction = "Commande validée" },
+        new TableEntry { Vehicle = "ZZ-001-AA", VehicleModel = "TESLA MODEL 3", Insurance = "ALLIANZ", Status = "CLÔTURÉ", Amount = "1,200", LastUpdate = "3 jours", LastAction = "Indemnisation réglée" },
+        new TableEntry { Vehicle = "KM-442-PT", VehicleModel = "PEUGEOT 3008", Insurance = "MAIF", Status = "DÉCLARÉ", Amount = "450", LastUpdate = "Aujourd'hui", LastAction = "Photos jointes" }
+    };
+
+    private string GetStatusColor(string status) => status switch
+    {
+        "CLÔTURÉ" => "border-green-500/30 text-green-400 bg-green-500/10",
+        "EXPERT MANDATÉ" => "border-blue-500/30 text-blue-400 bg-blue-500/10",
+        "DÉCLARÉ" => "border-yellow-500/30 text-yellow-400 bg-yellow-500/10",
+        _ => "border-white/20 text-gray-400 bg-white/5"
+    };
+
+    public class ClaimEntry
+    {
+        public string VehiclePlate { get; set; } = "";
+        public string InsuranceRef { get; set; } = "";
+        public string ClaimType { get; set; } = "";
+        public string ExpertName { get; set; } = "";
+        public int Progress { get; set; }
+        public bool IsUrgent { get; set; }
+    }
+
+    public class TableEntry
+    {
+        public string Vehicle { get; set; } = "";
+        public string VehicleModel { get; set; } = "";
+        public string Insurance { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string Amount { get; set; } = "";
+        public string LastUpdate { get; set; } = "";
+        public string LastAction { get; set; } = "";
+    }
+}

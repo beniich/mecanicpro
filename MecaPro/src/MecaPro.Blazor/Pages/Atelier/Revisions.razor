@@ -1,0 +1,152 @@
+@page "/atelier/revisions"
+@using MecaPro.Application
+@using MecaPro.Domain.Common
+@inject MediatR.IMediator Mediator
+
+<div class="min-h-screen bg-[#0a0b0d] text-white p-8 font-['Outfit']">
+    <!-- Main Header -->
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-[#02e1f2]/20 flex items-center justify-center border border-[#02e1f2]/30 shadow-[0_0_40px_rgba(2,225,242,0.15)]">
+                    <span class="material-symbols-outlined text-[#02e1f2]">build_circle</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Révisions <span class="text-[#02e1f2]">Flux</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.4em]">LISTE COMPLÈTE & ÉTAT DES INTERVENTIONS ATELIER</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-white/5 border border-white/10 p-1 rounded-2xl flex">
+                 <button class="px-6 py-2 rounded-xl bg-white/10 font-bold text-xs uppercase transition-all">Tout</button>
+                 <button class="px-6 py-2 rounded-xl text-gray-500 font-bold text-xs uppercase hover:text-white transition-all">En cours</button>
+                 <button class="px-6 py-2 rounded-xl text-gray-500 font-bold text-xs uppercase hover:text-white transition-all">Planifié</button>
+             </div>
+             <button class="bg-[#02e1f2] text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest hover:scale-105 transition-all shadow-[0_0_30px_rgba(2,225,242,0.3)]">
+                 NOUVELLE RÉVISION
+             </button>
+        </div>
+    </div>
+
+    <!-- Active Service Counter & KPIs -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        @foreach (var stat in stats)
+        {
+            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 hover:bg-white/[0.04] transition-all group">
+                <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-3 italic">@stat.Label</p>
+                <div class="flex justify-between items-end">
+                    <p class="text-4xl font-black italic tracking-tighter @(stat.Color)">@stat.Value</p>
+                    <span class="material-symbols-outlined text-gray-700 group-hover:text-white/20 transition-colors">@stat.Icon</span>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Revisions Grid/Table -->
+    <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl relative">
+        <!-- SVG Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-[#02e1f2]/5 to-transparent pointer-events-none"></div>
+        
+        <div class="p-8 border-b border-white/5 relative z-10 flex justify-between items-center">
+            <h3 class="text-xl font-black italic uppercase tracking-tighter">Répertoires des Interventions</h3>
+            <div class="flex gap-4">
+                <div class="bg-black/40 border border-white/10 rounded-xl px-4 py-2 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-xs text-gray-500">search</span>
+                    <input type="text" placeholder="Rechercher par Immatriculation / Client..." class="bg-transparent border-none text-[10px] font-bold text-gray-300 focus:outline-none w-64">
+                </div>
+            </div>
+        </div>
+
+        <div class="p-0 relative z-10">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] bg-black/20">
+                        <th class="px-10 py-5">Véhicule & Client</th>
+                        <th class="px-10 py-5">Type / Description</th>
+                        <th class="px-10 py-5">Statut</th>
+                        <th class="px-10 py-5">Échéance / Rendez-vous</th>
+                        <th class="px-10 py-5 text-right">Devis / Coût</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/[0.05]">
+                    @foreach (var rev in revisions)
+                    {
+                        <tr class="hover:bg-white/[0.02] transition-colors cursor-pointer group">
+                            <td class="px-10 py-8">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center font-black text-xl italic group-hover:border-[#02e1f2]/40 transition-all">
+                                        @rev.Plate.Substring(0, 2)
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-black tracking-tight group-hover:text-[#02e1f2] transition-colors uppercase italic tracking-widest leading-relaxed">@rev.Plate</p>
+                                        <p class="text-[10px] text-gray-500 font-medium uppercase font-outfit uppercase tracking-widest">PROPRIÉTAIRE: @rev.Customer</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-10 py-8">
+                                <p class="text-xs font-black uppercase italic tracking-widest text-[#02e1f2]">@rev.Type</p>
+                                <p class="text-[10px] text-gray-400 font-medium font-outfit uppercase tracking-widest italic leading-relaxed">@rev.VehicleModel</p>
+                            </td>
+                            <td class="px-10 py-8">
+                                <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter @(GetStatusStyle(rev.Status))">@rev.Status</span>
+                            </td>
+                            <td class="px-10 py-8">
+                                <p class="text-sm font-black italic">@rev.Date</p>
+                                <p class="text-[10px] font-bold text-gray-500 font-outfit uppercase tracking-widest italic leading-relaxed">@rev.Time</p>
+                            </td>
+                            <td class="px-10 py-8 text-right">
+                                <p class="text-xl font-black italic tracking-tighter">@rev.Cost <span class="text-xs text-gray-500">€</span></p>
+                                <p class="text-[9px] text-gray-500 font-black uppercase tracking-widest mt-1">@(rev.IsPaid ? "PAYÉ" : "EN ATTENTE")</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<StatCard> stats = new()
+    {
+        new StatCard { Label = "Interventions du jour", Value = "14", Icon = "today", Color = "text-white" },
+        new StatCard { Label = "En attente de pièces", Value = "3", Icon = "hourglass_empty", Color = "text-orange-500" },
+        new StatCard { Label = "Urgences Critiques", Value = "0", Icon = "bolt", Color = "text-green-500" },
+        new StatCard { Label = "Retards Planning", Value = "1", Icon = "error", Color = "text-red-500" }
+    };
+
+    private List<RevisionEntry> revisions = new()
+    {
+        new RevisionEntry { Plate = "AB-123-CD", Customer = "JEAN-LUC MARTINET", Type = "RÉVISION COMPLÈTE", VehicleModel = "RENAULT ZOE E-TECH", Status = "EN COURS", Date = "20 Mar 2026", Time = "14:30", Cost = "242.50", IsPaid = true },
+        new RevisionEntry { Plate = "XY-987-ZZ", Customer = "SOPHIE LARUE", Type = "CHANGEMENT PNEUMATIQUES", VehicleModel = "BMW SERIE 1", Status = "PLANIFIÉ", Date = "21 Mar 2026", Time = "09:00", Cost = "380.00", IsPaid = false },
+        new RevisionEntry { Plate = "KM-442-PT", Customer = "TRANS-LOGISTIX", Type = "DIAGNOSTIC IA AVANCÉ", VehicleModel = "MASTER ZE", Status = "TERMINÉ", Date = "19 Mar 2026", Time = "11:15", Cost = "150.00", IsPaid = true },
+        new RevisionEntry { Plate = "ER-003-XX", Customer = "PHILIPPE MOREL", Type = "RECONDITIONNEMENT MOTEUR", VehicleModel = "BMW M4 CSL", Status = "EN COURS", Date = "20 Mar 2026", Time = "08:30", Cost = "4,200.00", IsPaid = false }
+    };
+
+    private string GetStatusStyle(string status) => status switch
+    {
+        "EN COURS" => "bg-[#02e1f2]/10 text-[#02e1f2] border border-[#02e1f2]/30",
+        "PLANIFIÉ" => "bg-white/5 text-gray-400 border border-white/10",
+        "TERMINÉ" => "bg-green-500/10 text-green-500 border border-green-500/30",
+        _ => "bg-gray-500/10 text-gray-500 border border-gray-500/30"
+    };
+
+    public class StatCard {
+        public string Label { get; set; } = "";
+        public string Value { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public string Color { get; set; } = "";
+    }
+
+    public class RevisionEntry {
+        public string Plate { get; set; } = "";
+        public string Customer { get; set; } = "";
+        public string Type { get; set; } = "";
+        public string VehicleModel { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string Date { get; set; } = "";
+        public string Time { get; set; } = "";
+        public string Cost { get; set; } = "";
+        public bool IsPaid { get; set; }
+    }
+}

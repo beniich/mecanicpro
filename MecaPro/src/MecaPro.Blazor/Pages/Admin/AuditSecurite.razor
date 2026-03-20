@@ -1,0 +1,91 @@
+@page "/admin/audit-securite"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Journal d'Audit de Sécurité</PageTitle>
+
+<div class="bg-background text-on-background min-h-screen pb-24 md:pb-8 font-body">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full border-b border-[#524534]/15 sticky top-0 z-50">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='/'">
+            <span class="material-symbols-outlined text-[#f5a623] text-2xl">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] font-headline">MECAPRO</h1>
+        </div>
+        <div class="hidden md:flex gap-8">
+            <nav class="flex gap-8">
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors font-medium text-sm uppercase tracking-wider" href="/admin/planning">Planning</a>
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors font-medium text-sm uppercase tracking-wider" href="/admin/taches">Tâches</a>
+                <a class="text-[#f5a623] font-bold font-medium text-sm uppercase tracking-wider" href="/admin/audit-securite">Sécurité</a>
+            </nav>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+            <div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center">
+                <span class="material-symbols-outlined text-xs">person</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-10">
+            <h2 class="text-4xl font-headline tracking-wider text-on-background mb-6 uppercase">Journal d'Audit de Sécurité</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- KPI Cards -->
+                <div class="bg-surface-container-high p-6 relative overflow-hidden border border-outline-variant/10">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+                    <p class="text-on-surface-variant text-sm font-medium uppercase tracking-tighter mb-2">Connexions (24h)</p>
+                    <div class="flex items-end justify-between">
+                        <span class="text-4xl font-headline text-primary tracking-wide">142</span>
+                        <span class="text-xs text-primary font-technical bg-primary/10 px-2 py-1 rounded">NORMAL</span>
+                    </div>
+                </div>
+                <div class="bg-surface-container-high p-6 relative overflow-hidden border border-outline-variant/10">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+                    <p class="text-on-surface-variant text-sm font-medium uppercase tracking-tighter mb-2">Échecs Critiques</p>
+                    <div class="flex items-end justify-between">
+                        <span class="text-4xl font-headline text-error tracking-wide">03</span>
+                        <span class="text-xs text-error font-technical bg-error/10 px-2 py-1 rounded uppercase">ALERTE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audit Log Table (Simplified) -->
+        <div class="bg-surface-container-low overflow-hidden rounded-xl border border-outline-variant/10">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-highest/20">
+                        <tr class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">
+                            <th class="px-6 py-4">Horodatage</th>
+                            <th class="px-6 py-4">Utilisateur / ID</th>
+                            <th class="px-6 py-4">Action</th>
+                            <th class="px-6 py-4">Cible</th>
+                            <th class="px-6 py-4">Statut / IP</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm font-technical divide-y divide-outline-variant/5">
+                        <tr class="bg-surface hover:bg-surface-container-high transition-colors">
+                            <td class="px-6 py-4 opacity-70">2023-10-27 14:22:10</td>
+                            <td class="px-6 py-4 font-body">Marc Lefebvre (TECH-8821-X)</td>
+                            <td class="px-6 py-4"><span class="bg-tertiary/10 text-tertiary px-2 py-0.5 rounded text-[10px] font-bold uppercase">Accès Données Sensibles</span></td>
+                            <td class="px-6 py-4 text-xs opacity-70">DB_CLIENTS_PAYMENT_INFO</td>
+                            <td class="px-6 py-4"><span class="text-primary font-bold">AUTORISÉ</span> <span class="text-[10px] opacity-50 ml-1">192.168.1.42</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] rounded-t-xl md:hidden">
+        <a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5" href="/admin/planning">
+            <span class="material-symbols-outlined mb-1">calendar_today</span>
+            <span class="font- technical text-[10px] uppercase tracking-tight">Planning</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-xl px-3 py-1.5 border-l-2 border-[#f26411]" href="/admin/audit-securite">
+            <span class="material-symbols-outlined mb-1">verified_user</span>
+            <span class="font-technical text-[10px] uppercase tracking-tight">Sécurité</span>
+        </a>
+    </nav>
+</div>

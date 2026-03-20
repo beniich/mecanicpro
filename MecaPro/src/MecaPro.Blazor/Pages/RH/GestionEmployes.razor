@@ -1,0 +1,153 @@
+@page "/rh/gestion-employes"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Gestion des Effectifs (RH)</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen pb-24 overflow-hidden relative">
+
+    <!-- Abstract Decor -->
+    <div class="absolute inset-0 z-0 flex justify-end opacity-20 pointer-events-none">
+        <div class="w-1/2 h-full bg-[radial-gradient(ellipse_at_right_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent"></div>
+    </div>
+
+    <!-- Top Bar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-blue-400">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-blue-400 uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="bg-blue-500 text-white px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">person_add</span> RECRUTEMENT / ONBOARDING
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-10 relative z-10">
+
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+            <div>
+                <span class="text-blue-400 text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">HUMAN_RESOURCES_MATRIX</span>
+                <h2 class="text-6xl md:text-7xl font-black tracking-tighter italic uppercase leading-none drop-shadow-[0_0_15px_rgba(59,130,246,0.15)] text-white">Effectifs & Staff</h2>
+            </div>
+            
+            <div class="flex bg-white/5 border border-white/10 p-1 rounded-2xl">
+                <button @onclick='() => mode = "LIST"' class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(mode == "LIST" ? "bg-blue-500 text-white" : "text-white/40 hover:text-white hover:bg-white/5")">ANNUAIRE</button>
+                <button @onclick='() => mode = "PERF"' class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(mode == "PERF" ? "bg-blue-500 text-white" : "text-white/40 hover:text-white hover:bg-white/5")">PERFORMANCES (KPI)</button>
+            </div>
+        </div>
+
+        <!-- KPI Strip -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-surface-container rounded-3xl p-6 border border-white/5 shadow-xl relative overflow-hidden">
+                <p class="text-[8px] font-black tracking-[0.4em] uppercase text-white/40 mb-2">EFFECTIF_ACTIF</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="font-black italic text-5xl text-blue-400">12</h3>
+                    <p class="font-technical text-[10px] uppercase text-white/30 tracking-widest">+1 CE MOIS</p>
+                </div>
+            </div>
+            <div class="bg-surface-container rounded-3xl p-6 border border-white/5 shadow-xl relative overflow-hidden">
+                <p class="text-[8px] font-black tracking-[0.4em] uppercase text-white/40 mb-2">PRÉSENCE_AUJOURD'HUI</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="font-black italic text-5xl text-[#00FF66]">100%</h3>
+                </div>
+                <div class="w-full h-1 bg-white/10 mt-3 rounded overflow-hidden"><div class="w-full h-full bg-[#00FF66]"></div></div>
+            </div>
+            <div class="bg-surface-container rounded-3xl p-6 border border-white/5 shadow-xl relative overflow-hidden">
+                <p class="text-[8px] font-black tracking-[0.4em] uppercase text-white/40 mb-2">TEMPS_FACTURABLE</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="font-black italic text-4xl text-white">84%</h3>
+                    <p class="font-technical text-[10px] uppercase text-white/30 tracking-widest">MOY. ATELIER</p>
+                </div>
+            </div>
+            <div class="bg-surface-container rounded-3xl p-6 border border-yellow-500/20 shadow-[0_0_20px_rgba(234,179,8,0.1)] relative overflow-hidden">
+                <p class="text-[8px] font-black tracking-[0.4em] uppercase text-yellow-500 mb-2">ALERTES_RH</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="font-black italic text-5xl text-yellow-500">2</h3>
+                </div>
+                <p class="font-technical text-[9px] font-bold uppercase text-white/50 tracking-widest mt-2 border border-white/5 rounded px-2 py-0.5 inline-block">PERMIS CARISTE EXPIRÉ (1)</p>
+            </div>
+        </div>
+
+        @if(mode == "LIST")
+        {
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach (var emp in employes)
+                {
+                    <div class="bg-surface-container rounded-[32px] border border-white/5 p-8 relative overflow-hidden shadow-2xl group hover:border-blue-500/30 transition-all cursor-pointer">
+                        <div class="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-10 transition-all">
+                            <span class="material-symbols-outlined text-[100px]">engineering</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 mb-6 relative z-10">
+                            <img src="@emp.AvatarUrl" class="w-20 h-20 rounded-2xl object-cover border-2 border-white/10" alt="Avatar"/>
+                            <div>
+                                <h3 class="font-black italic text-2xl uppercase tracking-tight text-white leading-none">@emp.Nom</h3>
+                                <p class="font-black text-[10px] uppercase tracking-widest text-blue-400 mt-2">@emp.Poste</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 relative z-10">
+                            <div class="bg-white/5 rounded-xl p-3 border border-white/5 text-[10px] font-black uppercase tracking-widest text-white/50 flex justify-between">
+                                <span>TYPE CONTRAT</span>
+                                <span class="text-white font-technical">@emp.Contrat</span>
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-3 border border-white/5 text-[10px] font-black uppercase tracking-widest text-white/50 flex justify-between items-center">
+                                <span>STATUT</span>
+                                @if(emp.EnPoste)
+                                {
+                                    <span class="text-[#00FF66] font-technical flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#00FF66] animate-pulse"></span> ACTIF</span>
+                                }
+                                else
+                                {
+                                    <span class="text-white/30 font-technical">REPOS / CONGÉS</span>
+                                }
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-3 border border-white/5 text-[10px] font-black uppercase tracking-widest text-white/50 flex justify-between">
+                                <span>SPÉCIALITÉS</span>
+                                <span class="text-blue-200 font-technical text-right w-1/2">@string.Join(", ", emp.Specialites)</span>
+                            </div>
+                        </div>
+
+                        <button class="w-full mt-6 bg-blue-500/10 border border-blue-500/30 px-4 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-blue-500/20 text-blue-400 transition-all rounded-xl shadow-lg flex items-center justify-center gap-2">
+                            VOIR DOSSIER <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <!-- Vue KPI / Performance -->
+            <div class="bg-surface-container rounded-[40px] border border-white/5 p-8 relative overflow-hidden shadow-2xl h-[500px] flex items-center justify-center">
+                <span class="material-symbols-outlined text-[100px] text-white/10 mb-4 block text-center absolute blur-sm">analytics</span>
+                <div class="text-center relative z-10">
+                    <p class="font-black italic text-3xl uppercase tracking-tighter text-white mb-2">MODULE PERFORMANCES RH</p>
+                    <p class="text-[10px] font-black tracking-[0.3em] uppercase text-blue-400 mb-6 pb-6 border-b border-white/10 inline-block px-12">ANALYTIQUE AVANCÉE — EN COURS D'ENTRAÎNEMENT</p>
+                    <p class="text-xs uppercase font-technical text-white/40 max-w-lg mx-auto leading-loose font-bold tracking-widest">Collecte des métriques d'efficacité des techniciens et analyse des temps d'intervention (vs barème) en cours via Intelligence Artificielle.</p>
+                </div>
+            </div>
+        }
+
+    </main>
+</div>
+
+@code {
+    private string mode = "LIST";
+
+    record Employe(string Nom, string Poste, string Contrat, bool EnPoste, string[] Specialites, string AvatarUrl);
+
+    private List<Employe> employes = new()
+    {
+        new("Marc Dubois", "Chef d'Atelier", "CDI - Temps Plein", true, new[]{"Diag Elec", "Supervision"}, "https://randomuser.me/api/portraits/men/32.jpg"),
+        new("Sarah Meyer", "Mécanicienne Spécialisée", "CDI - Temps Plein", true, new[]{"Lourde", "Transmission"}, "https://randomuser.me/api/portraits/women/44.jpg"),
+        new("Karim Benali", "Technicien Rapide", "CDI - Temps Plein", false, new[]{"Vidange", "Freinage"}, "https://randomuser.me/api/portraits/men/22.jpg"),
+        new("Léa Martin", "Réceptionniste", "CDI - Temps Plein", true, new[]{"Accueil", "Facturation"}, "https://randomuser.me/api/portraits/women/68.jpg"),
+        new("Thomas Lenoir", "Carrossier", "CDD - Saisonnier", true, new[]{"Peinture", "Redressage"}, "https://randomuser.me/api/portraits/men/86.jpg"),
+        new("Lucas Favre", "Apprenti Mécanicien", "Apprentissage", true, new[]{"Soutien"}, "https://randomuser.me/api/portraits/men/15.jpg"),
+    };
+}

@@ -1,0 +1,218 @@
+@page "/clients/programme-fidelite"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Programme Fidélité</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen pb-24">
+
+    <!-- Top Bar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-primary uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="/clients" class="bg-white/5 border border-white/10 px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">group</span>CLIENTS
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-10">
+
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+            <div>
+                <span class="text-primary text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">REWARD_MASTERY_SYSTEM</span>
+                <h2 class="text-6xl md:text-7xl font-black tracking-tighter italic uppercase leading-none text-white">Fidélité & Récompenses</h2>
+            </div>
+            <div class="flex gap-4">
+                <button class="bg-white/5 border border-white/10 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all rounded-xl">
+                    AJOUTER UN CADEAU
+                </button>
+                <button class="bg-primary text-on-primary px-6 py-3 rounded-xl border border-primary text-[10px] font-black uppercase tracking-widest hover:bg-primary/80 transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(245,166,35,0.4)]">
+                    <span class="material-symbols-outlined text-sm">add_circle</span> CREER OFFRE
+                </button>
+            </div>
+        </div>
+
+        <!-- Tier Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            @foreach (var tier in tiers)
+            {
+                var isCurrent = currentTier == tier.Name;
+                <div class="bg-surface-container p-6 rounded-3xl border transition-all duration-300 relative overflow-hidden @(isCurrent ? $"border-{tier.ColorClass} shadow-[0_0_20px_{tier.ShadowColor}] scale-105" : "border-white/5 opacity-50")">
+                    @if (isCurrent)
+                    {
+                        <div class="absolute top-0 right-0 bg-@tier.ColorClass text-black text-[8px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest">
+                            ACTIF
+                        </div>
+                    }
+                    <div class="flex justify-between items-start mb-6 z-10 relative">
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-@tier.ColorClass mb-1">NIVEAU @tier.Level</p>
+                            <h3 class="font-black italic text-3xl text-white uppercase tracking-tighter">@tier.Name</h3>
+                        </div>
+                        <span class="material-symbols-outlined text-4xl text-@tier.ColorClass">@tier.Icon</span>
+                    </div>
+                    <div class="space-y-4 z-10 relative">
+                        <p class="font-technical text-sm text-white/50">SEUIL: <span class="text-white font-black italic">@tier.Threshold PTS</span></p>
+                        <ul class="text-[10px] uppercase font-bold tracking-wider text-white/70 space-y-2">
+                            @foreach (var perk in tier.Perks)
+                            {
+                                <li class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[14px] text-@tier.ColorClass">check</span> @perk
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 text-[120px] text-@tier.ColorClass opacity-5 pointer-events-none material-symbols-outlined">
+                        @tier.Icon
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- KPI & Search -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-6">
+            <div class="lg:col-span-8 bg-surface-container rounded-[40px] border border-white/5 p-8 relative overflow-hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="font-black text-2xl italic uppercase tracking-tight">Performances Programme</h3>
+                    <div class="bg-white/5 border border-white/5 rounded-2xl flex items-center gap-4 px-4 py-2">
+                        <span class="material-symbols-outlined text-white/30 text-sm">calendar_today</span>
+                        <span class="font-technical text-[10px] text-white uppercase italic font-black">2026 - YTD</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-6">
+                    <div>
+                        <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/40 mb-2">CLIENTS_ENROLÉS</p>
+                        <p class="text-4xl font-black italic text-primary">1,420</p>
+                        <p class="text-[10px] text-green-400 font-bold uppercase mt-1 tracking-widest">+12% CE MOIS</p>
+                    </div>
+                    <div>
+                        <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/40 mb-2">POINTS_DISTRIBUÉS</p>
+                        <p class="text-4xl font-black italic text-white">85K</p>
+                        <p class="text-[10px] text-white/40 font-bold uppercase mt-1 tracking-widest">VALEUR: ~4,250€</p>
+                    </div>
+                    <div>
+                        <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/40 mb-2">TAUX_ENGAGEMENT</p>
+                        <p class="text-4xl font-black italic text-secondary">64%</p>
+                        <p class="text-[10px] text-green-400 font-bold uppercase mt-1 tracking-widest">+5% VS N-1</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuration Rapide -->
+            <div class="lg:col-span-4 bg-surface-container rounded-[40px] border border-white/5 p-8 flex flex-col justify-between">
+                <div>
+                    <h3 class="font-black text-xl italic uppercase tracking-tight text-white mb-2">Échelle de Points</h3>
+                    <p class="text-xs text-white/40 font-body uppercase tracking-wider mb-6">Ratio de conversion standard</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-white">1 EURO FACTURÉ</span>
+                            <span class="font-technical text-primary font-black italic">1 POINT</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-white">REVISION STANDARD</span>
+                            <span class="font-technical text-primary font-black italic">+50 PTS BONUS</span>
+                        </div>
+                        <div class="flex items-center justify-between pb-2">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-white">PARRAINAGE ACTIF</span>
+                            <span class="font-technical text-primary font-black italic">+200 PTS BONUS</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full mt-6 bg-white/5 border border-white/10 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-sm">settings</span> CONFIGURER REGLES
+                </button>
+            </div>
+        </section>
+
+        <!-- Liste des Clients VIP (Simulée) -->
+        <section class="bg-surface-container rounded-[40px] border border-white/5 overflow-hidden shadow-2xl mt-10">
+            <div class="p-8 border-b border-white/5 bg-[#111318]/40 flex justify-between items-center">
+                <h3 class="font-black text-2xl italic uppercase tracking-tight">Top Clients (VIP)</h3>
+                <div class="bg-white/5 border border-white/5 rounded-2xl flex items-center gap-4 px-4 py-2 w-64">
+                    <span class="material-symbols-outlined text-white/30 text-sm">search</span>
+                    <input type="text" placeholder="RECHERCHER CLIENT..." class="bg-transparent border-none outline-none font-technical text-[10px] text-white uppercase italic placeholder:text-white/20 w-full font-black"/>
+                </div>
+            </div>
+            
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] bg-white/[0.02]">
+                        <th class="px-8 py-5">CLIENT</th>
+                        <th class="px-8 py-5">NIVEAU ACTUEL</th>
+                        <th class="px-8 py-5 text-right">SOLDE POINTS</th>
+                        <th class="px-8 py-5 text-center">DERNIERE VISITE</th>
+                        <th class="px-8 py-5 text-center">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    <tr class="hover:bg-white/[0.03] transition-all group">
+                        <td class="px-8 py-5">
+                            <p class="font-black text-sm uppercase text-white">JEAN DUPONT</p>
+                            <p class="font-technical text-[10px] text-white/40 uppercase">VÉHICULE: PEUGEOT 3008</p>
+                        </td>
+                        <td class="px-8 py-5">
+                            <span class="px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest bg-yellow-400/20 text-yellow-400 border border-yellow-400/30">GOLD</span>
+                        </td>
+                        <td class="px-8 py-5 text-right font-technical font-black text-primary text-xl">2,450</td>
+                        <td class="px-8 py-5 text-center font-technical font-black text-white/60 text-xs">12 MARS 2026</td>
+                        <td class="px-8 py-5 text-center">
+                            <button class="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all opacity-0 group-hover:opacity-100">VOIR PROFIL</button>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.03] transition-all group">
+                        <td class="px-8 py-5">
+                            <p class="font-black text-sm uppercase text-white">SOCIÉTÉ ALPHA B2B</p>
+                            <p class="font-technical text-[10px] text-white/40 uppercase">FLOTTE: 12 VÉHICULES</p>
+                        </td>
+                        <td class="px-8 py-5">
+                            <span class="px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest bg-purple-400/20 text-purple-400 border border-purple-400/30">PLATINUM</span>
+                        </td>
+                        <td class="px-8 py-5 text-right font-technical font-black text-primary text-xl">14,200</td>
+                        <td class="px-8 py-5 text-center font-technical font-black text-white/60 text-xs">02 MARS 2026</td>
+                        <td class="px-8 py-5 text-center">
+                            <button class="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all opacity-0 group-hover:opacity-100">VOIR PROFIL</button>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.03] transition-all group">
+                        <td class="px-8 py-5">
+                            <p class="font-black text-sm uppercase text-white">MARIE MARTIN</p>
+                            <p class="font-technical text-[10px] text-white/40 uppercase">VÉHICULE: RENAULT CLIO</p>
+                        </td>
+                        <td class="px-8 py-5">
+                            <span class="px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest bg-zinc-400/20 text-zinc-300 border border-zinc-400/30">SILVER</span>
+                        </td>
+                        <td class="px-8 py-5 text-right font-technical font-black text-primary text-xl">850</td>
+                        <td class="px-8 py-5 text-center font-technical font-black text-white/60 text-xs">Aujourd'hui</td>
+                        <td class="px-8 py-5 text-center">
+                            <button class="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all opacity-0 group-hover:opacity-100">VOIR PROFIL</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+</div>
+
+@code {
+    private string currentTier = "GOLD"; // Simulate a dashboard view where Gold is the average target
+
+    record LoyaltyTier(string Name, string Level, int Threshold, string Icon, string ColorClass, string ShadowColor, string[] Perks);
+
+    private List<LoyaltyTier> tiers = new()
+    {
+        new("BRONZE", "1", 0, "stars", "amber-800", "rgba(180,83,9,0.5)", new[] { "Rappel Service 48h", "Diagnostic Base Inclus" }),
+        new("SILVER", "2", 500, "workspace_premium", "zinc-300", "rgba(212,212,216,0.5)", new[] { "Lavage Gratuit", "-5% Pièces", "Priorité RDV" }),
+        new("GOLD", "3", 2000, "military_tech", "yellow-400", "rgba(250,204,21,0.5)", new[] { "Auto Prêt Gratuite", "-10% Pièces", "Check-up Hiver" }),
+        new("PLATINUM", "4", 5000, "diamond", "purple-400", "rgba(192,132,252,0.5)", new[] { "Conciergerie", "-15% Global", "Intervention Express 1h" })
+    };
+}

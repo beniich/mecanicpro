@@ -1,0 +1,133 @@
+@page "/settings/security"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Cyber Security Hub Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-sky-500/20 flex items-center justify-center border border-sky-500/30 shadow-[0_0_30px_rgba(14,165,233,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-sky-400 text-3xl animate-pulse">admin_panel_settings</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-sky-500"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none italic uppercase tracking-widest leading-relaxed">System <span class="text-sky-500 font-light italic uppercase shadow-none border-none">SECURITY</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">ADMINISTRATION DES RÔLES ET PARAMÈTRES DE CONFIDENTIALITÉ ÉLEVÉS</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-3xl flex items-center gap-8 shadow-xl shadow-black/40">
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Score Cyber</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-sky-500 uppercase tracking-widest leading-relaxed italic">A++</p>
+                 </div>
+                 <div class="w-[1px] h-10 bg-white/10"></div>
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Sessions Act.</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 uppercase tracking-widest leading-relaxed italic">14</p>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Security Control Panel Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+        <!-- RBAC - Roles & Permissions -->
+        <div class="lg:col-span-1 space-y-10 border-r border-white/5 pr-10">
+             <h3 class="text-xs font-black uppercase text-gray-500 tracking-widest mb-10 italic">Hub des Rôles (RBAC)</h3>
+             
+             @foreach (var role in appRoles)
+             {
+                 <div class="bg-[#111318]/40 border border-white/5 rounded-3xl p-8 hover:bg-white/5 transition-all group cursor-pointer relative overflow-hidden">
+                      <div class="absolute inset-0 bg-gradient-to-r from-sky-500/5 to-transparent"></div>
+                      <div class="flex justify-between items-center mb-6">
+                           <span class="material-symbols-outlined text-sky-500 text-sm">shield</span>
+                           <span class="text-[9px] font-black italic uppercase tracking-widest text-emerald-500 shadow-none border-none border-0">@role.UserCount ACCOUNTS</span>
+                      </div>
+                      <h4 class="text-lg font-black italic uppercase tracking-tighter italic shadow-none border-none">@role.Name</h4>
+                      <p class="text-[9px] text-gray-500 font-medium italic mt-1 italic shadow-none border-none border-0 uppercase tracking-widest leading-relaxed">PERMISSIONS: @role.PermissionsCount</p>
+                      
+                      <button class="mt-8 text-[8px] font-black uppercase text-sky-500 border-b border-sky-500/20 pb-0.5 hover:border-sky-500 transition-all font-outfit uppercase tracking-widest">ÉDITER LES DROITS</button>
+                 </div>
+             }
+
+             <button class="w-full bg-white/5 border border-white/10 py-5 rounded-2xl text-[9px] font-black uppercase tracking-widest transition-all shadow-xl font-outfit uppercase tracking-widest">CRÉER UN RÔLE SUR MESURE</button>
+        </div>
+
+        <!-- System-wide Security Settings -->
+        <div class="lg:col-span-3 space-y-10">
+             <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[3.5rem] p-12 overflow-hidden shadow-2xl relative">
+                  <h3 class="text-xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-12">Protocole de Sécurité Application</h3>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                       @foreach (var setIng in securitySettings)
+                       {
+                           <div class="bg-black/40 border border-white/5 rounded-[2.5rem] p-10 flex flex-col group hover:bg-white/[0.02] transition-all">
+                                <div class="flex justify-between items-center mb-10">
+                                     <div class="p-4 bg-sky-500/10 rounded-2xl border border-sky-500/20">
+                                          <span class="material-symbols-outlined text-sky-500 text-xl">@(setIng.Icon)</span>
+                                     </div>
+                                     <!-- Toggle-like Status -->
+                                     <div class="w-16 h-8 rounded-full bg-white/5 border-2 border-white/10 relative p-1 cursor-pointer">
+                                          <div class="w-5 h-5 rounded-full @(setIng.Value == "ON" ? "bg-emerald-500 ml-auto" : "bg-gray-700") transition-all"></div>
+                                     </div>
+                                </div>
+                                <h4 class="text-lg font-black italic uppercase tracking-tighter italic shadow-none border-none">@setIng.Label</h4>
+                                <p class="text-[10px] text-gray-600 font-medium italic uppercase tracking-widest mt-2 italic shadow-none border-none border-0 leading-relaxed uppercase tracking-widest font-outfit uppercase tracking-widest">@setIng.Description</p>
+                           </div>
+                       }
+                  </div>
+
+                  <div class="mt-12 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
+                       <div>
+                            <p class="text-[9px] text-gray-600 font-extrabold uppercase mb-2 italic shadow-none border-none shadow-none border-0 italic leading-relaxed">Statut Firewall Cloudflare</p>
+                            <span class="text-emerald-500 font-black italic shadow-none border-none shadow-none border-0 text-xl uppercase tracking-widest leading-relaxed">ACTIVE & PROTECTED</span>
+                       </div>
+                       <button class="bg-sky-600 text-black px-12 py-5 rounded-3xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-sky-900/40 italic">APPLIQUER LES CONFIGURATIONS</button>
+                  </div>
+             </div>
+
+             <!-- Active Sessions Monitoring -->
+             <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-12 overflow-hidden shadow-2xl relative">
+                  <h3 class="text-xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-10">Monitoring des Sessions (24H)</h3>
+                  <div class="w-full h-16 bg-white/5 rounded-2xl flex items-end p-4 gap-1">
+                       @foreach (var val in new int[] { 20, 30, 80, 50, 60, 20, 45, 90, 30, 22, 50, 60, 80, 40, 30, 90, 20, 10, 5, 20, 40, 60, 80, 100 })
+                       {
+                           <div class="flex-grow bg-sky-500/40 rounded-t-sm" style="height: @(val)%"></div>
+                       }
+                  </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<AppRoleInfo> appRoles = new()
+    {
+        new AppRoleInfo { Name = "SuperAdmin / Dirigeant", PermissionsCount = 124, UserCount = 2 },
+        new AppRoleInfo { Name = "Manager Atelier", PermissionsCount = 42, UserCount = 4 },
+        new AppRoleInfo { Name = "Magasinier / Logistique", PermissionsCount = 28, UserCount = 3 },
+        new AppRoleInfo { Name = "Technicien Expert", PermissionsCount = 12, UserCount = 25 }
+    };
+
+    private List<SecSetting> securitySettings = new()
+    {
+        new SecSetting { Label = "Double Authentification (2FA)", Description = "Exiger un code via Authenticator ou SMS lors de la connexion.", Icon = "lock_person", Value = "ON" },
+        new SecSetting { Label = "Politique Mots de Passe Forts", Description = "Min 12 car., Maj., Min., Chiffres, et Symb. spéciaux.", Icon = "password", Value = "ON" },
+        new SecSetting { Label = "IP Whitelisting (Garage)", Description = "Autoriser uniquement les IPs statiques déclarées du garage.", Icon = "lan", Value = "OFF" },
+        new SecSetting { Label = "Révocation Sessions Inactives", Description = "Délai de session porté à 30 min max sans activité.", Icon = "logout", Value = "ON" }
+    };
+
+    public class AppRoleInfo {
+        public string Name { get; set; } = "";
+        public int PermissionsCount { get; set; }
+        public int UserCount { get; set; }
+    }
+
+    public class SecSetting {
+        public string Label { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public string Value { get; set; } = "";
+    }
+}

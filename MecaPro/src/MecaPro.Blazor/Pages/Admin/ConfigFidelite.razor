@@ -1,0 +1,170 @@
+@page "/clients/programme-fidelite"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#0a0b0d] text-white p-8 font-['Outfit']">
+    <!-- Gold/Amber Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center border border-amber-500/30">
+                    <span class="material-symbols-outlined text-amber-500">loyalty</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Loyalty <span class="text-amber-500">Engine</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">CONFIGURATION DES RÉCOMPENSES & PALIERS FIDÉLITÉ</p>
+        </div>
+        
+        <div class="flex gap-4">
+            <div class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl flex items-center gap-6">
+                <div>
+                    <p class="text-[9px] text-gray-500 font-black tracking-widest leading-none mb-1 uppercase">Points en Circulation</p>
+                    <p class="text-xl font-black text-amber-500 italic">458,200</p>
+                </div>
+                <div class="w-[1px] h-8 bg-white/10"></div>
+                <div>
+                    <p class="text-[9px] text-gray-500 font-black tracking-widest leading-none mb-1 uppercase">Clients Actifs</p>
+                    <p class="text-xl font-black italic">1,240</p>
+                </div>
+            </div>
+            <button class="bg-amber-600 hover:bg-amber-500 px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-[0_0_30px_rgba(245,158,11,0.3)] flex items-center gap-2">
+                <span class="material-symbols-outlined">settings</span> SAUVEGARDER RÈGLES
+            </button>
+        </div>
+    </div>
+
+    <!-- Tier Configuration -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+        @foreach (var tier in loyaltyTiers)
+        {
+            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 relative overflow-hidden group">
+                <div class="absolute -right-8 -top-8 w-24 h-24 @(tier.BgColor) blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                
+                <h3 class="text-xs font-black uppercase tracking-widest @(tier.TextColor) mb-6 italic">Tier @tier.Name</h3>
+                
+                <div class="mb-8">
+                    <p class="text-3xl font-black italic italic tracking-tighter">@tier.Threshold <span class="text-xs text-gray-500 uppercase not-italic">pts</span></p>
+                    <p class="text-[10px] text-gray-400 font-medium mt-1">Seuil d'activation exigé</p>
+                </div>
+
+                <div class="space-y-3 mb-8">
+                    @foreach (var benefit in tier.Benefits)
+                    {
+                        <div class="flex items-center gap-2 text-xs">
+                            <span class="material-symbols-outlined text-[14px] @(tier.TextColor)">check_circle</span>
+                            <span class="text-gray-300">@benefit</span>
+                        </div>
+                    }
+                </div>
+
+                <button class="w-full bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">Éditer Avantages</button>
+            </div>
+        }
+    </div>
+
+    <!-- Rules Matrix -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Multipliers -->
+        <div class="lg:col-span-2 bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10">
+            <h3 class="text-xl font-black italic uppercase tracking-tighter mb-8 italic">Matrice d'Accumulation (Multiplicateurs)</h3>
+            
+            <div class="space-y-6">
+                @foreach (var rule in accumulationRules)
+                {
+                    <div class="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.05] transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20">
+                                <span class="material-symbols-outlined text-amber-500">@(rule.Icon)</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-200 uppercase tracking-tight italic">@rule.Type</p>
+                                <p class="text-[10px] text-gray-500 font-medium">@rule.Condition</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-6">
+                            <div class="text-right">
+                                <p class="text-[9px] text-gray-500 font-black tracking-widest">MULTIPLICATEUR</p>
+                                <p class="text-2xl font-black text-amber-500 italic">x @rule.Multiplier</p>
+                            </div>
+                            <button class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-all">
+                                <span class="material-symbols-outlined text-xs">edit</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Redemption Store -->
+        <div class="bg-amber-600/5 border border-amber-500/20 rounded-[3rem] p-10">
+            <h3 class="text-xl font-black italic uppercase tracking-tighter mb-8 italic text-amber-500">Catalogue Récompenses</h3>
+            
+            <div class="space-y-4">
+                @foreach (var reward in rewards)
+                {
+                    <div class="p-6 bg-black/40 border border-white/5 rounded-2xl relative overflow-hidden group">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="text-sm font-black italic uppercase">@reward.Name</h4>
+                            <span class="text-[10px] font-black text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full">@reward.Cost PTS</span>
+                        </div>
+                        <p class="text-[10px] text-gray-500 mb-4 italic">@reward.Description</p>
+                        <div class="flex justify-between items-center bg-white/5 rounded-xl px-4 py-2">
+                            <span class="text-[9px] text-gray-400 font-bold italic uppercase">Utilisations ce mois</span>
+                            <span class="text-xs font-black">@reward.UsageCount</span>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+            <button class="w-full mt-8 bg-amber-600 text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-amber-900/40">AJOUTER RÉCOMPENSE</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<LoyaltyTier> loyaltyTiers = new()
+    {
+        new LoyaltyTier { Name = "Bronze", Threshold = 0, BgColor = "bg-orange-900", TextColor = "text-orange-400", Benefits = new() { "1pt / 10€ dépensé", "Newsletter VIP", "Check-up gratuit annuel" } },
+        new LoyaltyTier { Name = "Silver", Threshold = 1000, BgColor = "bg-gray-400", TextColor = "text-gray-300", Benefits = new() { "1.5pts / 10€ dépensé", "Lavage offert / 2 révisions", "Priorité L1 Support" } },
+        new LoyaltyTier { Name = "Gold", Threshold = 5000, BgColor = "bg-amber-400", TextColor = "text-amber-500", Benefits = new() { "2pts / 10€ dépensé", "Véhicule prêt gratuit", "Remise 10% sur M.O." } },
+        new LoyaltyTier { Name = "Platinum", Threshold = 15000, BgColor = "bg-indigo-400", TextColor = "text-indigo-400", Benefits = new() { "3pts / 10€ dépensé", "Conciergerie dédiée", "Remise 15% sur Pièces" } }
+    };
+
+    private List<AccumulationRule> accumulationRules = new()
+    {
+        new AccumulationRule { Type = "Révision Constructeur", Condition = "Entretien périodique standard", Multiplier = 1.0, Icon = "build" },
+        new AccumulationRule { Type = "Diagnostic IA Avancé", Condition = "Utilisation du module M3.1", Multiplier = 2.5, Icon = "psychology" },
+        new AccumulationRule { Type = "Ventes Occasion", Condition = "Achat véhicule (M1.6)", Multiplier = 5.0, Icon = "directions_car" },
+        new AccumulationRule { Type = "Parrainage", Condition = "Nouveau client validé (M1.4)", Multiplier = 10.0, Icon = "group_add" },
+        new AccumulationRule { Type = "Eco-Geste BSD", Condition = "Recyclage fluides (M6.11)", Multiplier = 2.0, Icon = "eco" }
+    };
+
+    private List<Reward> rewards = new()
+    {
+        new Reward { Name = "Diagnostic Batterie EV", Cost = 500, Description = "Analyse complète SOH (M3.2)", UsageCount = 42 },
+        new Reward { Name = "Remise 50€ Facture", Cost = 1000, Description = "Valable sur toute intervention > 200€", UsageCount = 128 },
+        new Reward { Name = "Lavage Intérieur Gold", Cost = 800, Description = "Nettoyage vapeur haute pression", UsageCount = 15 }
+    };
+
+    public class LoyaltyTier {
+        public string Name { get; set; } = "";
+        public int Threshold { get; set; }
+        public string BgColor { get; set; } = "";
+        public string TextColor { get; set; } = "";
+        public List<string> Benefits { get; set; } = new();
+    }
+
+    public class AccumulationRule {
+        public string Type { get; set; } = "";
+        public string Condition { get; set; } = "";
+        public double Multiplier { get; set; }
+        public string Icon { get; set; } = "";
+    }
+
+    public class Reward {
+        public string Name { get; set; } = "";
+        public int Cost { get; set; }
+        public string Description { get; set; } = "";
+        public int UsageCount { get; set; }
+    }
+}

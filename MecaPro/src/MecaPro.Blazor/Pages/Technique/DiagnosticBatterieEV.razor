@@ -1,0 +1,84 @@
+@page "/technique/diagnostic-batterie-ev"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Diagnostic Batterie EV</PageTitle>
+
+<div class="bg-[#111318] text-[#e2e2e8] font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full fixed top-0 z-50 border-b border-[#524534]/15">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623]">terminal</span>
+            <h1 class="font-headline tracking-widest uppercase text-2xl text-[#f5a623]">DIAGNOSTIC_CONSOLE</h1>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU_OFHeMHv8T5ZUOL1ue2_T3-i_d3FQK-1rDSvm6V1UDPGJkq0Hw3PHN7iW2UEuYiqoI-7CnoaTF6978lHVs1zq2SabM5MhfVRY9QuEoi6wRtOgcplZQLSez3WI4jKJdsuqhYCXfKNk65sjLQIrLQfgZKHsomlWnfqpnmt940bZ6m2t69m1knbRFrW-EpbDOv24qQOdA3zCZrjSlR97fjg50ObX5-3uhd974KTv2__2lmRneYzg-1wy_jBKra3dfLvPX27LVdgLIaI" alt="Operator"/>
+        </div>
+    </header>
+
+    <div class="flex min-h-screen pt-20">
+        <!-- Sidebar -->
+        <aside class="hidden lg:flex flex-col h-[calc(100vh-80px)] w-80 fixed left-0 bg-[#0c0e12] py-8 px-4 gap-2 border-r border-outline-variant/10">
+            <div class="mb-8 px-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    <span class="font-mono text-[10px] text-primary">ONLINE</span>
+                </div>
+                <h2 class="font-headline text-2xl text-primary tracking-tighter uppercase">CHIEF_OPERATOR</h2>
+            </div>
+            <nav class="space-y-1">
+                <a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-[#282a2e] text-[#f5a623] border-l-4 border-[#f26411]" href="/technique/diagnostic-batterie-ev">
+                    <span class="material-symbols-outlined">biotech</span>
+                    <span class="font-headline text-lg tracking-wide uppercase">Diagnostics</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-80 p-6 md:p-10 space-y-10">
+            <header class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-outline-variant/15 pb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase">
+                        <span class="bg-primary/20 text-primary px-2 py-0.5 rounded">UNIT_ID: 882-EV-TX</span>
+                        <span class="bg-surface-bright text-tertiary px-2 py-0.5 rounded">FIRMWARE: v4.2.0</span>
+                    </div>
+                    <h2 class="font-headline text-5xl md:text-6xl tracking-tight text-on-surface uppercase">BATTERY_INTEGRITY</h2>
+                    <p class="font-mono text-sm text-on-surface-variant mt-2 max-w-xl">Deep-cell diagnostic scan initiated. Analyzing thermal distribution and electrochemical state across 96 modules.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button class="bg-[#282a2e] hover:bg-surface-bright text-on-surface font-headline tracking-widest px-6 py-3 border border-outline-variant/20 uppercase">RE-SCAN_PACK</button>
+                    <button class="bg-gradient-to-r from-primary-container to-secondary-container text-on-primary font-headline tracking-widest px-8 py-3 uppercase shadow-lg shadow-primary/10">EXPORT_REPORT</button>
+                </div>
+            </header>
+
+            <!-- Bento Stats -->
+            <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="md:col-span-2 bg-[#282a2e] p-8 flex flex-col justify-between min-h-[220px] border-l-4 border-[#f26411]">
+                    <span class="font-headline text-on-surface-variant tracking-widest uppercase">STATE_OF_HEALTH</span>
+                    <div class="flex items-baseline gap-4 mt-4">
+                        <span class="font-headline text-8xl text-primary leading-none">94.2</span>
+                        <span class="font-headline text-4xl text-primary/40 leading-none">%</span>
+                    </div>
+                </div>
+                <!-- ... other stats ... -->
+            </section>
+
+            <!-- Thermal Map -->
+            <section class="bg-[#0c0e12] p-8 rounded-xl border border-outline-variant/10">
+                <h3 class="font-headline text-2xl tracking-widest text-on-surface-variant mb-6 uppercase">THERMAL_DISTRIBUTION_MAP</h3>
+                <div class="aspect-video relative overflow-hidden bg-[#111318] flex items-center justify-center">
+                    <!-- Thermal grid simulation -->
+                    <div class="grid grid-cols-12 grid-rows-8 gap-1 w-full h-full opacity-60">
+                         <div class="bg-error-container"></div><div class="bg-secondary-container"></div>
+                         <!-- [Rest of the grid logic] -->
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                         <div class="bg-error-container/80 backdrop-blur px-6 py-3 border border-error/20">
+                            <span class="font-headline text-2xl tracking-widest text-error uppercase">CORE_HOTSPOT: 48.1°C</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>

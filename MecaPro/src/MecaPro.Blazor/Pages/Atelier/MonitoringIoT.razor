@@ -1,0 +1,145 @@
+@page "/atelier/monitoring-iot"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Monitoring IoT Atelier</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen pb-24 overflow-x-hidden relative">
+
+    <!-- Glowing Lines Decor -->
+    <div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <div class="absolute top-0 left-0 w-[400px] h-[400px] bg-red-500/10 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#00FF66]/5 rounded-full blur-[150px] translate-y-1/2 translate-x-1/2"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-[#00FF66]">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-[#00FF66] uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="bg-[#00FF66]/10 border border-[#00FF66]/30 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase text-[#00FF66] tracking-widest flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">sensors</span> MQTT_DATALINK_CONNECT
+            </span>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-12 relative z-10">
+
+        <!-- Title Section -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+            <div>
+                <span class="text-[#00FF66] text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">WORKSHOP_ENVIRONMENT_LOG</span>
+                <h2 class="text-7xl font-black tracking-tighter italic uppercase leading-none text-white">Monitoring IoT</h2>
+                <p class="text-white/40 font-technical text-sm mt-4 uppercase tracking-[0.2em] font-black">Supervision en direct de la consommation d'énergie et des paramètres environnementaux.</p>
+            </div>
+            
+            <div class="flex gap-4">
+                 <div class="bg-surface-container-low p-6 rounded-3xl border border-white/5 text-right min-w-[180px]">
+                    <p class="text-[8px] font-black uppercase tracking-widest text-[#00FF66] mb-1">KW/H TOTAL JOUR</p>
+                    <p class="text-4xl font-black italic text-white font-technical">142.1</p>
+                 </div>
+                 <div class="bg-surface-container-low p-6 rounded-3xl border border-red-500/20 text-right min-w-[180px]">
+                    <p class="text-[8px] font-black uppercase tracking-widest text-red-500 mb-1">DÉBIT AIR COMPRIMÉ</p>
+                    <p class="text-4xl font-black italic text-red-500 font-technical">8.2<span class="text-xl italic opacity-50">BAR</span></p>
+                 </div>
+            </div>
+        </div>
+
+        <!-- Sensor Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            @foreach (var sensor in sensors)
+            {
+                <div class="bg-surface-container rounded-3xl p-8 border border-white/5 shadow-xl relative overflow-hidden group hover:border-[#00FF66]/30 transition-all flex flex-col justify-between h-72">
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div class="w-12 h-12 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-center text-[#00FF66] group-hover:scale-110 transition-transform">
+                             <span class="material-symbols-outlined text-2xl">@sensor.Icon</span>
+                        </div>
+                        <div class="text-[8px] font-black uppercase tracking-widest text-white/20 italic pt-2">@sensor.Id</div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-2">@sensor.Label</p>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-5xl font-black italic text-white font-technical italic tracking-tighter">@sensor.Value</span>
+                            <span class="text-2xl font-black text-white/40 italic font-technical">@sensor.Unit</span>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex items-center gap-3 mt-4">
+                        <div class="flex-grow h-1 bg-white/5 rounded-full overflow-hidden">
+                             <div class="h-full bg-[#00FF66] shadow-[0_0_10px_#00FF66]" style="width: @sensor.Percent%;"></div>
+                        </div>
+                        <span class="text-[9px] font-black uppercase tracking-widest text-[#00FF66]">LIVE</span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Dynamic Visualization (Mocked) -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 bg-surface-container rounded-[40px] border border-white/5 p-10 h-[500px] flex flex-col shadow-2xl overflow-hidden relative">
+                <div class="flex justify-between items-center mb-10 z-10">
+                    <h3 class="font-black text-2xl italic uppercase tracking-tight text-white italic">Consommation Temps Réel</h3>
+                    <div class="flex gap-2">
+                        <span class="w-2 h-2 rounded-full bg-[#00FF66] animate-pulse"></span>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-[#00FF66]">SIGNAL RECEPTION v2.4</span>
+                    </div>
+                </div>
+
+                <!-- Fake Real-time Chart Logic (using SVG Path) -->
+                <div class="flex-grow flex items-end relative py-12">
+                   <svg class="w-full h-full" viewBox="0 0 1000 300">
+                      <path d="M0,150 Q100,50 200,180 T400,100 T600,220 T800,80 L1000,150" fill="transparent" stroke="#00FF66" stroke-width="4" stroke-dasharray="10 5" class="opacity-20"/>
+                      <path d="M0,200 L50,180 L100,220 L150,150 L200,190 L250,120 L300,160 L350,90 L400,140 L450,100 L500,180 L550,220 L600,150 L650,50 L700,90 L750,40 L800,110 L850,80 L900,140 L950,100 L1000,130" fill="transparent" stroke="#00FF66" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="animate-[dash_10s_linear_infinite] shadow-[0_0_20px_#00FF66]"/>
+                   </svg>
+                   <div class="absolute left-0 bottom-12 w-full h-px bg-white/5"></div>
+                   <div class="absolute left-0 top-12 w-full h-px bg-white/5 border-dashed"></div>
+                </div>
+
+                <div class="flex justify-between mt-6 text-[10px] font-black text-white/20 uppercase tracking-[0.4em] italic">
+                    <span>10:30</span><span>10:35</span><span>10:40</span><span>10:45</span><span>10:50</span><span>NOW</span>
+                </div>
+            </div>
+
+            <div class="bg-[#111318] rounded-[40px] border border-white/5 p-10 flex flex-col justify-between shadow-2xl">
+                 <div>
+                    <h3 class="font-black text-xl italic uppercase tracking-tight text-white mb-6">Alertes Environnement</h3>
+                    <div class="space-y-4">
+                        <div class="bg-red-500/10 border border-red-500/30 p-5 rounded-2xl">
+                           <p class="text-[9px] font-black uppercase text-red-500 mb-1">DÉBIT COMPRESSEUR ANORMAL</p>
+                           <p class="text-xs font-bold text-white leading-loose uppercase tracking-widest text-[10px]">Fuite détectée sur le circuit de la Baie 04. Perte de 1.2 Bar/min.</p>
+                        </div>
+                        <div class="bg-yellow-500/10 border border-yellow-500/30 p-5 rounded-2xl">
+                           <p class="text-[9px] font-black uppercase text-yellow-500 mb-1">CO2 CONCENTRATION</p>
+                           <p class="text-xs font-bold text-white leading-loose uppercase tracking-widest text-[10px]">Extension ventilation requise en Zone Montage Moteur.</p>
+                        </div>
+                    </div>
+                 </div>
+                 <button class="w-full bg-[#00FF66] text-black py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-green-400">OPTIMISER FLUX ÉNERGIE</button>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<style>
+    @@keyframes dash {
+        to { stroke-dashoffset: 2000; }
+    }
+</style>
+
+@code {
+    private List<SensorData> sensors = new()
+    {
+        new("HT-842", "TEMPÉRATURE AMB.", "thermometer", 22.4, "°C", 42),
+        new("HU-110", "HUMIDITÉ SALLE", "humidity_low", 48, "%", 55),
+        new("CO-921", "CO2_AIR_QUALITY", "air", 412, "ppm", 30),
+        new("EL-042", "CONSOMMATION_ACT.", "electric_bolt", 4.2, "kW/h", 72),
+    };
+
+    record SensorData(string Id, string Label, string Icon, double Value, string Unit, int Percent);
+}

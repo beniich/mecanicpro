@@ -1,0 +1,148 @@
+@page "/securite/gestion-dechets"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Gestion des Déchets Industriels</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen pb-24 overflow-x-hidden relative">
+
+    <!-- Industrial Overlay Decor -->
+    <div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22M20 20L0 0M20 20L40 0M20 20L40 40M20 20L0 40%22 stroke=%22%23ffffff%22 stroke-width=%221%22/%3E%3C/svg%3E');"></div>
+
+    <!-- Top Bar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-yellow-500">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-yellow-500 uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="bg-yellow-500 text-black px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-yellow-400 transition-all flex items-center gap-2 shadow-lg shadow-yellow-500/10">
+                <span class="material-symbols-outlined text-sm">assignment_add</span> RÉCEPTIONNER BSD
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-12 relative z-10">
+
+        <!-- Title Section -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+            <div>
+                <span class="text-yellow-500 text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">INDUSTRIAL_WASTE_RECOVERY</span>
+                <h2 class="text-7xl font-black tracking-tighter italic uppercase leading-none text-white">Gestion Déchets</h2>
+                <p class="text-white/40 font-technical text-sm mt-4 uppercase tracking-[0.2em] font-black">Traçabilité complète des polluants et évacuations réglementaires.</p>
+            </div>
+            
+            <div class="bg-surface-container-low p-6 rounded-3xl border border-white/5 text-right flex items-center gap-10">
+                <div>
+                   <p class="text-[8px] font-black uppercase tracking-widest text-[#00FF66] mb-1">RECYCLÉ YTD</p>
+                   <p class="text-4xl font-black italic text-white font-technical">842<span class="text-xl text-white/30">KG</span></p>
+                </div>
+                <div class="w-px h-10 bg-white/10"></div>
+                <div>
+                   <p class="text-[8px] font-black uppercase tracking-widest text-red-500 mb-1">HORS-DÉLAI</p>
+                   <p class="text-4xl font-black italic text-red-500 font-technical">00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Waste Monitoring -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            @foreach (var w in currentWaste)
+            {
+                <div class="bg-surface-container rounded-[32px] p-8 border border-white/5 shadow-2xl relative overflow-hidden group hover:border-yellow-500/20 transition-all">
+                    <!-- Progress Background -->
+                    <div class="absolute bottom-0 left-0 w-full bg-yellow-500/5 transition-all @(w.Level >= 80 ? "bg-red-500/10" : "bg-yellow-500/5")" style="height: @w.Level%;"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-6">
+                            <span class="material-symbols-outlined text-4xl @(w.Level >= 80 ? "text-red-500 animate-pulse" : "text-yellow-500")">@w.Icon</span>
+                            <span class="text-[10px] font-black uppercase font-technical text-white/20">#BIN-0@(w.Id)</span>
+                        </div>
+                        <h3 class="font-black italic text-xl uppercase tracking-tighter text-white mb-2">@w.Type</h3>
+                        <p class="text-[8px] font-black uppercase text-white/30 tracking-[0.2em] mb-8">CAPACITÉ: 200L / @w.Quantite L</p>
+                        
+                        <div class="flex justify-between items-center bg-black/40 rounded-xl px-4 py-3 border border-white/5">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-white/50">NIVEAU</span>
+                            <span class="text-sm font-black italic @(w.Level >= 80 ? "text-red-500" : "text-white")">@w.Level%</span>
+                        </div>
+
+                        @if (w.Level >= 80)
+                        {
+                            <button class="w-full mt-4 bg-red-500/10 border border-red-500/30 text-red-500 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all">APPEL CHIMIREC</button>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Registry -->
+        <div class="bg-surface-container rounded-[40px] border border-white/5 shadow-2xl overflow-hidden mt-12">
+            <div class="p-8 border-b border-white/5 flex justify-between items-center">
+                 <h3 class="font-black text-2xl italic uppercase tracking-tight text-white">Registre National BSD</h3>
+                 <div class="flex gap-4">
+                     <span class="bg-[#00FF66]/10 border border-[#00FF66]/30 px-3 py-1 rounded text-[8px] font-black uppercase text-[#00FF66] flex items-center gap-2 tracking-[0.2em]"><span class="w-1 h-1 rounded-full bg-[#00FF66] animate-pulse"></span> CONFORMITÉ RÈGLEMENTAIRE OK</span>
+                 </div>
+            </div>
+            
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] bg-white/[0.02]">
+                        <th class="px-8 py-5">N° BSD</th>
+                        <th class="px-8 py-5">TYPE POLLUANT</th>
+                        <th class="px-8 py-5">PRESTATAIRE</th>
+                        <th class="px-8 py-5">DATE COLLECTE</th>
+                        <th class="px-8 py-5">QUANTITÉ (KG)</th>
+                        <th class="px-8 py-5 text-center">CERTIFICAT</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    <tr class="hover:bg-white/[0.03] transition-colors group">
+                        <td class="px-8 py-5 font-technical text-yellow-500 font-black">BSD-2026-X841</td>
+                        <td class="px-8 py-5 font-black uppercase text-sm">HUILES USAGÉES MOTEUR</td>
+                        <td class="px-8 py-5 font-black uppercase text-xs text-white/60">CHIMIREC SUD</td>
+                        <td class="px-8 py-5 font-technical font-black text-white/40">14 MAR 2026</td>
+                        <td class="px-8 py-5 font-technical font-black text-[#00FF66]">420.00</td>
+                        <td class="px-8 py-5 text-center">
+                            <span class="material-symbols-outlined text-[#00FF66] text-xl opacity-20 group-hover:opacity-100 transition-all cursor-pointer">check_circle</span>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.03] transition-colors group">
+                        <td class="px-8 py-5 font-technical text-yellow-500 font-black">BSD-2026-X912</td>
+                        <td class="px-8 py-5 font-black uppercase text-sm">LIQUIDE DE FREIN / DOT4</td>
+                        <td class="px-8 py-5 font-black uppercase text-xs text-white/60">SECHE ENVIRONNEMENT</td>
+                        <td class="px-8 py-5 font-technical font-black text-white/40">02 FÉV 2026</td>
+                        <td class="px-8 py-5 font-technical font-black text-[#00FF66]">85.20</td>
+                        <td class="px-8 py-5 text-center">
+                            <span class="material-symbols-outlined text-[#00FF66] text-xl opacity-20 group-hover:opacity-100 transition-all cursor-pointer">check_circle</span>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-white/[0.03] transition-colors group">
+                        <td class="px-8 py-5 font-technical text-yellow-500 font-black">BSD-2026-X110</td>
+                        <td class="px-8 py-5 font-black uppercase text-sm">BATTERIES PLOMB/ACIDE</td>
+                        <td class="px-8 py-5 font-black uppercase text-xs text-white/60">VALOR POLE</td>
+                        <td class="px-8 py-5 font-technical font-black text-white/40">15 JAN 2026</td>
+                        <td class="px-8 py-5 font-technical font-black text-[#00FF66]">142.10</td>
+                        <td class="px-8 py-5 text-center">
+                            <span class="material-symbols-outlined text-[#00FF66] text-xl opacity-20 group-hover:opacity-100 transition-all cursor-pointer">check_circle</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    private List<BinData> currentWaste = new()
+    {
+        new(1, "HUILES USAGÉES", "oil_barrel", 168, 84),
+        new(2, "PNEUS USÉS", "tire_repair", 15, 60),
+        new(3, "SOLVANTS / CHIMIE", "experiment", 48, 96),
+        new(4, "FILTRES À HUILE", "delete_sweep", 22, 44),
+    };
+
+    record BinData(int Id, string Type, string Icon, int Quantite, int Level);
+}

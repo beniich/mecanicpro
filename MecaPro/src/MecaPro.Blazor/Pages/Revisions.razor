@@ -1,141 +1,195 @@
+@page "/atelier/revisions"
 @page "/revisions"
+@layout EmptyLayout
 @attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
 
-<PageTitle>Révisions — MecaPro</PageTitle>
+<PageTitle>MECAPRO — File d'Interventions</PageTitle>
 
-<div class="fade-in">
-  <div class="section-header">
-    <div>
-      <div class="section-title">📅 Révisions</div>
-      <div class="section-desc">Planification, durée et coûts des révisions</div>
-    </div>
-    <button class="btn btn-primary" style="margin-left:auto">⊕ Planifier révision</button>
-  </div>
+<div class="bg-[#111318] text-white min-h-screen pb-24">
 
-  <div class="kpi-row">
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(59,130,246,.12)">📅</div>
-      <div class="kpi-value" style="color:var(--blue)">8</div>
-      <div class="kpi-label">Prochaine semaine</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(34,197,94,.12)">⏱️</div>
-      <div class="kpi-value" style="color:var(--green)">2h40</div>
-      <div class="kpi-label">Durée moy. révision</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(245,166,35,.12)">💶</div>
-      <div class="kpi-value" style="color:var(--accent)">287€</div>
-      <div class="kpi-label">Coût moy. révision</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(168,85,247,.12)">📊</div>
-      <div class="kpi-value" style="color:var(--purple)">94%</div>
-      <div class="kpi-label">Taux satisfaction</div>
-    </div>
-  </div>
+    <!-- Top Bar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-primary uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="/planning/planning-atelier" class="bg-white/5 border border-white/10 px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">calendar_month</span>PLANNING
+            </a>
+        </div>
+    </header>
 
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">📋 Révisions Planifiées</div>
-      </div>
-      <table>
-        <tr><th>Date</th><th>Véhicule</th><th>Type</th><th>Durée Est.</th><th>Coût Est.</th><th>Statut</th></tr>
-        <tr>
-          <td style="font-family:JetBrains Mono,monospace;font-size:12px">20/03</td>
-          <td style="color:var(--accent)">MN-012</td><td>Révision complète</td>
-          <td>4h 00</td><td style="color:var(--green);font-weight:700">480 €</td>
-          <td><span class="badge badge-orange">Planifiée</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:JetBrains Mono,monospace;font-size:12px">21/03</td>
-          <td style="color:var(--accent)">AB-123</td><td>Vidange + filtres</td>
-          <td>1h 30</td><td style="color:var(--green);font-weight:700">120 €</td>
-          <td><span class="badge badge-blue">Confirmée</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:JetBrains Mono,monospace;font-size:12px">22/03</td>
-          <td style="color:var(--accent)">EF-456</td><td>Freins avant</td>
-          <td>2h 00</td><td style="color:var(--green);font-weight:700">290 €</td>
-          <td><span class="badge badge-blue">Confirmée</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:JetBrains Mono,monospace;font-size:12px">25/03</td>
-          <td style="color:var(--accent)">IJ-789</td><td>Distribution</td>
-          <td>6h 00</td><td style="color:var(--green);font-weight:700">850 €</td>
-          <td><span class="badge badge-purple">Devis envoyé</span></td>
-        </tr>
-      </table>
-    </div>
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-10">
 
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">💶 Détail Coûts — Révision Complète</div>
-      </div>
-      <div class="card-body">
-        <div class="cost-row">
-          <span class="cost-label">Main d'œuvre (3h)</span>
-          <div class="cost-bar"><div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div></div>
-          <span class="cost-val">180 €</span>
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8">
+            <div>
+                <span class="text-primary text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">ATELIER_QUEUE_SYSTEM</span>
+                <h2 class="text-7xl font-black tracking-tighter italic uppercase leading-none">File Interventions</h2>
+            </div>
+            <div class="flex gap-4">
+                <!-- Filtres statut -->
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-1.5 flex gap-1">
+                    @foreach (var f in new[] { "TOUS", "Scheduled", "InProgress", "Completed" })
+                    {
+                        <button @onclick="() => SetFilter(f)" class="px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(activeFilter == f ? "bg-primary text-on-primary shadow-lg shadow-primary/20" : "text-white/40 hover:text-white")">
+                            @(f == "TOUS" ? "ALL" : f == "Scheduled" ? "PLANIFIÉ" : f == "InProgress" ? "EN COURS" : "TERMINÉ")
+                        </button>
+                    }
+                </div>
+            </div>
         </div>
-        <div class="cost-row">
-          <span class="cost-label">Huile moteur 5L</span>
-          <div class="cost-bar"><div class="progress-bar"><div class="progress-fill" style="width:25%;background:linear-gradient(90deg,var(--blue),var(--purple))"></div></div></div>
-          <span class="cost-val">55 €</span>
-        </div>
-        <div class="cost-row">
-          <span class="cost-label">Filtre à huile</span>
-          <div class="cost-bar"><div class="progress-bar"><div class="progress-fill" style="width:10%;background:linear-gradient(90deg,var(--green),var(--blue))"></div></div></div>
-          <span class="cost-val">18 €</span>
-        </div>
-        <div class="cost-row">
-          <span class="cost-label">Filtre air + habitacle</span>
-          <div class="cost-bar"><div class="progress-bar"><div class="progress-fill" style="width:14%;background:linear-gradient(90deg,var(--green),var(--blue))"></div></div></div>
-          <span class="cost-val">34 €</span>
-        </div>
-        <div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;font-weight:700;font-size:16px">
-          <span>Total TTC</span>
-          <span style="color:var(--accent)">287 €</span>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:14px">
-          <button class="btn btn-primary" style="flex:1">📄 Générer facture</button>
-          <button class="btn btn-ghost" style="flex:1">📧 Envoyer devis</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Timeline révisions -->
-  <div class="card">
-    <div class="card-header"><div class="card-title">⏳ Historique Révisions — Peugeot 308</div></div>
-    <div class="card-body">
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot done"></div>
-          <div class="tl-date">15/01/2025 — 87 450 km</div>
-          <div class="tl-title">Révision complète</div>
-          <div class="tl-sub">Vidange, filtres, bougies — 287 € — 2h30</div>
+        <!-- KPI Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-3">TOTAL_QUEUE</p>
+                <p class="text-5xl font-black italic text-white tracking-tighter">@(revisions?.Total ?? 0)</p>
+                <span class="material-symbols-outlined absolute bottom-4 right-4 text-5xl text-white/5">build_circle</span>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-primary/60 mb-3">IN_PROGRESS</p>
+                <p class="text-5xl font-black italic text-primary tracking-tighter">@inProgressCount</p>
+                <span class="material-symbols-outlined absolute bottom-4 right-4 text-5xl text-primary/5">autorenew</span>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-3">THIS_WEEK</p>
+                <p class="text-5xl font-black italic text-white tracking-tighter">@thisWeekCount</p>
+                <span class="material-symbols-outlined absolute bottom-4 right-4 text-5xl text-white/5">event</span>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 relative overflow-hidden">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-3">COUT_TOTAL_EST</p>
+                <p class="text-5xl font-black italic text-white tracking-tighter">@totalCost.ToString("N0")€</p>
+                <span class="material-symbols-outlined absolute bottom-4 right-4 text-5xl text-white/5">euro</span>
+            </div>
         </div>
-        <div class="tl-item">
-          <div class="tl-dot done"></div>
-          <div class="tl-date">07/08/2024 — 75 000 km</div>
-          <div class="tl-title">Distribution + Courroie accessoires</div>
-          <div class="tl-sub">Remplacement kit distribution complet — 720 € — 5h</div>
+
+        <!-- Search Bar -->
+        <div class="bg-white/5 border border-white/5 rounded-2xl flex items-center gap-4 px-6 py-4 focus-within:border-primary/50 transition-all">
+            <span class="material-symbols-outlined text-white/30">search</span>
+            <input type="text" @bind="searchQuery" @bind:event="oninput" @onkeyup="HandleSearch"
+                   placeholder="RECHERCHER PAR TYPE OU VÉHICULE..." 
+                   class="bg-transparent border-none outline-none font-technical text-sm text-white uppercase italic placeholder:text-white/10 w-full font-black"/>
         </div>
-        <div class="tl-item">
-          <div class="tl-dot done"></div>
-          <div class="tl-date">12/02/2024 — 62 000 km</div>
-          <div class="tl-title">Freins complets 4 roues</div>
-          <div class="tl-sub">Plaquettes + disques — 640 € — 3h30</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot upcoming"></div>
-          <div class="tl-date" style="color:var(--blue)">Prochaine — 97 000 km (~6 mois)</div>
-          <div class="tl-title" style="color:var(--blue)">Révision 100 000 km</div>
-          <div class="tl-sub">Distribution + vidange + révision complète — Est. 950 €</div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+        <!-- Table -->
+        @if (loading)
+        {
+            <div class="flex justify-center py-24">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary"></div>
+            </div>
+        }
+        else if (!FilteredItems().Any())
+        {
+            <div class="bg-surface-container rounded-[40px] p-24 text-center border border-white/5">
+                <span class="material-symbols-outlined text-7xl text-white/10 mb-4 block">build_circle</span>
+                <p class="text-white/20 font-black italic uppercase tracking-widest">QUEUE_EMPTY — AUCUNE_INTERVENTION</p>
+            </div>
+        }
+        else
+        {
+            <div class="space-y-4">
+                @foreach (var rev in FilteredItems())
+                {
+                    var statusColor = rev.Status switch {
+                        "InProgress" => "border-l-primary bg-primary/5",
+                        "Completed"  => "border-l-green-400 bg-green-400/5",
+                        "Cancelled"  => "border-l-red-400 bg-red-400/5",
+                        _            => "border-l-white/10 bg-white/[0.02]"
+                    };
+                    var statusLabel = rev.Status switch {
+                        "InProgress" => ("IN_PROGRESS", "text-primary bg-primary/10 border-primary/30"),
+                        "Completed"  => ("TERMINÉ", "text-green-400 bg-green-400/10 border-green-400/30"),
+                        "Cancelled"  => ("ANNULÉ", "text-red-400 bg-red-400/10 border-red-400/30"),
+                        _            => ("PLANIFIÉ", "text-white/50 bg-white/5 border-white/10")
+                    };
+
+                    <div class="rounded-[28px] border-l-4 @statusColor border border-white/5 p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group hover:border-primary/20 transition-all">
+                        <div class="flex items-center gap-6">
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 flex-shrink-0">
+                                <span class="material-symbols-outlined text-primary">build</span>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-3 mb-1">
+                                    <span class="text-[10px] font-black uppercase italic px-3 py-1 rounded-lg border @statusLabel.Item2">@statusLabel.Item1</span>
+                                    <span class="font-technical text-[10px] text-white/30">#@rev.VehicleId.ToString().Substring(0,8).ToUpper()</span>
+                                </div>
+                                <h3 class="text-xl font-black italic uppercase tracking-tight text-white">@rev.Type</h3>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-white/30 mt-1">
+                                    @rev.ScheduledDate.ToString("dddd dd MMMM yyyy").ToUpper() à @rev.ScheduledDate.ToString("HH:mm")
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-6 md:gap-10">
+                            <div class="text-center">
+                                <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-1">DURÉE EST.</p>
+                                <p class="font-black italic text-white text-xl">@rev.EstimatedDuration<span class="text-[10px] text-white/30 ml-1">MIN</span></p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-1">COÛT EST.</p>
+                                <p class="font-black italic text-primary text-xl">@rev.EstimatedCost.ToString("N0") €</p>
+                            </div>
+                            <button @onclick='() => Nav.NavigateTo($"/clients/detail-intervention/{rev.Id}")'
+                                    class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:border-primary hover:text-on-primary transition-all active:scale-95 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">open_in_new</span>OUVRIR
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center gap-4 pb-12 pt-6">
+                <button @onclick="PrevPage" disabled="@(page <= 1)" class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center disabled:opacity-20 hover:border-primary transition-all">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <div class="px-6 bg-primary/10 border border-primary/30 rounded-xl flex items-center font-technical font-black text-primary italic">
+                    @page / @(revisions?.TotalPages ?? 1)
+                </div>
+                <button @onclick="NextPage" disabled="@(!revisions?.HasNext ?? true)" class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center disabled:opacity-20 hover:border-primary transition-all">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        }
+    </main>
 </div>
+
+@code {
+    private PagedResult<RevisionDto>? revisions;
+    private bool loading = true;
+    private int page = 1;
+    private string? searchQuery;
+    private string activeFilter = "TOUS";
+
+    private int inProgressCount => revisions?.Items.Count(r => r.Status == "InProgress") ?? 0;
+    private int thisWeekCount => revisions?.Items.Count(r => r.ScheduledDate >= DateTime.Today && r.ScheduledDate <= DateTime.Today.AddDays(7)) ?? 0;
+    private decimal totalCost => revisions?.Items.Sum(r => r.EstimatedCost) ?? 0;
+
+    protected override async Task OnInitializedAsync() => await LoadData();
+
+    private IEnumerable<RevisionDto> FilteredItems()
+    {
+        var items = revisions?.Items ?? Enumerable.Empty<RevisionDto>();
+        if (activeFilter != "TOUS") items = items.Where(r => r.Status == activeFilter);
+        if (!string.IsNullOrEmpty(searchQuery))
+            items = items.Where(r => r.Type.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+        return items;
+    }
+
+    private async Task SetFilter(string f) { activeFilter = f; page = 1; await LoadData(); }
+
+    private async Task LoadData()
+    {
+        loading = true;
+        revisions = await Api.GetAsync<PagedResult<RevisionDto>>($"/api/v1/revisions?page={page}&pageSize=15");
+        loading = false;
+    }
+
+    private async Task HandleSearch() { page = 1; await LoadData(); }
+    private async Task NextPage() { page++; await LoadData(); }
+    private async Task PrevPage() { page--; await LoadData(); }
+}

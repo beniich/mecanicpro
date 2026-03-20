@@ -1,0 +1,90 @@
+@page "/atelier/rappels-constructeur"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#0d0e12] text-white p-8 font-['Outfit']">
+    <!-- Red Alert Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-red-600/20 flex items-center justify-center border border-red-500/30 shadow-[0_0_40px_rgba(239,68,68,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-red-500 text-3xl animate-pulse">priority_high</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-red-600"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Recalls <span class="text-red-500">Monitor</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">CAMPAGNES DE RAPPELS OFFICIELLES & SÉCURITÉ VÉHICULES</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-3 px-6 rounded-2xl flex items-center gap-6">
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic">Véhicules Impactés</p>
+                      <p class="text-xl font-black italic text-red-600 italic">12 <span class="text-xs text-white/50 lowercase italic">clients</span></p>
+                 </div>
+                 <div class="w-[1px] h-8 bg-white/10"></div>
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic">MAJ Base</p>
+                      <p class="text-xl font-black italic shadow-none border-none border-0">JOUR</p>
+                 </div>
+             </div>
+             <button class="bg-red-600 text-white px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">notifications_active</span> NOTIFIER TOUS
+             </button>
+        </div>
+    </div>
+
+    <!-- Recall Alerts Grid -->
+    <div class="flex flex-col gap-8 mb-12">
+        @foreach (var recall in activeRecalls)
+        {
+            <div class="bg-[#111318]/80 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 hover:bg-white/[0.04] transition-all group overflow-hidden relative cursor-pointer shadow-2xl">
+                 <div class="absolute -right-12 -top-12 w-48 h-48 bg-red-600/10 blur-3xl opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity"></div>
+                 
+                 <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
+                      <!-- Manufacturer Icon -->
+                      <div class="w-20 h-20 rounded-[2.5rem] bg-black border border-white/10 flex items-center justify-center font-black text-xl italic group-hover:border-red-500/50 transition-all uppercase tracking-widest leading-relaxed">@recall.Brand.Substring(0, 1)</div>
+                      
+                      <div class="flex-grow">
+                           <div class="flex items-center gap-4 mb-3">
+                                <span class="px-3 py-1 bg-red-600/20 text-red-500 text-[8px] font-black uppercase tracking-widest rounded-full border border-red-500/30 italic">NHTSA #@recall.Id</span>
+                                <h3 class="text-2xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none">@recall.Brand @recall.Model (@recall.Years)</h3>
+                           </div>
+                           <p class="text-sm font-black italic text-gray-300 uppercase italic tracking-widest leading-relaxed mb-1 underline decoration-red-600/50">CIBLE: @recall.Component</p>
+                           <p class="text-[11px] text-gray-500 italic leading-relaxed italic max-w-2xl font-outfit uppercase tracking-widest italic leading-relaxed">@recall.Description</p>
+                      </div>
+
+                      <!-- Impacted Clients Count -->
+                      <div class="bg-black/40 p-6 rounded-[2rem] border border-white/5 min-w-[160px] text-center">
+                           <p class="text-[10px] text-gray-500 font-extrabold uppercase tracking-widest mb-1 italic shadow-none border-none">Impact Parc Client</p>
+                           <p class="text-3xl font-black italic italic @(recall.ImpactCount > 0 ? "text-red-500" : "text-emerald-500")">@recall.ImpactCount</p>
+                           <p class="text-[9px] text-gray-700 font-black uppercase mt-2 italic shadow-none border-none border-0">VÉHICULES IDENTIFIÉS</p>
+                      </div>
+                      
+                      <button class="bg-white/5 hover:bg-white/10 w-12 h-12 rounded-xl flex items-center justify-center transition-all border border-white/10 group-hover:border-red-500/30">
+                           <span class="material-symbols-outlined text-gray-500 group-hover:text-red-500">mail</span>
+                      </button>
+                 </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<RecallInfo> activeRecalls = new()
+    {
+        new RecallInfo { Id = "24V112", Brand = "TESLA", Model = "MODEL 3/Y", Years = "2021-2023", Component = "FRONT CAMERA MODULE", Description = "Le dysfonctionnement de la caméra avant peut désactiver l'assistance au maintien de trajectoire (Autopilot), augmentant les risques de collision.", ImpactCount = 8 },
+        new RecallInfo { Id = "23V882", Brand = "STALLANTIS", Model = "PEUGEOT 3008", Years = "2022", Component = "BATTERY HYBRID SYSTEM", Description = "Problème d'étanchéité du pack batterie haute tension entraînant un risque de court-circuit et d'incendie.", ImpactCount = 3 },
+        new RecallInfo { Id = "24V001", Brand = "BMW", Model = "IX / I4", Years = "2023", Component = "POWER ELECTRONICS", Description = "Un défaut de microcontrôleur peut interrompre l'alimentation électrique, causant une perte de propulsion soudaine.", ImpactCount = 1 },
+        new RecallInfo { Id = "22V449", Brand = "HONDA", Model = "CIVIC", Years = "2020", Component = "STEERING RACK", Description = "Le boîtier de direction peut se gripper prématurément, nécessitant un effort excessif pour braquer.", ImpactCount = 0 }
+    };
+
+    public class RecallInfo {
+        public string Id { get; set; } = "";
+        public string Brand { get; set; } = "";
+        public string Model { get; set; } = "";
+        public string Years { get; set; } = "";
+        public string Component { get; set; } = "";
+        public string Description { get; set; } = "";
+        public int ImpactCount { get; set; }
+    }
+}

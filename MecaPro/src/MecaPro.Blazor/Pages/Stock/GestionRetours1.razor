@@ -1,0 +1,79 @@
+@page "/stock/gestion-retours-1"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Gestion Retours</PageTitle>
+
+<div class="bg-[#111318] text-[#e2e2e8] font-body selection:bg-primary/30 min-h-screen pb-28">
+    <!-- Top Nav -->
+    <nav class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 h-16 border-b border-white/5">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[#f5a623]">precision_manufacturing</span>
+            <span class="text-2xl font-black tracking-tighter text-[#f5a623] font-headline uppercase">MECAPRO</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="text-on-surface-variant hover:bg-white/5 p-2 rounded-lg">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-20 px-4 max-w-7xl mx-auto">
+        <header class="mb-8 mt-4 font-headline uppercase">
+            <h1 class="text-5xl tracking-wider text-on-surface mb-1">GESTION RETOURS</h1>
+            <p class="text-on-surface-variant text-sm tracking-widest font-technical opacity-70">Suivi logistique fournisseurs</p>
+        </header>
+
+        <!-- Search -->
+        <div class="flex gap-2 mb-8">
+            <div class="flex-grow relative">
+                <input class="w-full bg-[#1e2024] border-none rounded-xl py-4 pl-12 pr-4 font-technical text-sm text-on-surface" placeholder="RECHERCHE RMA..." type="text"/>
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+            </div>
+            <button class="bg-[#282a2e] aspect-square w-14 rounded-xl flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined">filter_list</span>
+            </button>
+        </div>
+
+        <!-- Returns List -->
+        <div class="space-y-6">
+            <div class="bg-[#282a2e] rounded-xl overflow-hidden border-l-2 border-[#f26411] p-5">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="font-technical">
+                        <span class="text-[10px] text-secondary-container uppercase mb-1 block">RMA ID</span>
+                        <h2 class="text-xl font-bold text-primary">#RMA-99283-X</h2>
+                    </div>
+                    <span class="bg-primary/10 text-primary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                        Attente Expédition
+                    </span>
+                </div>
+                <div class="space-y-4 mb-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded bg-[#0c0e12] flex items-center justify-center">
+                            <span class="material-symbols-outlined text-on-surface-variant">factory</span>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase font-bold text-on-surface-variant font-technical">Fournisseur</p>
+                            <p class="font-bold text-on-surface">AUTOPARTS SOLUTIONS SRL</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 font-technical">
+                        <div class="bg-[#0c0e12] p-3 rounded-lg">
+                            <p class="text-[10px] uppercase font-bold text-on-surface-variant mb-1">Motif</p>
+                            <p class="text-sm">Pièce défectueuse</p>
+                        </div>
+                        <div class="bg-[#0c0e12] p-3 rounded-lg">
+                            <p class="text-[10px] uppercase font-bold text-on-surface-variant mb-1">Date</p>
+                            <p class="text-sm">14/10/2023</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full bg-gradient-to-r from-primary-container to-secondary-container text-on-primary font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 font-headline uppercase tracking-widest">
+                    <span class="material-symbols-outlined">download</span>
+                    ÉTIQUETTE RETOUR
+                </button>
+            </div>
+        </div>
+    </main>
+</div>

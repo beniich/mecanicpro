@@ -1,0 +1,133 @@
+@page "/reports/audit-archives"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Archives d'Audit</PageTitle>
+
+<div class="bg-background text-on-background min-h-screen flex flex-col pb-24 md:pb-0">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] sticky top-0 z-50 flex justify-between items-center px-6 py-4 w-full border-b border-[#524534]/15">
+        <div class="flex items-center gap-4 cursor-pointer" onclick="window.location.href='/'">
+            <h1 class="font-headline tracking-[0.05em] uppercase text-[#f5a623] text-3xl font-black tracking-widest">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex gap-6 mr-6">
+                <a class="font-headline tracking-widest text-[#e2e2e8] hover:text-[#f5a623] transition-colors" href="/">Tableau de Bord</a>
+                <a class="font-headline tracking-widest text-[#f5a623]" href="/reports/audit-archives">Archive</a>
+                <a class="font-headline tracking-widest text-[#e2e2e8] hover:text-[#f5a623] transition-colors" href="/maintenance">Maintenance</a>
+            </div>
+            <div class="h-10 w-10 rounded-full bg-surface-container-high border-2 border-primary-container overflow-hidden">
+                <img alt="Operator Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxIyUfGJR6PPxB3TnxlAO_e2d65d7fwgWdV35myR1IvVCkMZGZT87AK1QG_Xi1hLRh9iCXd0MSZBk3lPYUtnml_CwmB43P64_8bxcXS85GKvQk1VW16Vwlfpdz7M3tEbYMNwZ_DzqKVCxXmUKfPalxUEXf_IKmc_jypeBDRKdGF_nuqOblY4EPUQFW697clYcGLgFVjUs1V_igwilwLM7ni0hlGFf3sNsXldMxIQX1ht2VNGrzOsTVrGHS8LWof1BrhyqB0CDevHu4"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full">
+        <!-- Header Section -->
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="h-1 w-8 bg-secondary-container"></span>
+                    <span class="font-mono text-xs text-primary uppercase tracking-widest">Coffre-fort Numérique</span>
+                </div>
+                <h2 class="font-headline text-5xl md:text-7xl text-on-surface tracking-wide leading-none uppercase">Archives d'Audit</h2>
+                <p class="text-on-surface-variant max-w-xl mt-4">Registre centralisé des inspections de sécurité et certificats de conformité réglementaire.</p>
+            </div>
+            <!-- Quick Stats Bento -->
+            <div class="grid grid-cols-2 gap-4 w-full md:w-auto">
+                <div class="bg-surface-container-low p-4 rounded-lg flex flex-col justify-between border-l-4 border-primary-container">
+                    <span class="text-[10px] font-mono uppercase text-on-surface-variant">Total Rapports</span>
+                    <span class="font-headline text-3xl text-primary leading-none mt-2">1,284</span>
+                </div>
+                <div class="bg-surface-container-low p-4 rounded-lg flex flex-col justify-between border-l-4 border-secondary-container">
+                    <span class="text-[10px] font-mono uppercase text-on-surface-variant">Dernier Audit</span>
+                    <span class="font-headline text-3xl text-secondary leading-none mt-2">12 OCT</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter & Search Bar -->
+        <div class="bg-surface-container-lowest p-2 rounded-xl flex flex-col md:flex-row gap-2 mb-8 border border-outline-variant/15">
+            <div class="flex-grow flex items-center bg-surface-container-highest px-4 py-2 rounded-lg">
+                <span class="material-symbols-outlined text-outline mr-3" data-icon="search">search</span>
+                <input class="bg-transparent border-none text-on-surface placeholder:text-outline w-full focus:ring-0 font-mono text-sm uppercase" placeholder="RECHERCHER PAR VIN, N° RAPPORT OU OPÉRATEUR..." type="text"/>
+            </div>
+            <div class="flex gap-2">
+                <button class="bg-surface-container-high flex items-center gap-2 px-6 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-tighter text-on-surface border border-outline-variant/10">
+                    <span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span> Filtrer
+                </button>
+                <button class="bg-surface-container-high flex items-center gap-2 px-6 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-tighter text-primary border border-outline-variant/10">
+                    <span class="material-symbols-outlined text-sm" data-icon="download">download</span> Export Complet
+                </button>
+            </div>
+        </div>
+
+        <!-- Audit Timeline / List -->
+        <div class="space-y-4">
+            <!-- Audit Entry 1 -->
+            <div class="group bg-surface-container p-4 md:p-6 rounded-xl hover:bg-surface-container-high transition-all flex flex-col md:flex-row md:items-center gap-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full bg-primary-container group-hover:w-2 transition-all"></div>
+                <div class="flex flex-row md:flex-col items-center md:items-start justify-between md:justify-center min-w-[120px]">
+                    <span class="font-headline text-2xl text-on-surface">14 OCT 2023</span>
+                    <span class="font-mono text-[10px] text-outline tracking-wider uppercase">REF-2023-A8492</span>
+                </div>
+                <div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono uppercase text-outline mb-1">Type de Rapport</span>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+                            <span class="font-bold text-on-surface uppercase">CONFORMITÉ SÉCURITÉ NIV. 4</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono uppercase text-outline mb-1">Véhicule Associé</span>
+                        <span class="font-mono text-sm text-secondary tracking-tight">VIN: WBA5K710X0G12XXXX</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-mono uppercase text-outline mb-1">Statut Validation</span>
+                        <div class="flex items-center">
+                            <span class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> VALIDÉ
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center hover:bg-primary-container hover:text-on-primary transition-colors">
+                        <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                    </button>
+                    <button class="flex items-center gap-3 px-6 h-12 bg-surface-container-highest rounded-lg font-mono text-xs font-bold uppercase tracking-widest hover:bg-secondary-container transition-all">
+                        <span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span> PDF
+                    </button>
+                </div>
+            </div>
+            <!-- More entries simplified for brevity in this response, but following same pattern -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-12 flex justify-center items-center gap-4">
+            <button class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center opacity-50 cursor-not-allowed">
+                <span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+            </button>
+            <div class="flex gap-2">
+                <span class="w-10 h-10 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-mono font-bold">1</span>
+                <span class="w-10 h-10 rounded bg-surface-container-high text-on-surface flex items-center justify-center font-mono font-bold hover:bg-surface-container-highest cursor-pointer">2</span>
+            </div>
+            <button class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center hover:bg-surface-container-highest">
+                <span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="bg-[#0c0e12] fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 z-50 h-20 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] md:hidden">
+        <a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200" href="/">
+            <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            <span class="font-technical text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411]" href="/reports/audit-archives">
+            <span class="material-symbols-outlined" data-icon="package_2">package_2</span>
+            <span class="font-technical text-[10px] uppercase tracking-tighter">ARCHIVE</span>
+        </a>
+    </nav>
+</div>

@@ -1,0 +1,53 @@
+@page "/admin/profil-flotte-b2b"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Profil Flotte B2B</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary min-h-screen">
+    <!-- TopAppBar -->
+    <header class="bg-[#0c0e12] flex justify-between items-center px-6 py-4 w-full sticky top-0 z-50 shadow-2xl">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623] text-3xl">menu</span>
+            <h1 class="font-headline text-3xl font-black text-[#f5a623] tracking-[0.2em] uppercase italic">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-6 font-technical text-[10px] uppercase font-bold tracking-widest">
+            <nav class="hidden md:flex gap-8">
+                <a class="text-[#f5a623] border-b-2 border-[#f26411]" href="#">Profil Flotte</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center overflow-hidden shadow-lg">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHQPU6kvUDo5PjCKfpktfm6PMDt_QGq_Uvj_5-TRVINUm5XKD-qIq0czROOTIyR1WrVzHSWadLIz7aaaqt3ieHPE9X1DE-0AHOEFQH-3mRaTuEpYpFY4eh4TPodXOAoMteXtgD1ay4Dzi5N9UvwGeuH-d6hK6RtpcgEU6zaWiA1bIv8kiWE3vcwPOyWiNkvAa33K6i2GpDbpVgtY1BVPpkQWgAyn8Xl_9nwfd_3PMmjSTmipvtQi1cCFW7IxlepIKIWwXDAYUN12K1" alt="Logo" class="w-full h-full object-cover"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Profile Header -->
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 uppercase font-headline italic">
+            <div>
+                <span class="text-primary font-technical text-[10px] tracking-widest mb-2 block font-black not-italic">Enterprise Account ID: FR-99283-B2B</span>
+                <h2 class="text-6xl tracking-wider leading-none text-on-background font-black italic">Logistics Central Europe</h2>
+            </div>
+            <div class="flex gap-4">
+                <button class="bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container px-8 py-4 rounded-xl font-bold tracking-[0.2em] text-sm shadow-2xl active:scale-95 transition-all">
+                    ÉDITER PROFIL
+                </button>
+            </div>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 uppercase font-headline italic">
+            <div class="md:col-span-4 bg-surface-container-high p-8 rounded-xl border-l-4 border-secondary-container shadow-2xl">
+                <span class="text-on-surface-variant text-[10px] font-black tracking-[0.3em]">BUDGET CONSOMMÉ (Q3)</span>
+                <div class="text-6xl text-primary font-black mt-2 leading-none italic tracking-tighter">124,500€</div>
+                <div class="mt-6 h-2.5 bg-surface-container-lowest rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-[72%]"></div>
+                </div>
+            </div>
+            <div class="md:col-span-4 bg-surface-container-high p-8 rounded-xl border-l-4 border-primary-container shadow-2xl">
+                <span class="text-on-surface-variant text-[10px] font-black tracking-[0.3em]">UNITÉS ACTIVES</span>
+                <div class="text-6xl text-primary font-black mt-2 leading-none italic tracking-tighter">342</div>
+            </div>
+        </div>
+    </main>
+</div>

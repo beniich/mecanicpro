@@ -1,0 +1,122 @@
+@page "/securite/rapport-pollution"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#0d0e12] text-white p-8 font-['Outfit']">
+    <!-- Green/Emerald Eco Reporting Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 flex items-center justify-center border border-emerald-500/30">
+                    <span class="material-symbols-outlined text-emerald-400">equalizer</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Social & <span class="text-emerald-500 font-light italic uppercase shadow-none border-none italic">ECO Impact</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">GENERATION DE RAPPORTS DE BILAN CARBONE & RSE MECAPRO</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <button class="bg-black/40 border border-white/5 px-6 py-3 rounded-2xl flex items-center gap-6 shadow-xl shadow-black/40">
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic shadow-none border-none">CO2 Économisé / An</p>
+                      <p class="text-xl font-black italic text-emerald-500 shadow-none border-none border-0">12.4 <span class="text-xs text-white/50 lowercase italic">Tonnes</span></p>
+                 </div>
+             </button>
+             <button class="bg-emerald-600 text-black px-12 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">description</span> EXPORTER BILAN
+             </button>
+        </div>
+    </div>
+
+    <!-- Impact Reporting Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+        <!-- Visual Graphs / KPI Area -->
+        <div class="lg:col-span-3 space-y-10">
+             <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[4rem] p-12 overflow-hidden shadow-2xl relative">
+                  <h3 class="text-2xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-12">Analyse de l'Impact Carbone par Département (KG CO2e)</h3>
+                  
+                  <div class="flex flex-col md:flex-row gap-12 items-end mb-16 h-[300px]">
+                       @foreach (var val in impactData)
+                       {
+                           <div class="flex-grow flex flex-col items-center gap-6">
+                                <div class="w-full @(val.Color) rounded-[2rem] transition-all hover:scale-105" style="height: @(val.Height)%">
+                                     <div class="w-full h-full opacity-20 bg-gradient-to-t from-black to-transparent"></div>
+                                </div>
+                                <div class="text-center">
+                                     <p class="text-[10px] font-black italic uppercase italic shadow-none border-none">@val.Dept</p>
+                                     <p class="text-xl font-black italic italic shadow-none border-none border-0">@val.Value <span class="text-[9px] text-gray-600">KG</span></p>
+                                </div>
+                           </div>
+                       }
+                  </div>
+
+                  <!-- Footer Insights -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 border-t border-white/5 pt-12">
+                       <div class="flex items-center gap-6 p-8 bg-black/40 rounded-3xl border border-white/5">
+                            <span class="material-symbols-outlined text-emerald-500 text-4xl">energy_savings_leaf</span>
+                            <div>
+                                 <p class="text-[9px] text-gray-600 uppercase font-extrabold italic shadow-none border-none italic leading-relaxed">Objectif Réduction 2026</p>
+                                 <p class="text-lg font-black italic shadow-none border-none shadow-none border-0 uppercase tracking-widest leading-relaxed">-15% Consommation Papier & Recyclage Filtres.</p>
+                            </div>
+                       </div>
+                       <div class="flex items-center gap-6 p-8 bg-black/40 rounded-3xl border border-white/5">
+                            <span class="material-symbols-outlined text-orange-500 text-4xl">warning</span>
+                            <div>
+                                 <p class="text-[9px] text-gray-600 uppercase font-extrabold italic shadow-none border-none italic leading-relaxed">Point Critique Hub Logistique</p>
+                                 <p class="text-lg font-black italic shadow-none border-none shadow-none border-0 uppercase tracking-widest leading-relaxed">+8% Émissions transporteurs — Optimisation requise.</p>
+                            </div>
+                       </div>
+                  </div>
+             </div>
+        </div>
+
+        <!-- Sidebar Detailed Stats -->
+        <div class="lg:col-span-1 space-y-12 border-l border-white/5 pl-10">
+             <h3 class="text-xs font-black uppercase text-gray-500 tracking-widest mb-10 italic">Statistiques RSE Dynamiques</h3>
+             
+             @foreach (var stat in rseStats)
+             {
+                 <div class="bg-emerald-600/5 border border-emerald-500/10 rounded-3xl p-8 group hover:bg-emerald-600/10 transition-all">
+                      <p class="text-[9px] text-emerald-500 font-black uppercase tracking-widest mb-4 italic shadow-none border-none italic leading-relaxed">@stat.Label</p>
+                      <div class="flex justify-between items-end">
+                           <p class="text-3xl font-black italic shadow-none border-none border-0">@stat.Value</p>
+                           <span class="text-[10px] text-gray-600 font-bold italic shadow-none border-none shadow-none border-0">@stat.Unit</span>
+                      </div>
+                      <div class="w-full h-1 bg-white/5 rounded-full mt-6 overflow-hidden">
+                           <div class="h-full bg-emerald-600" style="width: @(stat.TargetPerc)%"></div>
+                      </div>
+                 </div>
+             }
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<ImpactItem> impactData = new()
+    {
+        new ImpactItem { Dept = "ATELIER LOURD", Height = 85, Value = 1420, Color = "bg-emerald-500" },
+        new ImpactItem { Dept = "LOGISTIQUE", Height = 100, Value = 1850, Color = "bg-orange-500" },
+        new ImpactItem { Dept = "BUREAUX / RH", Height = 30, Value = 410, Color = "bg-sky-500" },
+        new ImpactItem { Dept = "CARROSSERIE", Height = 65, Value = 920, Color = "bg-rose-500" }
+    };
+
+    private List<RseStat> rseStats = new()
+    {
+        new RseStat { Label = "RECYCLAGE HUILE", Value = "94", Unit = "% VALORISÉ", TargetPerc = 94 },
+        new RseStat { Label = "FORMATION ÉCO-CONDUITE Staff", Value = "12", Unit = "DIPLÔMÉS", TargetPerc = 40 },
+        new RseStat { Label = "INSERTION CDI / CDD", Value = "100", Unit = "CONFORMITÉ", TargetPerc = 100 }
+    };
+
+    public class ImpactItem {
+        public string Dept { get; set; } = "";
+        public int Height { get; set; }
+        public int Value { get; set; }
+        public string Color { get; set; } = "";
+    }
+
+    public class RseStat {
+        public string Label { get; set; } = "";
+        public string Value { get; set; } = "";
+        public string Unit { get; set; } = "";
+        public int TargetPerc { get; set; }
+    }
+}

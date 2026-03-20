@@ -1,0 +1,74 @@
+@page "/settings/security"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Paramètres & Sécurité</PageTitle>
+
+<div class="bg-background text-on-surface font-body selection:bg-primary/30 min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 h-20 w-full border-b border-[#524534]/15 fixed top-0 z-50 italic">
+        <div class="flex items-center gap-3 font-industrial">
+            <span class="material-symbols-outlined text-[#f5a623] text-2xl">precision_manufacturing</span>
+            <h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] uppercase leading-none">MECAPRO</h1>
+        </div>
+        <div class="hidden md:flex gap-8 items-center font-industrial text-sm tracking-widest italic font-bold">
+            <nav class="flex gap-8 text-[#e2e2e8]/60 uppercase">
+                <span class="hover:text-primary transition-colors cursor-pointer">PLANNING</span>
+                <span class="text-[#f5a623]">PROFIL</span>
+            </nav>
+            <div class="w-10 h-10 rounded-full border border-outline-variant/20 overflow-hidden bg-surface-container-high">
+                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcQkhB_xPwcnv76JeJd7FucWdgsxGih9aOs3N9c_n00XO_iF2tuniO_fjVM2Bw0Ujycx9_QXGctPnFagBgczNxwTyv8PEdPmFcJfdLE7p_OzwQ-yuZJwpxZUi5hA-vKjBeaLAW7qnr1nL1PE1TnKMd6RtyCNdraOrXVz4pQ1t37UQqbqVcxgvzvYSMFcAEdUg4hEh6bkZcO9e_CEdzouA8is7YGWDeqdJTaIOhTX5eUV7Fh3fjMMwzH6nZzit9yY87ElpzYQHUNAyc" alt="Marc-Antoine" class="w-full h-full object-cover grayscale"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+        <!-- Header -->
+        <section class="flex flex-col md:flex-row md:items-end justify-between gap-4 italic uppercase">
+            <div class="space-y-2 font-industrial">
+                <p class="text-primary font-technical tracking-[0.4em] text-[10px] font-black not-italic italic">CONFIGURATION SYSTÈME</p>
+                <h2 class="text-7xl font-black tracking-tighter leading-none">PARAMÈTRES & SÉCURITÉ</h2>
+            </div>
+            <div class="hidden md:block">
+                <span class="text-on-surface-variant font-technical text-[10px] px-4 py-2 bg-surface-container-low rounded border border-outline-variant/10 font-black tracking-widest not-italic">
+                    ID STATION: <span class="text-primary tracking-normal">MP-7782-X</span>
+                </span>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 italic font-industrial">
+            <!-- Profile -->
+            <div class="md:col-span-4 space-y-6">
+                <div class="bg-surface-container-high rounded-xl p-8 border border-outline-variant/10 relative overflow-hidden group shadow-2xl">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+                    <div class="flex flex-col items-center text-center space-y-6">
+                         <div class="w-32 h-32 rounded-xl bg-surface-container-high border-2 border-primary/20 p-1 group">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcQkhB_xPwcnv76JeJd7FucWdgsxGih9aOs3N9c_n00XO_iF2tuniO_fjVM2Bw0Ujycx9_QXGctPnFagBgczNxwTyv8PEdPmFcJfdLE7p_OzwQ-yuZJwpxZUi5hA-vKjBeaLAW7qnr1nL1PE1TnKMd6RtyCNdraOrXVz4pQ1t37UQqbqVcxgvzvYSMFcAEdUg4hEh6bkZcO9e_CEdzouA8is7YGWDeqdJTaIOhTX5eUV7Fh3fjMMwzH6nZzit9yY87ElpzYQHUNAyc" alt="Profile" class="w-full h-full object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all"/>
+                         </div>
+                         <div>
+                            <h3 class="text-4xl font-black tracking-tighter leading-none italic">MARC-ANTOINE LEFEBVRE</h3>
+                            <p class="text-primary font-technical text-[10px] mt-2 font-black tracking-widest not-italic italic uppercase">CHEF D'ATELIER SENIOR</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Modules -->
+            <div class="md:col-span-8 space-y-8 italic">
+                <div class="bg-surface-container-high rounded-xl p-8 border border-outline-variant/10 shadow-2xl">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="material-symbols-outlined text-secondary-container text-4xl">verified_user</span>
+                        <h3 class="text-4xl font-black tracking-tight uppercase leading-none">SÉCURITÉ DU COMPTE</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                         <div class="bg-surface p-6 rounded-xl border border-outline-variant/5 shadow-inner group hover:bg-surface-container-high transition-colors italic">
+                            <h4 class="font-black text-xl mb-1 uppercase tracking-tight">DOUBLE AUTHENTIFICATION</h4>
+                            <p class="text-[10px] font-technical text-on-surface-variant normal-case not-italic leading-relaxed font-black uppercase tracking-widest mb-4">Protégez votre compte avec une étape de validation supplémentaire.</p>
+                            <button class="text-primary text-[10px] font-black tracking-[0.3em] font-technical uppercase flex items-center gap-2 group-hover:translate-x-2 transition-transform italic underline decoration-2 underline-offset-4">CONFIGURER</button>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

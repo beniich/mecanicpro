@@ -1,0 +1,341 @@
+@page "/clients/onboarding"
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Onboarding Client</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen">
+    <div class="max-w-5xl mx-auto p-8 pt-12">
+        <!-- Header -->
+        <div class="mb-12 flex justify-between items-end">
+            <div>
+                <span class="text-primary text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">PHASE_INTAKE_PROTOCOL</span>
+                <h2 class="text-7xl font-black tracking-tighter italic uppercase text-white leading-none">Onboarding</h2>
+                <p class="text-white/30 font-technical uppercase mt-4 text-xs tracking-[0.2em]">User Registration System // V3.1</p>
+            </div>
+            <div class="flex items-center gap-4 mb-2">
+                @for (int i = 1; i <= 3; i++)
+                {
+                    <div class="flex flex-col items-center gap-2">
+                         <div class="w-10 h-10 rounded-full border-2 flex items-center justify-center font-black italic transition-all @(currentStep == i ? "bg-primary border-primary text-on-primary scale-110 shadow-[0_0_15px_rgba(245,166,35,0.4)]" : currentStep > i ? "bg-primary/20 border-primary/40 text-primary" : "border-white/10 text-white/20")">
+                            @if (currentStep > i) { <span class="material-symbols-outlined text-sm">check</span> } else { @i }
+                        </div>
+                    </div>
+                    @if (i < 3) { <div class="w-12 h-[2px] bg-white/5 mb-4"></div> }
+                }
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <div class="bg-error/10 border border-error/20 p-6 rounded-3xl text-error text-[10px] font-black uppercase mb-10 animate-shake flex items-center gap-4 shadow-2xl">
+                <span class="material-symbols-outlined">warning</span>
+                <span>ERREUR_SYSTÈME: @error</span>
+            </div>
+        }
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Form Side -->
+            <div class="md:col-span-2 space-y-8">
+                @if (currentStep == 1)
+                {
+                    <div class="bg-surface-container-high p-10 rounded-[40px] border border-white/5 shadow-2xl space-y-8">
+                        <div class="border-b border-white/5 pb-6">
+                            <h3 class="text-3xl font-black italic uppercase tracking-tight text-white">Identité_Client</h3>
+                            <p class="text-xs text-white/30 mt-1 uppercase font-technical">Personal Data Entry</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-primary italic">Prénom*</label>
+                                <input @bind="customerData.FirstName" type="text" placeholder="GIVEN_NAME" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-white focus:border-primary outline-none transition-all uppercase placeholder:text-white/5 shadow-inner"/>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-primary italic">Nom*</label>
+                                <input @bind="customerData.LastName" type="text" placeholder="FAMILY_NAME" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-white focus:border-primary outline-none transition-all uppercase placeholder:text-white/5 shadow-inner"/>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-primary italic">Email_Contact*</label>
+                            <input @bind="customerData.Email" type="email" placeholder="USER@ENDPOINT.SYSTEM" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-white focus:border-primary outline-none transition-all placeholder:text-white/5 shadow-inner"/>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-primary italic">Mobile_Protocol_ID</label>
+                            <input @bind="customerData.Phone" type="tel" placeholder="+33_6_XX_XX_XX_XX" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-white focus:border-primary outline-none transition-all placeholder:text-white/5 shadow-inner"/>
+                        </div>
+
+                        <div class="pt-4 flex items-center gap-4">
+                            <MudSwitch T="bool" @bind-Value="@customerData.IsBusiness" Color="Color.Primary" />
+                            <div>
+                                <p class="text-sm font-black italic uppercase text-white">Entité Professionnelle</p>
+                                <p class="text-[10px] text-white/30 font-technical uppercase">Business_Account_Tier</p>
+                            </div>
+                        </div>
+
+                        @if (customerData.IsBusiness)
+                        {
+                            <div class="grid grid-cols-2 gap-6 animate-fade-in">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-secondary italic">Raison Sociale</label>
+                                    <input @bind="customerData.CompanyName" type="text" placeholder="CORP_NAME" class="w-full bg-[#111318] border border-secondary/20 rounded-2xl px-6 py-4 font-technical text-white focus:border-secondary outline-none transition-all uppercase placeholder:text-white/5"/>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-secondary italic">SIRET / VAT</label>
+                                    <input @bind="customerData.TaxId" type="text" placeholder="ID_8829_XXXX" class="w-full bg-[#111318] border border-secondary/20 rounded-2xl px-6 py-4 font-technical text-white focus:border-secondary outline-none transition-all placeholder:text-white/5"/>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else if (currentStep == 2)
+                {
+                    <div class="bg-surface-container-high p-10 rounded-[40px] border border-white/5 shadow-2xl space-y-8 animate-slide-right">
+                        <div class="border-b border-white/5 pb-6 flex justify-between items-center">
+                            <div>
+                                <h3 class="text-3xl font-black italic uppercase tracking-tight text-white">Payload_Véhicule</h3>
+                                <p class="text-xs text-white/30 mt-1 uppercase font-technical">Primary Unit Assignment</p>
+                            </div>
+                            <span class="bg-primary/10 text-primary text-[10px] font-black italic px-4 py-2 rounded-xl">OPTI_STEP_02</span>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-primary italic">Immatriculation*</label>
+                            <input @bind="vehicleData.LicensePlate" type="text" placeholder="AA-123-BB" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-3xl font-black text-primary focus:border-primary outline-none transition-all uppercase text-center placeholder:text-white/5 tracking-tighter"/>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-white/30 italic">Constructeur</label>
+                                <input @bind="vehicleData.Make" type="text" placeholder="MAKE_REF" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-white focus:border-primary outline-none transition-all uppercase text-sm"/>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-white/30 italic">Modèle</label>
+                                <input @bind="vehicleData.Model" type="text" placeholder="MODEL_ID" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-white focus:border-primary outline-none transition-all uppercase text-sm"/>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-white/30 italic">Année_Cycle</label>
+                                <input @bind="vehicleData.Year" type="number" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-white focus:border-primary outline-none transition-all"/>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-white/30 italic">Odomètre_KM</label>
+                                <input @bind="vehicleData.Mileage" type="number" class="w-full bg-[#111318] border border-white/5 rounded-2xl px-6 py-4 font-technical text-primary font-black italic focus:border-primary outline-none transition-all text-xl"/>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (currentStep == 3)
+                {
+                    <div class="bg-surface-container-high p-10 rounded-[40px] border border-white/5 shadow-2xl space-y-12 animate-slide-right">
+                         <div class="border-b border-white/5 pb-6 text-center">
+                            <h3 class="text-3xl font-black italic uppercase tracking-tight text-white line-through opacity-20">Config_Finie</h3>
+                            <h3 class="text-4xl font-black italic uppercase tracking-tighter text-primary">Prêt_Pour_Injection</h3>
+                            <p class="text-[10px] text-white/30 mt-2 uppercase font-technical">Final Validation Handshake</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="bg-white/5 p-8 rounded-3xl border border-white/5 text-center space-y-2 transform hover:scale-105 transition-all">
+                                 <span class="material-symbols-outlined text-4xl text-primary mb-2">person_check</span>
+                                 <p class="text-xs font-black uppercase text-white/50">DATA_ACCOUNT</p>
+                                 <p class="font-black italic text-lg uppercase truncate">@customerData.FirstName @customerData.LastName</p>
+                            </div>
+                            <div class="bg-white/5 p-8 rounded-3xl border border-white/5 text-center space-y-2 transform hover:scale-105 transition-all">
+                                 <span class="material-symbols-outlined text-4xl text-primary mb-2">directions_car</span>
+                                 <p class="text-xs font-black uppercase text-white/50">UNIT_ASSIGNED</p>
+                                 <p class="font-black italic text-xl uppercase tracking-tighter text-primary">@vehicleData.LicensePlate</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-primary/5 p-8 rounded-3xl border border-primary/20 space-y-4">
+                            <div class="flex items-center gap-4">
+                                <span class="material-symbols-outlined text-primary">verified</span>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-white italic">SYSTÈME: TOUS_LES_PARAMÈTRES_EN_ORDRE</p>
+                            </div>
+                            <p class="text-xs text-white/40 leading-relaxed font-technical uppercase">
+                                En cliquant sur "INIT_SYSTÈME", vous acceptez de synchroniser les données avec le registre central MECAPRO via une connexion sécurisée TLS_1.3.
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Summary / Info Side -->
+            <div class="space-y-6">
+                <!-- Info Card -->
+                <div class="bg-[#111318] rounded-[40px] p-10 border border-white/5 flex flex-col justify-between shadow-2xl h-full relative overflow-hidden min-h-[500px]">
+                    <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full -z-10"></div>
+                    <div>
+                        <div class="flex items-center justify-between mb-8">
+                             <h3 class="text-primary font-black italic uppercase tracking-widest text-sm">Summary_Matrix</h3>
+                             <span class="text-[8px] font-technical text-white/20">CORE_SYNC: ACTIVE</span>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <p class="text-[8px] font-black text-white/20 uppercase tracking-[0.4em]">ACCOUNT_STATUS</p>
+                                <p class="font-black italic text-xl text-white uppercase tracking-tighter">GRACE_PERIOD_ACTIVE</p>
+                            </div>
+                            <div class="space-y-2 pt-4 border-t border-white/5">
+                                <p class="text-[8px] font-black text-white/20 uppercase tracking-[0.4em]">LOYALTY_INITIAL</p>
+                                <p class="font-black italic text-xl text-primary uppercase tracking-tighter">100_WELCOME_POINTS</p>
+                            </div>
+                             <div class="space-y-2 pt-4 border-t border-white/5">
+                                <p class="text-[8px] font-black text-white/20 uppercase tracking-[0.4em]">SYSTEM_VERSION</p>
+                                <p class="font-technical text-xs text-white/50">MECAPRO_OS_04.82.9</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-12 space-y-4">
+                        @if (currentStep < 3)
+                        {
+                            <button @onclick="NextStep" class="w-full bg-primary text-on-primary py-6 rounded-[28px] font-black italic uppercase tracking-[0.2em] transition-all active:scale-95 shadow-2xl shadow-primary/20 flex items-center justify-center gap-4 text-lg">
+                                <span>SUIVANT</span>
+                                <span class="material-symbols-outlined">trending_flat</span>
+                            </button>
+                            @if (currentStep > 1)
+                            {
+                                <button @onclick="PrevStep" class="w-full bg-white/5 text-white py-4 rounded-2xl font-black italic uppercase tracking-widest transition-all border border-white/5 hover:bg-white/10 text-xs">
+                                    RETOUR_ARRIÈRE
+                                </button>
+                            }
+                        }
+                        else
+                        {
+                            <button @onclick="HandleSubmit" disabled="@loading" class="w-full bg-gradient-to-r from-primary to-secondary text-on-primary py-6 rounded-[28px] font-black italic uppercase tracking-[0.2em] transition-all active:scale-95 shadow-2xl shadow-primary/20 flex items-center justify-center gap-4 text-xl">
+                                @if (loading)
+                                {
+                                    <div class="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-on-primary"></div>
+                                }
+                                else
+                                {
+                                    <span class="material-symbols-outlined">rocket_launch</span>
+                                    <span>INIT_SYSTÈME</span>
+                                }
+                            </button>
+                             <button @onclick="PrevStep" class="w-full bg-white/5 text-white py-4 rounded-2xl font-black italic uppercase tracking-widest transition-all border border-white/5 hover:bg-white/10 text-xs text-center">
+                                RÉTABLIR_PARAMÈTRES
+                            </button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Helpful Tip -->
+                <div class="bg-secondary/5 p-8 rounded-3xl border border-secondary/10 flex items-start gap-4">
+                     <span class="material-symbols-outlined text-secondary">lightbulb</span>
+                     <p class="text-[10px] text-on-surface-variant font-technical uppercase leading-tight">
+                        TIP: L'UTILISATION_DU_SIRET_AUGMENTE_LA_PRÉCISION_COMPTABLE_DE_18%.
+                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .font-technical { font-family: 'JetBrains Mono', monospace; }
+    .animate-shake { animation: shake 0.5s ease-in-out; }
+    @@keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+    @@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-slide-right { animation: slideRight 0.4s ease-out; }
+    @@keyframes slideRight { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+</style>
+
+@code {
+    private int currentStep = 1;
+    private CustomerEntry customerData = new();
+    private VehicleEntry vehicleData = new();
+    private bool loading = false;
+    private string? error;
+
+    private void NextStep() 
+    {
+        if (currentStep == 1 && (string.IsNullOrWhiteSpace(customerData.FirstName) || string.IsNullOrWhiteSpace(customerData.Email)))
+        {
+            error = "CRITICAL_ERROR: IDENTITY_FIELDS_EMPTY";
+            return;
+        }
+        error = null;
+        currentStep++; 
+    }
+    private void PrevStep() { currentStep--; error = null; }
+
+    private async Task HandleSubmit()
+    {
+        loading = true;
+        error = null;
+
+        // Step 1: Create Customer
+        var customerResult = await Api.PostAsync<CustomerDto>("/api/v1/customers", new {
+            FirstName = customerData.FirstName,
+            LastName = customerData.LastName,
+            Email = customerData.Email,
+            Phone = customerData.Phone,
+            IsBusiness = customerData.IsBusiness,
+            CompanyName = customerData.CompanyName,
+            TaxId = customerData.TaxId
+        });
+
+        if (customerResult == null)
+        {
+            error = "UPLINK_FAILURE: CUSTOMER_CREATION_REJECTED";
+            loading = false;
+            return;
+        }
+
+        // Step 2: Create Vehicle if license plate is provided
+        if (!string.IsNullOrWhiteSpace(vehicleData.LicensePlate))
+        {
+            var vehicleResult = await Api.PostAsync<VehicleDto>("/api/v1/vehicles", new {
+                CustomerId = customerResult.Id,
+                LicensePlate = vehicleData.LicensePlate,
+                Make = vehicleData.Make,
+                Model = vehicleData.Model,
+                Year = vehicleData.Year,
+                Mileage = vehicleData.Mileage
+            });
+
+            if (vehicleResult == null)
+            {
+                // We keep the customer but show error for vehicle
+                error = "UPLINK_WARNING: CUSTOMER_LINKED_BUT_VEHICLE_UPLOADER_FAILED";
+                loading = false;
+                Nav.NavigateTo($"/clients/fiche-client/{customerResult.Id}");
+                return;
+            }
+        }
+
+        loading = false;
+        Nav.NavigateTo($"/clients/fiche-client/{customerResult.Id}");
+    }
+
+    public class CustomerEntry
+    {
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string? Phone { get; set; }
+        public bool IsBusiness { get; set; }
+        public string? CompanyName { get; set; }
+        public string? TaxId { get; set; }
+    }
+
+    public class VehicleEntry
+    {
+        public string LicensePlate { get; set; } = "";
+        public string Make { get; set; } = "UNKNOWN";
+        public string Model { get; set; } = "UNKNOWN";
+        public int Year { get; set; } = DateTime.Now.Year;
+        public int Mileage { get; set; } = 0;
+    }
+}

@@ -17,10 +17,10 @@ using MecaPro.Application.Common;
 
 namespace MecaPro.Infrastructure.CRM
 {
-    public record Customer360Dto(CustomerDto Customer, IEnumerable<VehicleDto> Vehicles, IEnumerable<RevisionDto> RecentRevisions, IEnumerable<DiagnosticDto> ActiveDiagnostics, IEnumerable<OrderDto> RecentOrders, decimal LifetimeValue, string LoyaltyLevel);
-    public record RevisionDto(); // Placeholder
-    public record OrderDto(); // Placeholder
+    // Note: RevisionDto, VehicleDto, DiagnosticDto viennent de Application.Common
+    public record OrderDto(Guid Id, string Status, decimal Total, DateTime Date); // specifique CRM
     public record CustomerDto(Guid Id, string FirstName, string LastName, string Email);
+    public record Customer360Dto(CustomerDto Customer, IEnumerable<VehicleDto> Vehicles, IEnumerable<RevisionDto> RecentRevisions, IEnumerable<DiagnosticDto> ActiveDiagnostics, IEnumerable<OrderDto> RecentOrders, decimal LifetimeValue, string LoyaltyLevel);
 
     public interface ICrmService { Task<Customer360Dto> GetCustomer360Async(Guid customerId); }
     public class CrmService(ICustomerRepository customers, AppDbContext db, IUnitOfWork uow) : ICrmService
@@ -28,7 +28,14 @@ namespace MecaPro.Infrastructure.CRM
         public async Task<Customer360Dto> GetCustomer360Async(Guid customerId)
         {
             var customer = await customers.GetWithVehiclesAsync(customerId) ?? throw new NotFoundException("Customer", customerId);
-            return new Customer360Dto(new CustomerDto(customer.Id, customer.Name.FirstName, customer.Name.LastName, customer.Email.Value), customer.Vehicles.Select(v => v.ToDto()), new List<RevisionDto>(), new List<DiagnosticDto>(), new List<OrderDto>(), 0, "Standard");
+            return new Customer360Dto(
+                new CustomerDto(customer.Id, customer.Name.FirstName, customer.Name.LastName, customer.Email.Value),
+                customer.Vehicles.Select(v => v.ToDto()),
+                new List<RevisionDto>(),
+                new List<DiagnosticDto>(),
+                new List<OrderDto>(),
+                0,
+                customer.Loyalty.Level.ToString());
         }
     }
 }
@@ -113,20 +120,20 @@ namespace MecaPro.Infrastructure.Invoicing
 {
     using MecaPro.Infrastructure.Notifications;
 
-    public interface IInvoiceService { Task<InvoiceDto> GenerateAsync(GenerateInvoiceCommand cmd); }
+    public interface IInvoiceService { Task<InvoiceResultDto> GenerateAsync(GenerateInvoiceCommand cmd); }
     public interface IBlobStorageService { Task<string> UploadAsync(string path, byte[] content, string contentType); }
     public interface IInvoiceSequencer { Task<string> GetNextAsync(string prefix, Guid garageId); }
 
     public class InvoiceService(AppDbContext db, IBlobStorageService blob, IEmailService email, IInvoiceSequencer sequencer) : IInvoiceService
     {
-        public async Task<InvoiceDto> GenerateAsync(GenerateInvoiceCommand cmd)
+        public async Task<InvoiceResultDto> GenerateAsync(GenerateInvoiceCommand cmd)
         {
             var num = await sequencer.GetNextAsync("INV", cmd.GarageId);
-            var inv = new MecaPro.Infrastructure.Persistence.Invoice { Id = Guid.NewGuid(), Number = num, CustomerId = cmd.CustomerId, GarageId = cmd.GarageId, TotalTTC = cmd.Lines.Sum(l => l.Qty * l.UnitPrice) * 1.2m, IssuedAt = DateTime.UtcNow, Status = "Issued" };
-            var pdf = Encoding.UTF8.GetBytes($"Invoice {num}");
+            var inv = new MecaPro.Domain.Common.Invoice { Id = Guid.NewGuid(), Number = num, CustomerId = cmd.CustomerId, GarageId = cmd.GarageId, TotalTTC = cmd.Lines.Sum(l => l.Qty * l.UnitPrice) * 1.2m, IssuedAt = DateTime.UtcNow, Status = "Issued" };
+            var pdf = System.Text.Encoding.UTF8.GetBytes($"Invoice {num}");
             inv.PdfBlobUrl = await blob.UploadAsync($"invoices/{num}.pdf", pdf, "application/pdf");
             db.Invoices.Add(inv); await db.SaveChangesAsync();
-            return new InvoiceDto(inv.Id, inv.Number, inv.TotalTTC, inv.IssuedAt, inv.PdfBlobUrl);
+            return new InvoiceResultDto(inv.Id, inv.Number, inv.TotalTTC, inv.IssuedAt, inv.PdfBlobUrl ?? "");
         }
     }
 
@@ -135,7 +142,7 @@ namespace MecaPro.Infrastructure.Invoicing
         public async Task<string> GetNextAsync(string prefix, Guid gid) => $"{prefix}-{DateTime.UtcNow.Year}-{(await db.Invoices.CountAsync() + 1):D4}";
     }
 
-    public record InvoiceDto(Guid Id, string Number, decimal TotalTTC, DateTime IssuedAt, string PdfBlobUrl);
+    public record InvoiceResultDto(Guid Id, string Number, decimal TotalTTC, DateTime IssuedAt, string PdfBlobUrl);
     public record GenerateInvoiceCommand(Guid CustomerId, Guid GarageId, List<InvoiceLine> Lines);
     public record InvoiceLine(string Description, int Qty, decimal UnitPrice);
 

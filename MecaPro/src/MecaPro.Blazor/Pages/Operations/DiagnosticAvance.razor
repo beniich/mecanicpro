@@ -1,0 +1,171 @@
+@page "/diagnostic/avancer"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Amber/Gold High Tech Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center border border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-amber-500 text-3xl animate-pulse">psychology</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-amber-500"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">AI <span class="text-amber-500">Auto-Diagnostic</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">SYSTÈME D'ANALYSE PRÉDICTIVE & DÉCODEUR DTC</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-2xl flex items-center gap-6">
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic">Précision IA</p>
+                      <p class="text-xl font-black italic text-amber-500 italic">99.2<span class="text-xs text-white/50 lowercase">%</span></p>
+                 </div>
+                 <div class="w-[1px] h-8 bg-white/10"></div>
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic">Base DTC</p>
+                      <p class="text-xl font-black italic">+15,000</p>
+                 </div>
+             </div>
+             <button class="bg-amber-600 text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">qr_code_scanner</span> SCAN ODB-III
+             </button>
+        </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+        <!-- Dashboard Sidebar: Codes List -->
+        <div class="lg:col-span-1 space-y-6">
+             <div class="bg-white/[0.03] border border-white/10 rounded-[2rem] p-8 shadow-inner overflow-hidden relative">
+                  <h3 class="text-xs font-black uppercase text-gray-500 tracking-widest mb-6 italic">Saisie des Codes Défaut</h3>
+                  <div class="space-y-4">
+                       @foreach (var code in activeCodes)
+                       {
+                           <div class="p-4 bg-black/40 border border-white/5 rounded-2xl flex items-center justify-between group hover:bg-white/5 transition-all">
+                                <div>
+                                     <p class="text-sm font-black italic uppercase text-amber-500">@code.Code</p>
+                                     <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">@code.System</p>
+                                </div>
+                                <button class="text-gray-700 hover:text-red-500 transition-colors">
+                                     <span class="material-symbols-outlined text-sm">remove_circle</span>
+                                </button>
+                           </div>
+                       }
+                  </div>
+                  <div class="mt-8 flex gap-2">
+                       <input type="text" placeholder="P0000" class="flex-grow bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-xs font-black uppercase focus:border-amber-500 outline-none">
+                       <button class="bg-amber-600/20 text-amber-500 px-4 py-2 rounded-xl border border-amber-500/30 text-[10px] font-black uppercase tracking-widest">AJOUTER</button>
+                  </div>
+             </div>
+
+             <div class="bg-amber-600/5 border border-amber-500/20 rounded-[2rem] p-8">
+                  <h3 class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-4 italic shadow-none border-none">Derniers Scans</h3>
+                  <div class="space-y-4">
+                       <div class="p-4 bg-black/40 rounded-2xl border border-white/5 opacity-60">
+                            <p class="text-[10px] text-gray-400 font-bold uppercase">AB-123-CD — Renault Zoe</p>
+                            <p class="text-xs font-black italic text-gray-500 uppercase">SANTÉ BATTERIE 92%</p>
+                       </div>
+                       <div class="p-4 bg-black/40 rounded-2xl border border-white/5 opacity-60">
+                            <p class="text-[10px] text-gray-400 font-bold uppercase">XY-987-ZZ — BMW S1</p>
+                            <p class="text-xs font-black italic text-gray-500 uppercase">ANOMALIE INJECTION P0301</p>
+                       </div>
+                  </div>
+             </div>
+        </div>
+
+        <!-- Main Column: AI Analysis Visualization -->
+        <div class="lg:col-span-3 space-y-8">
+             <div class="bg-[#111318]/80 backdrop-blur-3xl border border-white/10 rounded-[3.5rem] p-10 relative overflow-hidden">
+                  <!-- AI Glow Background -->
+                  <div class="absolute -right-20 -top-20 w-64 h-64 bg-amber-500/5 blur-3xl opacity-50 pointer-events-none"></div>
+                  
+                  <div class="flex justify-between items-start mb-12">
+                       <div>
+                            <h2 class="text-3xl font-black italic uppercase italic tracking-tighter uppercase tracking-widest leading-relaxed">Rapport de Diagnostic IA — v4.2</h2>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em] mt-1 font-outfit uppercase tracking-widest italic leading-relaxed">Généré le 20 mars 2026 à 14:45</p>
+                       </div>
+                       <span class="px-6 py-2 bg-amber-600 shadow-xl shadow-amber-900/40 text-black text-[10px] font-black uppercase tracking-[0.2em] rounded-full italic shadow-none border-none">CONFIT IA: 98%</span>
+                  </div>
+
+                  @foreach (var analysis in aiInsights)
+                  {
+                      <div class="mb-12">
+                           <div class="flex items-center gap-4 mb-6">
+                                <div class="w-10 h-10 rounded-xl @(analysis.Color) bg-opacity-20 flex items-center justify-center border @(analysis.Border)">
+                                     <span class="material-symbols-outlined @(analysis.Color.Replace("bg-", "text-")) text-xl">@(analysis.Icon)</span>
+                                </div>
+                                <h3 class="text-xl font-black italic uppercase italic tracking-tighter @(analysis.Color.Replace("bg-", "text-"))">@analysis.Title</h3>
+                           </div>
+                           <div class="bg-black/40 border border-white/5 p-8 rounded-[2.5rem] shadow-inner relative overflow-hidden">
+                                <p class="text-sm font-medium italic text-gray-300 leading-relaxed italic z-10 relative">"@analysis.Recommendation"</p>
+                                
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t border-white/5 z-10 relative">
+                                     <div>
+                                          <p class="text-[9px] text-gray-500 font-black tracking-widest uppercase italic">PROBABILITÉ</p>
+                                          <p class="text-base font-black italic text-amber-500">@analysis.Probability%</p>
+                                     </div>
+                                     <div>
+                                          <p class="text-[9px] text-gray-500 font-black tracking-widest uppercase italic">IMPORTANCE</p>
+                                          <p class="text-base font-black italic text-red-500 italic">CRITIQUE</p>
+                                     </div>
+                                     <div class="col-span-2 text-right">
+                                          <button class="bg-white/5 hover:bg-white/10 px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border border-white/10 transition-all font-outfit uppercase tracking-widest">Voir Pièces Détachées associées</button>
+                                     </div>
+                                </div>
+                           </div>
+                      </div>
+                  }
+
+                  <div class="flex gap-4">
+                       <button class="flex-grow bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl font-outfit uppercase tracking-widest">IMPRIMER RAPPORT RAPIDE</button>
+                       <button class="flex-grow bg-amber-600 text-black py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-xl shadow-amber-900/40">GÉNÉRER ORDRE DE RÉPARATION (OR)</button>
+                  </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<DtcCode> activeCodes = new()
+    {
+        new DtcCode { Code = "P0301", System = "MOTEUR / INJECTION", Severity = "HAUTE" },
+        new DtcCode { Code = "P0171", System = "ADMISSION AIR / MÉLANGE PAUVRE", Severity = "MOYENNE" },
+        new DtcCode { Code = "U0121", System = "BUS COMMUNICATION CAN-ABS", Severity = "CRITIQUE" }
+    };
+
+    private List<AiInsight> aiInsights = new()
+    {
+        new AiInsight { 
+            Title = "Anomalie Système d'Injection", 
+            Icon = "local_gas_station", 
+            Color = "bg-red-500", 
+            Border = "border-red-500/30",
+            Recommendation = "Le code P0301 indique un raté dans le cylindre 1. L'analyse croisée avec P0171 suggère une prise d'air à l'admission plutôt qu'une défaillance bougie/bobine. Cause probable : Joint de collecteur défectueux.",
+            Probability = 87
+        },
+        new AiInsight { 
+            Title = "Défaillance Communication ABS", 
+            Icon = "settings_input_antenna", 
+            Color = "bg-amber-500", 
+            Border = "border-amber-500/30",
+            Recommendation = "Défaut U0121. Perte de communication avec le module de contrôle du système de freinage antiblocage. Vérifier le faisceau multiplexé (CAN High/Low) au niveau de la baie moteur et les fusibles F42/F44.",
+            Probability = 94
+        }
+    };
+
+    public class DtcCode {
+        public string Code { get; set; } = "";
+        public string System { get; set; } = "";
+        public string Severity { get; set; } = "";
+    }
+
+    public class AiInsight {
+        public string Title { get; set; } = "";
+        public string Recommendation { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public string Color { get; set; } = "";
+        public string Border { get; set; } = "";
+        public int Probability { get; set; }
+    }
+}

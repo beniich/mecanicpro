@@ -1,0 +1,105 @@
+@page "/securite/historique-pollution"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Red Alert Pollution Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-red-600/20 flex items-center justify-center border border-red-500/30 shadow-[0_0_30px_rgba(239,68,68,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-red-500 text-3xl animate-pulse">emergency_home</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-red-600"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Pollution <span class="text-red-500 font-light italic uppercase shadow-none border-none">History</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">REGISTRE CHRONOLOGIQUE DES INCIDENTS ENVIRONNEMENTAUX & DÉVERSEMENTS</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-3xl flex items-center gap-8 shadow-xl shadow-black/40">
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Incidents 2026</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-red-500 uppercase tracking-widest leading-relaxed">0</p>
+                 </div>
+                 <div class="w-[1px] h-10 bg-white/10"></div>
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Niveau Risque</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-emerald-500 uppercase tracking-widest leading-relaxed">FAIBLE</p>
+                 </div>
+             </div>
+             <button class="bg-red-600 text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">report</span> DÉCLARER INCIDENT
+             </button>
+        </div>
+    </div>
+
+    <!-- Pollution Incident Grid Feed -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        @foreach (var incident in pollutionIncidents)
+        {
+            <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 hover:bg-white/[0.04] transition-all group overflow-hidden relative shadow-2xl flex flex-col">
+                 <div class="absolute -right-8 -top-8 w-24 h-24 bg-red-600/5 blur-3xl opacity-20 pointer-events-none group-hover:opacity-40 transition-opacity"></div>
+                 
+                 <div class="flex justify-between items-center mb-10">
+                      <div class="w-12 h-12 rounded-xl bg-black border border-white/10 flex items-center justify-center font-black text-xs uppercase italic tracking-tighter">@incident.SeverityCode</div>
+                      <span class="px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-tighter border @(incident.Severity == "CRITICAL" ? "border-red-500 text-red-500" : "border-orange-500/30 text-orange-500") italic shadow-none border-none">@incident.Severity</span>
+                 </div>
+                 
+                 <h3 class="text-2xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-4 italic uppercase tracking-widest leading-relaxed">@incident.Type</h3>
+                 <p class="text-sm font-bold italic text-gray-500 italic mb-10 uppercase italic tracking-widest leading-relaxed italic uppercase tracking-widest bold">@incident.Description</p>
+                 
+                 <div class="bg-black/40 p-10 rounded-[2rem] border border-white/5 mb-10">
+                      <p class="text-[9px] text-gray-600 font-extrabold uppercase mb-4 italic shadow-none border-none shadow-none border-0 italic leading-relaxed">Mesures Prises & Résolution</p>
+                      <ul class="space-y-3">
+                           @foreach (var step in incident.Countermeasures)
+                           {
+                               <li class="flex items-center gap-3 text-[10px] text-gray-300 font-black uppercase tracking-widest shadow-none border-none border-0">
+                                    <span class="material-symbols-outlined text-emerald-500 text-xs shadow-none border-none border-0">check_circle</span>
+                                    @step
+                               </li>
+                           }
+                      </ul>
+                 </div>
+
+                 <div class="mt-auto flex justify-between items-center pt-8 border-t border-white/5">
+                      <div>
+                           <p class="text-[9px] text-gray-600 font-extrabold uppercase mb-1 italic shadow-none border-none shadow-none border-0 italic leading-relaxed">Horodatage Incident</p>
+                           <p class="text-xs font-black italic text-gray-300">@incident.Date</p>
+                      </div>
+                      <button class="bg-white/5 hover:bg-white/10 px-6 py-2 rounded-xl text-[8px] font-black uppercase tracking-widest border border-white/10 transition-all font-outfit uppercase tracking-widest italic">VOIR RAPPORT</button>
+                 </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<PollutionRecord> pollutionIncidents = new()
+    {
+        new PollutionRecord { 
+            Date = "15 NOV 2025", 
+            Type = "DÉVERSEMENT HUILE MOTEUR", 
+            Severity = "MEDIUM", 
+            SeverityCode = "⚠️", 
+            Description = "Rupture d'un fût de 200L lors du déchargement sur le quai logistique. Risque de pollution sols.", 
+            Countermeasures = new() { "Utilisation de bac avec absorbant minéral", "Nettoyage haute pression hublot de rétention", "Signalement Responsable QSE" } 
+        },
+        new PollutionRecord { 
+            Date = "02 JUIL 2025", 
+            Type = "REJET ATMOSPHÉRIQUE SUSPECT", 
+            Severity = "CRITICAL", 
+            SeverityCode = "🚨", 
+            Description = "Dysfonctionnement filtre cabine peinture lors de pulvérisation polyuréthane (Forte odeur voisinage).", 
+            Countermeasures = new() { "Arrêt immédiat de la ventilation cabine", "Remplacement filtres HEPA hors service", "Audit préventif société externe" } 
+        }
+    };
+
+    public class PollutionRecord {
+        public string Date { get; set; } = "";
+        public string Type { get; set; } = "";
+        public string Severity { get; set; } = "";
+        public string SeverityCode { get; set; } = "";
+        public string Description { get; set; } = "";
+        public List<string> Countermeasures { get; set; } = new();
+    }
+}

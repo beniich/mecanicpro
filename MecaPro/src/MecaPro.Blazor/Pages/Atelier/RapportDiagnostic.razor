@@ -1,0 +1,231 @@
+@page "/atelier/rapport-diagnostic"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Rapport Diagnostique IA</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen pb-24">
+
+    <!-- Top Bar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-[#FFD700]">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-[#FFD700] uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="bg-[#FFD700]/10 border border-[#FFD700]/30 px-4 py-1.5 rounded-xl text-[10px] font-black uppercase text-[#FFD700] tracking-widest flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">picture_as_pdf</span> RAPPORTEUR PDF v1.0
+            </span>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-10">
+
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+            <div>
+                <span class="text-[#FFD700] text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">AI_EVALUATION_SUMMARY</span>
+                <h2 class="text-6xl md:text-7xl font-black tracking-tighter italic uppercase leading-none drop-shadow-[0_0_15px_rgba(255,215,0,0.1)]">Génération Rapports</h2>
+            </div>
+            <div class="flex gap-4">
+                <button class="bg-white/5 border border-white/10 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all rounded-xl shadow-lg flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">mail</span> ENVOYER CLIENT
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- List Panel -->
+            <div class="lg:col-span-5 bg-surface-container rounded-[40px] border border-white/5 p-8 relative overflow-hidden flex flex-col h-[700px]">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-black text-xl italic uppercase tracking-tight text-white">Diagnostics Récents</h3>
+                    <div class="bg-white/5 border border-white/5 rounded-2xl flex items-center gap-2 px-3 py-1.5">
+                        <span class="material-symbols-outlined text-white/30 text-xs">search</span>
+                        <input type="text" placeholder="VIN..." class="bg-transparent border-none outline-none font-technical text-[10px] text-white uppercase italic placeholder:text-white/20 w-24 font-black"/>
+                    </div>
+                </div>
+
+                <div class="flex-grow overflow-y-auto custom-scroll pr-2 space-y-3">
+                    @foreach(var diag in diagnostics)
+                    {
+                        var isSelected = (selectedDiag?.Id == diag.Id);
+                        <div @onclick="() => SelectDiag(diag)" class="p-6 rounded-2xl border transition-all cursor-pointer @(isSelected ? "bg-[#FFD700]/10 border-[#FFD700]/50 shadow-[0_0_15px_rgba(255,215,0,0.15)]" : "bg-white/5 border-white/5 hover:border-white/20")">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-black italic text-lg uppercase tracking-tight text-white">@diag.Vehicle</h4>
+                                <span class="font-technical text-[10px] uppercase font-bold @(diag.Severity=="HAUTE"?"text-red-400":diag.Severity=="MOYENNE"?"text-yellow-400":"text-[#00FF66]") border rounded px-2 py-0.5 border-current/30 bg-current/10">SÉV: @diag.Severity</span>
+                            </div>
+                            <p class="font-technical text-xs text-white/50 uppercase tracking-widest mb-3">VIN: @diag.Vin</p>
+                            <div class="flex justify-between items-end">
+                                <p class="text-[10px] font-black uppercase text-white/30 truncate max-w-[200px]">CLIENT: @diag.ClientName</p>
+                                <p class="text-[10px] font-black text-white/40 uppercase tracking-widest">@diag.Date.ToString("dd MMM HH:mm")</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- PDF Preview Mockup -->
+            <div class="lg:col-span-7 bg-[#EFEFEF] rounded-md p-2 md:p-8 flex justify-center items-center relative overflow-hidden h-[700px] border border-white/10 shadow-[inner_0_0_50px_rgba(0,0,0,0.5)]">
+                <!-- Watermark -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                    <span class="material-symbols-outlined text-[300px] text-black">print</span>
+                </div>
+
+                @if (selectedDiag != null)
+                {
+                    <!-- Paper A4 Mock -->
+                    <div class="bg-white w-full max-w-[500px] h-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] text-black p-8 font-sans flex flex-col relative animate-fade-in custom-scroll overflow-y-auto">
+                        
+                        <!-- Logotype -->
+                        <div class="flex justify-between items-end border-b-2 border-black pb-4 mb-6">
+                            <div>
+                                <h1 class="font-black tracking-[0.2em] text-2xl uppercase italic">GARAGE MECAPRO</h1>
+                                <p class="text-[9px] font-bold uppercase tracking-widest text-gray-500">12 Rue de l'Avenir, 75000 Paris</p>
+                                <p class="text-[9px] font-bold uppercase tracking-widest text-gray-500">SIRET: 123 456 789 00012</p>
+                            </div>
+                            <div class="text-right">
+                                <h2 class="font-black text-xs uppercase tracking-widest">RAPPORT DIAGNOSTIC V2</h2>
+                                <p class="text-[9px] font-bold uppercase text-gray-500 font-mono">DOC-#@selectedDiag.Id.ToString().Substring(0,8).ToUpper()</p>
+                                <p class="text-[9px] font-bold uppercase text-gray-500 font-mono">@selectedDiag.Date.ToString("dd/MM/yyyy HH:mm")</p>
+                            </div>
+                        </div>
+
+                        <!-- Data -->
+                        <div class="grid grid-cols-2 gap-4 mb-8 bg-gray-100 p-4 rounded-sm border border-gray-300 relative">
+                            <div>
+                                <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">PROPRIÉTAIRE</p>
+                                <p class="font-black text-xs uppercase">@selectedDiag.ClientName</p>
+                                <p class="text-[10px] font-mono text-gray-600">ID CLIENT: 92842A</p>
+                            </div>
+                            <div>
+                                <p class="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">IDENTIFICATION VÉHICULE</p>
+                                <p class="font-black text-xs uppercase">@selectedDiag.Vehicle</p>
+                                <p class="text-[10px] font-mono text-gray-600 font-bold">VIN: @selectedDiag.Vin</p>
+                                <p class="text-[10px] font-mono text-gray-600 mt-1">KM: 84,210 km</p>
+                            </div>
+                            <div class="absolute top-0 right-0 p-4 opacity-10">
+                                <span class="material-symbols-outlined text-4xl">directions_car</span>
+                            </div>
+                        </div>
+
+                        <!-- Scan Results -->
+                        <div class="mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm text-black">memory</span>
+                            <h3 class="font-black text-xs uppercase tracking-widest bg-black text-white px-2 py-0.5 inline-block">RÉSULTATS DU SCAN SYSTÈME</h3>
+                        </div>
+
+                        <div class="space-y-4 mb-8">
+                            @foreach(var code in selectedDiag.Codes)
+                            {
+                                <div class="border border-gray-300 p-3 rounded-sm border-l-4 @(code.StartsWith("P03") ? "border-l-red-500" : "border-l-yellow-500")">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <p class="font-black font-mono text-sm tracking-widest">@code</p>
+                                        <p class="text-[8px] font-black uppercase tracking-widest text-[#FF0000]">DÉFAUT ACTIF</p>
+                                    </div>
+                                    <p class="text-[10px] font-bold uppercase text-gray-700 leading-tight">Anomalie système détectée. Erreur capteur/composant répertoriée dans la base constructeur.</p>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- AI IA -->
+                        <div class="mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm text-black">auto_awesome</span>
+                            <h3 class="font-black text-xs uppercase tracking-widest bg-black text-white px-2 py-0.5 inline-block">ANALYSE INTELLIGENCE ARTIFICIELLE</h3>
+                        </div>
+                        <div class="bg-gray-100 p-4 border border-gray-300 rounded-sm italic text-xs leading-relaxed font-serif text-gray-800 border-l-[6px] border-black border-l-black">
+                            "Sur la base des codes extraits, le système identifie une probabilité élevée d'usure des bobines d'allumage ou d'une fuite de vide à l'admission. Une inspection physique du bloc moteur est préconisée avant tout effacement de codes. Niveau d'alerte : @selectedDiag.Severity."
+                        </div>
+
+                        <!-- Signature -->
+                        <div class="mt-auto pt-8 flex justify-between items-end border-t border-gray-300">
+                            <div>
+                                <p class="text-[8px] font-black uppercase text-gray-400 mb-2">TECHNICIEN CERTIFIÉ</p>
+                                <p class="text-xs font-black uppercase">MARC D. (CHEF ATELIER)</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-[8px] font-black uppercase text-gray-400 mb-2">SIGNATURE NUMÉRIQUE</p>
+                                <div class="border-b border-black w-32 mb-1 border-dashed"></div>
+                                <p class="text-[8px] font-mono text-gray-500">HASH: 0x93FA29E1</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PDF Action Bar Overlay -->
+                    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/90 p-2 rounded-2xl flex gap-2 border border-white/20 shadow-2xl z-10">
+                        <button class="w-12 h-12 flex items-center justify-center text-white hover:text-[#FFD700] transition-colors rounded-xl bg-white/10 hover:bg-white/20" title="Imprimer">
+                            <span class="material-symbols-outlined">print</span>
+                        </button>
+                        <button class="px-6 flex items-center font-black tracking-widest text-xs uppercase gap-2 text-black hover:bg-[#FFE55C] transition-colors rounded-xl bg-[#FFD700]" @onclick="GenPdf">
+                            @if (isGenerating)
+                            {
+                                <span class="material-symbols-outlined animate-spin">refresh</span> <span>GÉNÉRATION...</span>
+                            }
+                            else
+                            {
+                                <span class="material-symbols-outlined">picture_as_pdf</span> <span>TÉLÉCHARGER (.PDF)</span>
+                            }
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center opacity-30 text-black">
+                        <span class="material-symbols-outlined text-[64px] mb-4">description</span>
+                        <p class="font-black italic text-xl uppercase tracking-widest">SÉLECTIONNEZ UN RAPPORT</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+<style>
+    .custom-scroll::-webkit-scrollbar { width: 4px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
+    .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+    @@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+@code {
+    private DiagReport? selectedDiag = null;
+    private bool isGenerating = false;
+
+    private List<DiagReport> diagnostics = new()
+    {
+        new(Guid.NewGuid(), "PORSCHE 911 GT3", "WP0ZZZ99ZLS120938", "JEAN DUPONT", DateTime.Now.AddHours(-1), "HAUTE", new[]{"P0301", "P0171", "C003A"}),
+        new(Guid.NewGuid(), "AUDI RS6 AVANT", "WAUZZZ4GZHN052814", "ENTREPRISE ALPHA", DateTime.Now.AddHours(-4), "MOYENNE", new[]{"P0420"}),
+        new(Guid.NewGuid(), "TESLA MODEL 3", "5YJ3E1EA5KF543219", "MARIE MARTIN", DateTime.Now.AddDays(-1), "BASSE", new[]{"U0101"}),
+        new(Guid.NewGuid(), "RENAULT KANGOO Z.E", "VF1FW0G0543219875", "FLOTTE LIVRAISON B2B", DateTime.Now.AddDays(-2), "MOYENNE", new[]{"P0A80"}),
+    };
+
+    private void SelectDiag(DiagReport d)
+    {
+        selectedDiag = d;
+    }
+
+    private async Task GenPdf()
+    {
+        isGenerating = true;
+        await Task.Delay(2000); // Simulate QuestPDF generation
+        isGenerating = false;
+        // Logic to trigger browser download
+    }
+
+    private class DiagReport
+    {
+        public Guid Id { get; set; }
+        public string Vehicle { get; set; }
+        public string Vin { get; set; }
+        public string ClientName { get; set; }
+        public DateTime Date { get; set; }
+        public string Severity { get; set; }
+        public string[] Codes { get; set; }
+
+        public DiagReport(Guid id, string vehicle, string vin, string clientName, DateTime date, string severity, string[] codes)
+        { Id=id; Vehicle=vehicle; Vin=vin; ClientName=clientName; Date=date; Severity=severity; Codes=codes; }
+    }
+}

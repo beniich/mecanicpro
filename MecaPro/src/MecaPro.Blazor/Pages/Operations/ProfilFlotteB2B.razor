@@ -1,0 +1,116 @@
+@page "/clients/profil-flotte-b2b"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Blue Profile Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-sky-600 flex items-center justify-center border border-sky-500 shadow-[0_0_30px_rgba(14,165,233,0.3)]">
+                    <span class="material-symbols-outlined text-black font-black">settings_account_box</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter italic">Settings <span class="text-sky-500 italic uppercase">B2B Account</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">PARAMÉTRAGE DES COMPTES & CONVENTIONS CADRES</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <button class="bg-white/5 hover:bg-white/10 px-8 py-3 rounded-2xl font-black uppercase text-xs tracking-widest border border-white/10 transition-all font-outfit uppercase tracking-widest">ANNULER</button>
+             <button class="bg-sky-600 hover:bg-sky-500 px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">save</span> SAUVEGARDER PROFIL
+             </button>
+        </div>
+    </div>
+
+    <!-- Configuration Form -->
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-12">
+        <!-- Left: Basic Info -->
+        <div class="xl:col-span-2 space-y-8">
+            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10">
+                <h3 class="text-xl font-black italic uppercase tracking-tighter mb-10 italic shadow-none border-none">Identification & Coordonnées</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-2">
+                        <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest ml-1 font-outfit">RAISON SOCIALE</label>
+                        <input type="text" class="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm font-bold focus:border-sky-500 transition-all" value="TRANS-LOGISTIX EUROPE">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest ml-1 font-outfit">NUMÉRO SIRET</label>
+                        <input type="text" class="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm font-bold focus:border-sky-500 transition-all font-outfit uppercase tracking-widest italic leading-relaxed" value="452 331 992 00018">
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest ml-1 font-outfit">ADRESSE DE FACTURATION</label>
+                        <input type="text" class="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm font-bold focus:border-sky-500 transition-all" value="14 Avenue de l'Innovation, 31000 Toulouse">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest ml-1 font-outfit">EMAIL RESPONSABLE</label>
+                        <input type="email" class="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm font-bold focus:border-sky-500 transition-all" value="contact@trans-logistix.com">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest ml-1 font-outfit">TEL DIRECT</label>
+                        <input type="text" class="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm font-bold focus:border-sky-500 transition-all" value="+33 5 40 40 40 40">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10">
+                <h3 class="text-xl font-black italic uppercase tracking-tighter mb-10 italic shadow-none border-none">Conventions Tarifaires & SLA</h3>
+                <div class="space-y-6">
+                     <div class="flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-2xl">
+                          <div class="flex items-center gap-4">
+                               <div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-sky-500">percent</span>
+                               </div>
+                               <div>
+                                    <p class="text-sm font-black italic uppercase italic tracking-tight uppercase tracking-widest">Remise Client Privilégié</p>
+                                    <p class="text-[10px] text-gray-500 font-medium font-outfit uppercase tracking-widest italic leading-relaxed">Appliqué sur l'ensemble de la Facturation M.O.</p>
+                               </div>
+                          </div>
+                          <p class="text-2xl font-black text-sky-500 italic">20<span class="text-xs text-white/50">%</span></p>
+                     </div>
+
+                     <div class="flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-2xl">
+                          <div class="flex items-center gap-4">
+                               <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-orange-500">timer</span>
+                               </div>
+                               <div>
+                                    <p class="text-sm font-black italic uppercase italic tracking-tight uppercase tracking-widest">SLA Priorité Diagnostic</p>
+                                    <p class="text-[10px] text-gray-500 font-medium font-outfit uppercase tracking-widest italic leading-relaxed">Temps maximal de prise en charge atelier</p>
+                               </div>
+                          </div>
+                          <p class="text-2xl font-black text-orange-500 italic">4<span class="text-xs text-white/50">h</span></p>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Logo & Quick View -->
+        <div class="space-y-8">
+             <div class="bg-black/60 border border-white/5 rounded-[3rem] p-10 flex flex-col items-center">
+                  <h3 class="text-[10px] font-black uppercase text-gray-500 tracking-[0.3em] mb-10 italic shadow-none border-none">Logo Entreprise</h3>
+                  <div class="w-48 h-48 rounded-[3rem] bg-white/5 border border-white/10 flex items-center justify-center group overflow-hidden relative cursor-pointer shadow-none border-none border-0">
+                       <span class="material-symbols-outlined text-6xl text-white/10 group-hover:scale-110 transition-transform">add_a_photo</span>
+                       <div class="absolute inset-0 bg-sky-600/20 translate-y-full group-hover:translate-y-0 transition-all duration-500 flex items-center justify-center">
+                            <span class="text-[10px] font-black uppercase tracking-widest">Changer Logo</span>
+                       </div>
+                  </div>
+             </div>
+
+             <div class="bg-sky-600/10 border border-sky-500/20 rounded-[3rem] p-10">
+                  <h3 class="text-xs font-black uppercase text-sky-500 tracking-[0.3em] mb-8 italic shadow-none border-none">ÉTAT DU CONTRAT</h3>
+                  <div class="p-6 bg-black/40 rounded-2xl border border-white/5 mb-6">
+                       <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] text-gray-500 font-bold uppercase italic font-outfit uppercase tracking-widest italic leading-relaxed">Statut Juridique</span>
+                            <span class="text-xs font-black text-green-500">VALIDE</span>
+                       </div>
+                       <p class="text-xs font-black uppercase tracking-tighter shadow-none border-none border-0 mt-3 italic">CONVENTION BIMESTRIELLE</p>
+                  </div>
+                  <button class="w-full bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all font-outfit uppercase tracking-widest">Télécharger Convention PDF</button>
+             </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

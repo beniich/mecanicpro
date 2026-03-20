@@ -1,0 +1,104 @@
+@page "/stock/catalogue-pub"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Premium B2B Catalog Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 flex items-center justify-center border border-indigo-500/30">
+                    <span class="material-symbols-outlined text-indigo-400">inventory_2</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">B2B <span class="text-indigo-500 font-light italic uppercase shadow-none border-none">Wholesale</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">ACCÈS RÉSERVÉ AUX PARTENAIRES PROFESSIONNELS & RÉSEAU B2B</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-2xl flex items-center gap-6">
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase">Remise Réseau</p>
+                      <p class="text-xl font-black italic text-indigo-500 uppercase italic tracking-tighter shadow-none border-none">-15<span class="text-xs text-white/50 lowercase italic">%</span></p>
+                 </div>
+                 <div class="w-[1px] h-8 bg-white/10"></div>
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic shadow-none border-none">Compte B2B</p>
+                      <p class="text-xl font-black italic shadow-none border-none border-0 text-emerald-500">ACTIF</p>
+                 </div>
+             </div>
+             <button class="bg-indigo-600 text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-xl flex items-center gap-2">
+                 <span class="material-symbols-outlined">shopping_cart</span> VOIR PANIER PRO
+             </button>
+        </div>
+    </div>
+
+    <!-- Product Grid Catalog -->
+    <div class="flex flex-col gap-10">
+         <!-- Search & Filters -->
+         <div class="bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+              <div class="flex items-center gap-4 flex-grow max-w-2xl px-6 py-2 bg-black/40 rounded-xl border border-white/5 shadow-inner">
+                   <span class="material-symbols-outlined text-xs text-gray-500 shadow-none border-none border-0">search</span>
+                   <input type="text" placeholder="Rechercher par Référence / OEM / Modèle..." class="bg-transparent border-none text-[10px] font-bold text-gray-300 focus:outline-none w-full italic">
+              </div>
+              <div class="flex gap-4">
+                   <button class="px-6 py-2 rounded-xl bg-white/5 text-[9px] font-black uppercase tracking-widest border border-white/10 transition-all font-outfit uppercase tracking-widest">FILTRES</button>
+                   <button class="px-6 py-2 rounded-xl bg-white/5 text-[9px] font-black uppercase tracking-widest border border-white/10 transition-all font-outfit uppercase tracking-widest">PNEUMATIQUES</button>
+                   <button class="px-6 py-2 rounded-xl bg-white/5 text-[9px] font-black uppercase tracking-widest border border-white/10 transition-all font-outfit uppercase tracking-widest">CHREINAGE</button>
+              </div>
+         </div>
+
+         <!-- Cards List -->
+         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              @foreach (var part in b2bParts)
+              {
+                  <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[3rem] p-8 hover:bg-white/[0.03] transition-all cursor-pointer group shadow-2xl relative overflow-hidden flex flex-col">
+                       <!-- Blueprint Overlay -->
+                       <div class="absolute -right-8 -top-8 material-symbols-outlined text-[10rem] text-indigo-500/5 rotate-12 pointer-events-none select-none">build</div>
+                       
+                       <div class="aspect-square bg-black/40 rounded-[2rem] border border-white/5 flex items-center justify-center mb-8 relative overflow-hidden">
+                            <span class="material-symbols-outlined text-6xl text-gray-800 opacity-20 shadow-none border-none border-0">@(part.Icon)</span>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                                 <span class="bg-indigo-600/20 text-indigo-400 text-[8px] font-black px-3 py-1 rounded-full border border-indigo-500/30 italic shadow-none border-none">QUALITÉ PREMIUM</span>
+                            </div>
+                       </div>
+
+                       <h3 class="text-base font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-2 italic">@part.Label</h3>
+                       <p class="text-[9px] text-gray-500 font-extrabold uppercase italic shadow-none border-none border-0 mb-4">RÉF : @part.Ref</p>
+                       
+                       <div class="mt-auto space-y-6">
+                           <div class="flex justify-between items-end border-t border-white/5 pt-6">
+                                <div>
+                                     <p class="text-[8px] text-gray-500 font-black uppercase italic shadow-none border-none border-0 leading-relaxed mb-1 italic">VOTRE PRIX HT</p>
+                                     <p class="text-3xl font-black italic italic @(part.Price < 100 ? "text-white" : "text-indigo-500")">@part.Price <span class="text-xs text-white/50">€</span></p>
+                                </div>
+                                <p class="text-[10px] text-emerald-500 font-black italic shadow-none border-none shadow-none border-0">DISPONIBLE</p>
+                           </div>
+                           
+                           <button class="w-full bg-white/5 group-hover:bg-indigo-600 group-hover:text-black py-4 rounded-2xl border border-white/10 group-hover:border-indigo-600 transition-all text-[10px] font-black uppercase tracking-widest italic shadow-xl shadow-black/40">AJOUTER AU PANIER</button>
+                       </div>
+                  </div>
+              }
+         </div>
+    </div>
+</div>
+
+@code {
+    private List<PartInfo> b2bParts = new()
+    {
+        new PartInfo { Label = "DISQUE DE FREIN VENTILÉ BMW", Ref = "DF-9921-X", Price = 42.50, Icon = "settings" },
+        new PartInfo { Label = "PLAQUETTES DE FREIN BREMBO", Ref = "PF-441-A", Price = 18.20, Icon = "hardware" },
+        new PartInfo { Label = "ALTERNATEUR 140A - PSA", Ref = "ALT-8842", Price = 195.00, Icon = "bolt" },
+        new PartInfo { Label = "KIT DISTRIBUTION GATES", Ref = "IGN-772-B", Price = 112.40, Icon = "calendar_today" },
+        new PartInfo { Label = "TURBO GARRETT GT-1544V", Ref = "TRB-9921", Price = 580.00, Icon = "air" },
+        new PartInfo { Label = "HUILE CASTROL EDGE 5W30 (5L)", Ref = "OIL-5W30-C", Price = 38.00, Icon = "opacity" },
+        new PartInfo { Label = "BATTERIE VARTA E39 AGM", Ref = "BAT-AG70", Price = 142.00, Icon = "electrical_services" },
+        new PartInfo { Label = "ESUIS-GLACE VALEO VM342", Ref = "EG-VAL-M", Price = 12.40, Icon = "cleaning_services" }
+    };
+
+    public class PartInfo {
+        public string Label { get; set; } = "";
+        public string Ref { get; set; } = "";
+        public double Price { get; set; }
+        public string Icon { get; set; } = "";
+    }
+}

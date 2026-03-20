@@ -1,0 +1,135 @@
+@page "/finance/comparatif-devis-3"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Comparatif Devis Diagnostic</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 h-20 w-full fixed top-0 z-50">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+            <h1 class="font-headline uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex gap-8 font-technical text-xs tracking-widest text-[#e2e2e8]/60">
+                <span class="text-[#f5a623] border-b border-[#f5a623]">ESTIMATE_v4.2</span>
+                <span>HISTORY</span>
+                <span>WARRANTY</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKtIVHEk_K62TdyhvyU2uqJpqeZ9lOW764c8mTWfpYNDW3BNcr6gnW2ufe2g5g066IPk_cL9ywARpeWk3kzw3ABKLVYBrz7kY2l8XVRqCsPylPLqilrzCvYKfTMX3f22u0tqDBCG-7d8k7kHFexTBa3ymM561clHz5SdEpHyTp_mySQDoOL0EsXGHoN3ZtqKu7-E7Agdg2Ffjt_LN5ZPfnah1kZgCACgRVOihihQhRJ3PWEIO0FBw-541plBInNi7c0gLZVY5mcUfA" alt="Operator"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-28 px-4 md:px-8 max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="mb-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <span class="font-technical text-primary text-sm tracking-tighter mb-2 block">VEHICLE_REPORT_ID: #FR-99283-TX</span>
+                    <h2 class="font-headline text-5xl md:text-7xl uppercase tracking-tight leading-none text-on-surface">Comparatif Devis</h2>
+                </div>
+                <div class="bg-surface-container-low p-4 rounded border-l-4 border-secondary-container">
+                    <p class="text-xs font-technical text-on-surface-variant uppercase mb-1">Diagnostic Actif</p>
+                    <p class="text-lg font-bold">Remplacement Système de Freinage</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote Comparison Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Option 1: Économique -->
+            <div class="bg-surface-container-low rounded-xl overflow-hidden flex flex-col transition-all hover:translate-y-[-4px] group">
+                <div class="p-6 border-b border-outline-variant/10">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="material-symbols-outlined text-outline">savings</span>
+                        <span class="font-technical text-[10px] py-1 px-2 bg-surface-container-highest rounded text-on-surface-variant">ENTRY_LEVEL</span>
+                    </div>
+                    <h3 class="font-headline text-3xl mb-1 text-on-surface uppercase">Économique</h3>
+                    <p class="text-sm text-on-surface-variant">Pièces de qualité équivalente certifiées.</p>
+                </div>
+                <div class="p-6 flex-grow space-y-4">
+                    <div class="flex justify-between items-baseline">
+                        <span class="font-technical text-2xl font-bold text-primary">485.00€</span>
+                        <span class="text-xs text-on-surface-variant uppercase">TTC</span>
+                    </div>
+                     <ul class="space-y-3 pt-4">
+                        <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Main d'œuvre incluse</li>
+                        <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Garantie 6 mois</li>
+                        <li class="flex items-center gap-3 text-sm text-on-surface-variant/60"><span class="material-symbols-outlined text-sm">cancel</span> <span class="line-through">Pièces d'origine</span></li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-surface-container-high/50">
+                    <button class="w-full py-3 rounded bg-surface-container-highest font-bold text-sm tracking-widest hover:bg-surface-bright transition-colors uppercase">Sélectionner</button>
+                </div>
+            </div>
+
+            <!-- Option 2: Standard (Recommended) -->
+            <div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col border border-primary/20 relative scale-105 z-10 shadow-2xl shadow-primary/5 group">
+                <div class="absolute top-0 right-0 bg-primary text-on-primary px-3 py-1 font-technical text-[10px] font-bold tracking-tighter">RECOMMENDED</div>
+                <div class="p-6 border-b border-primary/10">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="material-symbols-outlined text-primary">build_circle</span>
+                        <span class="font-technical text-[10px] py-1 px-2 bg-primary/10 text-primary rounded">OPTIMAL_VALUE</span>
+                    </div>
+                    <h3 class="font-headline text-3xl mb-1 text-primary uppercase">Standard</h3>
+                    <p class="text-sm text-on-surface-variant">Équilibre parfait entre performance et coût.</p>
+                </div>
+                <div class="p-6 flex-grow space-y-4">
+                    <div class="flex justify-between items-baseline">
+                        <span class="font-technical text-3xl font-bold text-primary">642.50€</span>
+                        <span class="text-xs text-on-surface-variant uppercase">TTC</span>
+                    </div>
+                    <ul class="space-y-3 pt-4 text-on-surface">
+                        <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Pièces de marque (Brembo/ATE)</li>
+                        <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Garantie 12 mois</li>
+                        <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Assistance routière 3 mois</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-primary/5">
+                    <button class="w-full py-3 rounded bg-gradient-to-r from-[#f5a623] to-[#f26411] text-on-primary-container font-bold text-sm tracking-widest uppercase shadow-lg shadow-secondary-container/20">Valider Option</button>
+                </div>
+            </div>
+
+            <!-- Option 3: Premium -->
+            <div class="bg-surface-container-low rounded-xl overflow-hidden flex flex-col transition-all hover:translate-y-[-4px] group">
+                <div class="p-6 border-b border-outline-variant/10">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="material-symbols-outlined text-secondary">verified</span>
+                        <span class="font-technical text-[10px] py-1 px-2 bg-surface-container-highest rounded text-on-surface-variant">OEM_PARTS</span>
+                    </div>
+                    <h3 class="font-headline text-3xl mb-1 text-on-surface uppercase">Premium</h3>
+                    <p class="text-sm text-on-surface-variant">Pièces constructeur d'origine (OEM).</p>
+                </div>
+                <div class="p-6 flex-grow space-y-4">
+                    <div class="flex justify-between items-baseline">
+                        <span class="font-technical text-2xl font-bold text-primary">895.00€</span>
+                        <span class="text-xs text-on-surface-variant uppercase">TTC</span>
+                    </div>
+                    <ul class="space-y-3 pt-4 text-on-surface">
+                        <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Pièces d'origine garantie</li>
+                        <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Garantie 24 mois (Europe)</li>
+                        <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Nettoyage véhicule offert</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-surface-container-high/50">
+                    <button class="w-full py-3 rounded bg-surface-container-highest font-bold text-sm tracking-widest hover:bg-surface-bright transition-colors uppercase">Sélectionner</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] h-20 flex justify-around items-center px-4 pb-2 z-50">
+        <a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all font-technical text-[10px] uppercase tracking-tighter" href="/">
+            <span class="material-symbols-outlined mb-1">dashboard</span>
+            <span>DASHBOARD</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all font-technical text-[10px] uppercase tracking-tighter" href="/finance/comparatif-devis-3">
+            <span class="material-symbols-outlined mb-1">analytics</span>
+            <span>REPORTS</span>
+        </a>
+    </nav>
+</div>

@@ -1,0 +1,69 @@
+@page "/admin/gestion-flotte"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Gestion de Flotte</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container min-h-screen pb-24 md:pb-0">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 h-20 w-full sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+            <h1 class="font-headline uppercase tracking-[0.05em] text-2xl text-[#f5a623] italic">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6 font-technical text-xs tracking-widest uppercase">
+            <nav class="hidden md:flex gap-8">
+                <a class="text-[#f5a623]" href="#">Dashboard</a>
+                <a class="text-[#e2e2e8]/60" href="#">Flotte</a>
+                <a class="text-[#e2e2e8]/60" href="#">Factures</a>
+            </nav>
+            <div class="h-10 w-10 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgUiKXLJA6u6VtruGA_Nb34lIROZEM8G3MJYNOt8-4gTDwE-vC0euUSYgSbuGZYX8Dui61Uzzk_9d6pbuzZyu0XFAF8chwoLYWu87e_s9cfB2q-91M9An0xSisJPJk_T6g8hSeb_bGBUJQzvVRrQL8LIPq9098e31klnzF3NES_ilWgGobg7r8pdN57FwWL_fW3U_juAcCl51kI3E1A4qHKbvXHNcP9OhoCNGQdz5v_9N6gWAMHGzs0n9DJ1aKnfFwQTrElAkEbUif" alt="Operator" class="w-full h-full object-cover"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Fleet Hero -->
+        <section class="mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Status Card -->
+                <div class="lg:col-span-2 bg-surface-container-high rounded-xl p-8 relative overflow-hidden group border-l-4 border-secondary-container shadow-2xl">
+                    <div class="flex justify-between items-start mb-12 uppercase font-headline">
+                        <div>
+                            <p class="font-technical text-[10px] text-on-surface-variant tracking-[0.3em] mb-1">GLOBAL_FLEET_STATUS</p>
+                            <h2 class="text-6xl tracking-tight text-primary italic font-black">OPERATIONAL_94%</h2>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 font-headline uppercase italic">
+                        <div class="bg-surface-container-lowest p-4 rounded-xl">
+                            <p class="text-[10px] font-technical text-on-surface-variant font-bold">VHC_TOTAL</p>
+                            <p class="text-3xl text-on-surface">142</p>
+                        </div>
+                        <div class="bg-surface-container-lowest p-4 rounded-xl">
+                            <p class="text-[10px] font-technical text-on-surface-variant font-bold">IN_TRANSIT</p>
+                            <p class="text-3xl text-primary font-black">88</p>
+                        </div>
+                        <div class="bg-surface-container-lowest p-4 rounded-xl border-l-4 border-error/50">
+                            <p class="text-[10px] font-technical text-on-surface-variant font-bold">MAINTENANCE</p>
+                            <p class="text-3xl text-error font-black">12</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Preview -->
+                <div class="bg-surface-container-low rounded-xl overflow-hidden relative min-h-[300px] flex items-end shadow-2xl border border-outline-variant/10">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkQVBfLUcUVKws__80t91ZsXIhp2H1DgIb6fXbrCmDatwdpjOqICsCYU3u4LzVjWgjJV0FaywgIpwhf60HRpj759NmsStc71c0nmYBdpeAEpHSab3TQCKsZgFBRO2fTKlylDRWI4YPlpFuB_qkAsRAYbWzRCTy62WbH-nWfjQXS7HOBd4NXbQWTSLHPDnKOGtYKsl9nSuzjS5pwrlTV443XAZJfFXX9j-DMGFPREHTYx1zSlvhp34C_-vB4_DCUh3ptWQmnzp5fHgj" alt="Fleet Map" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale"/>
+                    <div class="relative p-6 w-full uppercase font-headline italic">
+                        <div class="flex items-center gap-2 mb-2 font-technical text-[10px] text-primary">
+                            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            <span>LIVE_TRACKING_ON</span>
+                        </div>
+                        <h3 class="text-2xl mb-4 tracking-wider">REGION_EUROPE_NORTH</h3>
+                        <button class="w-full bg-surface-container-highest py-4 rounded-xl font-technical text-[10px] font-bold tracking-[0.2em] border border-outline-variant/20 hover:bg-surface-bright transition-all">EXPAND_INTERFACE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

@@ -1,0 +1,91 @@
+@page "/stock/detail-commande"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Détail Commande</PageTitle>
+
+<div class="bg-surface text-on-surface font-body min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full sticky top-0 z-50 shadow-none border-none">
+        <div class="flex items-center gap-4">
+            <button class="text-[#f5a623] hover:bg-[#282a2e] transition-colors p-2 rounded-lg active:scale-95 duration-100">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <h1 class="text-3xl font-black text-[#f5a623] tracking-widest font-headline uppercase leading-none">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-surface-container-highest border-2 border-primary-container overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTFAJZooltOHuDkYhhoi5PLF8JKmik9SU39yBrDkZUsny-JLoZhs-laoGNZd-9V4PMvDwd97H8sVEW68A6CEZzZBQtEgrpG0mAaEWhfHDToMwZPUB8E3pzSwhAeEqCGdb9u5fO6tUXpHDcTmR4iP7oLJDutHRwl3gRGSqb865R-uItftlsXjkmmQ97d1J4VF8wW12hJOhOCuPmJyJsucXXXSjDtekLkCjIFpFNe1Ulni7MQrtWfLv7GZwp15LFnYTbALpAkBn6yJrS" alt="Operator"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
+        <!-- Header Section -->
+        <section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div class="space-y-2">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary-container">package_2</span>
+                    <span class="font-mono text-sm text-on-surface-variant tracking-widest uppercase">Bon de Commande</span>
+                </div>
+                <h2 class="text-5xl font-headline tracking-wider text-on-surface leading-none uppercase">PO-4829-XJ</h2>
+            </div>
+            <button class="bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-bold flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-container/10 uppercase tracking-tighter text-sm">
+                <span class="material-symbols-outlined">inventory_2</span> Valider la réception en stock
+            </button>
+        </section>
+
+        <!-- KPI Summary Bar -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-on-surface">
+            <div class="bg-surface-container-high p-6 rounded-xl border-l-2 border-secondary relative overflow-hidden">
+                <p class="text-[10px] font-mono text-on-surface-variant uppercase mb-2">Total Articles</p>
+                <p class="text-4xl font-headline text-primary tracking-tight">12 UNITS</p>
+            </div>
+             <div class="bg-surface-container-high p-6 rounded-xl border-l-2 border-tertiary relative overflow-hidden">
+                <p class="text-[10px] font-mono text-on-surface-variant uppercase mb-2">Valeur Estimée</p>
+                <p class="text-4xl font-headline text-tertiary tracking-tight">4 290.50 €</p>
+            </div>
+             <div class="bg-surface-container-high p-6 rounded-xl border-l-2 border-secondary-container relative overflow-hidden">
+                <p class="text-[10px] font-mono text-on-surface-variant uppercase mb-2">Poids Total</p>
+                <p class="text-4xl font-headline text-secondary-container tracking-tight">145.2 KG</p>
+            </div>
+        </div>
+
+        <!-- Detailed Article List -->
+        <div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10">
+             <div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container">
+                <h3 class="font-headline text-2xl tracking-wide uppercase">Inventaire des articles</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low text-on-surface-variant font-mono text-[10px] uppercase tracking-widest">
+                        <tr>
+                            <th class="px-6 py-4">Reference / VIN</th>
+                            <th class="px-6 py-4">Description</th>
+                            <th class="px-6 py-4">Commandé</th>
+                            <th class="px-6 py-4">Reçu</th>
+                            <th class="px-6 py-4 text-right">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant/5 text-on-surface">
+                        <tr class="hover:bg-surface-container-high/50 transition-colors">
+                            <td class="px-6 py-6 font-mono text-sm text-primary uppercase">BRK-90210-XT</td>
+                            <td class="px-6 py-6 font-bold uppercase">Plaquettes de frein</td>
+                            <td class="px-6 py-6 font-mono text-lg">04</td>
+                            <td class="px-6 py-6"><input class="w-20 bg-surface-container-highest border-none rounded font-mono text-center" type="number" value="4"/></td>
+                            <td class="px-6 py-6 text-right"><span class="bg-primary/10 text-primary px-2 py-1 rounded text-[10px] font-bold uppercase border border-primary/20">Complet</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 right-0 flex justify-around items-center px-4 pb-safe bg-[#0c0e12] z-50 h-20 rounded-t-xl">
+        <a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#282a2e]/40 rounded-lg px-3 py-1 border-l-2 border-[#f26411] font-mono text-[10px] uppercase font-bold" href="/stock/detail-commande">
+            <span class="material-symbols-outlined">package_2</span>
+            <span>Achats</span>
+        </a>
+    </nav>
+</div>

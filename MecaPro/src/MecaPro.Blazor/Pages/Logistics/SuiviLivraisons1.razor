@@ -1,0 +1,75 @@
+@page "/logistics/suivi-livraisons"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Suivi Livraisons Pièces</PageTitle>
+
+<div class="bg-background text-on-surface font-body selection:bg-primary-container min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="w-full sticky top-0 z-50 bg-[#111318] h-20 border-b border-outline-variant/10 shadow-2xl">
+        <div class="flex justify-between items-center px-6 h-full w-full font-headline italic uppercase">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-[#f5a623] text-3xl">settings_input_component</span>
+                <h1 class="tracking-wider text-3xl text-[#f5a623] font-black leading-none">MecaPro</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative cursor-pointer group">
+                    <span class="material-symbols-outlined text-[#e2e2e8] text-3xl group-hover:text-primary transition-colors">notifications</span>
+                    <span class="absolute top-0 right-0 w-3 h-3 bg-secondary rounded-full border-2 border-background animate-pulse"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="px-6 pt-10 space-y-10 max-w-5xl mx-auto uppercase font-headline">
+        <section class="flex flex-col gap-2 italic">
+            <div class="flex items-center gap-3 text-primary">
+                <span class="material-symbols-outlined text-sm">local_shipping</span>
+                <span class="font-technical text-xs tracking-[0.4em] font-black not-italic">TRACKING_ID: 4920-X92-DHL</span>
+            </div>
+            <h2 class="text-6xl tracking-tight font-black leading-none">Suivi Livraisons Pièces</h2>
+        </section>
+
+        <!-- Alert -->
+        <div class="bg-error-container/10 border-l-4 border-error p-6 flex gap-6 items-start shadow-2xl backdrop-blur-sm">
+            <span class="material-symbols-outlined text-error text-3xl animate-pulse">warning</span>
+            <div class="flex flex-col gap-1">
+                <span class="text-error font-black text-lg italic italic">RETARD DÉTECTÉ</span>
+                <p class="text-on-error-container/80 text-[10px] font-technical not-italic uppercase tracking-widest font-black">Delay of 2 hours detected at Leipzig sorting facility due to weather.</p>
+            </div>
+        </div>
+
+        <!-- Real-Time Map -->
+        <div class="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl bg-surface-container-low group border border-outline-variant/10">
+            <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=2033&auto=format&fit=crop" alt="Tracking Map" class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale contrast-150 group-hover:scale-105 transition-all duration-[20s] linear"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+            <div class="relative h-full flex items-center justify-center">
+                <div class="relative">
+                    <div class="absolute -inset-16 bg-primary/20 rounded-full animate-ping duration-3000"></div>
+                    <span class="material-symbols-outlined text-primary text-6xl shadow-2xl" style="font-variation-settings: 'FILL' 1;">navigation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="md:col-span-2 space-y-8">
+                <div class="bg-surface-container-high p-8 rounded-2xl border-l-2 border-secondary shadow-2xl relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-10 italic">
+                        <h3 class="text-3xl tracking-wide font-black">ÉTAT D'AVANCEMENT</h3>
+                        <span class="bg-secondary-container/20 text-secondary text-[10px] px-3 py-1.5 rounded-lg border border-secondary/30 font-black tracking-[0.2em] not-italic">EN TRANSIT</span>
+                    </div>
+                    <div class="relative space-y-12 pl-8 border-l border-outline-variant/20 ml-2">
+                        <div class="relative">
+                             <span class="absolute -left-[41px] top-1 w-6 h-6 rounded-full bg-primary shadow-[0_0_24px_rgba(245,166,35,0.8)] border-4 border-background"></span>
+                             <div class="space-y-1">
+                                <h4 class="text-primary font-black text-xl italic leading-none">EN TRANSIT</h4>
+                                <p class="text-on-surface-variant/60 text-xs font-technical not-italic tracking-wider font-bold">Paris Nord Distribution Center</p>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

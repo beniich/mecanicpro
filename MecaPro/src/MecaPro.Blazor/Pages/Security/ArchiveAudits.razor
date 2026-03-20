@@ -1,0 +1,114 @@
+@page "/securite/archive-audits"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Amber Archive Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-amber-600/20 flex items-center justify-center border border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-amber-500 text-3xl animate-pulse">archive</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-amber-500"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Audit <span class="text-amber-500 font-light italic uppercase shadow-none border-none">ARCHIVE</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">HISTORIQUE COMPLET DES RAPPORTS QSE & SÉCURITÉ RÉGLEMENTAIRE (5 ANS)</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-3xl flex items-center gap-8 shadow-xl shadow-black/40">
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Total Rapports</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-amber-500 uppercase tracking-widest leading-relaxed">24</p>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Archive List Matrix -->
+    <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3.5rem] overflow-hidden shadow-2xl relative">
+        <div class="p-10 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <h3 class="text-xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none">Registres Historiques de Conformité du Garage</h3>
+            
+            <div class="flex flex-wrap gap-4">
+                 <div class="bg-black/40 border border-white/5 rounded-xl px-4 py-2 flex items-center gap-2 shadow-inner">
+                      <span class="material-symbols-outlined text-xs text-gray-500 shadow-none border-none border-0">search</span>
+                      <input type="text" placeholder="Rechercher par Date / Auditeur..." class="bg-transparent border-none text-[10px] font-bold text-gray-300 focus:outline-none w-64 italic">
+                 </div>
+            </div>
+        </div>
+
+        <div class="p-0">
+             <table class="w-full text-left border-collapse">
+                  <thead>
+                       <tr class="text-[11px] text-gray-500 font-black uppercase tracking-[0.2em] bg-black/20">
+                            <th class="px-10 py-6">ID Rapport / Date</th>
+                            <th class="px-10 py-6">Type d'Audit</th>
+                            <th class="px-10 py-6">Auditeur / Responsable</th>
+                            <th class="px-10 py-6 text-center">Score Global</th>
+                            <th class="px-10 py-6">Actions Correctives</th>
+                            <th class="px-10 py-6 text-right">Documents</th>
+                       </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/[0.05]">
+                       @foreach (var audit in archivedAudits)
+                       {
+                           <tr class="hover:bg-white/[0.01] transition-all group overflow-hidden border-none text-[11px]">
+                                <td class="px-10 py-6">
+                                     <p class="text-amber-500 font-black italic">#RPT-@audit.Id</p>
+                                     <p class="text-[9px] text-gray-600 font-black mt-0.5 italic">@audit.Date</p>
+                                </td>
+                                <td class="px-10 py-6">
+                                     <p class="text-white font-black italic">@audit.Type</p>
+                                </td>
+                                <td class="px-10 py-6 text-xs italic">
+                                     <p class="text-white font-black italic">@audit.Auditor</p>
+                                </td>
+                                <td class="px-10 py-6 text-center">
+                                     <div class="flex flex-col items-center gap-1">
+                                          <p class="text-xl font-black italic italic @(audit.Score > 90 ? "text-emerald-500" : (audit.Score > 75 ? "text-orange-500" : "text-red-500")) shadow-none border-none">@audit.Score %</p>
+                                          <div class="w-16 h-1 bg-white/5 rounded-full overflow-hidden">
+                                               <div class="h-full bg-amber-600" style="width: @(audit.Score)%"></div>
+                                          </div>
+                                     </div>
+                                </td>
+                                <td class="px-10 py-6">
+                                     <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter border @(GetPlanStyle(audit.ActionPlanStatus))">@audit.ActionPlanStatus</span>
+                                </td>
+                                <td class="px-10 py-6 text-right">
+                                     <button class="bg-white/5 hover:bg-white/10 px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest border border-white/10 transition-all font-outfit uppercase tracking-widest">TÉLÉCHARGER PDF</button>
+                                </td>
+                           </tr>
+                       }
+                  </tbody>
+             </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<ArchivedAudit> archivedAudits = new()
+    {
+        new ArchivedAudit { Id = "2026-004", Date = "12 MARS 2026", Type = "TRIMESTRIEL QSE", Auditor = "MARC ATELIER", Score = 92, ActionPlanStatus = "CLÔTURÉ" },
+        new ArchivedAudit { Id = "2026-003", Date = "04 FÉVR 2026", Type = "SECURITÉ CYBER (JWT)", Auditor = "SOPHIE LARUE", Score = 100, ActionPlanStatus = "STAND-BY" },
+        new ArchivedAudit { Id = "2026-002", Date = "10 JANV 2026", Type = "INVENTAIRE DYNAMIQUE", Auditor = "JEAN-MICHEL ATELIER", Score = 84, ActionPlanStatus = "EN COURS" },
+        new ArchivedAudit { Id = "2025-012", Date = "15 DÉC 2025", Type = "ANNUEL RÉGLEMENTAIRE", Auditor = "PHILIPPE JOULIA", Score = 72, ActionPlanStatus = "URGENT" }
+    };
+
+    private string GetPlanStyle(string status) => status switch
+    {
+        "CLÔTURÉ" => "border-emerald-500/30 text-emerald-500 bg-emerald-500/10",
+        "EN COURS" => "border-orange-500/30 text-orange-500 bg-orange-500/10",
+        "URGENT" => "border-red-500/30 text-red-500 bg-red-500/10",
+        _ => "border-white/20 text-gray-400 bg-white/5"
+    } ;
+
+    public class ArchivedAudit {
+        public string Id { get; set; } = "";
+        public string Date { get; set; } = "";
+        public string Type { get; set; } = "";
+        public string Auditor { get; set; } = "";
+        public int Score { get; set; }
+        public string ActionPlanStatus { get; set; } = "";
+    }
+}

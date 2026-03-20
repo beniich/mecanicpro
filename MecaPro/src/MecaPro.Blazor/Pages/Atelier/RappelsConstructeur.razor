@@ -1,0 +1,52 @@
+@page "/atelier/rappels-constructeur"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Rappels Constructeur</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container min-h-screen">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 h-20 w-full border-b border-[#524534]/15 sticky top-0 z-50 shadow-2xl">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623] text-3xl">settings_input_component</span>
+            <h1 class="font-industrial uppercase tracking-[0.05em] text-2xl text-[#f5a623] italic">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6 font-technical text-sm tracking-widest uppercase font-bold">
+            <nav class="hidden md:flex gap-8">
+                <a class="text-[#f5a623]" href="#">RECALL_DATABASE</a>
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">FLEET_SYNC</a>
+            </nav>
+            <div class="h-10 w-10 rounded-full border-2 border-primary-container p-0.5">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVR5it8HHTDV8YS3GV4I9M6Nl__35jtOBYy1lOjEhRzHHQhjSVl_5oM7A7z5OEPHcl6K70snS6U2kp2MlWuvf4X9bh9MFVb7bHoZob-WFd_AbP2ZDpmT75y8JXbIWeAlm1Z2Y3Jit3UcEm-MO5lK8xLAU-v36VH3o8dtcEJ0kdWc1bEZezeIIwHpgQG8wj4JvBvBfKjHpNOj7piahcbUTLUWXgh-r3VKW1eEFjSwarvuWKy35Q3xn0T87iDjdC1KLug726xVVfEU_7" alt="Operator" class="w-full h-full rounded-full object-cover"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6 pb-32">
+        <!-- Hero Search -->
+        <section class="mb-12">
+            <div class="bg-surface-container-low rounded-xl p-8 border-l-4 border-primary shadow-2xl relative overflow-hidden group">
+                <h2 class="font-industrial text-4xl tracking-tight mb-2 text-on-surface italic">VÉRIFICATION VIN DE SÉCURITÉ</h2>
+                <p class="text-on-surface-variant font-body mb-8 max-w-2xl text-sm uppercase font-bold italic opacity-60">Real-time interrogation of global manufacturer databases for critical safety recalls.</p>
+                <div class="flex flex-col md:flex-row gap-4 uppercase font-industrial text-xl italic tracking-widest">
+                    <div class="flex-grow relative">
+                        <label class="absolute -top-3 left-4 bg-surface-container-low px-2 text-xs font-technical text-primary tracking-widest font-black not-italic">VIN_IDENTIFIER</label>
+                        <input type="text" class="w-full bg-surface-container-highest border-none rounded-xl h-16 px-6 font-technical tracking-[0.2em] text-on-surface focus:ring-2 focus:ring-primary shadow-inner" placeholder="WBA3A5C5XHXXXXXXX"/>
+                    </div>
+                    <button class="bg-gradient-to-r from-primary-container to-secondary-container px-12 rounded-xl h-16 text-on-primary-fixed active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary-container/20">
+                        <span class="material-symbols-outlined">qr_code_scanner</span>
+                        SCANNER_DB
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+            <div class="md:col-span-1 bg-surface-container-high p-6 rounded-xl border-l-2 border-secondary relative overflow-hidden group shadow-xl">
+                <p class="text-on-surface-variant font-technical text-[10px] uppercase tracking-[0.3em] font-black mb-4">RAPPELS_OUVERTS</p>
+                <p class="font-industrial text-6xl text-primary italic font-black">02</p>
+            </div>
+        </div>
+    </main>
+</div>

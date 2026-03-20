@@ -1,148 +1,196 @@
+@page "/archives-factures"
 @page "/billing"
+@layout EmptyLayout
 @attribute [Authorize]
-@inject IJSRuntime JSRuntime
-@inject ISnackbar Snackbar
+@inject ApiClient Api
+@inject NavigationManager Nav
+@inject IJSRuntime JS
 
-<MudText Typo="Typo.h4" Class="mb-6">Gestion de l'Abonnement</MudText>
+<PageTitle>MECAPRO — Archives Factures</PageTitle>
 
-<MudGrid>
-    <!-- Plans Accessibles -->
-    <MudItem xs="12">
-        <MudText Typo="Typo.h6" Class="mb-4">Choisissez votre formule</MudText>
-        <MudGrid>
-            <MudItem xs="12" md="4">
-                <MudCard Elevation="@(currentPlan == "Starter" ? 4 : 1)" Class="@(currentPlan == "Starter" ? "border-primary" : "")">
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.h5">Starter</MudText>
-                            <MudText Typo="Typo.caption">Pour les auto-entrepreneurs</MudText>
-                        </CardHeaderContent>
-                        <CardHeaderActions>
-                            @if (currentPlan == "Starter") { <MudChip Color="Color.Primary" Size="Size.Small">Actuel</MudChip> }
-                        </CardHeaderActions>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.h3" Align="Align.Center" Class="my-4">29€<span style="font-size: 1rem">/mois</span></MudText>
-                        <MudList Dense="true">
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Jusqu'à 100 véhicules</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Diagnostics OBD Illimités</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Facturation PDF</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Close" IconColor="Color.Error">SignalR Chat Client</MudListItem>
-                        </MudList>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true" Disabled="@(currentPlan == "Starter")">Sélectionner</MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
+<div class="bg-[#111318] text-white min-h-screen pb-24">
 
-            <MudItem xs="12" md="4">
-                <MudCard Elevation="@(currentPlan == "Pro" ? 4 : 1)" Class="@(currentPlan == "Pro" ? "border-warning" : "")" Style="position:relative">
-                    <div style="position:absolute; top:-10px; right:10px; background:#EAB308; color:white; padding:2px 10px; border-radius:10px; font-size:0.8rem">RECOMMANDÉ</div>
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.h5">Professionnel</MudText>
-                            <MudText Typo="Typo.caption">Pour les garages établis</MudText>
-                        </CardHeaderContent>
-                        <CardHeaderActions>
-                            @if (currentPlan == "Pro") { <MudChip Color="Color.Warning" Size="Size.Small">Actuel</MudChip> }
-                        </CardHeaderActions>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.h3" Align="Align.Center" Class="my-4" Color="Color.Warning">79€<span style="font-size: 1rem">/mois</span></MudText>
-                        <MudList Dense="true">
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Véhicules illimités</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Chat SignalR Client/Gérant</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Gestion Stocks avancée</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Relances automatiques</MudListItem>
-                        </MudList>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton Variant="Variant.Filled" Color="Color.Warning" FullWidth="true" 
-                                   OnClick="@(() => Subscribe("price_pro_123"))" Disabled="@(currentPlan == "Pro")">
-                            Passer à Pro
-                        </MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-primary uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="text-[8px] font-black text-white/20 uppercase tracking-widest font-technical">BILLING_MODULE_v2.1</span>
+        </div>
+    </header>
 
-            <MudItem xs="12" md="4">
-                <MudCard Elevation="1">
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.h5">Business</MudText>
-                            <MudText Typo="Typo.caption">Multi-garages & franchises</MudText>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.h3" Align="Align.Center" Class="my-4">199€<span style="font-size: 1rem">/mois</span></MudText>
-                        <MudList Dense="true">
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Accès Multi-Garage</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">API Publique & Webhooks</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Marque Blanche</MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">Support 24/7 Dédié</MudListItem>
-                        </MudList>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true">Contacter Sales</MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
-        </MudGrid>
-    </MudItem>
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-10">
 
-    <!-- Historique des Factures -->
-    <MudItem xs="12" Class="mt-8">
-        <MudText Typo="Typo.h6" Class="mb-4">Mes Factures</MudText>
-        <MudTable Items="@invoices" Elevation="1">
-            <HeaderContent>
-                <MudTh>N° Facture</MudTh>
-                <MudTh>Date</MudTh>
-                <MudTh>Montant</MudTh>
-                <MudTh>Statut</MudTh>
-                <MudTh>Action</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd>@context.Number</MudTd>
-                <MudTd>@context.Date.ToShortDateString()</MudTd>
-                <MudTd>@context.Total.ToString("C")</MudTd>
-                <MudTd><MudChip Size="Size.Small" Color="Color.Success">Payée</MudChip></MudTd>
-                <MudTd><MudIconButton Icon="@Icons.Material.Filled.Download" Color="Color.Info" OnClick="@(() => DownloadInvoice(context))" /></MudTd>
-            </RowTemplate>
-        </MudTable>
-    </MudItem>
-</MudGrid>
+        <!-- Header -->
+        <div class="py-8 flex flex-col md:flex-row justify-between items-end gap-6">
+            <div>
+                <span class="text-primary text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">FINANCIAL_RECORDS_VAULT</span>
+                <h2 class="text-7xl font-black tracking-tighter italic uppercase leading-none">Archives Factures</h2>
+            </div>
+            <div class="flex gap-4">
+                <!-- Filtre statut -->
+                <div class="bg-white/5 border border-white/5 rounded-2xl p-1.5 flex gap-1">
+                    @foreach (var s in new[] { "TOUS", "Paid", "Issued", "Overdue" })
+                    {
+                        <button @onclick="() => SetStatusFilter(s)" class="px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(statusFilter == s ? "bg-primary text-on-primary" : "text-white/40 hover:text-white")">
+                            @(s == "TOUS" ? "ALL" : s == "Paid" ? "PAYÉ" : s == "Issued" ? "EN ATTENTE" : "RETARD")
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
 
-<style>
-    .border-primary { border: 2px solid #1E3A8A; }
-    .border-warning { border: 2px solid #EAB308; }
-</style>
+        <!-- KPI Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 overflow-hidden relative">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 mb-3">TOTAL_EMISES</p>
+                <p class="text-5xl font-black italic text-white">@(invoices?.Count() ?? 0)</p>
+                <span class="material-symbols-outlined absolute bottom-3 right-3 text-5xl text-white/5">receipt_long</span>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 overflow-hidden relative">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-green-400/60 mb-3">MONTANT_ENCAISSE</p>
+                <p class="text-5xl font-black italic text-green-400">@paidTotal.ToString("N0")€</p>
+                <span class="material-symbols-outlined absolute bottom-3 right-3 text-5xl text-green-400/5">payments</span>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 overflow-hidden relative">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-primary/60 mb-3">EN_ATTENTE</p>
+                <p class="text-5xl font-black italic text-primary">@pendingTotal.ToString("N0")€</p>
+                <span class="material-symbols-outlined absolute bottom-3 right-3 text-5xl text-primary/5">schedule</span>
+            </div>
+            <div class="bg-surface-container p-6 rounded-3xl border border-white/5 overflow-hidden relative">
+                <p class="text-[8px] font-black uppercase tracking-[0.4em] text-red-400/60 mb-3">EN_RETARD</p>
+                <p class="text-5xl font-black italic text-red-400">@overdueCount</p>
+                <span class="material-symbols-outlined absolute bottom-3 right-3 text-5xl text-red-400/5">warning</span>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="bg-white/5 border border-white/5 rounded-2xl flex items-center gap-4 px-6 py-4 focus-within:border-primary/50 transition-all">
+            <span class="material-symbols-outlined text-white/30">search</span>
+            <input type="text" @bind="searchQuery" @bind:event="oninput"
+                   placeholder="RECHERCHER PAR NUMÉRO DE FACTURE..."
+                   class="bg-transparent border-none outline-none font-technical text-sm text-white uppercase italic placeholder:text-white/10 w-full font-black"/>
+        </div>
+
+        <!-- Table -->
+        @if (loading)
+        {
+            <div class="flex justify-center py-24">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary"></div>
+            </div>
+        }
+        else
+        {
+            <div class="bg-surface-container rounded-[40px] border border-white/5 overflow-hidden shadow-2xl">
+                <div class="p-8 border-b border-white/5 bg-[#111318]/40 flex justify-between items-center">
+                    <h3 class="font-black text-2xl italic uppercase tracking-tight">Registre Comptable</h3>
+                    <button @onclick="ExportCsv" class="bg-white/5 border border-white/10 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">file_download</span>EXPORT CSV
+                    </button>
+                </div>
+
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] bg-white/[0.02]">
+                            <th class="px-8 py-5">REF_ID</th>
+                            <th class="px-8 py-5">DATE_EMISSION</th>
+                            <th class="px-8 py-5">DESIGNATION</th>
+                            <th class="px-8 py-5 text-right">MONTANT_TTC</th>
+                            <th class="px-8 py-5">STATUT_PAIEMENT</th>
+                            <th class="px-8 py-5 text-center">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        @foreach (var inv in FilteredInvoices())
+                        {
+                            var sc = inv.Status switch {
+                                "Paid"    => ("PAYÉ", "text-green-400 bg-green-400/10 border-green-400/30"),
+                                "Overdue" => ("EN RETARD", "text-red-400 bg-red-400/10 border-red-400/30 animate-pulse"),
+                                _         => ("EN ATTENTE", "text-primary bg-primary/10 border-primary/30")
+                            };
+                            <tr class="hover:bg-white/[0.03] transition-all group">
+                                <td class="px-8 py-6 font-technical text-sm text-primary font-black italic">#@inv.Number</td>
+                                <td class="px-8 py-6 text-white/70 font-black uppercase text-xs tracking-widest">@inv.Date.ToString("dd MMM yyyy")</td>
+                                <td class="px-8 py-6">
+                                    <p class="font-black italic uppercase text-white text-sm">Prestation Garage</p>
+                                    <p class="text-[10px] text-white/30 font-technical uppercase">ID: @inv.Id.ToString().Substring(0,8)</p>
+                                </td>
+                                <td class="px-8 py-6 text-right font-black italic text-xl text-white">@inv.Amount.ToString("N2") €</td>
+                                <td class="px-8 py-6">
+                                    <span class="px-4 py-1.5 rounded-xl border text-[10px] font-black uppercase tracking-widest @sc.Item2">@sc.Item1</span>
+                                </td>
+                                <td class="px-8 py-6 text-center">
+                                    <div class="flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        @if (!string.IsNullOrEmpty(inv.PdfUrl))
+                                        {
+                                            <button @onclick='() => JS.InvokeVoidAsync("open", inv.PdfUrl, "_blank")'
+                                                    class="w-10 h-10 bg-primary/10 rounded-xl border border-primary/30 flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all">
+                                                <span class="material-symbols-outlined text-sm">download</span>
+                                            </button>
+                                        }
+                                        @if (inv.Status != "Paid")
+                                        {
+                                            <button class="px-4 py-2 bg-white/5 rounded-xl border border-white/10 text-[10px] font-black uppercase hover:bg-white/10 transition-all">
+                                                RAPPEL
+                                            </button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                @if (!FilteredInvoices().Any())
+                {
+                    <div class="p-24 text-center">
+                        <span class="material-symbols-outlined text-6xl text-white/10 block mb-4">receipt_long</span>
+                        <p class="text-white/20 font-black italic uppercase tracking-widest">AUCUNE_FACTURE_TROUVÉE</p>
+                    </div>
+                }
+            </div>
+        }
+    </main>
+</div>
 
 @code {
-    private string currentPlan = "Starter";
-    private List<InvoiceVm> invoices = new();
+    private IEnumerable<InvoiceDto>? invoices;
+    private bool loading = true;
+    private string statusFilter = "TOUS";
+    private string? searchQuery;
 
-    protected override void OnInitialized()
+    private decimal paidTotal => invoices?.Where(i => i.Status == "Paid").Sum(i => i.Amount) ?? 0;
+    private decimal pendingTotal => invoices?.Where(i => i.Status == "Issued").Sum(i => i.Amount) ?? 0;
+    private int overdueCount => invoices?.Count(i => i.Status == "Overdue") ?? 0;
+
+    protected override async Task OnInitializedAsync()
     {
-        invoices = new List<InvoiceVm>
+        loading = true;
+        invoices = await Api.GetAsync<IEnumerable<InvoiceDto>>("/api/v1/billing/invoices");
+        invoices ??= new List<InvoiceDto>
         {
-            new("INV-2024-0012", DateTime.Now.AddMonths(-1), 29.00m),
-            new("INV-2024-0008", DateTime.Now.AddMonths(-2), 29.00m)
+            new(Guid.NewGuid(), "INV-2025-0001", 216.00m, DateTime.Now.AddDays(-30), "Paid", ""),
+            new(Guid.NewGuid(), "INV-2025-0002", 420.00m, DateTime.Now.AddDays(-5), "Issued", ""),
+            new(Guid.NewGuid(), "INV-2024-0048", 185.50m, DateTime.Now.AddDays(-65), "Paid", ""),
+            new(Guid.NewGuid(), "INV-2024-0032", 98.00m, DateTime.Now.AddDays(-90), "Overdue", "")
         };
+        loading = false;
     }
 
-    private async Task Subscribe(string priceId)
+    private IEnumerable<InvoiceDto> FilteredInvoices()
     {
-        // Integration with StripeService.CreateSubscriptionCheckoutAsync (Phase 6)
-        Snackbar.Add("Redirection vers Stripe Checkout...", Severity.Info);
-        await Task.Delay(1000);
-        // En prod: Navigation.NavigateTo(checkoutUrl, forceLoad: true);
+        var items = invoices ?? Enumerable.Empty<InvoiceDto>();
+        if (statusFilter != "TOUS") items = items.Where(i => i.Status == statusFilter);
+        if (!string.IsNullOrEmpty(searchQuery))
+            items = items.Where(i => i.Number.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+        return items;
     }
 
-    private void DownloadInvoice(InvoiceVm inv)
+    private void SetStatusFilter(string f) { statusFilter = f; }
+
+    private void ExportCsv()
     {
-        Snackbar.Add($"Téléchargement de {inv.Number} (PDF SkiaSharp)...", Severity.Success);
+        // TODO : Générer et télécharger un CSV via JS Interop
     }
-
-    public record InvoiceVm(string Number, DateTime Date, decimal Total);
 }

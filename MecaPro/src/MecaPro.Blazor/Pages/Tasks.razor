@@ -3,72 +3,109 @@
 
 <PageTitle>Tâches Effectuées — MecaPro</PageTitle>
 
-<div class="fade-in">
-  <div class="section-header">
-    <div>
-      <div class="section-title">✅ Tâches Effectuées</div>
-      <div class="section-desc">Journal des interventions et opérations réalisées</div>
+<section class="space-y-12 animate-in fade-in duration-700">
+    <!-- Header Section with Asymmetry -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+            <p class="font-technical text-primary tracking-widest uppercase text-xs mb-2">Historique Opérationnel</p>
+            <h2 class="text-6xl md:text-8xl font-headline tracking-wider leading-none uppercase">Tâches Effectuées</h2>
+        </div>
+        <div class="bg-surface-container-low p-6 border-l-2 border-secondary-container shadow-sm">
+            <p class="text-on-surface-variant text-xs uppercase tracking-widest font-bold mb-1">Rendement Journalier</p>
+            <div class="flex items-baseline gap-2">
+                <span class="text-4xl font-headline text-primary tracking-wide">24</span>
+                <span class="text-on-surface-variant text-sm font-technical uppercase">Interventions</span>
+            </div>
+        </div>
     </div>
-    <button class="btn btn-primary" style="margin-left:auto">⊕ Ajouter tâche</button>
-  </div>
 
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">📋 Journal des Interventions</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-ghost" style="font-size:11px">📅 Filtrer date</button>
-        <button class="btn btn-ghost" style="font-size:11px">⬇ Exporter</button>
-      </div>
+    <!-- Filter Bar -->
+    <div class="flex flex-wrap gap-4 mb-8">
+        <button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-sm uppercase tracking-tight flex items-center gap-2 shadow-md">
+            <span class="material-symbols-outlined text-sm">filter_list</span>
+            Aujourd'hui
+        </button>
+        <button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-medium text-sm uppercase tracking-tight hover:bg-surface-bright transition-colors">Semaine</button>
+        <button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-medium text-sm uppercase tracking-tight hover:bg-surface-bright transition-colors">Mois</button>
+        <div class="ml-auto flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-xl border border-outline-variant/10">
+            <span class="material-symbols-outlined text-on-surface-variant text-lg">calendar_month</span>
+            <span class="font-technical text-sm text-on-surface">@DateTime.Now.ToString("dd/MM/yyyy")</span>
+        </div>
     </div>
-    <table>
-      <tr>
-        <th>Date</th><th>Heure</th><th>Véhicule</th><th>Tâche</th><th>Mécanicien</th>
-        <th>Durée</th><th>Pièces</th><th>Coût</th><th>Statut</th>
-      </tr>
-      <tr>
-        <td style="font-family:JetBrains Mono,monospace;font-size:12px">17/03/25</td>
-        <td style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--text3)">09:30</td>
-        <td style="color:var(--accent)">AB-123</td>
-        <td><strong>Vidange huile moteur</strong></td>
-        <td>Jean-Luc M.</td>
-        <td>45 min</td>
-        <td>Huile 5L + Filtre</td>
-        <td style="font-weight:700;color:var(--green)">73 €</td>
-        <td><span class="badge badge-green">✓ Fait</span></td>
-      </tr>
-      <tr>
-        <td style="font-family:JetBrains Mono,monospace;font-size:12px">17/03/25</td>
-        <td style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--text3)">11:00</td>
-        <td style="color:var(--accent)">EF-456</td>
-        <td><strong>Diagnostic électronique</strong></td>
-        <td>Marc D.</td>
-        <td>1h 20</td>
-        <td>—</td>
-        <td style="font-weight:700;color:var(--green)">80 €</td>
-        <td><span class="badge badge-green">✓ Fait</span></td>
-      </tr>
-      <tr>
-        <td style="font-family:JetBrains Mono,monospace;font-size:12px">17/03/25</td>
-        <td style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--text3)">14:00</td>
-        <td style="color:var(--accent)">IJ-789</td>
-        <td><strong>Remplacement plaquettes AV</strong></td>
-        <td>Jean-Luc M.</td>
-        <td>2h 00</td>
-        <td>Plaquettes Brembo</td>
-        <td style="font-weight:700;color:var(--green)">210 €</td>
-        <td><span class="badge badge-green">✓ Fait</span></td>
-      </tr>
-      <tr>
-        <td style="font-family:JetBrains Mono,monospace;font-size:12px">18/03/25</td>
-        <td style="font-family:JetBrains Mono,monospace;font-size:12px;color:var(--text3)">08:00</td>
-        <td style="color:var(--accent)">MN-012</td>
-        <td><strong>Inspection freins circuit</strong></td>
-        <td>Marc D.</td>
-        <td>En cours</td>
-        <td>Liquide de frein</td>
-        <td style="font-weight:700;color:var(--accent)">— €</td>
-        <td><span class="badge badge-orange">En cours</span></td>
-      </tr>
-    </table>
-  </div>
-</div>
+
+    <!-- Technical Log Table -->
+    <div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10 shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low border-b border-outline-variant/10">
+                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">Heure</th>
+                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">Véhicule / VIN</th>
+                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">Tâche / Diagnostic</th>
+                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">Mécanicien</th>
+                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">Statut</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/5">
+                    <tr class="hover:bg-surface-container-high transition-colors group">
+                        <td class="px-6 py-5">
+                            <span class="font-technical text-primary text-sm">16:45</span>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-on-surface uppercase">Porsche 911 GT3</span>
+                                <span class="font-technical text-xs text-on-surface-variant/60">VIN: WP0ZZZ99ZLS120</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-secondary-container"></div>
+                                <span class="text-sm font-medium">Calibrage Suspension Active</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 text-sm">Marc D.</td>
+                        <td class="px-6 py-5">
+                            <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center w-fit gap-1">
+                                <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                Terminé
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Visual Analytics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-surface-container-high p-6 rounded-xl relative overflow-hidden group shadow-sm">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <span class="material-symbols-outlined text-6xl">speed</span>
+            </div>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Temps Moyen</p>
+            <h3 class="text-4xl font-headline text-secondary tracking-wide">42m 15s</h3>
+            <p class="text-xs text-on-surface-variant/60 mt-2 font-technical">-8% vs Moyenne atelier</p>
+        </div>
+        <div class="bg-surface-container-high p-6 rounded-xl border-l-4 border-primary shadow-sm">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Pièces Consommées</p>
+            <div class="flex items-end justify-between">
+                <h3 class="text-4xl font-headline text-primary tracking-wide">128</h3>
+                <div class="flex -space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-surface-bright border border-background flex items-center justify-center text-[10px] font-bold">12</div>
+                    <div class="w-8 h-8 rounded-full bg-surface-variant border border-background flex items-center justify-center text-[10px] font-bold">08</div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-surface-container-high p-6 rounded-xl flex flex-col justify-between shadow-sm border border-outline-variant/10">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">Satisfaction Diagnostic</p>
+            <div class="flex gap-1 mb-2 text-primary">
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-lg">star_half</span>
+            </div>
+            <p class="text-xs text-on-surface font-medium italic">"Précision technique irréprochable"</p>
+        </div>
+    </div>
+</section>

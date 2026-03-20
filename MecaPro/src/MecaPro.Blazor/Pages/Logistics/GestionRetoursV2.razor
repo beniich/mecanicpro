@@ -1,0 +1,122 @@
+@page "/logistics/gestion-retours-2"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#06070a] text-white p-8 font-['Outfit']">
+    <!-- Green Refund Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-teal-600/20 flex items-center justify-center border border-teal-500/30">
+                    <span class="material-symbols-outlined text-teal-400">payments</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Customer <span class="text-teal-500 font-light italic uppercase">Refunds</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">GESTION DES AVOIRS CLIENTS & REMBOURSEMENTS STRIPE</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-[2rem] flex items-center gap-8">
+                 <div class="text-center">
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Avoirs Mois</p>
+                      <p class="text-2xl font-black italic text-teal-500 shadow-none border-none border-0">1,240 <span class="text-xs text-white/50 lowercase">€</span></p>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Active Refunds Flow -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+        <!-- New Refund Creation -->
+        <div class="lg:col-span-1 border-r border-white/5 pr-10 space-y-10">
+             <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+                  <h3 class="text-xs font-black uppercase text-gray-500 tracking-widest mb-8 italic">Émettre un Avoir</h3>
+                  <div class="space-y-6">
+                       <input type="text" placeholder="N° FACTURE (ex: INV-9921)" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-black uppercase outline-none focus:border-teal-500 transition-all">
+                       <input type="text" placeholder="MONTANT À REMBOURSER" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-black uppercase outline-none focus:border-teal-500 transition-all">
+                       <textarea placeholder="RAISON DU REMBOURSEMENT..." class="w-full h-32 bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-black uppercase outline-none focus:border-teal-500 transition-all resize-none"></textarea>
+                       <button class="w-full bg-teal-600 text-black py-4 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-teal-900/40">GÉNÉRER AVOIR (PDF)</button>
+                  </div>
+             </div>
+             
+             <div class="bg-teal-600/5 border border-teal-500/20 rounded-[2.5rem] p-8">
+                  <div class="flex items-center gap-4 mb-4">
+                       <span class="material-symbols-outlined text-teal-500">sync_alt</span>
+                       <h3 class="text-[10px] text-teal-500 font-black uppercase tracking-widest shadow-none border-none border-0 italic">Stripe Connect Sync</h3>
+                  </div>
+                  <p class="text-[11px] text-gray-500 leading-relaxed font-outfit uppercase tracking-widest italic leading-relaxed">Les fonds sont automatiquement crédités sur le compte client sous 3 à 5 jours ouvrés après validation.</p>
+             </div>
+        </div>
+
+        <!-- Refunds History -->
+        <div class="lg:col-span-3">
+             <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3.5rem] overflow-hidden shadow-2xl relative">
+                  <div class="p-8 border-b border-white/5">
+                       <h3 class="text-xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none">Historique des Remboursements & Avoirs</h3>
+                  </div>
+
+                  <div class="p-0">
+                       <table class="w-full text-left border-collapse">
+                            <thead>
+                                 <tr class="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] bg-black/20">
+                                      <th class="px-10 py-5">Référence Avoir</th>
+                                      <th class="px-10 py-5">Client</th>
+                                      <th class="px-10 py-5">Mode</th>
+                                      <th class="px-10 py-5">Statut Stripe</th>
+                                      <th class="px-10 py-5 text-right">Montant</th>
+                                 </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/[0.05]">
+                                 @foreach (var refund in refundHistory)
+                                 {
+                                     <tr class="hover:bg-white/[0.01] transition-all group">
+                                         <td class="px-10 py-8">
+                                              <span class="text-sm font-black italic text-teal-500">#@refund.Id</span>
+                                              <p class="text-[9px] text-gray-600 font-extrabold mt-1 italic shadow-none border-none border-0 uppercase tracking-widest leading-relaxed">SUR @refund.InvoiceRef</p>
+                                         </td>
+                                         <td class="px-10 py-8">
+                                              <p class="text-sm font-black italic uppercase italic tracking-tight italic uppercase tracking-widest">@refund.CustomerName</p>
+                                         </td>
+                                         <td class="px-10 py-8">
+                                              <span class="text-[10px] font-black uppercase text-gray-400 italic shadow-none border-none">@refund.Method</span>
+                                         </td>
+                                         <td class="px-10 py-8">
+                                              <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter border @(GetStripeStyle(refund.Status))">@refund.Status</span>
+                                         </td>
+                                         <td class="px-10 py-8 text-right">
+                                              <p class="text-xl font-black italic">@refund.Amount <span class="text-xs text-gray-500">€</span></p>
+                                         </td>
+                                     </tr>
+                                 }
+                            </tbody>
+                       </table>
+                  </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<RefundEntry> refundHistory = new()
+    {
+        new RefundEntry { Id = "AV-9921", InvoiceRef = "INV-2026-0042", CustomerName = "MICHEL DUPONT", Method = "CARTE (STRIPE)", Status = "COMPLETED", Amount = "142.00" },
+        new RefundEntry { Id = "AV-9922", InvoiceRef = "INV-2026-0010", CustomerName = "SOPHIE LARUE", Method = "CARTE (STRIPE)", Status = "PROCESSING", Amount = "85.50" },
+        new RefundEntry { Id = "AV-9923", InvoiceRef = "INV-2026-0005", CustomerName = "B2B LOGISTIC", Method = "A VOIR INTERNE", Status = "VALIDATED", Amount = "1,120.00" }
+    };
+
+    private string GetStripeStyle(string status) => status switch
+    {
+        "COMPLETED" => "border-emerald-500/30 text-emerald-500 bg-emerald-500/10",
+        "PROCESSING" => "border-orange-500/30 text-orange-500 bg-orange-500/10",
+        "VALIDATED" => "border-teal-500/30 text-teal-500 bg-teal-500/10",
+        _ => "border-white/20 text-gray-400 bg-white/5"
+    } ;
+
+    public class RefundEntry {
+        public string Id { get; set; } = "";
+        public string InvoiceRef { get; set; } = "";
+        public string CustomerName { get; set; } = "";
+        public string Method { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string Amount { get; set; } = "";
+    }
+}

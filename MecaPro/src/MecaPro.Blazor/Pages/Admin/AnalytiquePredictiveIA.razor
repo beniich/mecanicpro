@@ -1,0 +1,88 @@
+@page "/analytics/predictive"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Analytique Prédictive IA</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen">
+    <!-- Top Navigation -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full fixed top-0 z-50">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='/'">
+            <span class="material-symbols-outlined text-[#f5a623]" data-icon="terminal">terminal</span>
+            <h1 class="font-headline text-[#f5a623] tracking-[0.2em] text-2xl uppercase">DIAGNOSTIC_CONSOLE</h1>
+        </div>
+        <div class="hidden md:flex gap-8 items-center">
+            <nav class="flex gap-6">
+                <a class="text-[#f5a623] font-bold text-sm font-technical uppercase" href="/analytics">DASHBOARD</a>
+                <a class="text-[#e2e2e8]/60 hover:bg-[#282a2e] transition-colors duration-200 px-2 rounded text-sm font-technical uppercase" href="/fleet">FLEET_REPORTS</a>
+                <a class="text-[#e2e2e8]/60 hover:bg-[#282a2e] transition-colors duration-200 px-2 rounded text-sm font-technical uppercase" href="/system-health">SYSTEM_HEALTH</a>
+            </nav>
+            <div class="flex items-center gap-3 bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant/10">
+                <span class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold text-xs">CH</span>
+                <span class="font-technical text-xs text-on-surface/70">CHIEF_OP</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex pt-20 pb-24 md:pb-8 min-h-screen">
+        <!-- Sidebar -->
+        <aside class="hidden md:flex flex-col h-[calc(100vh-80px)] w-80 fixed left-0 bg-[#0c0e12] py-8 px-4 gap-2 overflow-y-auto">
+            <div class="mb-8 px-4">
+                <div class="flex items-center gap-3 mb-1">
+                    <span class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center border border-outline-variant/20">
+                        <span class="material-symbols-outlined text-primary" data-icon="biotech">biotech</span>
+                    </span>
+                    <div>
+                        <h2 class="font-headline text-xl tracking-wide text-primary uppercase">CHIEF_OPERATOR</h2>
+                        <p class="font-technical text-[10px] text-primary/60 tracking-tighter">STATION_04 // ONLINE</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="space-y-1">
+                <a class="flex items-center gap-4 px-4 py-3 bg-[#282a2e] text-[#f5a623] border-l-4 border-[#f26411] transition-all duration-300 cursor-pointer" href="/inventory">
+                    <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                    <span class="font-headline tracking-widest text-lg uppercase">Inventory</span>
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 text-[#e2e2e8]/70 hover:bg-[#111318] hover:pl-6 transition-all duration-300 cursor-pointer" href="/work-orders">
+                    <span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+                    <span class="font-headline tracking-widest text-lg uppercase">Work Orders</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-80 px-4 md:px-8 py-6 max-w-7xl mx-auto w-full">
+            <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-technical border border-primary/20 rounded">UNIT_442_BETA</span>
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-headline tracking-tighter text-on-surface uppercase">VEHICLE_HEALTH_ANALYTICS</h2>
+                </div>
+            </header>
+
+            <!-- Bento Grid Content simplified -->
+            <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-6">
+                <!-- Predictive Maintenance Score -->
+                <div class="md:col-span-2 lg:col-span-4 bg-surface-container-high p-6 rounded-xl border-l-2 border-[#f26411] flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+                            <span class="text-[10px] font-technical text-primary/60 uppercase">PRDX_INDEX_2024</span>
+                        </div>
+                        <h3 class="font-headline text-xl tracking-widest text-on-surface/80 uppercase">PREDICTIVE_MAINT_SCORE</h3>
+                        <div class="mt-4 flex items-baseline gap-2">
+                            <span class="text-6xl font-headline text-primary">84</span>
+                            <span class="text-xl font-headline text-primary/40">/100</span>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-[84%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

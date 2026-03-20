@@ -1,0 +1,113 @@
+@page "/profile"
+@attribute [Authorize]
+@inject MecaPro.Blazor.Services.ApiClient Api
+
+<PageTitle>Profil & Sécurité — MecaPro</PageTitle>
+
+<main class="space-y-12 animate-in fade-in duration-700">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div class="space-y-2">
+            <p class="text-primary font-technical tracking-widest text-xs uppercase">Configuration Système</p>
+            <h2 class="text-5xl md:text-7xl font-headline tracking-wider uppercase text-on-surface">Paramètres & Sécurité</h2>
+        </div>
+        <div class="hidden md:block">
+            <span class="text-on-surface-variant font-technical text-sm px-4 py-2 bg-surface-container-low rounded-lg border border-outline-variant/10 shadow-sm">
+                ID STATION: <span class="text-primary">MP-7782-X</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Bento Grid Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <!-- Left Column: User Profile -->
+        <div class="md:col-span-4 space-y-6">
+            <div class="bg-surface-container-high rounded-xl p-6 relative overflow-hidden group shadow-sm">
+                <div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+                <div class="flex flex-col items-center text-center space-y-4">
+                    <div class="relative">
+                        <div class="w-32 h-32 rounded-xl bg-surface-container-highest flex items-center justify-center border border-outline-variant/20 overflow-hidden">
+                             @if (!string.IsNullOrEmpty(profile?.Avatar))
+                             {
+                                 <img src="@profile.Avatar" alt="Avatar" class="w-full h-full object-cover">
+                             }
+                             else
+                             {
+                                 <span class="material-symbols-outlined text-5xl text-on-surface-variant">person</span>
+                             }
+                        </div>
+                        <button class="absolute -bottom-2 -right-2 bg-primary text-on-primary p-2 rounded-lg shadow-lg active:scale-95 duration-100">
+                            <span class="material-symbols-outlined text-sm">edit</span>
+                        </button>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold font-body">@profile?.Name</h3>
+                        <p class="text-on-surface-variant text-sm font-technical uppercase">@profile?.Role</p>
+                    </div>
+                </div>
+                <div class="mt-8 space-y-4">
+                    <div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/10">
+                        <label class="text-[10px] text-on-surface-variant uppercase font-medium">Email Professionnel</label>
+                        <p class="font-technical text-on-surface">@profile?.Email</p>
+                    </div>
+                </div>
+                <button class="w-full mt-6 py-3 bg-primary/10 text-primary border border-primary/20 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-primary/20 transition-all">Modifier Profil</button>
+            </div>
+        </div>
+
+        <!-- Right Column: Security & API -->
+        <div class="md:col-span-8 space-y-6">
+            <!-- Security Card -->
+            <div class="bg-surface-container-high rounded-xl p-8 shadow-sm border border-outline-variant/10">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="material-symbols-outlined text-secondary-container text-3xl">verified_user</span>
+                    <h3 class="text-3xl font-headline tracking-wide uppercase">Sécurité du Compte</h3>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-secondary-container/10 rounded-lg text-secondary-container">
+                                <span class="material-symbols-outlined">lock_reset</span>
+                            </div>
+                            <span class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded font-bold uppercase">Activé</span>
+                        </div>
+                        <h4 class="font-bold mb-1">Double Authentification</h4>
+                        <p class="text-on-surface-variant text-xs mb-4">Validation supplémentaire requise pour la connexion.</p>
+                        <button class="text-primary text-xs font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform uppercase">
+                            Configurer 2FA <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </button>
+                    </div>
+
+                    <div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-primary/10 rounded-lg text-primary">
+                                <span class="material-symbols-outlined">api</span>
+                            </div>
+                            <span class="text-[10px] bg-primary text-on-primary px-2 py-0.5 rounded font-bold uppercase">PRO</span>
+                        </div>
+                        <h4 class="font-bold mb-1">Clés API</h4>
+                        <p class="text-on-surface-variant text-xs mb-4">Accès programmatique pour intégrations externes.</p>
+                        <button class="text-primary text-xs font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform uppercase">
+                            Générer Clé <span class="material-symbols-outlined text-sm">vpn_key</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@code {
+    private MecaPro.Blazor.Services.UserProfileDto? profile;
+
+    protected override async Task OnInitializedAsync()
+    {
+        profile = await Api.GetAsync<MecaPro.Blazor.Services.UserProfileDto>("/api/v1/profile");
+        
+        if (profile == null)
+        {
+            // Seed for preview
+            profile = new MecaPro.Blazor.Services.UserProfileDto("1", "Jean Mécanicien", "jean@mecapro.fr", "Chef d'Atelier / Administrateur", "https://i.pravatar.cc/150?u=jean", "garage-demo");
+        }
+    }
+}

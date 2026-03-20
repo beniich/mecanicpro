@@ -1,0 +1,126 @@
+@page "/finance/comparatif-carburants"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Comparatif Carburants Live</PageTitle>
+
+<div class="bg-[#111318] text-white min-h-screen pb-24 overflow-x-hidden relative">
+
+    <!-- Top Bar -->
+    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-[#FFD700]">precision_manufacturing</span>
+            <h1 class="text-xl font-black tracking-[0.2em] text-[#FFD700] uppercase">MECAPRO</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="bg-[#FFD700]/10 border border-[#FFD700]/30 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase text-[#FFD700] tracking-widest flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">public</span> SYNC_CARBU_COM_ACTIVE
+            </span>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-6xl mx-auto space-y-12 relative z-10">
+
+        <!-- Title Section -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+            <div>
+                <span class="text-[#FFD700] text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">ENERGY_PRICE_RECON</span>
+                <h2 class="text-6xl font-black tracking-tighter italic uppercase leading-none text-white">Tarifs Carburants</h2>
+                <p class="text-white/40 font-technical text-sm mt-4 uppercase tracking-[0.2em] font-black">Comparatif temps réel des stations à proximité de l'atelier.</p>
+            </div>
+            
+            <div class="bg-white/5 border border-white/5 rounded-3xl p-6 flex flex-col items-end">
+                <p class="text-[8px] font-black uppercase tracking-widest text-[#FFD700] mb-2">ZONE GÉOGRAPHIQUE ACTUELLE</p>
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[#FFD700]">location_on</span>
+                    <span class="text-xl font-black italic uppercase italic">PARIS (75000) — 5KM PK</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fuel Category Tabs -->
+        <div class="flex gap-4 bg-white/5 p-2 rounded-2xl border border-white/10 w-fit">
+            @foreach (var type in fuelTypes)
+            {
+                <button @onclick="() => selectedFuel = type" class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all @(selectedFuel == type ? "bg-[#FFD700] text-black" : "text-white/40 hover:text-white hover:bg-white/5")">@type</button>
+            }
+        </div>
+
+        <!-- Stations List -->
+        <div class="grid grid-cols-1 gap-6">
+            @foreach (var station in stations.OrderBy(s => s.Prices[selectedFuel]))
+            {
+                var isCheapest = station == stations.OrderBy(s => s.Prices[selectedFuel]).First();
+                <div class="bg-surface-container rounded-[40px] border @(isCheapest ? "border-[#FFD700]/40 shadow-[0_0_40px_rgba(255,215,0,0.08)] scale-[1.01]" : "border-white/5 opacity-80 hover:opacity-100") p-8 flex flex-col md:flex-row items-center justify-between gap-8 transition-all duration-300 relative overflow-hidden">
+                    @if (isCheapest)
+                    {
+                        <div class="absolute top-0 right-0 bg-[#FFD700] text-black text-[8px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-[0.2em] shadow-lg animate-pulse">L'ÉCONOMIE DU JOUR</div>
+                    }
+
+                    <div class="flex items-center gap-8 flex-grow">
+                        <div class="w-20 h-20 rounded-3xl bg-black/40 border border-white/10 flex items-center justify-center p-4">
+                            <img src="@station.LogoUrl" class="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all opacity-60" alt="Logo"/>
+                        </div>
+                        <div>
+                            <h3 class="font-black italic text-3xl uppercase tracking-tighter text-white">@station.Brand</h3>
+                            <p class="text-[10px] font-black uppercase text-white/30 tracking-widest mt-1">@station.Address</p>
+                            <div class="flex gap-4 mt-3">
+                                <span class="bg-white/5 px-3 py-1 rounded text-[8px] font-black uppercase tracking-widest text-white/50 border border-white/10">DISTANCE: @station.Distance KM</span>
+                                <span class="bg-white/5 px-3 py-1 rounded text-[8px] font-black uppercase tracking-widest text-[#00FF66] border border-[#00FF66]/20">DISPONIBLE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Column -->
+                    <div class="flex flex-col items-center md:items-end justify-center min-w-[200px]">
+                        <p class="text-[10px] font-black uppercase tracking-[0.3em] text-[#FFD700] mb-2 italic">@selectedFuel</p>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-6xl font-black italic text-white font-technical leading-none tracking-tighter">@station.Prices[selectedFuel].ToString("0.000")</span>
+                            <span class="text-2xl font-black text-white/50 italic font-technical">€/L</span>
+                        </div>
+                        <p class="text-[9px] font-bold text-white/30 uppercase mt-3 tracking-widest">MIS À JOUR: IL Y A 42 MIN</p>
+                    </div>
+
+                    <div class="flex gap-2 shrink-0">
+                        <button class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 text-white/40 flex items-center justify-center hover:bg-white/10 hover:text-white transition-all"><span class="material-symbols-outlined">directions</span></button>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="bg-primary/5 border border-primary/20 rounded-[32px] p-8 flex items-center justify-between mt-12">
+            <div class="flex items-center gap-4">
+               <span class="material-symbols-outlined text-primary text-4xl">lightbulb</span>
+               <p class="text-xs uppercase font-technical text-white/60 max-w-lg font-bold leading-relaxed tracking-widest">
+                  CONSEIL MECAPRO : En faisant le plein chez <span class="text-white">TOTALENERGIES ACCESS</span>, vous économisez ~5.40€ sur un réservoir de 60L par rapport à la moyenne locale.
+               </p>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    private string selectedFuel = "DÉSIEL";
+    private List<string> fuelTypes = new() { "DÉSIEL", "SP95-E10", "SP98", "E85", "GPL" };
+
+    private List<StationData> stations = new()
+    {
+        new("TOTALENERGIES ACCESS", "https://logodownload.org/wp-content/uploads/2014/08/total-logo-4.png", "Avenue de la division Leclerc, 75000", 1.2, new Dictionary<string, double> {
+            { "DÉSIEL", 1.842 }, { "SP95-E10", 1.899 }, { "SP98", 1.982 }, { "E85", 0.892 }, { "GPL", 0.999 }
+        }),
+        new("ESSO AUTOMATE 24/7", "https://logodownload.org/wp-content/uploads/2016/10/esso-logo.png", "42 Boulevard Magenta, 75010", 2.5, new Dictionary<string, double> {
+            { "DÉSIEL", 1.859 }, { "SP95-E10", 1.912 }, { "SP98", 1.999 }, { "E85", 0.910 }, { "GPL", 1.050 }
+        }),
+        new("RELAIS TOTALENERGIES", "https://logodownload.org/wp-content/uploads/2014/08/total-logo-4.png", "Rue Rivoli, 75001", 3.8, new Dictionary<string, double> {
+            { "DÉSIEL", 1.921 }, { "SP95-E10", 1.999 }, { "SP98", 2.150 }, { "E85", 1.050 }, { "GPL", 1.100 }
+        }),
+        new("BP SERVICES", "https://logodownload.org/wp-content/uploads/2014/10/bp-logo-0.png", "Quai d'Orsay, 75007", 4.1, new Dictionary<string, double> {
+            { "DÉSIEL", 1.894 }, { "SP95-E10", 1.942 }, { "SP98", 2.050 }, { "E85", 0.940 }, { "GPL", 1.080 }
+        }),
+    };
+
+    record StationData(string Brand, string LogoUrl, string Address, double Distance, Dictionary<string, double> Prices);
+}

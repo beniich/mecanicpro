@@ -1,0 +1,90 @@
+@page "/planning/planning-formations"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Planning Formations</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen pb-24">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] flex justify-between items-center px-6 h-20 w-full border-b border-[#524534]/15 z-50 sticky top-0">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+            <h1 class="font-headline uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <nav class="hidden md:flex gap-8 font-technical text-sm tracking-tighter uppercase">
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">Dashboard</a>
+                <a class="text-[#f5a623]" href="#">Catalogue</a>
+                <a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">Calendrier</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <span class="text-right hidden sm:block">
+                    <p class="text-[10px] font-technical text-on-surface-variant leading-none uppercase">Operator</p>
+                    <p class="text-xs font-bold text-on-surface uppercase">J. VANDERBILT</p>
+                </span>
+                <div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+                    <img alt="Operator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbY7yjuzzRfk7e9BdhK-T6kDQZ_3a_JeW53RyvtFyH-R59K-YpdAYg_RmlUHhRzCDqH8Av7_O1mJtuiS8by94LIGbbnPDiFQK40aUiXhKs3V2RRSB47Qk3JDATtu3vYwJ6N2yvS4LuEmVm-zMa5Leao2_uLLlTmUiIiysBO51q6dDNB6YkW6_hHMRwxfVR0JGUScqSbd3P4NLnfdjOXpQXAXP6rTUTsa8jeKkq7GFOiyr9CpAU-44aebqclSF-DJdL-T2zgzFqk2zp"/>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Hero Section / KPIs -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 uppercase">
+            <div class="md:col-span-2 bg-surface-container-high p-8 flex flex-col justify-between relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+                <div class="relative z-10">
+                    <p class="font-headline text-on-surface-variant tracking-widest text-lg">Global Progress</p>
+                    <h2 class="font-headline text-6xl text-primary mt-2">84.2%</h2>
+                    <p class="font-technical text-sm text-on-surface-variant mt-4 tracking-tighter">Certification status: ACTIVE</p>
+                </div>
+                <div class="mt-8 bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-[84%]"></div>
+                </div>
+            </div>
+            <div class="bg-surface-container-high p-8 border-l-2 border-secondary/30">
+                <p class="font-headline text-on-surface-variant tracking-widest">Next Session</p>
+                <div class="mt-4">
+                    <span class="font-technical text-xs text-secondary bg-secondary/10 px-2 py-1 rounded">24 OCT 2023</span>
+                    <h3 class="font-bold text-xl mt-2 leading-tight">ADAS Calibration V2</h3>
+                    <p class="text-sm text-on-surface-variant mt-1">Main Workshop • Hall B</p>
+                </div>
+            </div>
+            <div class="bg-surface-container-high p-8 border-l-2 border-primary/30">
+                <p class="font-headline text-on-surface-variant tracking-widest">Active Staff</p>
+                <div class="mt-4">
+                    <h3 class="font-headline text-5xl text-on-surface">14/18</h3>
+                    <p class="text-sm text-on-surface-variant mt-1">Technicians Enrolled</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bento Grid: Training Catalogue -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8 uppercase">
+                <div class="flex justify-between items-end">
+                    <h2 class="font-headline text-4xl tracking-tight">Catalogue Technique</h2>
+                    <button class="font-technical text-xs text-primary border border-primary/20 px-4 py-2 hover:bg-primary/5 transition-colors">Filter By Category</button>
+                </div>
+                <!-- Card Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-surface-container-high p-6 group hover:bg-surface-bright transition-colors">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="p-2 bg-surface-container-lowest rounded-lg">
+                                <span class="material-symbols-outlined text-primary">electric_car</span>
+                            </span>
+                            <span class="font-technical text-[10px] text-primary-container border border-primary-container/30 px-2 py-1">High Voltage</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">EV Battery Management</h4>
+                        <p class="text-sm text-on-surface-variant mb-6 leading-relaxed normal-case">Advanced diagnostics for lithium-ion power packs and thermal cooling systems. Mandatory for Level 3 certification.</p>
+                        <div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+                            <span class="font-technical text-xs text-on-surface-variant">32 Hours • 4 Modules</span>
+                            <button class="bg-primary text-on-primary px-4 py-2 text-xs font-bold hover:scale-105 active:scale-95 transition-all">Enroll Staff</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

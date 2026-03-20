@@ -1,0 +1,268 @@
+@page "/clients/fiche-client/{Id:guid}"
+@attribute [Authorize]
+@inject ApiClient Api
+
+<PageTitle>MECAPRO — Fiche Client</PageTitle>
+
+@if (loading)
+{
+    <div class="flex items-center justify-center min-h-screen pb-24">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+    </div>
+}
+else if (customer == null)
+{
+    <div class="flex flex-col items-center justify-center min-h-screen pb-24 gap-4">
+        <span class="material-symbols-outlined text-6xl text-error">error</span>
+        <h2 class="text-2xl font-black">CLIENT INTROUVABLE</h2>
+        <a href="/explorateur-modules" class="text-primary uppercase font-bold tracking-widest hover:underline">Retour à l'explorateur</a>
+    </div>
+}
+else
+{
+    <div class="text-on-background font-body min-h-screen pb-24">
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Hero Header Section -->
+        <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="flex items-center gap-6">
+                <div class="relative">
+                    <div class="w-32 h-32 rounded-xl bg-surface-container-high overflow-hidden border-2 border-primary/20 p-1">
+                        @{
+                            var avatarUrl = $"https://i.pravatar.cc/150?u={customer.Id}";
+                        }
+                        <img class="w-full h-full object-cover rounded-lg grayscale hover:grayscale-0 transition-all duration-500" alt="Portrait photo of customer" src="@avatarUrl"/>
+                    </div>
+                    <div class="absolute -bottom-2 -right-2 bg-secondary-container text-white px-3 py-1 rounded-lg font-headline tracking-wider text-sm shadow-lg">@customer.Segment</div>
+                </div>
+                <div>
+                    <h2 class="font-headline text-5xl text-on-background tracking-wide mb-1 uppercase">@customer.FirstName @customer.LastName</h2>
+                    <div class="flex items-center gap-4 text-on-surface-variant font-technical">
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="id_card">id_card</span> @customer.Id.ToString().Substring(0,8).ToUpper()</span>
+                        <span class="flex items-center gap-1 text-primary"><span class="material-symbols-outlined text-sm" data-icon="verified">verified</span> Client depuis @customer.CreatedAt.Year</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-6 py-3 rounded-lg font-bold transition-all active:scale-95 flex items-center gap-2">
+                    <span class="material-symbols-outlined" data-icon="edit">edit</span> Modifier
+                </button>
+                <a href="/clients/@customer.Id/add-vehicle" class="bg-gradient-to-br from-primary-container to-secondary-container text-on-primary-container px-6 py-3 rounded-lg font-bold transition-all active:scale-95 flex items-center gap-2 shadow-[0_0_20px_rgba(245,166,35,0.2)]">
+                    <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span> Nouvelle Entrée
+                </a>
+            </div>
+        </div>
+
+        <!-- Bento Grid Content -->
+        <div class="bento-grid">
+            <!-- Contact Info Card -->
+            <div class="col-span-12 md:col-span-4 bg-surface-container-high rounded-xl p-6 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+                <h3 class="font-headline text-xl text-on-surface-variant tracking-wider mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary" data-icon="contact_page">contact_page</span>
+                    COORDONNÉES
+                </h3>
+                <div class="space-y-6">
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-on-surface-variant/50 font-bold block mb-1">Téléphone</label>
+                        <p class="font-technical text-lg text-primary">@(string.IsNullOrEmpty(customer.Phone) ? "NON RENSEIGNÉ" : customer.Phone)</p>
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-on-surface-variant/50 font-bold block mb-1">E-mail</label>
+                        <p class="font-body text-on-surface">@customer.Email</p>
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-on-surface-variant/50 font-bold block mb-1">Adresse</label>
+                        <p class="font-body text-on-surface leading-relaxed">
+                            @if (!string.IsNullOrEmpty(customer.Street))
+                            {
+                                @customer.Street<br/>@customer.PostalCode @customer.City
+                            }
+                            else
+                            {
+                                <span class="italic opacity-50">Aucune adresse enregistrée</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loyalty Status Card -->
+            <a href="/clients/detail-fidelite/@customer.Id" class="col-span-12 md:col-span-4 bg-surface-container-high rounded-xl p-6 relative overflow-hidden block hover:bg-surface-container-highest transition-colors">
+                <div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+                <h3 class="font-headline text-xl text-on-surface-variant tracking-wider mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary" data-icon="loyalty">loyalty</span>
+                    PROGRAMME FIDÉLITÉ
+                </h3>
+                <div class="flex flex-col h-[calc(100%-3rem)] justify-between">
+                    <div>
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="font-headline text-4xl text-primary text-shadow-glow">@customer.LoyaltyPoints.ToString("N0")</span>
+                            @{
+                                var nextGoal = customer.LoyaltyPoints > 2000 ? 5000 : (customer.LoyaltyPoints > 500 ? 2000 : 500);
+                                var progress = (customer.LoyaltyPoints * 100.0 / nextGoal);
+                            }
+                            <span class="font-technical text-xs text-on-surface-variant">PTS / @nextGoal.ToString("N0")</span>
+                        </div>
+                        <div class="w-full h-3 bg-surface-container-lowest rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-primary to-secondary-container" style="width: @(progress)%"></div>
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-highest/50 p-4 rounded-lg mt-6 border border-outline-variant/10">
+                        <p class="text-xs text-on-surface-variant mb-2 italic">Dernière transaction :</p>
+                        @if (customer.LoyaltyHistory.Any())
+                        {
+                            var last = customer.LoyaltyHistory.OrderByDescending(t => t.Date).First();
+                            <p class="font-bold text-on-surface flex items-center gap-2 uppercase text-[10px]">
+                                <span class="material-symbols-outlined text-secondary text-sm" data-icon="history">history</span>
+                                @last.Points pts : @last.Reason (@last.Date.ToString("dd/MM/yy"))
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="text-xs italic opacity-50">Aucun historique</p>
+                        }
+                    </div>
+                </div>
+            </a>
+
+            <!-- Lifetime Value Card -->
+            <div class="col-span-12 md:col-span-4 bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/15 flex flex-col justify-center items-center text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+                <label class="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/70 font-bold mb-4">Préférence Contact</label>
+                <div class="font-headline text-4xl text-on-surface tracking-tighter mb-2 uppercase">@customer.PreferredContact</div>
+                <div class="flex items-center gap-2 text-sm font-technical text-primary">
+                    <span class="material-symbols-outlined text-sm" data-icon="notification_important">notification_important</span>
+                    Canal @customer.PreferredContact actif
+                </div>
+                <div class="mt-8 flex gap-4 w-full">
+                    <div class="flex-1 bg-surface-container-high p-3 rounded-lg">
+                        <p class="text-[10px] text-on-surface-variant/50 uppercase font-bold">Tags</p>
+                        <p class="font-technical text-[10px] mt-1 uppercase">@(string.IsNullOrEmpty(customer.Tags) ? "NONE" : customer.Tags)</p>
+                    </div>
+                    <div class="flex-1 bg-surface-container-high p-3 rounded-lg">
+                        <p class="text-[10px] text-on-surface-variant/50 uppercase font-bold">Interventions</p>
+                        <p class="font-technical text-sm mt-1">@customer.Vehicles.Count</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicles Fleet Section -->
+            <div class="col-span-12 md:col-span-8 bg-surface-container rounded-xl p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="font-headline text-2xl text-on-surface tracking-wider">VÉHICULES ENREGISTRÉS</h3>
+                    <span class="font-technical text-xs px-3 py-1 bg-surface-container-highest rounded-full text-on-surface-variant">@customer.Vehicles.Count UNITÉS</span>
+                </div>
+                <div class="space-y-4 mb-12">
+                    @foreach (var v in customer.Vehicles)
+                    {
+                        <a href="/vehicles/@v.Id" class="flex flex-col md:flex-row items-center gap-6 p-4 rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-colors group cursor-pointer border border-transparent hover:border-outline-variant/20 block">
+                            <div class="w-32 h-20 rounded bg-surface-container-highest flex-shrink-0 overflow-hidden flex items-center justify-center">
+                                <span class="material-symbols-outlined text-4xl opacity-20" data-icon="directions_car">directions_car</span>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-bold text-lg text-on-surface uppercase">@v.Make @v.Model</h4>
+                                        <p class="text-xs font-technical text-on-surface-variant mt-1">VIN: <span class="text-primary/70">@(v.VIN ?? "INCONNU")</span></p>
+                                    </div>
+                                    <span class="px-2 py-1 rounded text-[10px] font-technical bg-primary-container/10 text-primary border border-primary/20 uppercase">@v.LicensePlate</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-8 text-right">
+                                <div>
+                                    <p class="text-[10px] text-on-surface-variant/50 uppercase font-bold">Kilométrage</p>
+                                    <p class="font-technical text-sm">@v.Mileage.ToString("N0") km</p>
+                                </div>
+                                <div class="hidden sm:block">
+                                    <p class="text-[10px] text-on-surface-variant/50 uppercase font-bold">Année</p>
+                                    <p class="font-technical text-sm">@v.Year</p>
+                                </div>
+                                <span class="material-symbols-outlined text-on-surface-variant self-center group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+                            </div>
+                        </a>
+                    }
+                    @if (!customer.Vehicles.Any())
+                    {
+                        <p class="text-center py-12 italic opacity-30">Aucun véhicule enregistré pour ce client.</p>
+                    }
+                </div>
+
+                <!-- Timeline Interventions -->
+                <div class="mt-12 border-t border-outline-variant/15 pt-10">
+                    <h3 class="font-headline text-2xl text-on-surface tracking-wider mb-8 uppercase italic flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">history</span> HISTORIQUE TECHNIQUE
+                    </h3>
+                    <div class="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-0 before:w-[2px] before:bg-outline-variant/20">
+                        @foreach (var r in customer.Revisions)
+                        {
+                            <div class="relative group">
+                                <div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-primary shadow-[0_0_10px_rgba(245,166,35,0.4)] z-10"></div>
+                                <div class="bg-surface-container-low border border-outline-variant/10 p-5 rounded-2xl hover:bg-surface-container-high transition-all cursor-pointer" @onclick='() => Nav.NavigateTo($"/clients/detail-intervention/{r.Id}")'>
+                                    <div class="flex justify-between items-start mb-2">
+                                        <p class="font-technical text-[10px] text-primary font-black uppercase tracking-widest">OR-@r.Id.ToString().Substring(0,8).ToUpper()</p>
+                                        <span class="text-[10px] font- technical text-on-surface-variant">@r.ScheduledDate.ToShortDateString()</span>
+                                    </div>
+                                    <div class="flex justify-between items-end">
+                                        <div>
+                                            <h5 class="font-black italic text-lg text-white uppercase">@r.Type</h5>
+                                            <p class="text-xs text-on-surface-variant uppercase">@r.Status</p>
+                                        </div>
+                                        <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-primary">analytics</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                         @if (!customer.Revisions.Any())
+                        {
+                            <p class="text-on-surface-variant opacity-40 italic text-sm">Aucune intervention enregistrée.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity / Notes -->
+            <div class="col-span-12 md:col-span-4 flex flex-col gap-6">
+                <!-- Internal Notes -->
+                <div class="bg-surface-container-high rounded-xl p-6 flex-1 border border-outline-variant/10">
+                    <h3 class="font-headline text-xl text-on-surface-variant tracking-wider mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-secondary" data-icon="description">description</span>
+                        NOTES INTERNES
+                    </h3>
+                    <div class="bg-surface-container-lowest p-4 rounded-lg text-sm text-on-surface leading-relaxed min-h-[120px]">
+                        @(string.IsNullOrEmpty(customer.Notes) ? "Aucune note interne pour ce client." : customer.Notes)
+                    </div>
+                </div>
+                <!-- Quick Support -->
+                <div class="bg-gradient-to-br from-secondary-container to-on-secondary-fixed-variant p-6 rounded-xl text-white shadow-xl relative overflow-hidden group cursor-pointer" onclick="window.location.href='/chat'">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-[120px]" data-icon="support_agent">support_agent</span>
+                    </div>
+                    <p class="font-headline text-2xl mb-2">ASSISTANCE DIRECTE</p>
+                    <p class="text-sm opacity-80 mb-6 font-body">Contacter le conseiller de M. @customer.LastName</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+                            <span class="material-symbols-outlined" data-icon="call">call</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+                            <span class="material-symbols-outlined" data-icon="chat">chat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    private CustomerDetailDto? customer;
+    private bool loading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        loading = true;
+        customer = await Api.GetAsync<CustomerDetailDto>($"/api/v1/customers/{Id}");
+        loading = false;
+    }
+}

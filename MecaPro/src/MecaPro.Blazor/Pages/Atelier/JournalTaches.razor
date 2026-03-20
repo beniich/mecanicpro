@@ -1,0 +1,120 @@
+@page "/atelier/journal-taches"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#06070a] text-white p-8 font-['Outfit']">
+    <!-- Neon Counter Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-[#02e1f2]/20 flex items-center justify-center border border-[#02e1f2]/30 shadow-[0_0_30px_rgba(2,225,242,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-[#02e1f2] text-3xl animate-pulse">timer</span>
+                    <div class="absolute inset-0 bg-[#02e1f2]/10 blur-xl"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Time <span class="text-[#02e1f2]">Tracker</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">JOURNAL DE POINTAGE & PRODUCTIVITÉ TECHNICIEN</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-3 px-6 rounded-2xl flex items-center gap-6">
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase">Total Équipe Jour</p>
+                      <p class="text-xl font-black italic">42.5<span class="text-xs text-white/50 lowercase">h</span></p>
+                 </div>
+                 <div class="w-[1px] h-8 bg-white/10"></div>
+                 <div>
+                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase">Rentabilité Brute</p>
+                      <p class="text-xl font-black italic text-[#02e1f2]">108<span class="text-xs text-white/50 lowercase">%</span></p>
+                 </div>
+             </div>
+             <button class="bg-[#02e1f2] text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-[0_0_30px_rgba(2,225,242,0.3)]">
+                 EXPORTER LOGS
+             </button>
+        </div>
+    </div>
+
+    <!-- Active Tasks Matrix -->
+    <div class="flex flex-col gap-6 mb-12 relative">
+        <div class="absolute -left-20 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-[#02e1f2]/20 to-transparent"></div>
+        
+        @foreach (var task in activeJournal)
+        {
+            <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 hover:bg-white/[0.04] transition-all group overflow-hidden relative animate-fade-in">
+                @if (task.IsRunning)
+                {
+                    <div class="absolute top-0 right-0 p-4">
+                        <span class="flex items-center gap-2 text-[8px] font-black uppercase text-orange-500 animate-pulse">
+                             <div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div> LIVE TRACKING
+                        </span>
+                    </div>
+                }
+
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <!-- Tech Profile -->
+                    <div class="flex flex-col items-center justify-center gap-2 min-w-[120px] text-center border-r border-white/5 pr-8">
+                         <div class="w-12 h-12 rounded-full border-2 border-[#02e1f2]/30 bg-black flex items-center justify-center font-black">@task.TechInitial</div>
+                         <p class="text-[10px] font-black uppercase tracking-widest italic text-[#02e1f2]">@task.TechName</p>
+                    </div>
+
+                    <!-- Task Detail -->
+                    <div class="flex-grow">
+                         <div class="flex items-center gap-3 mb-1">
+                             <h4 class="text-lg font-black italic uppercase tracking-tight group-hover:text-[#02e1f2] transition-colors leading-relaxed">@task.Plate — @task.ServiceType</h4>
+                         </div>
+                         <p class="text-[11px] text-gray-500 italic uppercase tracking-widest font-outfit uppercase tracking-widest">TÂCHE: @task.Description</p>
+                         
+                         <div class="flex gap-6 mt-6">
+                              <div>
+                                   <p class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1 italic">TEMPS ESTIMÉ</p>
+                                   <p class="text-base font-black italic text-gray-300">@task.EstimatedTime<span class="text-[10px]">m</span></p>
+                              </div>
+                              <div class="w-[1px] h-8 bg-white/5"></div>
+                              <div>
+                                   <p class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1 italic">TEMPS RÉEL</p>
+                                   <p class="text-base font-black italic @(task.IsRunning ? "text-orange-500" : (task.ActualTime > task.EstimatedTime ? "text-red-500" : "text-green-500"))">@task.ActualTime<span class="text-[10px]">m</span></p>
+                              </div>
+                         </div>
+                    </div>
+
+                    <!-- Timer Control Area -->
+                    <div class="flex gap-4 items-center">
+                         @if (task.IsRunning)
+                         {
+                             <div class="bg-black/40 px-6 py-3 rounded-2xl border border-orange-500/20 shadow-[0_0_20px_rgba(249,115,22,0.1)]">
+                                  <p class="text-[9px] text-orange-500 font-black uppercase mb-1 tracking-widest italic leading-relaxed">Timer Actif</p>
+                                  <p class="text-3xl font-black italic leading-none font-mono">@task.DisplayTimer</p>
+                             </div>
+                             <button class="bg-red-600/10 hover:bg-red-600 text-red-500 hover:text-white px-6 py-3 rounded-2xl border border-red-500/30 transition-all font-black uppercase text-xs tracking-widest leading-relaxed">STOP</button>
+                         }
+                         else
+                         {
+                             <button class="bg-[#02e1f2]/10 hover:bg-[#02e1f2] text-[#02e1f2] hover:text-black px-10 py-5 rounded-2xl border border-[#02e1f2]/30 transition-all font-black uppercase text-sm tracking-widest italic shadow-xl shadow-black/40">DÉMARRER TÂCHE</button>
+                         }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<JournalEntry> activeJournal = new()
+    {
+        new JournalEntry { TechInitial = "KM", TechName = "KARLAN", Plate = "AB-123-CD", ServiceType = "RÉVISION ZOE", Description = "Vidange Fluides & Filtres", EstimatedTime = 45, ActualTime = 38, IsRunning = true, DisplayTimer = "00:38:12" },
+        new JournalEntry { TechInitial = "SB", TechName = "SYLVAIN", Plate = "XY-987-ZZ", ServiceType = "CHASSIS BMW", Description = "Dépose Paralléllisme Train Avant", EstimatedTime = 120, ActualTime = 135, IsRunning = false, DisplayTimer = "" },
+        new JournalEntry { TechInitial = "MT", TechName = "MAXIME", Plate = "ER-003-XX", ServiceType = "ENGINE REBUILD", Description = "Mesure Alésage Cylindres V8", EstimatedTime = 60, ActualTime = 12, IsRunning = true, DisplayTimer = "00:12:44" },
+        new JournalEntry { TechInitial = "KM", TechName = "KARLAN", Plate = "KM-442-PT", ServiceType = "DIAGNOSTIC", Description = "Scan OBDIII SignalR Sync", EstimatedTime = 30, ActualTime = 25, IsRunning = false, DisplayTimer = "" }
+    };
+
+    public class JournalEntry {
+        public string TechInitial { get; set; } = "";
+        public string TechName { get; set; } = "";
+        public string Plate { get; set; } = "";
+        public string ServiceType { get; set; } = "";
+        public string Description { get; set; } = "";
+        public int EstimatedTime { get; set; }
+        public int ActualTime { get; set; }
+        public bool IsRunning { get; set; }
+        public string DisplayTimer { get; set; } = "";
+    }
+}

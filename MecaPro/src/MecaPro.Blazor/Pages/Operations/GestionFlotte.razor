@@ -1,0 +1,157 @@
+@page "/clients/gestion-flotte"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Corporate Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-sky-600/20 flex items-center justify-center border border-sky-500/30">
+                    <span class="material-symbols-outlined text-sky-400">domain</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Corporate <span class="text-sky-500">Fleet Control</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">ADMINISTRATION DES PARCS VÉHICULES B2B</p>
+        </div>
+        
+        <div class="flex gap-4">
+            <div class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl flex items-center gap-6">
+                <div>
+                    <p class="text-[9px] text-gray-500 font-black tracking-widest leading-none mb-1 uppercase">Flotte Totale</p>
+                    <p class="text-xl font-black text-sky-500 italic">382 <span class="text-xs text-white/50">Unités</span></p>
+                </div>
+                <div class="w-[1px] h-8 bg-white/10"></div>
+                <div>
+                    <p class="text-[9px] text-gray-500 font-black tracking-widest leading-none mb-1 uppercase">Maintenances Dues</p>
+                    <p class="text-xl font-black italic text-red-500">14</p>
+                </div>
+            </div>
+            <button class="bg-sky-600 hover:bg-sky-500 px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-[0_0_30px_rgba(14,165,233,0.3)] flex items-center gap-2">
+                <span class="material-symbols-outlined">add</span> NOUVELLE FLOTTE
+            </button>
+        </div>
+    </div>
+
+    <!-- Fleet Dashboard -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        @foreach (var fleet in activeFleets)
+        {
+            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 hover:bg-white/[0.04] transition-all cursor-pointer group">
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <h3 class="text-xl font-black italic uppercase tracking-tighter group-hover:text-sky-400 transition-colors">@fleet.CompanyName</h3>
+                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1 italic">SIRET: @fleet.Siret</p>
+                    </div>
+                    <span class="px-3 py-1 bg-sky-500/10 text-sky-500 text-[9px] font-black uppercase tracking-widest rounded-full border border-sky-500/20">@fleet.ClientType</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="bg-black/40 p-4 rounded-2xl border border-white/5">
+                        <p class="text-[9px] text-gray-500 font-black tracking-widest mb-1 italic">VÉHICULES</p>
+                        <p class="text-xl font-black italic">@fleet.VehicleCount</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-2xl border border-white/5">
+                        <p class="text-[9px] text-gray-500 font-black tracking-widest mb-1 italic">TCO MOYEN</p>
+                        <p class="text-xl font-black italic">@fleet.AverageTco <span class="text-xs">€/an</span></p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 mb-8">
+                    <div class="flex justify-between items-center text-[10px]">
+                        <span class="text-gray-500 font-bold uppercase">SLA Maintenance</span>
+                        <span class="font-black text-sky-400">@fleet.SlaPerformance% Conformité</span>
+                    </div>
+                    <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-sky-500 rounded-full" style="width: @fleet.SlaPerformance%"></div>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button class="flex-grow bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">GÉRER PARC</button>
+                    <button class="w-12 h-12 flex items-center justify-center bg-white/5 hover:bg-sky-500/20 border border-white/10 rounded-xl transition-all">
+                        <span class="material-symbols-outlined text-lg">database</span>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Fleet Actions & Global View -->
+    <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10">
+        <div class="flex justify-between items-center mb-10">
+            <h3 class="text-2xl font-black italic uppercase tracking-tighter">Planification Prédictive Parcs</h3>
+            <div class="flex gap-4">
+                <button class="bg-white/5 border border-white/10 px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all font-outfit uppercase tracking-widest">Générer Rapport Consolidation</button>
+                <button class="bg-white/5 border border-white/10 px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all font-outfit uppercase tracking-widest italic text-sky-400">Exporter pour SAP/Oracle</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+             <div class="bg-black/40 p-8 rounded-[2rem] border border-white/5">
+                 <h4 class="text-xs font-black uppercase text-gray-500 tracking-widest mb-6 italics">Alertes Kilométrage Critique (Prochaines 48h)</h4>
+                 <div class="space-y-4">
+                      @foreach (var alert in fleetAlerts)
+                      {
+                          <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border-l-4 border-sky-500">
+                               <div>
+                                   <p class="text-sm font-bold tracking-tight">@alert.Plate</p>
+                                   <p class="text-[10px] text-gray-500 italic">CLIENT: @alert.Client</p>
+                               </div>
+                               <div class="text-right">
+                                   <p class="text-[10px] text-orange-500 font-black italic">DEPASSEMENT + @alert.Drift KM</p>
+                                   <button class="text-[9px] font-black uppercase text-sky-500 hover:text-sky-400 transition-colors mt-1 font-outfit uppercase tracking-widest">Planifier d'urgence</button>
+                               </div>
+                          </div>
+                      }
+                 </div>
+             </div>
+
+             <div class="bg-sky-600/10 border border-sky-500/20 rounded-[2rem] p-8 flex flex-col justify-center">
+                 <div class="flex items-center gap-6 mb-8">
+                      <div class="w-16 h-16 rounded-2xl bg-sky-500 flex items-center justify-center shadow-[0_0_30px_rgba(14,165,233,0.4)]">
+                          <span class="material-symbols-outlined text-black text-3xl font-black">hub</span>
+                      </div>
+                      <div>
+                           <h4 class="text-2xl font-black italic uppercase italic tracking-tighter">Connexion Portal B2B</h4>
+                           <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1 font-outfit uppercase tracking-widest">Inviter un gestionnaire de parc client</p>
+                      </div>
+                 </div>
+                 <div class="bg-black/40 p-1 rounded-2xl border border-white/10 flex">
+                      <input type="text" placeholder="Email du gestionnaire client..." class="bg-transparent border-none flex-grow p-4 text-sm font-medium focus:outline-none">
+                      <button class="m-1 bg-sky-600 px-6 rounded-xl font-black uppercase text-[10px] tracking-widest shadow-xl">ENVOYER INVITATION</button>
+                 </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<FleetInfo> activeFleets = new()
+    {
+        new FleetInfo { CompanyName = "TRANS-LOGISTIX EUROPE", Siret = "452 331 992 00018", VehicleCount = 142, AverageTco = "2,450", SlaPerformance = 98, ClientType = "TRANSPORT" },
+        new FleetInfo { CompanyName = "PHARMANORD GROUP", Siret = "881 204 443 00031", VehicleCount = 58, AverageTco = "1,820", SlaPerformance = 92, ClientType = "MÉDICAL" },
+        new FleetInfo { CompanyName = "CITY-RENTAL S.A.S", Siret = "552 441 992 00010", VehicleCount = 182, AverageTco = "3,110", SlaPerformance = 85, ClientType = "LOCATION" }
+    };
+
+    private List<FleetAlert> fleetAlerts = new()
+    {
+        new FleetAlert { Plate = "AB-123-CD", Client = "TRANS-LOGISTIX", Drift = 850 },
+        new FleetAlert { Plate = "XY-987-ZZ", Client = "PHARMANORD", Drift = 340 },
+        new FleetAlert { Plate = "KM-442-PT", Client = "CITY-RENTAL", Drift = 4220 }
+    };
+
+    public class FleetInfo {
+        public string CompanyName { get; set; } = "";
+        public string Siret { get; set; } = "";
+        public int VehicleCount { get; set; }
+        public string AverageTco { get; set; } = "";
+        public int SlaPerformance { get; set; }
+        public string ClientType { get; set; } = "";
+    }
+
+    public class FleetAlert {
+        public string Plate { get; set; } = "";
+        public string Client { get; set; } = "";
+        public int Drift { get; set; }
+    }
+}

@@ -1,0 +1,165 @@
+@page "/atelier/formations"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Blue/Cyber Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
+                    <span class="material-symbols-outlined text-indigo-400">school</span>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Skill <span class="text-indigo-500">Academy</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">GESTION DES CERTIFICATIONS & FORMATIONS TECHNIQUES</p>
+        </div>
+        
+        <div class="flex gap-4">
+            <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-2xl flex items-center gap-6">
+                <div>
+                    <p class="text-[9px] text-gray-500 font-black tracking-widest leading-none mb-1 uppercase">Certifiés Actifs</p>
+                    <p class="text-xl font-black text-indigo-500 italic">42</p>
+                </div>
+                <div class="w-[1px] h-8 bg-white/10"></div>
+                <div>
+                    <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase">Renouvellements Dûs</p>
+                    <p class="text-xl font-black italic text-red-500">3</p>
+                </div>
+            </div>
+            <button class="bg-indigo-600 hover:bg-indigo-500 px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest transition-all shadow-[0_0_30px_rgba(79,70,229,0.3)] flex items-center gap-2">
+                <span class="material-symbols-outlined">add_circle</span> CREER SESSION
+            </button>
+        </div>
+    </div>
+
+    <!-- Featured Certifications Matrix -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        @foreach (var cert in certifications)
+        {
+            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 hover:bg-white/[0.04] transition-all cursor-pointer group relative overflow-hidden">
+                <div class="absolute -right-8 -top-8 w-24 h-24 bg-indigo-500/10 blur-3xl opacity-20 group-hover:opacity-60 transition-opacity"></div>
+                
+                <div class="flex justify-between items-start mb-10">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/30">
+                        <span class="material-symbols-outlined text-indigo-400 text-3xl">@(cert.Icon)</span>
+                    </div>
+                    @if (cert.IsExpiringSoon)
+                    {
+                        <span class="bg-red-600/20 text-red-500 text-[8px] font-black px-2 py-0.5 rounded-full border border-red-500/30 font-outfit uppercase tracking-widest">ALERTE RENOUVELLEMENT</span>
+                    }
+                </div>
+
+                <h3 class="text-xl font-black italic uppercase tracking-tighter mb-4 italic leading-tight">@cert.Name</h3>
+                <p class="text-[11px] text-gray-400 italic mb-8 line-clamp-2 leading-relaxed font-outfit">@cert.Description</p>
+
+                <div class="flex items-center gap-6 bg-black/40 px-6 py-4 rounded-2xl border border-white/5 mb-8">
+                     <div>
+                          <p class="text-[9px] text-gray-500 font-black tracking-widest leading-none mb-1 uppercase italic">PARTICIPANTS</p>
+                          <p class="text-xl font-black italic text-white">@cert.TechnicianCount</p>
+                     </div>
+                     <div class="flex-grow">
+                          <div class="flex -space-x-3 justify-end">
+                              <div class="w-8 h-8 rounded-full border-2 border-[#1a1c24] bg-indigo-600 flex items-center justify-center font-black text-[10px]">KM</div>
+                              <div class="w-8 h-8 rounded-full border-2 border-[#1a1c24] bg-teal-500 flex items-center justify-center font-black text-[10px]">SB</div>
+                              <div class="w-8 h-8 rounded-full border-2 border-[#1a1c24] bg-white/5 flex items-center justify-center font-black text-[8px]">+3</div>
+                          </div>
+                     </div>
+                </div>
+
+                <button class="w-full bg-indigo-600 text-black py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-900/40">GÉRER SESSION</button>
+            </div>
+        }
+    </div>
+
+    <!-- Upcoming Sessions & Skills Matrix -->
+    <div class="bg-[#111318]/60 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10">
+        <div class="flex justify-between items-center mb-10">
+            <h3 class="text-2xl font-black italic uppercase tracking-tighter">Prochaines Sessions Planifiées</h3>
+            <div class="flex gap-4">
+                <button class="bg-white/5 border border-white/10 px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all font-outfit uppercase tracking-widest">Voir Matrice Compétences (M6.4)</button>
+            </div>
+        </div>
+
+        <div class="overflow-hidden">
+             <table class="w-full text-left border-collapse">
+                 <thead>
+                     <tr class="text-[10px] text-gray-500 font-black uppercase tracking-widest bg-black/20">
+                         <th class="px-8 py-4 uppercase tracking-widest">Formation</th>
+                         <th class="px-8 py-4 uppercase tracking-widest">Instructeur</th>
+                         <th class="px-8 py-4 uppercase tracking-widest">Date / Durée</th>
+                         <th class="px-8 py-4 uppercase tracking-widest">Capacité</th>
+                         <th class="px-8 py-4 uppercase tracking-widest text-right">Action</th>
+                     </tr>
+                 </thead>
+                 <tbody class="divide-y divide-white/[0.05]">
+                     @foreach (var session in upcomingSessions)
+                     {
+                         <tr class="hover:bg-white/[0.01] transition-all group">
+                             <td class="px-8 py-6">
+                                 <div class="flex items-center gap-4">
+                                     <div class="w-2 h-10 bg-indigo-500/20 rounded-full group-hover:bg-indigo-500 transition-all"></div>
+                                     <div>
+                                         <p class="font-bold text-sm uppercase italic tracking-tight italic uppercase tracking-widest leading-relaxed">@session.Title</p>
+                                         <p class="text-[9px] text-gray-500 font-black uppercase italic tracking-[0.2em] font-outfit uppercase tracking-widest">Niveau: @session.Level</p>
+                                     </div>
+                                 </div>
+                             </td>
+                             <td class="px-8 py-6">
+                                 <p class="text-xs font-black uppercase">@session.Trainer</p>
+                             </td>
+                             <td class="px-8 py-6">
+                                 <p class="text-xs font-black uppercase">@session.Date</p>
+                                 <p class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">@session.Duration</p>
+                             </td>
+                             <td class="px-8 py-6">
+                                 <div class="flex justify-between items-center w-24 mb-1">
+                                      <span class="text-[9px] text-gray-500 font-black uppercase">@session.Enrolled/@session.Capacity</span>
+                                 </div>
+                                 <div class="w-24 h-1 bg-white/5 rounded-full overflow-hidden">
+                                      <div class="h-full bg-indigo-500" style="width: @(session.Enrolled * 100 / session.Capacity)%"></div>
+                                 </div>
+                             </td>
+                             <td class="px-8 py-6 text-right">
+                                 <button class="bg-white/5 border border-white/5 px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest hover:border-indigo-500 transition-all font-outfit uppercase tracking-widest">INSCRIPTION</button>
+                             </td>
+                         </tr>
+                     }
+                 </tbody>
+             </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<CertInfo> certifications = new()
+    {
+        new CertInfo { Name = "Expertise Haute Tension EV", Description = "Habilitation électrique B2VL / B2V spécialisée véhicules électriques & hybrides.", Icon = "bolt", TechnicianCount = 5, IsExpiringSoon = true },
+        new CertInfo { Name = "Diagnostic Multi-Marques Pro", Description = "Maîtrise avancée des oscilloscopes et outils de diagnostic OBD-III (M2.8).", Icon = "analytics", TechnicianCount = 12, IsExpiringSoon = false },
+        new CertInfo { Name = "Spécialisation Moteurs V6/V8", Description = "Cycle lourd de formation sur le reconditionnement moteur haut de gamme (M2.10).", Icon = "settings", TechnicianCount = 3, IsExpiringSoon = false }
+    };
+
+    private List<SessionInfo> upcomingSessions = new()
+    {
+        new SessionInfo { Title = "Sécurité & Incendie Batterie", Level = "CRITIQUE", Trainer = "B. DELAVILLE", Date = "12-Avril-2026", Duration = "3 JOURS", Enrolled = 4, Capacity = 6 },
+        new SessionInfo { Title = "Optimisation Flux SignalR IoT", Level = "EXPERT", Trainer = "IA-TRAINER", Date = "15-Avril-2026", Duration = "1 JOUR", Enrolled = 8, Capacity = 10 },
+        new SessionInfo { Title = "Relation Client B2B & Support", Level = "STANDARD", Trainer = "C. MOREAU", Date = "20-Avril-2026", Duration = "0.5 JOUR", Enrolled = 15, Capacity = 20 }
+    };
+
+    public class CertInfo {
+        public string Name { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Icon { get; set; } = "";
+        public int TechnicianCount { get; set; }
+        public bool IsExpiringSoon { get; set; }
+    }
+
+    public class SessionInfo {
+        public string Title { get; set; } = "";
+        public string Level { get; set; } = "";
+        public string Trainer { get; set; } = "";
+        public string Date { get; set; } = "";
+        public string Duration { get; set; } = "";
+        public int Enrolled { get; set; }
+        public int Capacity { get; set; }
+    }
+}

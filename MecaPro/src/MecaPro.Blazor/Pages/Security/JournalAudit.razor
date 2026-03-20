@@ -1,0 +1,120 @@
+@page "/securite/journal-audit"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Matrix/Cyber Audit Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 flex items-center justify-center border border-indigo-500/30 shadow-[0_0_40px_rgba(79,70,229,0.15)] overflow-hidden relative group">
+                    <span class="material-symbols-outlined text-indigo-400 text-3xl animate-pulse">history_edu</span>
+                    <div class="absolute inset-x-0 bottom-0 h-1 bg-indigo-600"></div>
+                </div>
+                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Audit <span class="text-indigo-500 font-light italic uppercase shadow-none border-none">JOURNAL</span></h1>
+            </div>
+            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">LOG IMMUABLE DES ACTIONS UTILISATEURS & ÉVÉNEMENTS SYSTÈME</p>
+        </div>
+        
+        <div class="flex gap-4">
+             <div class="bg-black/60 border border-white/5 py-4 px-8 rounded-3xl flex items-center gap-8 shadow-xl shadow-black/40">
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Événements (24H)</p>
+                      <p class="text-2xl font-black italic shadow-none border-none border-0 text-indigo-500 uppercase tracking-widest leading-relaxed">1,482</p>
+                 </div>
+                 <div class="w-[1px] h-10 bg-white/10"></div>
+                 <div class="text-center">
+                      <p class="text-[8px] text-gray-400 font-black tracking-widest leading-none mb-2 uppercase italic shadow-none border-none">Integrity Hash</p>
+                      <p class="text-xs font-black italic shadow-none border-none border-0 text-emerald-500 uppercase tracking-widest leading-relaxed">SHA-256 VALID</p>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Audit Log Feed -->
+    <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3.5rem] overflow-hidden shadow-2xl relative">
+        <div class="p-10 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <h3 class="text-xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none italic">Flux d'Audit des Opérations SQL/API</h3>
+            
+            <div class="flex flex-wrap gap-4">
+                 <div class="bg-black/40 border border-white/5 rounded-xl px-4 py-2 flex items-center gap-4">
+                      <span class="text-[9px] text-gray-500 font-black uppercase tracking-widest italic shadow-none border-none border-0 leading-relaxed italic">Catégorie: ALL</span>
+                      <span class="material-symbols-outlined text-xs text-gray-700">arrow_drop_down</span>
+                 </div>
+                 <button class="bg-indigo-600 text-black px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl font-outfit uppercase tracking-widest">IMPORTER LOGS</button>
+            </div>
+        </div>
+
+        <div class="p-0">
+             <table class="w-full text-left border-collapse">
+                  <thead>
+                       <tr class="text-[11px] text-gray-500 font-black uppercase tracking-[0.2em] bg-black/20">
+                            <th class="px-10 py-6">Timestamp / Node</th>
+                            <th class="px-10 py-6">Utilisateur (ID/Rôle)</th>
+                            <th class="px-10 py-6">Action / Mutation</th>
+                            <th class="px-10 py-6">Ressource Cible</th>
+                            <th class="px-10 py-6 text-right">Adresse IP / GPS</th>
+                       </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/[0.05] font-mono">
+                       @foreach (var log in auditLogs)
+                       {
+                           <tr class="hover:bg-white/[0.02] transition-all group overflow-hidden border-none text-[10px]">
+                                <td class="px-10 py-6">
+                                     <p class="text-indigo-500 font-black italic">@log.Timestamp</p>
+                                     <p class="text-[8px] text-gray-600 font-black mt-0.5">@log.Node</p>
+                                </td>
+                                <td class="px-10 py-6">
+                                     <p class="text-white font-black italic">@log.User</p>
+                                     <p class="text-[8px] text-indigo-100/30 uppercase tracking-widest mt-0.5 shadow-none border-none border-0">@log.Role</p>
+                                </td>
+                                <td class="px-10 py-6">
+                                     <span class="px-3 py-1 bg-white/5 border @(GetActionStyle(log.Action)) rounded-lg text-[10px] font-black uppercase italic shadow-none border-none border-0">@log.Action</span>
+                                </td>
+                                <td class="px-10 py-6">
+                                     <p class="text-gray-400 font-medium italic italic">@log.Target</p>
+                                </td>
+                                <td class="px-10 py-6 text-right">
+                                     <p class="text-white font-black">@log.Ip</p>
+                                     <p class="text-[8px] text-gray-700 mt-0.5">VEMARS, GRP-95 (FR)</p>
+                                </td>
+                           </tr>
+                       }
+                  </tbody>
+             </table>
+        </div>
+
+        <div class="p-10 border-t border-white/5 bg-black/40 text-center">
+             <button class="text-[10px] font-black italic text-gray-500 uppercase italic tracking-[0.3em] hover:text-indigo-400 transition-colors uppercase tracking-widest leading-relaxed">Charger les 500 entrées suivantes</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<AuditLogEntry> auditLogs = new()
+    {
+        new AuditLogEntry { Timestamp = "20 Mar 2026 14:42:01", Node = "API-NODE-A42", User = "MARC ATELIER", Role = "MANAGER ATELIER", Action = "CREATE", Target = "Revision #RV-2026-9921", Ip = "192.168.1.104" },
+        new AuditLogEntry { Timestamp = "20 Mar 2026 14:40:55", Node = "API-NODE-A42", User = "PHILIPPE JOULIA", Role = "SUPERADMIN", Action = "UPDATE", Target = "SettingsSecurity (2FA: ON)", Ip = "45.12.99.12" },
+        new AuditLogEntry { Timestamp = "20 Mar 2026 14:38:22", Node = "API-NODE-B10", User = "SYLVAIN BRICOLO", Role = "TECHNICIEN MASTER", Action = "READ", Target = "CustomerData (PII)", Ip = "10.0.0.122" },
+        new AuditLogEntry { Timestamp = "20 Mar 2026 14:35:10", Node = "API-NODE-A42", User = "ANONYMOUS", Role = "N/A", Action = "AUTH_FAILED", Target = "LoginAttempts (Limit Exceeded)", Ip = "8.8.8.8" },
+        new AuditLogEntry { Timestamp = "20 Mar 2026 14:30:44", Node = "API-NODE-B10", User = "MARIE COMPTA", Role = "FINANCE", Action = "DELETE", Target = "InvoiceDraft #D-99", Ip = "192.168.1.55" }
+    };
+
+    private string GetActionStyle(string action) => action switch
+    {
+        "CREATE" => "border-emerald-500/20 text-emerald-500",
+        "UPDATE" => "border-sky-500/20 text-sky-500",
+        "DELETE" => "border-red-500/20 text-red-500",
+        "AUTH_FAILED" => "border-rose-600/40 text-rose-600 bg-rose-600/5 shadow-[0_0_10px_rgba(225,29,72,0.1)]",
+        _ => "border-white/10 text-gray-500"
+    };
+
+    public class AuditLogEntry {
+        public string Timestamp { get; set; } = "";
+        public string Node { get; set; } = "";
+        public string User { get; set; } = "";
+        public string Role { get; set; } = "";
+        public string Action { get; set; } = "";
+        public string Target { get; set; } = "";
+        public string Ip { get; set; } = "";
+    }
+}

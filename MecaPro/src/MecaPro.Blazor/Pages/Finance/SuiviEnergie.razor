@@ -1,0 +1,75 @@
+@page "/finance/suivi-energie"
+@layout EmptyLayout
+@attribute [Authorize]
+
+<PageTitle>MECAPRO — Suivi Énergie</PageTitle>
+
+<div class="bg-surface text-on-surface font-body selection:bg-primary-container min-h-screen pb-24 italic">
+    <!-- TopAppBar -->
+    <header class="bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 h-20 w-full sticky top-0 z-50 shadow-2xl">
+        <div class="flex items-center gap-4 font-industrial italic">
+            <span class="material-symbols-outlined text-[#f5a623] text-4xl">settings_input_component</span>
+            <h1 class="uppercase tracking-[0.2em] text-2xl text-[#f5a623] font-black leading-none">SYSTEM_DIAGNOSTICS</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-right hidden sm:block font-technical">
+                <p class="text-[9px] text-on-surface-variant leading-none font-black italic tracking-widest uppercase">STATION_ID</p>
+                <p class="text-xs text-primary font-black italic">FR-75-ATELIER-04</p>
+            </div>
+            <div class="h-10 w-10 rounded-full border-2 border-primary-container overflow-hidden p-0.5">
+                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_cDgXcdqcuY5wz9n0GMCCoayUBjDngMGg4sjvCjQ2hsfcY3z59TozCKynNe-gsjVB_BLrmkW-bedDTXOtT9HAGmSD6oMwIJcQaMeoWaBHYbaMHVSZvLUrTEsmXvF0-b7HJIOXdcdfZBqe8T1CB_vTI3EdoHQINvyCdKYy7_EIzZZq4TcpF-WJw3sYY7uEQWa-MBoiw536AGIsyvMNdcptYlP2dCsz1QL99mX0347GYv9_pFRx1BTdBoj9t3Oj7eTjy99DgmC8Okl6" alt="Operator" class="w-full h-full object-cover rounded-full grayscale"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-10 space-y-12 italic">
+        <!-- Dashboard Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 font-industrial italic">
+            <div>
+                <span class="font-technical text-primary text-[10px] tracking-[0.4em] uppercase mb-2 block font-black not-italic italic">REAL-TIME TELEMETRY</span>
+                <h2 class="text-8xl tracking-tighter text-on-surface font-black leading-none italic uppercase">SUIVI CONSOMMATION</h2>
+            </div>
+            <div class="flex gap-4 font-technical italic text-[10px] font-black tracking-widest uppercase">
+                <div class="bg-surface-container-high px-5 py-3 rounded border border-outline-variant/10 flex items-center gap-3 shadow-xl">
+                    <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+                    <span>SENSORS_ONLINE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 font-industrial italic uppercase">
+            <!-- Electricity -->
+            <div class="md:col-span-2 bg-surface-container-high rounded-xl p-8 relative overflow-hidden border-l-4 border-secondary shadow-2xl group">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-2xl text-on-surface-variant tracking-widest font-black italic">PUISSANCE ACTUELLE</span>
+                    <span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+                </div>
+                <div class="flex items-baseline gap-3">
+                    <span class="text-9xl text-primary font-black tracking-tighter leading-none italic">42.8</span>
+                    <span class="font-technical text-3xl text-on-surface-variant font-black">kW</span>
+                </div>
+                <div class="mt-6 flex items-center gap-2 text-error font-technical text-[10px] font-black italic">
+                    <span class="material-symbols-outlined text-sm">trending_up</span>
+                    <span>+12.4% VS PREV_HOUR</span>
+                </div>
+            </div>
+            <!-- Eco Score -->
+            <div class="bg-surface-container-high rounded-xl p-8 flex flex-col justify-between border-l-4 border-primary shadow-2xl group italic">
+                <div>
+                    <span class="text-2xl text-on-surface-variant tracking-widest font-black italic">OBJECTIF ÉCO</span>
+                    <p class="font-technical text-[10px] text-on-surface-variant mt-2 font-black italic">TARGET_2024</p>
+                </div>
+                <div class="relative pt-6">
+                    <div class="flex justify-between items-end mb-2">
+                        <span class="text-4xl font-black text-primary">82%</span>
+                        <span class="text-[10px] font-technical text-on-surface-variant font-black tracking-widest uppercase mb-1.5 italic">COMPLETE</span>
+                    </div>
+                    <div class="w-full bg-surface-container-lowest h-3 rounded-full overflow-hidden shadow-inner">
+                        <div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-[82%]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

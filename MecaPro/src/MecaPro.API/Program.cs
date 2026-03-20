@@ -14,9 +14,9 @@ using MecaPro.Infrastructure.CRM;
 using MecaPro.Infrastructure.Notifications;
 using MecaPro.Infrastructure.Payment;
 using MecaPro.Infrastructure.Invoicing;
-using System.Security.Claims;
 using MediatR;
 using MecaPro.Domain.Common;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ── Serilog ───────────────────────────────────────────────────
@@ -30,7 +30,7 @@ builder.Host.UseSerilog();
 
 // ── Database ──────────────────────────────────────────────────
 builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // ── Identity & Auth ───────────────────────────────────────────
 builder.Services.AddIdentity<AppUser, IdentityRole>()
@@ -70,8 +70,15 @@ builder.Services.AddMediatR(cfg =>
     cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 });
 
-// ── Carter ────────────────────────────────────────────────────
+// ── Carter (Endpoints) ────────────────────────────────────────
 builder.Services.AddCarter();
+
+// ── Swagger ───────────────────────────────────────────────────
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "MecaPro API", Version = "v1" });
+});
 
 // ── Services ──────────────────────────────────────────────────
 builder.Services.AddHttpContextAccessor();
@@ -81,6 +88,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IRevisionRepository, RevisionRepository>();
+builder.Services.AddScoped<IPartRepository, PartRepository>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<ICrmService, CrmService>();
 builder.Services.AddScoped<INotificationService, NotificationDispatcher>();
 builder.Services.AddScoped<IEmailService, SendGridEmailService>();
@@ -92,15 +102,45 @@ builder.Services.AddScoped<ISignalRNotifier, MockSignalRNotifier>();
 builder.Services.AddScoped<IStripeSubscriptionService, StripeSubscriptionService>();
 builder.Services.AddScoped<DatabaseSeeder>();
 
+// ── CORS ──────────────────────────────────────────────────────
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazor", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5200",
+                "https://localhost:5201",
+                "http://localhost:5240",
+                "https://localhost:5241")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
+
+// ── Middleware Pipeline ────────────────────────────────────────
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MecaPro API v1");
+        c.RoutePrefix = "swagger";
+    });
+}
 
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
+app.UseCors("AllowBlazor");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapCarter();
 
+// ── Seeding ───────────────────────────────────────────────────
 using (var scope = app.Services.CreateScope())
 {
     var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();

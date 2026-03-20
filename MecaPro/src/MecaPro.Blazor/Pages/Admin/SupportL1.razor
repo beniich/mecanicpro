@@ -1,0 +1,176 @@
+@page "/marketing/support-1"
+@using System.Collections.Generic
+
+<div class="min-h-screen bg-[#07080a] text-white p-8 font-['Outfit']">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
+        <div class="space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="w-14 h-14 rounded-2xl bg-[#00f2fe]/10 flex items-center justify-center border border-[#00f2fe]/30 shadow-[0_0_40px_rgba(0,242,254,0.15)]">
+                    <span class="material-symbols-outlined text-[#00f2fe] text-3xl">support_agent</span>
+                </div>
+                <div>
+                    <h1 class="text-5xl font-black italic uppercase tracking-tighter leading-none">Support <span class="text-[#00f2fe]">Level 1</span></h1>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-2">PLATEFORME DE RÉALIMENTATION CLIENTS & TICKETING</p>
+                </div>
+            </div>
+            
+            <div class="flex gap-6 pt-4">
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-2xl">
+                    <p class="text-[10px] text-gray-500 font-black uppercase mb-1">TICKETS ACTIFS</p>
+                    <p class="text-3xl font-black italic leading-none">12</p>
+                </div>
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-2xl">
+                    <p class="text-[10px] text-gray-500 font-black uppercase mb-1">SLA MOYEN</p>
+                    <p class="text-3xl font-black italic leading-none text-[#00f2fe]">14<span class="text-xs">m</span></p>
+                </div>
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-2xl">
+                    <p class="text-[10px] text-gray-500 font-black uppercase mb-1">CLIENTS EN ATTENTE</p>
+                    <p class="text-3xl font-black italic leading-none text-red-500">2</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex gap-4">
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-1 flex">
+                <button class="px-6 py-2 rounded-xl bg-white/10 font-bold text-xs uppercase transition-all">Tous</button>
+                <button class="px-6 py-2 rounded-xl text-gray-500 font-bold text-xs uppercase hover:text-white transition-all">Urgent</button>
+                <button class="px-6 py-2 rounded-xl text-gray-500 font-bold text-xs uppercase hover:text-white transition-all">Non-Assignés</button>
+            </div>
+            <button class="bg-[#00f2fe] text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest hover:scale-105 transition-all shadow-[0_0_30px_rgba(0,242,254,0.3)] flex items-center gap-2">
+                <span class="material-symbols-outlined text-black">add</span> NOUVEAU TICKET
+            </button>
+        </div>
+    </div>
+
+    <!-- Layout Grid -->
+    <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+        <!-- Sidebar: Filter & Channels -->
+        <div class="space-y-8">
+            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8">
+                <h3 class="text-xs font-black uppercase text-[#00f2fe] tracking-widest mb-6">Canaux d'entrée</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-[#00f2fe]/30 cursor-pointer transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-gray-400">mail</span>
+                            <span class="text-sm font-bold">Email Support</span>
+                        </div>
+                        <span class="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">4</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-[#00f2fe]/30 cursor-pointer transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-gray-400">chat</span>
+                            <span class="text-sm font-bold">Live Chat App</span>
+                        </div>
+                        <span class="bg-[#00f2fe] text-black text-[10px] font-black px-2 py-0.5 rounded-full">2</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-[#00f2fe]/30 cursor-pointer transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-gray-400">call</span>
+                            <span class="text-sm font-bold">Ligne Directe</span>
+                        </div>
+                        <span class="text-gray-500 text-[10px] font-black italic">Libre</span>
+                    </div>
+                </div>
+
+                <div class="mt-10 pt-10 border-t border-white/5">
+                    <h3 class="text-xs font-black uppercase text-white/50 tracking-widest mb-6 italic">Agents Express</h3>
+                    <div class="flex -space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-full border-2 border-[#111318] bg-orange-500 flex items-center justify-center font-black text-xs">J</div>
+                        <div class="w-10 h-10 rounded-full border-2 border-[#111318] bg-[#00f2fe] flex items-center justify-center font-black text-xs text-black">M</div>
+                        <div class="w-10 h-10 rounded-full border-2 border-[#111318] bg-gray-600 flex items-center justify-center font-black text-xs">L</div>
+                        <div class="w-10 h-10 rounded-full border-2 border-[#111318] bg-white/5 flex items-center justify-center font-black text-[10px]">+2</div>
+                    </div>
+                    <p class="text-[10px] text-gray-500 font-medium">3 agents actuellement connectés</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Column: Tickets -->
+        <div class="xl:col-span-3 space-y-6">
+            @foreach (var ticket in tickets)
+            {
+                <div class="bg-[#111318]/80 backdrop-blur-xl border @(ticket.IsUrgent ? "border-red-500/30 shadow-[0_0_50px_rgba(239,68,68,0.05)]" : "border-white/10") rounded-[2rem] p-6 hover:bg-white/[0.03] transition-all group overflow-hidden relative">
+                    @if (ticket.IsUrgent)
+                    {
+                        <div class="absolute -right-12 -top-12 w-24 h-24 bg-red-500/20 rotate-45 blur-2xl"></div>
+                    }
+                    
+                    <div class="flex flex-col md:flex-row gap-8 items-center">
+                        <!-- Priority & Date -->
+                        <div class="flex flex-row md:flex-col items-center justify-center gap-1 min-w-[100px] text-center border-r border-white/5 pr-8">
+                            <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest">OUVERT DEPUIS</p>
+                            <p class="text-3xl font-black italic @(ticket.WaitMinutes > 30 ? "text-red-500 animate-pulse" : "text-white")">@ticket.WaitMinutes<span class="text-xs">m</span></p>
+                            @if (ticket.IsUrgent)
+                            {
+                                <span class="bg-red-600 text-[8px] font-black px-2 py-0.5 rounded-full uppercase mt-2 tracking-tighter">CRITIQUE</span>
+                            }
+                        </div>
+
+                        <!-- Content -->
+                        <div class="flex-grow">
+                            <div class="flex items-center gap-3 mb-1">
+                                <span class="material-symbols-outlined text-[#00f2fe] text-lg">@(ticket.ChannelIcon)</span>
+                                <h4 class="text-lg font-bold group-hover:text-[#00f2fe] transition-colors uppercase tracking-tight italic">@ticket.Subject</h4>
+                            </div>
+                            <p class="text-sm text-gray-400 font-medium line-clamp-1 mb-4 italic">"@ticket.Snippet"</p>
+                            
+                            <div class="flex flex-wrap gap-4">
+                                <div class="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-xl border border-white/5">
+                                    <span class="material-symbols-outlined text-[10px] text-gray-500">person</span>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">@ticket.CustomerName</span>
+                                </div>
+                                <div class="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-xl border border-white/5">
+                                    <span class="material-symbols-outlined text-[10px] text-gray-500">directions_car</span>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">@ticket.VehicleRef</span>
+                                </div>
+                                @if (!string.IsNullOrEmpty(ticket.AssignedAgent))
+                                {
+                                    <div class="flex items-center gap-2 bg-[#00f2fe]/10 px-3 py-1.5 rounded-xl border border-[#00f2fe]/20">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-[#00f2fe]"></div>
+                                        <span class="text-[10px] font-black uppercase text-[#00f2fe] tracking-widest">@ticket.AssignedAgent</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex gap-3">
+                            <button class="w-12 h-12 rounded-2xl bg-white/5 hover:bg-[#00f2fe]/20 border border-white/10 flex items-center justify-center transition-all group/btn">
+                                <span class="material-symbols-outlined text-gray-400 group-hover/btn:text-[#00f2fe]">history</span>
+                            </button>
+                            <button class="w-12 h-12 rounded-2xl bg-white/5 hover:bg-orange-500/20 border border-white/10 flex items-center justify-center transition-all group/btn">
+                                <span class="material-symbols-outlined text-gray-400 group-hover/btn:text-orange-500">ios_share</span>
+                            </button>
+                            <button class="bg-[#00f2fe] text-black px-6 py-2 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-lg shadow-black/40 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-xs">chat</span> RÉPONDRE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<TicketInfo> tickets = new()
+    {
+        new TicketInfo { Subject = "Échec validation devis", Snippet = "L'application mobile n'accepte pas ma signature électronique YouSign pour le devis #441...", CustomerName = "JEAN-LUC MARTINET", VehicleRef = "AB-123-CD", WaitMinutes = 8, IsUrgent = true, ChannelIcon = "smartphone", AssignedAgent = null },
+        new TicketInfo { Subject = "Retard RDV Réception", Snippet = "Je serai en retard de 30 min pour mon rdv de 14h, pouvez-vous prévenir le mécanicien ?", CustomerName = "JULIA BENOIT", VehicleRef = "XY-987-ZZ", WaitMinutes = 42, IsUrgent = false, ChannelIcon = "mail", AssignedAgent = "MAX" },
+        new TicketInfo { Subject = "Question Facturation Points", Snippet = "Mes points de fidélité Diagnostic IA (x50) n'ont pas été crédités sur ma dernière facture...", CustomerName = "PHILIPPE MOREL", VehicleRef = "KM-442-PT", WaitMinutes = 15, IsUrgent = false, ChannelIcon = "chat", AssignedAgent = "LÉA" },
+        new TicketInfo { Subject = "Erreur accès véhicule QrCode", Snippet = "Le QR code sur ma portière ne renvoie vers aucune fiche technique, 'Error 404 Token'...", CustomerName = "SOPHIE LARUE", VehicleRef = "ER-003-XX", WaitMinutes = 55, IsUrgent = true, ChannelIcon = "smartphone", AssignedAgent = null }
+    };
+
+    public class TicketInfo
+    {
+        public string Subject { get; set; } = "";
+        public string Snippet { get; set; } = "";
+        public string CustomerName { get; set; } = "";
+        public string VehicleRef { get; set; } = "";
+        public int WaitMinutes { get; set; }
+        public bool IsUrgent { get; set; }
+        public string ChannelIcon { get; set; } = "";
+        public string? AssignedAgent { get; set; }
+    }
+}

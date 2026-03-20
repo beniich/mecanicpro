@@ -1,0 +1,260 @@
+@page "/clients/detail-intervention/{RevisionId:guid}"
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MECAPRO — Détail Intervention</PageTitle>
+
+@if (loading)
+{
+    <div class="flex justify-center items-center min-h-screen bg-[#111318]">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary"></div>
+    </div>
+}
+else if (revision == null)
+{
+    <div class="flex flex-col justify-center items-center min-h-screen bg-[#111318] text-white">
+        <span class="material-symbols-outlined text-8xl opacity-20 mb-4">error</span>
+        <p class="font-black italic uppercase tracking-[0.2em] opacity-50">INTERVENTION_INTROUVABLE</p>
+        <button onclick="history.back()" class="mt-8 text-primary font-black uppercase tracking-widest hover:underline">RETOUR_SYSTÈME</button>
+    </div>
+}
+else
+{
+    <div class="bg-[#111318] text-on-surface min-h-screen pb-24">
+        <!-- TopAppBar -->
+        <header class="bg-[#111318]/80 backdrop-blur-xl flex justify-between items-center px-6 py-4 w-full border-b border-white/5 fixed top-0 z-50">
+            <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
+                <span class="material-symbols-outlined text-primary text-2xl">precision_manufacturing</span>
+                <h1 class="text-2xl font-black tracking-[0.2em] text-primary headline-font uppercase">MECAPRO</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                 <div class="flex flex-col items-end mr-4">
+                    <span class="text-[8px] font-black text-primary uppercase tracking-widest">STATUS_LINK_READY</span>
+                    <span class="text-xs font-technical text-white/40">TECH_ID: @revision.Id.ToString().Substring(0,8).ToUpper()</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="pt-24 px-4 md:px-8 max-w-6xl mx-auto space-y-8">
+            <!-- Intervention Hero Section -->
+            <section class="flex flex-col md:flex-row gap-8">
+                <div class="flex-1 bg-surface-container-high p-8 rounded-[40px] border border-white/5 relative overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-primary/20"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[0.4em] text-primary font-black italic mb-2">ORDRE DE RÉPARATION</p>
+                            <h2 class="text-5xl font-black tracking-tighter text-white uppercase italic">@revision.Type</h2>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                             <span class="px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-xl text-xs font-black uppercase tracking-widest">
+                                @revision.Status
+                            </span>
+                            <span class="text-[10px] font-technical text-white/30 lowercase">PLAN: @revision.ScheduledDate.ToShortDateString()</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-8 mt-10 pt-8 border-t border-white/5">
+                        <div class="space-y-1">
+                            <p class="text-[10px] font-black uppercase text-white/30 tracking-widest mb-2">Spécifications_Véhicule</p>
+                            <p class="font-black italic text-xl text-white uppercase">UNIT_REF_@revision.VehicleId.ToString().Substring(0,4)</p>
+                            <div class="flex items-center gap-2 opacity-60">
+                                <span class="material-symbols-outlined text-sm">barcode_scanner</span>
+                                <span class="font-technical text-xs">VIN: DÉCODAGE_EN_COURS...</span>
+                            </div>
+                        </div>
+                        <div class="space-y-1 text-right">
+                            <p class="text-[10px] font-black uppercase text-white/30 tracking-widest mb-2">Entité_Propriétaire</p>
+                            <p class="font-black italic text-xl text-white uppercase">CLIENT_ANONYME</p>
+                            <p class="text-xs font-technical text-primary">ACCOUNT_VERIFIED</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timer / Actions Card -->
+                <div class="w-full md:w-80 bg-surface-container-low border border-white/5 p-8 rounded-[40px] flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full -z-10"></div>
+                    <p class="text-[10px] uppercase font-black text-primary tracking-[0.4em] mb-4 italic">CHRONO_POINTAGE</p>
+                    <div class="text-6xl font-black text-white tracking-tighter italic mb-8">
+                        01:42:<span class="text-primary animate-pulse">15</span>
+                    </div>
+                    <div class="w-full space-y-3">
+                        <button @onclick='() => ChangeStatus("InProgress")' class="w-full py-4 bg-primary text-on-primary font-black uppercase italic rounded-2xl transition-all active:scale-95 shadow-xl shadow-primary/20">
+                            REPRENDRE_TÂCHE
+                        </button>
+                        <button @onclick='() => ChangeStatus("Scheduled")' class="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-black uppercase italic rounded-2xl transition-all border border-white/5">
+                            METTRE_EN_PAUSE
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Status Stepper -->
+            <section class="bg-surface-container-high rounded-[40px] p-8 border border-white/5 shadow-xl">
+                 <div class="flex justify-between items-center max-w-4xl mx-auto relative px-12">
+                     <div class="absolute h-[2px] bg-white/5 left-12 right-12 top-11 -z-10"></div>
+                     <div class="absolute h-[2px] bg-primary left-12 @(GetStepWidth()) top-11 -z-10 transition-all duration-700"></div>
+                     
+                     @foreach(var step in new[] { ("Scheduled", "RESERVED"), ("InProgress", "ACTIVE"), ("Completed", "DONE"), ("Cancelled", "CLOSED") })
+                     {
+                         <div class="flex flex-col items-center gap-4 relative">
+                             <div class="w-22 h-22 rounded-full border-4 flex items-center justify-center transition-all duration-500 @(IsActive(step.Item1) ? "bg-primary border-primary/20 scale-110 shadow-[0_0_30px_rgba(245,166,35,0.4)]" : "bg-[#111318] border-white/5 opacity-40")">
+                                 <span class="material-symbols-outlined text-3xl @(IsActive(step.Item1) ? "text-on-primary" : "text-white/20")">
+                                     @(step.Item1 == "Scheduled" ? "event" : step.Item1 == "InProgress" ? "build" : step.Item1 == "Completed" ? "check_circle" : "close")
+                                 </span>
+                             </div>
+                             <span class="text-[10px] font-black uppercase tracking-widest @(IsActive(step.Item1) ? "text-primary" : "text-white/20")">@step.Item2</span>
+                         </div>
+                     }
+                 </div>
+            </section>
+
+            <!-- Tasks & Parts Details -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Checklist / Tasks -->
+                <section class="bg-surface-container p-8 rounded-[40px] border border-white/5 shadow-2xl">
+                    <div class="flex items-center justify-between mb-8">
+                         <h3 class="text-2xl font-black italic uppercase text-white tracking-tight flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">fact_check</span> 
+                            LOG_INTERVENTION
+                        </h3>
+                        <span class="text-[10px] font-technical text-primary font-black uppercase">@(revision.Tasks.Count(t => t.IsCompleted))/@(revision.Tasks.Count) COMPLETE</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        @foreach(var task in revision.Tasks)
+                        {
+                            <div class="group bg-[#111318] p-5 rounded-2xl flex items-center justify-between border border-transparent hover:border-primary/20 transition-all @(task.IsCompleted ? "opacity-50" : "")">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center @(task.IsCompleted ? "text-primary" : "text-white/10")">
+                                        <span class="material-symbols-outlined">@(task.IsCompleted ? "check_circle" : "pending")</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-black text-white italic uppercase text-sm">@task.Description</p>
+                                        <p class="text-[10px] font-technical text-white/30">ESTIMATED: @task.EstimatedMinutes MIN</p>
+                                    </div>
+                                </div>
+                                @if (!task.IsCompleted)
+                                {
+                                    <button class="px-4 py-2 bg-primary/10 text-primary rounded-lg text-[10px] font-black uppercase tracking-widest border border-primary/20 hover:bg-primary hover:text-on-primary transition-all">
+                                        VALIDER
+                                    </button>
+                                }
+                            </div>
+                        }
+                    </div>
+                </section>
+
+                <!-- Parts Breakdown -->
+                <section class="bg-[#1f346e]/30 p-8 rounded-[40px] border border-secondary/20 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-secondary/10 rounded-full blur-[100px]"></div>
+                    <div class="flex items-center justify-between mb-8 relative z-10">
+                        <h3 class="text-2xl font-black italic uppercase text-white tracking-tight flex items-center gap-3">
+                            <span class="material-symbols-outlined text-secondary">inventory_2</span> 
+                            BOM_AFFECTATION
+                        </h3>
+                        <span class="material-symbols-outlined text-secondary hover:scale-110 transition-transform cursor-pointer">add_circle</span>
+                    </div>
+
+                    <div class="space-y-4 relative z-10">
+                        @foreach(var part in revision.Parts)
+                        {
+                            <div class="flex items-center gap-4 p-4 bg-surface-container-high/40 rounded-2xl border border-white/5">
+                                <div class="w-12 h-12 bg-[#111318] rounded-xl flex items-center justify-center text-secondary border border-secondary/10">
+                                    <span class="material-symbols-outlined">settings_input_component</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-black text-white text-sm uppercase italic">@part.PartName</p>
+                                    <p class="text-[10px] font-technical text-white/30">QTY: @part.Quantity x @part.UnitPrice.ToString("F2") €</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-black text-secondary italic">@part.Total.ToString("F2") €</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center relative z-10">
+                        <div class="flex flex-col">
+                            <span class="text-[8px] font-black text-white/40 uppercase tracking-[0.3em] mb-1">VALEUR_PARTS_TOTAL_TTC</span>
+                            <span class="text-3xl font-black italic text-white tracking-tighter">@revision.ActualCost?.ToString("F2") €</span>
+                        </div>
+                         <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+                            <span class="material-symbols-outlined">price_check</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Global Action Footer -->
+            <footer class="flex flex-col md:flex-row gap-6 pt-12">
+                 <button class="flex-1 bg-surface-container-high text-white font-black uppercase italic py-6 rounded-3xl border border-white/5 hover:bg-white/5 transition-all text-xl tracking-tighter">
+                    GÉNÉRER_RAPPORT_PDF
+                </button>
+                <button @onclick='() => ChangeStatus("Completed")' class="flex-[2] bg-gradient-to-r from-primary to-secondary text-on-primary font-black uppercase italic py-6 rounded-3xl shadow-2xl shadow-primary/20 text-2xl tracking-tighter active:scale-[0.98] transition-all">
+                    FINALISER_INTERVENTION_SYSTEME
+                </button>
+            </footer>
+        </main>
+    </div>
+}
+
+<style>
+    .headline-font { font-family: 'Outfit', sans-serif; }
+    .font-technical { font-family: 'JetBrains Mono', monospace; }
+</style>
+
+@code {
+    [Parameter] public Guid RevisionId { get; set; }
+    private RevisionDetailDto? revision;
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync() => await LoadData();
+
+    private async Task LoadData()
+    {
+        loading = true;
+        var result = await Api.GetAsync<RevisionDetailDto>($"/api/v1/revisions/{RevisionId}");
+        if (result != null)
+        {
+            revision = result;
+        }
+        loading = false;
+    }
+
+    private async Task ChangeStatus(string newStatus)
+    {
+        var result = await Api.PostAsync<bool>($"/api/v1/revisions/{RevisionId}/status", new { Status = newStatus });
+        if (result)
+        {
+            await LoadData();
+        }
+    }
+
+    private bool IsActive(string stepStatus)
+    {
+        if (revision == null) return false;
+        
+        // Simple mapping for demonstration
+        if (revision.Status == stepStatus) return true;
+        
+        // Logical "previous" steps
+        if (revision.Status == "InProgress" && stepStatus == "Scheduled") return true;
+        if (revision.Status == "Completed" && (stepStatus == "Scheduled" || stepStatus == "InProgress")) return true;
+        
+        return false;
+    }
+
+    private string GetStepWidth()
+    {
+        if (revision == null) return "w-0";
+        return revision.Status switch
+        {
+            "Scheduled" => "w-[5%]",
+            "InProgress" => "w-[33%]",
+            "Completed" => "w-[66%]",
+            "Cancelled" => "w-[100%]",
+            _ => "w-0"
+        };
+    }
+}
