@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["DM Sans"],
+              "label": ["Inter"],
+              "industrial": ["Bebas Neue"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(40, 42, 46, 0.6);
+        backdrop-filter: blur(20px);
+      }
+      .glow-primary {
+        box-shadow: 0 0 24px -4px rgba(245, 166, 35, 0.08);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] border-b border-[#524534]/15 docked full-width top-0 flex justify-between items-center px-6 h-20 w-full z-50 sticky">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623]" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6 font-mono text-xs tracking-widest">
+<a class="text-[#f5a623]" href="#">DASHBOARD</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">SCANNER</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">REPORTS</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+<img alt="Operator Profile" class="w-full h-full object-cover" data-alt="Operator avatar silhouette in industrial theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYMcbBfaw5I7E_4p_klk4pnB6nlesahJzaZdz70lEaKxP7MRfOLgBKNPjqB2N-lwdppwQMRednI0HkN-zI1dWyo-4TY6nE9lmEFwYtr-MGMyMVot_DduKE8kVOIZXV6XgIW3prnlyLpdehKceAsSgqoIwWksM2_EfcPhv81vNoIZ2UdTvGh3uEUrC4cP66x8zhPu6rPK-ooKe1UW-L0y9wDFgVOS7OwfCEHUe46n8P358Z5PcBxXenJjKRR9t6cNPLO4HWHnU61BFb"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto p-6 md:p-10 space-y-10">
+<!-- Hero Section: Vehicle Context -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-end">
+<div class="lg:col-span-2 space-y-2">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-primary-container/20 text-primary-container text-xs font-mono rounded border-l-2 border-secondary-container">VIN_VERIFIED</span>
+<span class="font-mono text-on-surface-variant/60 text-sm tracking-tighter uppercase">Diagnostic ID: #PX-992-88-L</span>
+</div>
+<h2 class="font-industrial text-6xl md:text-8xl tracking-tight text-on-surface leading-none">RAPPORT_POLLUTION</h2>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border-l-2 border-primary-container flex flex-col justify-between h-full">
+<span class="font-mono text-[10px] text-on-surface-variant uppercase">Vehicle_Identity</span>
+<div class="mt-4">
+<p class="font-mono text-2xl text-primary leading-none tracking-tighter">WBA-7A11-040-CL-5509</p>
+<p class="font-body text-sm text-on-surface/60 mt-1">Industrial Heavy-Duty Transport • Euro VI-D</p>
+</div>
+</div>
+</section>
+<!-- KPI Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-surface-container-high p-6 rounded relative overflow-hidden glow-primary">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+<span class="font-mono text-[10px] uppercase text-on-surface-variant">CO2_EMISSIONS</span>
+<div class="flex items-baseline gap-2 mt-4">
+<span class="font-industrial text-5xl text-primary">124.8</span>
+<span class="font-mono text-sm text-on-surface-variant">g/km</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-error text-xs font-mono">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+                    +2.4% vs Baseline
+                </div>
+</div>
+<div class="bg-surface-container-high p-6 rounded relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<span class="font-mono text-[10px] uppercase text-on-surface-variant">LAMBDA_COEFF</span>
+<div class="flex items-baseline gap-2 mt-4">
+<span class="font-industrial text-5xl text-on-surface">1.002</span>
+<span class="font-mono text-sm text-on-surface-variant">λ</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary-container text-xs font-mono">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                    STABLE_RANGE
+                </div>
+</div>
+<div class="bg-surface-container-high p-6 rounded relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+<span class="font-mono text-[10px] uppercase text-on-surface-variant">NOx_CONCENTRATION</span>
+<div class="flex items-baseline gap-2 mt-4">
+<span class="font-industrial text-5xl text-on-surface">32.4</span>
+<span class="font-mono text-sm text-on-surface-variant">mg/km</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-on-surface/40 text-xs font-mono uppercase">
+                    Norme Euro 6: &lt; 80
+                </div>
+</div>
+<div class="bg-surface-container-high p-6 rounded relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<span class="font-mono text-[10px] uppercase text-on-surface-variant">PARTICULATE_MATTER</span>
+<div class="flex items-baseline gap-2 mt-4">
+<span class="font-industrial text-5xl text-error">4.8</span>
+<span class="font-mono text-sm text-on-surface-variant">mg/km</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-error text-xs font-mono">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
+                    LIMIT_APPROACHING
+                </div>
+</div>
+</section>
+<!-- Main Content: Charts and Comparison -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Lambda Graph -->
+<div class="lg:col-span-8 bg-surface-container-low rounded-xl p-8 space-y-8">
+<div class="flex justify-between items-center">
+<div>
+<h3 class="font-industrial text-2xl text-on-surface tracking-wide">MESURES_LAMBDA_REAL-TIME</h3>
+<p class="text-xs font-mono text-on-surface-variant/60 uppercase">Dernières 60 secondes de test dynamique</p>
+</div>
+<div class="flex gap-2">
+<span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-[10px] font-mono text-primary uppercase">Live_Feed</span>
+</div>
+</div>
+<!-- Fake SVG Graph -->
+<div class="h-64 w-full bg-surface-container-lowest rounded relative overflow-hidden border-l border-b border-outline-variant/20">
+<svg class="w-full h-full preserve-3xl" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="line-grad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f5a623" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="#f5a623" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line stroke="#524534" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="1000" y1="50" y2="50"></line>
+<line stroke="#524534" stroke-width="1" x1="0" x2="1000" y1="100" y2="100"></line>
+<line stroke="#524534" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="1000" y1="150" y2="150"></line>
+<!-- Area Fill -->
+<path d="M0,120 L50,115 L100,105 L150,110 L200,98 L250,102 L300,95 L350,105 L400,100 L450,90 L500,100 L550,110 L600,100 L650,95 L700,98 L750,102 L800,100 L850,92 L900,100 L950,105 L1000,100 L1000,200 L0,200 Z" fill="url(#line-grad)"></path>
+<!-- Data Line -->
+<path d="M0,120 L50,115 L100,105 L150,110 L200,98 L250,102 L300,95 L350,105 L400,100 L450,90 L500,100 L550,110 L600,100 L650,95 L700,98 L750,102 L800,100 L850,92 L900,100 L950,105 L1000,100" fill="none" stroke="#f5a623" stroke-width="2"></path>
+</svg>
+<!-- Label Overlay -->
+<div class="absolute top-4 left-4 font-mono text-[10px] text-on-surface-variant/40 space-y-1">
+<p>LIMIT_HIGH: 1.03</p>
+<p>OPTIMAL: 1.00</p>
+<p>LIMIT_LOW: 0.97</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 pt-4">
+<div class="text-center p-3 border border-outline-variant/10 rounded">
+<p class="font-mono text-[10px] text-on-surface-variant">MIN</p>
+<p class="font-mono text-xl text-on-surface">0.992</p>
+</div>
+<div class="text-center p-3 border border-outline-variant/10 rounded">
+<p class="font-mono text-[10px] text-on-surface-variant">AVG</p>
+<p class="font-mono text-xl text-primary">1.002</p>
+</div>
+<div class="text-center p-3 border border-outline-variant/10 rounded">
+<p class="font-mono text-[10px] text-on-surface-variant">MAX</p>
+<p class="font-mono text-xl text-on-surface">1.014</p>
+</div>
+</div>
+</div>
+<!-- European Norms Comparison -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-high rounded-xl p-6 flex-1">
+<h3 class="font-industrial text-2xl text-on-surface tracking-wide mb-6">EU_COMPLIANCE</h3>
+<div class="space-y-6">
+<!-- CO2 Bar -->
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-mono uppercase">
+<span class="text-on-surface-variant">CO2_EMISSIONS</span>
+<span class="text-error">EXCEEDED</span>
+</div>
+<div class="h-4 bg-surface-container-lowest rounded-full overflow-hidden flex p-1">
+<div class="h-full bg-gradient-to-r from-primary-container to-secondary-container rounded-full" style="width: 85%"></div>
+</div>
+<div class="flex justify-between text-[10px] font-mono text-on-surface-variant/40">
+<span>0 g</span>
+<span>TARGET: 95g</span>
+<span>CUR: 124g</span>
+</div>
+</div>
+<!-- NOx Bar -->
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-mono uppercase">
+<span class="text-on-surface-variant">NITROGEN_OXIDE</span>
+<span class="text-primary">PASS</span>
+</div>
+<div class="h-4 bg-surface-container-lowest rounded-full overflow-hidden flex p-1">
+<div class="h-full bg-primary/40 rounded-full" style="width: 40%"></div>
+</div>
+<div class="flex justify-between text-[10px] font-mono text-on-surface-variant/40">
+<span>0 mg</span>
+<span>TARGET: 80mg</span>
+<span>CUR: 32mg</span>
+</div>
+</div>
+<!-- PM Bar -->
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-mono uppercase">
+<span class="text-on-surface-variant">PARTICULATE</span>
+<span class="text-secondary">WARNING</span>
+</div>
+<div class="h-4 bg-surface-container-lowest rounded-full overflow-hidden flex p-1">
+<div class="h-full bg-secondary-container/60 rounded-full" style="width: 65%"></div>
+</div>
+<div class="flex justify-between text-[10px] font-mono text-on-surface-variant/40">
+<span>0 mg</span>
+<span>TARGET: 5mg</span>
+<span>CUR: 4.8mg</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-10 py-4 bg-surface-bright border border-primary/20 text-primary font-mono text-sm tracking-widest hover:bg-primary/10 transition-colors uppercase">
+                        Generer Rapport Certifié
+                    </button>
+</div>
+</div>
+</section>
+<!-- Technical Log Table -->
+<section class="bg-surface-container rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="font-industrial text-2xl text-on-surface tracking-wide">HISTORIQUE_DES_TESTS</h3>
+<span class="font-mono text-[10px] text-on-surface-variant">RECORDS_FOUND: 004</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="p-6 text-[10px] font-mono uppercase text-on-surface-variant tracking-widest">TEST_ID</th>
+<th class="p-6 text-[10px] font-mono uppercase text-on-surface-variant tracking-widest">TIMESTAMP</th>
+<th class="p-6 text-[10px] font-mono uppercase text-on-surface-variant tracking-widest">OPÉRATEUR</th>
+<th class="p-6 text-[10px] font-mono uppercase text-on-surface-variant tracking-widest">VALEUR_CO2</th>
+<th class="p-6 text-[10px] font-mono uppercase text-on-surface-variant tracking-widest">STATUS</th>
+</tr>
+</thead>
+<tbody class="font-mono text-sm">
+<tr class="bg-surface-container-low border-b border-surface/40">
+<td class="p-6">#TX-8821</td>
+<td class="p-6 text-on-surface/60">2023-11-24 14:32</td>
+<td class="p-6">M. DURAND</td>
+<td class="p-6">124.8 g/km</td>
+<td class="p-6">
+<span class="px-2 py-1 bg-error/10 text-error text-[10px] rounded border border-error/20">FAILED</span>
+</td>
+</tr>
+<tr class="bg-surface border-b border-surface/40">
+<td class="p-6">#TX-8799</td>
+<td class="p-6 text-on-surface/60">2023-11-22 09:15</td>
+<td class="p-6">J. MARTIN</td>
+<td class="p-6">121.2 g/km</td>
+<td class="p-6">
+<span class="px-2 py-1 bg-error/10 text-error text-[10px] rounded border border-error/20">FAILED</span>
+</td>
+</tr>
+<tr class="bg-surface-container-low border-b border-surface/40">
+<td class="p-6">#TX-8742</td>
+<td class="p-6 text-on-surface/60">2023-10-12 16:45</td>
+<td class="p-6">M. DURAND</td>
+<td class="p-6">118.5 g/km</td>
+<td class="p-6">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] rounded border border-primary/20">PASSED</span>
+</td>
+</tr>
+<tr class="bg-surface">
+<td class="p-6">#TX-8601</td>
+<td class="p-6 text-on-surface/60">2023-09-01 11:20</td>
+<td class="p-6">L. MOREL</td>
+<td class="p-6">119.1 g/km</td>
+<td class="p-6">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] rounded border border-primary/20">PASSED</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 bg-[#0c0e12] dark:bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] z-50 h-20 md:hidden">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SCANNER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">REPORTS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">INVENTORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SUPPORT</span>
+</div>
+</nav>
+</body></html>

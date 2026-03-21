@@ -80,7 +80,7 @@ else
             <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/10 flex flex-col justify-between aspect-square group active:scale-95 transition-transform duration-200">
                 <div class="flex justify-between items-start">
                     <span class="material-symbols-outlined text-secondary text-3xl" data-icon="oil_barrel">oil_barrel</span>
-                    <span class="bg-primary/10 text-primary px-2 py-0.5 rounded font-technical text-[10px] uppercase">@ (customer.LoyaltyPoints > 500 ? "DISPONIBLE" : "BLOQUÉ")</span>
+                    <span class="bg-primary/10 text-primary px-2 py-0.5 rounded font-technical text-[10px] uppercase">@(customer.LoyaltyPoints > 500 ? "DISPONIBLE" : "BLOQUÉ")</span>
                 </div>
                 <div>
                     <h4 class="font-headline text-2xl text-on-surface leading-tight uppercase">-10% Vidange</h4>
@@ -91,7 +91,8 @@ else
             <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/10 flex flex-col justify-between aspect-square active:scale-95 transition-transform duration-200">
                 <div class="flex justify-between items-start">
                     <span class="material-symbols-outlined text-primary text-3xl" data-icon="car_repair">car_repair</span>
-                    <span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded font-technical text-[10px] uppercase">@ (customer.LoyaltyPoints > 2000 ? "DISPONIBLE" : "BLOQUÉ")</span>
+                    <span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded font-technical text-[10px] uppercase">@(customer.LoyaltyPoints > 2000 ? "DISPONIBLE" : "BLOQUÉ")</span>
+
                 </div>
                 <div>
                     <h4 class="font-headline text-2xl text-on-surface leading-tight uppercase">Check-up Été</h4>

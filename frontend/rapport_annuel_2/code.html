@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;700&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#1a1c20",
+              "error-container": "#93000a",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary": "#2d3037",
+              "surface-container-highest": "#333539",
+              "on-tertiary-fixed-variant": "#44474e",
+              "surface-container": "#1e2024",
+              "on-primary-fixed-variant": "#633f00",
+              "surface-tint": "#ffb955",
+              "surface-bright": "#37393e",
+              "secondary-fixed-dim": "#ffb596",
+              "surface-dim": "#111318",
+              "on-surface": "#e2e2e8",
+              "error": "#ffb4ab",
+              "on-error-container": "#ffdad6",
+              "outline": "#9f8e7a",
+              "background": "#111318",
+              "secondary": "#ffb596",
+              "primary": "#ffc880",
+              "inverse-surface": "#e2e2e8",
+              "on-surface-variant": "#d7c3ae",
+              "inverse-primary": "#835500",
+              "surface-variant": "#333539",
+              "inverse-on-surface": "#2f3035",
+              "on-tertiary-container": "#45474f",
+              "primary-fixed": "#ffddb4",
+              "tertiary": "#d0d2db",
+              "tertiary-fixed": "#e0e2eb",
+              "surface": "#111318",
+              "on-error": "#690005",
+              "outline-variant": "#524534",
+              "on-secondary": "#581e00",
+              "on-background": "#e2e2e8",
+              "on-secondary-fixed": "#360f00",
+              "surface-container-lowest": "#0c0e12",
+              "on-secondary-container": "#4d1900",
+              "tertiary-container": "#b4b6bf",
+              "secondary-container": "#f26411",
+              "on-primary-container": "#644000",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-primary": "#452b00",
+              "on-tertiary-fixed": "#191c22",
+              "primary-container": "#f5a623",
+              "primary-fixed-dim": "#ffb955",
+              "on-primary-fixed": "#291800",
+              "surface-container-high": "#282a2e"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["DM Sans"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono"],
+              "display": ["Bebas Neue"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#111318] dark:bg-[#111318]">
+<div class="flex justify-between items-center w-full px-6 h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623] text-2xl">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-tighter text-[#f5a623] font-['Space_Grotesk'] uppercase">MECAPRO</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="active:scale-95 duration-200 hover:bg-white/5 p-2 rounded-lg">
+<span class="material-symbols-outlined text-slate-500">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-28 px-4 space-y-6 max-w-md mx-auto">
+<!-- Page Header -->
+<section class="space-y-1">
+<h2 class="font-display text-5xl tracking-wider text-on-surface leading-none">RAPPORT ANNUEL</h2>
+<p class="font-mono text-xs text-primary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                FISCAL_YEAR_2023_ANALYSIS
+            </p>
+</section>
+<!-- Primary KPI Grid (Bento Style) -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Revenue Card -->
+<div class="col-span-2 bg-surface-container-high p-5 rounded-xl border-l-2 border-secondary-container relative overflow-hidden">
+<div class="relative z-10">
+<p class="font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">Total Revenue</p>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-5xl text-primary leading-tight">1.28M</span>
+<span class="font-mono text-xs text-primary">EUR</span>
+</div>
+<div class="mt-2 flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="font-mono text-sm">+14.2% YOY</span>
+</div>
+</div>
+<!-- Abstract Background Glow -->
+<div class="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Volume Card -->
+<div class="bg-surface-container-high p-4 rounded-xl border-l-2 border-primary relative">
+<p class="font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">Vehicles</p>
+<span class="font-display text-4xl text-on-surface leading-tight">2,840</span>
+<div class="mt-1 flex items-center gap-1 text-on-surface-variant/60 font-mono text-[10px]">
+<span class="material-symbols-outlined text-xs">analytics</span>
+                    AVG 236/MO
+                </div>
+</div>
+<!-- CSAT Card -->
+<div class="bg-surface-container-high p-4 rounded-xl border-l-2 border-tertiary relative">
+<p class="font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">Satisfaction</p>
+<span class="font-display text-4xl text-on-surface leading-tight">4.82</span>
+<div class="mt-1 flex items-center gap-1 text-primary font-mono text-[10px]">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                    +0.3 UNIT
+                </div>
+</div>
+</div>
+<!-- Monthly Trends Visualization -->
+<section class="bg-surface-container-low rounded-xl p-6 space-y-4">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="font-headline font-bold text-lg text-on-surface">FLUX DE TRÉSORERIE</h3>
+<p class="font-mono text-[10px] text-on-surface-variant">MONTHLY REVENUE DISTRIBUTION</p>
+</div>
+<span class="material-symbols-outlined text-primary-container">query_stats</span>
+</div>
+<!-- Industrial Chart Visualization -->
+<div class="h-48 flex items-end justify-between gap-1 pt-4 border-b border-outline-variant/20">
+<div class="w-full bg-surface-container-highest h-[30%] rounded-t-sm group relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[8px] font-mono opacity-0 group-hover:opacity-100 transition-opacity">JAN</div>
+</div>
+<div class="w-full bg-surface-container-highest h-[45%] rounded-t-sm"></div>
+<div class="w-full bg-surface-container-highest h-[40%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[65%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[85%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[70%] rounded-t-sm"></div>
+<div class="w-full bg-secondary-container h-[95%] rounded-t-sm relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-bright px-1 py-0.5 rounded text-[8px] font-mono whitespace-nowrap border border-outline-variant/30 shadow-xl">PEAK: JULY</div>
+</div>
+<div class="w-full bg-primary-container h-[75%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[60%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[55%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[68%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[82%] rounded-t-sm"></div>
+</div>
+<div class="flex justify-between font-mono text-[8px] text-on-surface-variant pt-1 px-1">
+<span>Q1</span>
+<span>Q2</span>
+<span>Q3</span>
+<span>Q4</span>
+</div>
+</section>
+<!-- Technical Breakdown Table -->
+<section class="space-y-4">
+<h3 class="font-headline font-bold text-lg text-on-surface uppercase tracking-tighter">Segment Metrics</h3>
+<div class="space-y-1 rounded-xl overflow-hidden border border-outline-variant/10">
+<!-- Table Header -->
+<div class="grid grid-cols-3 bg-surface-container-highest px-4 py-2">
+<span class="text-[9px] font-mono text-on-surface-variant uppercase tracking-widest">Category</span>
+<span class="text-[9px] font-mono text-on-surface-variant uppercase tracking-widest text-center">Volume</span>
+<span class="text-[9px] font-mono text-on-surface-variant uppercase tracking-widest text-right">Performance</span>
+</div>
+<!-- Row 1 -->
+<div class="grid grid-cols-3 bg-surface-container-low px-4 py-3 items-center">
+<span class="font-body font-bold text-sm">Light Duty</span>
+<span class="font-mono text-xs text-center">1,240</span>
+<div class="flex justify-end">
+<span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded font-mono">+12.4%</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-3 bg-surface px-4 py-3 items-center">
+<span class="font-body font-bold text-sm">Heavy Comm.</span>
+<span class="font-mono text-xs text-center">854</span>
+<div class="flex justify-end">
+<span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded font-mono">+18.1%</span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-3 bg-surface-container-low px-4 py-3 items-center">
+<span class="font-body font-bold text-sm">Electric/EV</span>
+<span class="font-mono text-xs text-center">412</span>
+<div class="flex justify-end">
+<span class="bg-secondary-container/20 text-secondary-container text-[10px] px-2 py-0.5 rounded font-mono">+42.8%</span>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-3 bg-surface px-4 py-3 items-center">
+<span class="font-body font-bold text-sm">Off-Road</span>
+<span class="font-mono text-xs text-center">334</span>
+<div class="flex justify-end">
+<span class="bg-error/10 text-error text-[10px] px-2 py-0.5 rounded font-mono">-4.2%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Annual Targets Card -->
+<section class="bg-surface-container-highest rounded-xl p-6 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-6">
+<div class="space-y-1">
+<h3 class="font-display text-3xl leading-none">OBJECTIF 2024</h3>
+<p class="font-mono text-[10px] text-primary-container uppercase tracking-tighter">PROJECTED_GROWTH_TARGET</p>
+</div>
+<div class="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">rocket_launch</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="space-y-2">
+<div class="flex justify-between font-mono text-[10px]">
+<span class="text-on-surface-variant">CURRENT COMPLETION</span>
+<span class="text-primary">82%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full w-[82%] bg-gradient-to-r from-primary-container to-secondary-container"></div>
+</div>
+</div>
+<!-- Action Button -->
+<button class="mt-8 w-full bg-primary-fixed text-on-primary-fixed py-3 rounded font-headline font-bold uppercase tracking-widest text-sm hover:brightness-110 active:scale-95 transition-all">
+                Download PDF Full Audit
+            </button>
+<!-- Technical Detail -->
+<div class="mt-4 flex justify-center">
+<p class="font-mono text-[8px] text-on-surface-variant/40">CHECKSUM: 0x82A_ANNUAL_PERF_VERIFIED</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full bg-[#0c0e12] dark:bg-[#0c0e12] flex justify-around items-center px-4 py-3 pb-safe z-50 rounded-t-xl border-t border-white/5 shadow-[0_-8px_24px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-lg px-4 py-1.5 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Inventory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

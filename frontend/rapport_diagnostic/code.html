@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#c4c6cf",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "inverse-primary": "#835500",
+              "surface-container-lowest": "#0c0e12",
+              "surface-bright": "#37393e",
+              "on-secondary-container": "#4d1900",
+              "on-background": "#e2e2e8",
+              "background": "#111318",
+              "on-primary": "#452b00",
+              "error": "#ffb4ab",
+              "secondary-fixed-dim": "#ffb596",
+              "on-tertiary-fixed": "#191c22",
+              "surface-container-low": "#1a1c20",
+              "surface-container": "#1e2024",
+              "inverse-surface": "#e2e2e8",
+              "on-primary-fixed": "#291800",
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-high": "#282a2e",
+              "surface": "#111318",
+              "primary-fixed": "#ffddb4",
+              "surface-container-highest": "#333539",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-surface": "#e2e2e8",
+              "outline-variant": "#524534",
+              "primary-fixed-dim": "#ffb955",
+              "on-secondary": "#581e00",
+              "tertiary": "#d0d2db",
+              "surface-variant": "#333539",
+              "on-tertiary-container": "#45474f",
+              "on-surface-variant": "#d7c3ae",
+              "primary": "#ffc880",
+              "surface-dim": "#111318",
+              "secondary-fixed": "#ffdbcd",
+              "on-error": "#690005",
+              "on-tertiary": "#2d3037",
+              "secondary": "#ffb596",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed": "#360f00",
+              "on-error-container": "#ffdad6",
+              "inverse-on-surface": "#2f3035",
+              "secondary-container": "#f26411",
+              "primary-container": "#f5a623",
+              "surface-tint": "#ffb955",
+              "error-container": "#93000a",
+              "on-primary-fixed-variant": "#633f00"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "technical": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .technical-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(82, 69, 52, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body technical-bg min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full border-b border-[#524534]/15 sticky top-0 z-40">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623] text-2xl" data-icon="precision_manufacturing">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] font-headline uppercase">MECAPRO</h1>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-high text-on-surface hover:bg-[#282a2e] transition-colors border border-outline-variant/15">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+<span class="text-sm font-medium">Partager</span>
+</button>
+<button class="flex items-center gap-2 px-6 py-2 rounded-xl bg-primary-container text-on-primary-container font-bold hover:opacity-90 transition-all shadow-[0_0_12px_rgba(245,166,35,0.2)]">
+<span class="material-symbols-outlined text-xl" data-icon="download">download</span>
+<span class="text-sm">Télécharger PDF</span>
+</button>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-6 py-8">
+<!-- Page Title & VIN Anchor -->
+<div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="text-primary font-technical tracking-tighter text-sm uppercase opacity-70">RAPPORT #DX-2024-089</span>
+<h2 class="text-5xl font-headline tracking-wider text-on-background mt-1 uppercase">Rapport de Diagnostic</h2>
+</div>
+<div class="bg-surface-container-low px-4 py-2 rounded-lg border-l-4 border-secondary-container">
+<span class="block text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">Identifiant Véhicule (VIN)</span>
+<span class="font-technical text-primary text-lg">WBA3N310X0K123456</span>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Summary Card (Editorial Scale) -->
+<div class="md:col-span-8 bg-surface-container-high rounded-xl p-8 relative overflow-hidden group border border-outline-variant/10">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-9xl" data-icon="analytics">analytics</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline text-2xl tracking-wide mb-6 text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-6 bg-secondary-container rounded-full"></span>
+                        RÉSUMÉ TECHNIQUE
+                    </h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+<div>
+<span class="block text-xs font-medium text-on-surface-variant mb-1 uppercase tracking-tighter">Santé Moteur</span>
+<span class="text-5xl font-headline text-primary">84%</span>
+<div class="w-full h-1 bg-surface-container-lowest mt-2 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-[84%]"></div>
+</div>
+</div>
+<div>
+<span class="block text-xs font-medium text-on-surface-variant mb-1 uppercase tracking-tighter">Alertes Critiques</span>
+<span class="text-5xl font-headline text-error">02</span>
+</div>
+<div>
+<span class="block text-xs font-medium text-on-surface-variant mb-1 uppercase tracking-tighter">Temps de Test</span>
+<span class="text-5xl font-headline text-on-surface">42<span class="text-2xl ml-1 opacity-50">min</span></span>
+</div>
+</div>
+<p class="mt-8 text-on-surface-variant leading-relaxed border-t border-outline-variant/10 pt-6">
+                        Le diagnostic complet révèle une performance globale satisfaisante. Toutefois, une perte de pression mineure est détectée dans le circuit de suralimentation. L'analyse des capteurs indique une usure prématurée des bougies d'allumage sur les cylindres 2 et 4.
+                    </p>
+</div>
+</div>
+<!-- Vehicle Info Card -->
+<div class="md:col-span-4 bg-surface-container-low rounded-xl p-6 border border-outline-variant/5">
+<h3 class="font-headline text-xl tracking-wide mb-4 text-on-surface-variant">INFOS VÉHICULE</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Modèle</span>
+<span class="font-medium">BMW 3 Series (2020)</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Kilométrage</span>
+<span class="font-technical text-primary">74,230 KM</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Dernier Entretien</span>
+<span class="text-sm">12 Janv 2024</span>
+</div>
+<div class="mt-6">
+<img alt="Vehicle Front View" class="w-full h-32 object-cover rounded-lg filter grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500" data-alt="Dark luxury sedan car front view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs1_Lv3D0FlyL59HyWj0TtzIvfZ0atyJPLzEq919Z7M4yXxpJyHdsNOmjr3pehLlkV5oGNDwr5NOlpavUl5o8_cX12OICnHfcaerDlywdKZyli2TVuaSu5n2FNaol5imKNBkqX35cuhvjC8lDV_Gcu7-QBc3XPWkpwi-KlgjlicfNB0rP3GiYPNyRiJ_L1xLxzMykCbxjq2U2b9XIHmqMiFGbfYM86OA-drfCsSywhESXfqYbkqI2tvXVAsplGlOzoyjYL3faC_yko"/>
+</div>
+</div>
+</div>
+<!-- Performance Curves -->
+<div class="md:col-span-12 lg:col-span-7 bg-surface-container-high rounded-xl p-6 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline text-2xl tracking-wide text-on-surface-variant">COURBES DE PERFORMANCE</h3>
+<div class="flex gap-3">
+<span class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tighter text-primary">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Couple
+                        </span>
+<span class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tighter text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Puissance
+                        </span>
+</div>
+</div>
+<div class="h-64 flex items-end gap-1 relative">
+<!-- Faux Graph bars representing data -->
+<div class="flex-1 bg-surface-container-lowest relative group h-[40%] rounded-t-sm">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[60%] opacity-40"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative h-[45%] rounded-t-sm">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[65%] opacity-40"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative h-[55%] rounded-t-sm">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[70%] opacity-40"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative h-[75%] rounded-t-sm">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[85%] opacity-40"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative h-[90%] rounded-t-sm">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[95%] opacity-40"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative h-[85%] rounded-t-sm border-r border-dashed border-primary/30">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[80%] opacity-40"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative h-[70%] rounded-t-sm">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[60%] opacity-40"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative h-[60%] rounded-t-sm">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[50%] opacity-40"></div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative h-[40%] rounded-t-sm">
+<div class="absolute bottom-0 w-full bg-primary/20 h-full"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[40%] opacity-40"></div>
+</div>
+<!-- Overlay Line (Faux Curve) -->
+<div class="absolute inset-x-0 bottom-[30%] h-px bg-secondary-container shadow-[0_0_15px_rgba(242,100,17,0.5)] rotate-[-5deg]"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-technical text-on-surface-variant/40">
+<span>1000 RPM</span>
+<span>3000 RPM</span>
+<span>5000 RPM</span>
+<span>7000 RPM</span>
+</div>
+</div>
+<!-- Diagnostic Trouble Codes (DTC) -->
+<div class="md:col-span-12 lg:col-span-5 space-y-4">
+<h3 class="font-headline text-2xl tracking-wide text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-error" data-icon="bug_report">bug_report</span>
+                    CODES D'ERREUR
+                </h3>
+<div class="bg-surface-container rounded-xl p-4 border-l-4 border-error flex items-start justify-between">
+<div>
+<span class="font-technical text-lg text-error block">P0302</span>
+<span class="text-sm font-medium">Cylinder 2 Misfire Detected</span>
+<span class="block text-xs text-on-surface-variant mt-1">Sévérité: Critique</span>
+</div>
+<span class="material-symbols-outlined text-error/30 text-3xl" data-icon="warning">warning</span>
+</div>
+<div class="bg-surface-container rounded-xl p-4 border-l-4 border-primary-container flex items-start justify-between">
+<div>
+<span class="font-technical text-lg text-primary block">P0299</span>
+<span class="text-sm font-medium">Turbocharger Underboost</span>
+<span class="block text-xs text-on-surface-variant mt-1">Sévérité: Modérée</span>
+</div>
+<span class="material-symbols-outlined text-primary/30 text-3xl" data-icon="error_outline">error_outline</span>
+</div>
+<div class="bg-surface-container rounded-xl p-4 border-l-4 border-outline-variant/40 flex items-start justify-between">
+<div>
+<span class="font-technical text-lg text-on-surface-variant block">U0100</span>
+<span class="text-sm font-medium">ECM Communication Lost</span>
+<span class="block text-xs text-on-surface-variant mt-1">Sévérité: Historique</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/20 text-3xl" data-icon="history">history</span>
+</div>
+</div>
+<!-- Recommandations Section -->
+<div class="md:col-span-12 bg-surface-container-low rounded-xl p-8 border border-outline-variant/5">
+<h3 class="font-headline text-2xl tracking-wide mb-6 text-on-surface-variant uppercase">Actions Recommandées</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-high p-5 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Bougies d'allumage</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Remplacement immédiat du jeu de bougies requis pour éliminer les ratés d'allumage constatés sur les cylindres 2 et 4.</p>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary" data-icon="compress">compress</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Circuit Turbo</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Test d'étanchéité de la fumée sur le circuit d'admission pour localiser la fuite de pression de suralimentation.</p>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="update">update</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Mise à jour ECU</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Une mise à jour logicielle est disponible pour le module de commande moteur (ECM) afin d'optimiser la consommation.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight mt-1">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight mt-1">Tâches</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-xl px-3 py-1.5 shadow-[0_0_12px_rgba(245,166,35,0.1)] translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight mt-1">Factures</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight mt-1">Sécurité</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight mt-1">Profil</span>
+</a>
+</nav>
+</body></html>

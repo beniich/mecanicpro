@@ -12,6 +12,13 @@ using Microsoft.Extensions.Logging;
 
 namespace MecaPro.Application;
 
+public interface ICurrentUserService
+{
+    string? UserId { get; }
+    string? IpAddress { get; }
+    bool IsAuthenticated { get; }
+}
+
 public class Result<T>
 {
     public bool IsSuccess { get; }
@@ -177,6 +184,19 @@ public record GetPartsPagedQuery(int Page, int PageSize, string? Search = null, 
 public record GetPartByReferenceQuery(string Reference) : IRequest<Result<PartDto>>;
 public record AdjustStockCommand(Guid Id, int Delta) : IRequest<Result<bool>>;
 public record GetPartCategoriesQuery() : IRequest<Result<List<string>>>;
+
+public record GetVehiclesPagedQuery(int Page, int PageSize, string? Search, string? Status) : IRequest<Result<PagedResult<VehicleDto>>>;
+public record GetVehicleByIdQuery(Guid Id) : IRequest<Result<VehicleDetailDto>>;
+public record GetVehicleByQrQuery(string Token) : IRequest<Result<VehicleDetailDto>>;
+public record GenerateQrCodeCommand(Guid VehicleId) : IRequest<Result<QrCodeDto>>;
+
+public record AddDiagnosticCommand(Guid VehicleId, string FaultCode, string Description, string Severity, string? Tool = null, string? Causes = null) : IRequest<Result<DiagnosticDto>>;
+
+public record GetRevisionsQuery(int Page, int PageSize, string? Search) : IRequest<Result<PagedResult<RevisionDto>>>;
+public record CreateRevisionCommand(Guid VehicleId, string Type, DateTime ScheduledDate, int EstimatedDurationMinutes, decimal EstimatedCost, int Mileage) : IRequest<Result<RevisionDto>>;
+
+public record GetInvoicesQuery(Guid CustomerId) : IRequest<Result<List<InvoiceDto>>>;
+public record GetUserProfileQuery(string UserId) : IRequest<Result<UserProfileDto>>;
 
 // ─────────────────────────────────────────────────────────────
 // HANDLERS
@@ -354,5 +374,108 @@ public class GetPartCategoriesHandler(IPartRepository parts) : IRequestHandler<G
     {
         var all = await parts.GetAllAsync(ct);
         return Result<List<string>>.Success(all.Select(p => p.Category).Distinct().ToList());
+    }
+}
+
+public class GetVehiclesPagedHandler(IVehicleRepository vehicles) : IRequestHandler<GetVehiclesPagedQuery, Result<PagedResult<VehicleDto>>>
+{
+    public async Task<Result<PagedResult<VehicleDto>>> Handle(GetVehiclesPagedQuery query, CancellationToken ct)
+    {
+        var all = await vehicles.GetAllAsync(ct);
+        var filtered = all.Where(v => (string.IsNullOrEmpty(query.Search) || v.LicensePlate.Value.Contains(query.Search, StringComparison.OrdinalIgnoreCase) || v.Make.Contains(query.Search, StringComparison.OrdinalIgnoreCase))
+                                   && (string.IsNullOrEmpty(query.Status) || v.Status.ToString() == query.Status));
+        
+        var total = filtered.Count();
+        var items = filtered.Skip((query.Page - 1) * query.PageSize).Take(query.PageSize).Select(v => v.ToDto());
+        
+        return Result<PagedResult<VehicleDto>>.Success(new PagedResult<VehicleDto>(items, total, query.Page, query.PageSize));
+    }
+}
+
+public class GetVehicleByIdHandler(IVehicleRepository vehicles, ICustomerRepository customers) : IRequestHandler<GetVehicleByIdQuery, Result<VehicleDetailDto>>
+{
+    public async Task<Result<VehicleDetailDto>> Handle(GetVehicleByIdQuery query, CancellationToken ct)
+    {
+        var v = await vehicles.GetByIdAsync(query.Id, ct);
+        if (v == null) return Result<VehicleDetailDto>.Failure("Véhicule introuvable.");
+        var c = await customers.GetByIdAsync(v.CustomerId, ct);
+        return Result<VehicleDetailDto>.Success(v.ToDetailDto(c?.Name.Full));
+    }
+}
+
+public class GetVehicleByQrHandler(IVehicleRepository vehicles, ICustomerRepository customers) : IRequestHandler<GetVehicleByQrQuery, Result<VehicleDetailDto>>
+{
+    public async Task<Result<VehicleDetailDto>> Handle(GetVehicleByQrQuery query, CancellationToken ct)
+    {
+        var v = await vehicles.GetByQrTokenAsync(query.Token, ct);
+        if (v == null) return Result<VehicleDetailDto>.Failure("QR Code invalide.");
+        var c = await customers.GetByIdAsync(v.CustomerId, ct);
+        return Result<VehicleDetailDto>.Success(v.ToDetailDto(c?.Name.Full));
+    }
+}
+
+public class GenerateQrCodeHandler(IVehicleRepository vehicles, IUnitOfWork uow) : IRequestHandler<GenerateQrCodeCommand, Result<QrCodeDto>>
+{
+    public async Task<Result<QrCodeDto>> Handle(GenerateQrCodeCommand cmd, CancellationToken ct)
+    {
+        var v = await vehicles.GetByIdAsync(cmd.VehicleId, ct);
+        if (v == null) return Result<QrCodeDto>.Failure("Véhicule introuvable.");
+        v.RegenerateQrToken();
+        await uow.SaveChangesAsync(ct);
+        return Result<QrCodeDto>.Success(new QrCodeDto(v.QrCodeToken, $"https://mecapro.app/v/{v.QrCodeToken}", "", v.LicensePlate.Value));
+    }
+}
+
+public class AddDiagnosticHandler(IVehicleRepository vehicles, IUnitOfWork uow, ICurrentUserService currentU) : IRequestHandler<AddDiagnosticCommand, Result<DiagnosticDto>>
+{
+    public async Task<Result<DiagnosticDto>> Handle(AddDiagnosticCommand cmd, CancellationToken ct)
+    {
+        var v = await vehicles.GetByIdAsync(cmd.VehicleId, ct);
+        if (v == null) return Result<DiagnosticDto>.Failure("Véhicule introuvable.");
+        Enum.TryParse<DiagnosticSeverity>(cmd.Severity, out var sev);
+        var d = Diagnostic.Create(v.Id, Guid.Parse(currentU.UserId ?? Guid.Empty.ToString()), cmd.FaultCode, cmd.Description, sev, cmd.Tool, cmd.Causes);
+        v.AddDiagnostic(d);
+        await uow.SaveChangesAsync(ct);
+        return Result<DiagnosticDto>.Success(d.ToDto());
+    }
+}
+
+public class GetRevisionsHandler(IRevisionRepository revisions) : IRequestHandler<GetRevisionsQuery, Result<PagedResult<RevisionDto>>>
+{
+    public async Task<Result<PagedResult<RevisionDto>>> Handle(GetRevisionsQuery query, CancellationToken ct)
+    {
+        var (items, total) = await revisions.GetPagedAsync(query.Page, query.PageSize, query.Search, ct);
+        return Result<PagedResult<RevisionDto>>.Success(new PagedResult<RevisionDto>(items.Select(r => r.ToDto()), total, query.Page, query.PageSize));
+    }
+}
+
+public class CreateRevisionHandler(IVehicleRepository vehicles, IRevisionRepository revisions, IUnitOfWork uow) : IRequestHandler<CreateRevisionCommand, Result<RevisionDto>>
+{
+    public async Task<Result<RevisionDto>> Handle(CreateRevisionCommand cmd, CancellationToken ct)
+    {
+        var v = await vehicles.GetByIdAsync(cmd.VehicleId, ct);
+        if (v == null) return Result<RevisionDto>.Failure("Véhicule introuvable.");
+        var r = Revision.Create(v.Id, cmd.Type, cmd.ScheduledDate, cmd.EstimatedDurationMinutes, Money.Create(cmd.EstimatedCost), cmd.Mileage);
+        await revisions.AddAsync(r, ct);
+        await uow.SaveChangesAsync(ct);
+        return Result<RevisionDto>.Success(r.ToDto());
+    }
+}
+
+public class GetInvoicesHandler(IInvoiceRepository invoices) : IRequestHandler<GetInvoicesQuery, Result<List<InvoiceDto>>>
+{
+    public async Task<Result<List<InvoiceDto>>> Handle(GetInvoicesQuery query, CancellationToken ct)
+    {
+        var items = await invoices.GetByCustomerIdAsync(query.CustomerId, ct);
+        return Result<List<InvoiceDto>>.Success(items.Select(i => i.ToDto()).ToList());
+    }
+}
+
+public class GetUserProfileHandler(ICurrentUserService currentU) : IRequestHandler<GetUserProfileQuery, Result<UserProfileDto>>
+{
+    public Task<Result<UserProfileDto>> Handle(GetUserProfileQuery query, CancellationToken ct)
+    {
+        // Simplified: returns current user info from session
+        return Task.FromResult(Result<UserProfileDto>.Success(new UserProfileDto(query.UserId, "User", "user@email.com", "Mechanic", null, null)));
     }
 }

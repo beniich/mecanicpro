@@ -13,7 +13,7 @@ using Stripe.Checkout;
 using System.Text;
 using Hangfire;
 using Microsoft.AspNetCore.Authorization;
-using MecaPro.Application.Common;
+using MecaPro.Application;
 
 namespace MecaPro.Infrastructure.CRM
 {

@@ -353,6 +353,7 @@ public class RevisionTask(Guid revisionId, string description, int estimatedMinu
     public int? ActualMinutes { get; set; }
     public bool IsCompleted { get; set; }
     public void Complete(int minutes) { IsCompleted = true; ActualMinutes = minutes; }
+    private RevisionTask() : this(Guid.Empty, "", 0) { }
 }
 
 public class RevisionPart(Guid revisionId, Guid partId, string partName, int quantity, Money unitPrice) : BaseEntity<Guid>
@@ -363,6 +364,7 @@ public class RevisionPart(Guid revisionId, Guid partId, string partName, int qua
     public int Quantity { get; set; } = quantity;
     public Money UnitPrice { get; set; } = unitPrice;
     public decimal Total => UnitPrice.Amount * Quantity;
+    private RevisionPart() : this(Guid.Empty, Guid.Empty, "", 0, null!) { }
 }
 
 public class Part : AggregateRoot<Guid>

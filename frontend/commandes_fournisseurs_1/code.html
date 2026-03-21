@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#524534",
+              "outline": "#9f8e7a",
+              "surface-bright": "#37393e",
+              "inverse-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "on-background": "#e2e2e8",
+              "surface-variant": "#333539",
+              "inverse-primary": "#835500",
+              "error": "#ffb4ab",
+              "surface-container-high": "#282a2e",
+              "tertiary-fixed": "#e0e2eb",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "on-secondary": "#581e00",
+              "surface-container-lowest": "#0c0e12",
+              "primary-fixed": "#ffddb4",
+              "on-secondary-fixed": "#360f00",
+              "background": "#111318",
+              "surface": "#111318",
+              "on-primary-container": "#644000",
+              "primary": "#ffc880",
+              "on-tertiary-fixed": "#191c22",
+              "error-container": "#93000a",
+              "tertiary-container": "#b4b6bf",
+              "surface-container": "#1e2024",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "on-surface-variant": "#d7c3ae",
+              "tertiary": "#d0d2db",
+              "surface-container-low": "#1a1c20",
+              "secondary-fixed-dim": "#ffb596",
+              "secondary": "#ffb596",
+              "on-secondary-container": "#4d1900",
+              "surface-dim": "#111318",
+              "on-error": "#690005",
+              "on-tertiary-container": "#45474f",
+              "on-primary-fixed-variant": "#633f00",
+              "secondary-container": "#f26411",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "surface-tint": "#ffb955",
+              "secondary-fixed": "#ffdbcd",
+              "on-primary-fixed": "#291800",
+              "surface-container-highest": "#333539",
+              "on-error-container": "#ffdad6",
+              "inverse-on-surface": "#2f3035"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "technical": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #111318;
+            color: #e2e2e8;
+            font-family: 'DM Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#111318] shadow-[0_4px_20px_rgba(0,0,0,0.5)] border-none">
+<div class="flex justify-between items-center px-6 py-4 w-full bg-[#111318]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623] text-2xl" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] text-[#f5a623] tracking-[0.05em] uppercase text-2xl">MecaPro</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#e2e2e8] p-2 hover:bg-[#282a2e] transition-colors rounded-lg active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 pt-8">
+<!-- Header Section -->
+<div class="mb-10">
+<h2 class="font-headline text-5xl tracking-wider text-on-surface mb-2">COMMANDES FOURNISSEURS</h2>
+<p class="text-on-surface-variant font-body">Gestion du stock et flux logistique pièces détachées.</p>
+</div>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<!-- KPI 1 -->
+<div class="bg-surface-container-high relative overflow-hidden p-6 border-l-2 border-secondary-container">
+<div class="flex flex-col">
+<span class="text-on-surface-variant font-body text-sm uppercase tracking-widest mb-2">Total Commandes Mois</span>
+<span class="font-headline text-5xl text-primary tracking-tight">42</span>
+</div>
+<div class="absolute top-4 right-4 text-primary/10">
+<span class="material-symbols-outlined text-6xl" data-icon="shopping_cart">shopping_cart</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-high relative overflow-hidden p-6 border-l-2 border-primary-container">
+<div class="flex flex-col">
+<span class="text-on-surface-variant font-body text-sm uppercase tracking-widest mb-2">Budget Engagé</span>
+<span class="font-technical text-4xl text-primary">12.840,50 €</span>
+</div>
+<div class="absolute top-4 right-4 text-primary/10">
+<span class="material-symbols-outlined text-6xl" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-container-high relative overflow-hidden p-6 border-l-2 border-tertiary">
+<div class="flex flex-col">
+<span class="text-on-surface-variant font-body text-sm uppercase tracking-widest mb-2">Délai Moyen Réception</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-5xl text-on-surface">3.2</span>
+<span class="font-body text-xl text-on-surface-variant">JOURS</span>
+</div>
+</div>
+<div class="absolute top-4 right-4 text-primary/10">
+<span class="material-symbols-outlined text-6xl" data-icon="timer">timer</span>
+</div>
+</div>
+</div>
+<!-- Filters / Search -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+<div class="flex gap-2">
+<button class="px-6 py-2 bg-primary-container text-on-primary-container font-body font-bold rounded-lg hover:bg-primary transition-colors text-sm uppercase tracking-wide active:scale-95">Tout</button>
+<button class="px-6 py-2 bg-surface-container-low text-on-surface-variant font-body font-bold rounded-lg hover:bg-surface-container-high transition-colors text-sm uppercase tracking-wide active:scale-95">En attente</button>
+<button class="px-6 py-2 bg-surface-container-low text-on-surface-variant font-body font-bold rounded-lg hover:bg-surface-container-high transition-colors text-sm uppercase tracking-wide active:scale-95">Expédié</button>
+</div>
+<div class="relative w-full md:w-80">
+<input class="w-full bg-surface-container-highest border-none rounded-xl py-3 pl-12 pr-4 text-on-surface placeholder-outline font-technical text-sm focus:ring-1 focus:ring-primary-container" placeholder="RECHERCHER UNE COMMANDE..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+</div>
+</div>
+<!-- Orders Table/List -->
+<div class="bg-surface-container-lowest overflow-hidden rounded-xl">
+<div class="grid grid-cols-12 gap-4 px-6 py-4 bg-surface-container-low text-on-surface-variant font-body text-xs font-bold uppercase tracking-widest border-b border-outline-variant/10">
+<div class="col-span-2">Réf. Commande</div>
+<div class="col-span-3">Fournisseur</div>
+<div class="col-span-2">Date</div>
+<div class="col-span-2">Montant</div>
+<div class="col-span-2">Statut</div>
+<div class="col-span-1 text-right">Action</div>
+</div>
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-surface-container transition-colors border-b border-outline-variant/5">
+<div class="col-span-2 font-technical text-primary">ORD-2409-B12</div>
+<div class="col-span-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<span class="font-body font-bold">BREMBO RACING</span>
+</div>
+<div class="col-span-2 font-technical text-sm text-on-surface-variant">24/09/2023</div>
+<div class="col-span-2 font-technical font-bold text-on-surface">2.450,00 €</div>
+<div class="col-span-2">
+<span class="px-3 py-1 bg-primary-container/20 text-primary-container text-[10px] font-bold uppercase rounded-full tracking-tighter ring-1 ring-primary-container/30">Expédié</span>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-surface-container transition-colors border-b border-outline-variant/5">
+<div class="col-span-2 font-technical text-primary">ORD-2409-M08</div>
+<div class="col-span-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="oil_barrel">oil_barrel</span>
+</div>
+<span class="font-body font-bold">MOTUL FRANCE</span>
+</div>
+<div class="col-span-2 font-technical text-sm text-on-surface-variant">22/09/2023</div>
+<div class="col-span-2 font-technical font-bold text-on-surface">840,25 €</div>
+<div class="col-span-2">
+<span class="px-3 py-1 bg-surface-bright text-on-surface-variant text-[10px] font-bold uppercase rounded-full tracking-tighter ring-1 ring-outline-variant/30">En attente</span>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-surface-container transition-colors border-b border-outline-variant/5">
+<div class="col-span-2 font-technical text-primary">ORD-2408-A99</div>
+<div class="col-span-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="settings_wrench">reset_wrench</span>
+</div>
+<span class="font-body font-bold">AKRAPOVIC EXHAUST</span>
+</div>
+<div class="col-span-2 font-technical text-sm text-on-surface-variant">18/08/2023</div>
+<div class="col-span-2 font-technical font-bold text-on-surface">5.120,00 €</div>
+<div class="col-span-2">
+<span class="px-3 py-1 bg-tertiary-container/20 text-tertiary text-[10px] font-bold uppercase rounded-full tracking-tighter ring-1 ring-tertiary/30">Reçu</span>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-surface-container transition-colors">
+<div class="col-span-2 font-technical text-primary">ORD-2409-N44</div>
+<div class="col-span-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="tire_repair">tire_repair</span>
+</div>
+<span class="font-body font-bold">MICHELIN TYRES</span>
+</div>
+<div class="col-span-2 font-technical text-sm text-on-surface-variant">25/09/2023</div>
+<div class="col-span-2 font-technical font-bold text-on-surface">1.215,00 €</div>
+<div class="col-span-2">
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-error-container/30 text-error text-[10px] font-bold uppercase rounded-full tracking-tighter ring-1 ring-error/50 shadow-[0_0_10px_rgba(255,180,171,0.2)]">Urgent</span>
+</div>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center mt-8 gap-4">
+<button class="p-2 bg-surface-container-high rounded-lg hover:bg-primary-container transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex items-center gap-2 px-4 font-technical text-sm">
+<span class="text-primary font-bold">01</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface-variant">04</span>
+</div>
+<button class="p-2 bg-surface-container-high rounded-lg hover:bg-primary-container transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed right-6 bottom-24 w-14 h-14 bg-gradient-to-br from-primary-container to-secondary-container text-on-primary-container rounded-xl shadow-[0_4px_24px_rgba(245,166,35,0.4)] flex items-center justify-center hover:scale-105 transition-transform active:scale-90 z-40">
+<span class="material-symbols-outlined text-3xl font-bold" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#111318]/80 backdrop-blur-xl z-50 rounded-t-xl border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#949494] hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#949494] hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter mt-1">Diagnostic</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#949494] hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter mt-1">QR Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-3 py-1 shadow-[0_0_12px_rgba(245,166,35,0.2)]" href="#">
+<span class="material-symbols-outlined fill-icon" data-icon="settings_wrench">reset_wrench</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter mt-1">Parts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#949494] hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter mt-1">Chat</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "technical": ["JetBrains Mono"],
+              "label": ["DM Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(51, 53, 57, 0.6);
+        backdrop-filter: blur(20px);
+      }
+      .premium-gradient {
+        background: linear-gradient(135deg, #f5a623 0%, #f26411 100%);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 h-20 w-full fixed top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623]" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 font-technical text-xs tracking-widest text-[#e2e2e8]/60">
+<span class="text-[#f5a623] border-b border-[#f5a623]">ESTIMATE_v4.2</span>
+<span class="hover:text-[#f5a623] cursor-pointer transition-colors">HISTORY</span>
+<span class="hover:text-[#f5a623] cursor-pointer transition-colors">WARRANTY</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Operator profile picture professional portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKtIVHEk_K62TdyhvyU2uqJpqeZ9lOW764c8mTWfpYNDW3BNcr6gnW2ufe2g5g066IPk_cL9ywARpeWk3kzw3ABKLVYBrz7kY2l8XVRqCsPylPLqilrzCvYKfTMX3f22u0tqDBCG-7d8k7kHFexTBa3ymM561clHz5SdEpHyTp_mySQDoOL0EsXGHoN3ZtqKu7-E7Agdg2Ffjt_LN5ZPfnah1kZgCACgRVOihihQhRJ3PWEIO0FBw-541plBInNi7c0gLZVY5mcUfA"/>
+</div>
+</div>
+</header>
+<main class="pt-28 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="font-technical text-primary text-sm tracking-tighter mb-2 block">VEHICLE_REPORT_ID: #FR-99283-TX</span>
+<h2 class="font-headline text-5xl md:text-7xl uppercase tracking-tight leading-none">Comparatif Devis</h2>
+</div>
+<div class="bg-surface-container-low p-4 rounded border-l-4 border-secondary-container">
+<p class="text-xs font-technical text-on-surface-variant uppercase mb-1">Diagnostic Actif</p>
+<p class="text-lg font-bold">Remplacement Système de Freinage</p>
+</div>
+</div>
+</div>
+<!-- Quote Comparison Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Option 1: Économique -->
+<div class="bg-surface-container-low rounded-xl overflow-hidden flex flex-col transition-all hover:translate-y-[-4px] group">
+<div class="p-6 border-b border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-outline" data-icon="savings">savings</span>
+<span class="font-technical text-[10px] py-1 px-2 bg-surface-container-highest rounded text-on-surface-variant">ENTRY_LEVEL</span>
+</div>
+<h3 class="font-headline text-3xl mb-1 text-on-surface">Économique</h3>
+<p class="text-sm text-on-surface-variant">Pièces de qualité équivalente certifiées.</p>
+</div>
+<div class="p-6 flex-grow space-y-4">
+<div class="flex justify-between items-baseline">
+<span class="font-technical text-2xl font-bold text-primary">485.00€</span>
+<span class="text-xs text-on-surface-variant uppercase">TTC</span>
+</div>
+<ul class="space-y-3 pt-4">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check_circle">check_circle</span>
+<span>Main d'œuvre incluse</span>
+</li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check_circle">check_circle</span>
+<span>Garantie 6 mois</span>
+</li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant/60">
+<span class="material-symbols-outlined text-sm" data-icon="cancel">cancel</span>
+<span class="line-through">Pièces d'origine</span>
+</li>
+</ul>
+</div>
+<div class="p-6 bg-surface-container-high/50">
+<button class="w-full py-3 rounded bg-surface-container-highest font-bold text-sm tracking-widest hover:bg-surface-bright transition-colors uppercase">Sélectionner</button>
+</div>
+</div>
+<!-- Option 2: Standard (The Featured One) -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col border border-primary/20 relative scale-105 z-10 shadow-2xl shadow-primary/5 group">
+<div class="absolute top-0 right-0 bg-primary text-on-primary px-3 py-1 font-technical text-[10px] font-bold tracking-tighter">RECOMMENDED</div>
+<div class="p-6 border-b border-primary/10">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="build_circle">build_circle</span>
+<span class="font-technical text-[10px] py-1 px-2 bg-primary/10 text-primary rounded">OPTIMAL_VALUE</span>
+</div>
+<h3 class="font-headline text-3xl mb-1 text-primary">Standard</h3>
+<p class="text-sm text-on-surface-variant">Équilibre parfait entre performance et coût.</p>
+</div>
+<div class="p-6 flex-grow space-y-4">
+<div class="flex justify-between items-baseline">
+<span class="font-technical text-3xl font-bold text-primary">642.50€</span>
+<span class="text-xs text-on-surface-variant uppercase">TTC</span>
+</div>
+<ul class="space-y-3 pt-4">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check_circle">check_circle</span>
+<span>Pièces de marque (Brembo/ATE)</span>
+</li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check_circle">check_circle</span>
+<span>Garantie 12 mois</span>
+</li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check_circle">check_circle</span>
+<span>Assistance routière 3 mois</span>
+</li>
+</ul>
+</div>
+<div class="p-6 bg-primary/5">
+<button class="w-full py-3 rounded premium-gradient text-on-primary-container font-bold text-sm tracking-widest hover:opacity-90 transition-all uppercase shadow-lg shadow-secondary-container/20">Valider Option</button>
+</div>
+</div>
+<!-- Option 3: Premium -->
+<div class="bg-surface-container-low rounded-xl overflow-hidden flex flex-col transition-all hover:translate-y-[-4px] group">
+<div class="p-6 border-b border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary" data-icon="verified">verified</span>
+<span class="font-technical text-[10px] py-1 px-2 bg-surface-container-highest rounded text-on-surface-variant">OEM_PARTS</span>
+</div>
+<h3 class="font-headline text-3xl mb-1 text-on-surface">Premium</h3>
+<p class="text-sm text-on-surface-variant">Pièces constructeur d'origine (OEM).</p>
+</div>
+<div class="p-6 flex-grow space-y-4">
+<div class="flex justify-between items-baseline">
+<span class="font-technical text-2xl font-bold text-primary">895.00€</span>
+<span class="text-xs text-on-surface-variant uppercase">TTC</span>
+</div>
+<ul class="space-y-3 pt-4">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check_circle">check_circle</span>
+<span>Pièces d'origine garantie</span>
+</li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check_circle">check_circle</span>
+<span>Garantie 24 mois (Europe)</span>
+</li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="check_circle">check_circle</span>
+<span>Nettoyage véhicule offert</span>
+</li>
+</ul>
+</div>
+<div class="p-6 bg-surface-container-high/50">
+<button class="w-full py-3 rounded bg-surface-container-highest font-bold text-sm tracking-widest hover:bg-surface-bright transition-colors uppercase">Sélectionner</button>
+</div>
+</div>
+</div>
+<!-- Detailed Breakdown -->
+<section class="mt-16">
+<h4 class="font-headline text-2xl mb-8 tracking-widest border-b border-outline-variant/20 pb-2">Spécifications Techniques</h4>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Data Table -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="p-4 font-technical text-[10px] uppercase tracking-widest text-on-surface-variant">Code_Pièce</th>
+<th class="p-4 font-technical text-[10px] uppercase tracking-widest text-on-surface-variant">Description</th>
+<th class="p-4 font-technical text-[10px] uppercase tracking-widest text-on-surface-variant text-right">Qty</th>
+</tr>
+</thead>
+<tbody class="font-technical text-sm">
+<tr class="bg-surface-container-low/50">
+<td class="p-4 text-primary">BK-DISK-290</td>
+<td class="p-4">Disques de frein ventilés avant</td>
+<td class="p-4 text-right">02</td>
+</tr>
+<tr class="bg-surface-container-lowest">
+<td class="p-4 text-primary">BK-PAD-V2</td>
+<td class="p-4">Plaquettes céramique haute perf</td>
+<td class="p-4 text-right">01</td>
+</tr>
+<tr class="bg-surface-container-low/50">
+<td class="p-4 text-primary">LB-MECH-S1</td>
+<td class="p-4">Main d'œuvre expert T2</td>
+<td class="p-4 text-right">2.5h</td>
+</tr>
+<tr class="bg-surface-container-lowest">
+<td class="p-4 text-primary">ENV-REC-01</td>
+<td class="p-4">Recyclage fluides &amp; déchets</td>
+<td class="p-4 text-right">01</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Warranty Info Card -->
+<div class="bg-surface-container-high p-8 rounded-xl border-l-4 border-primary relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-4 mb-6">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="security">security</span>
+<h5 class="font-headline text-3xl">Engagement Qualité</h5>
+</div>
+<p class="text-on-surface-variant mb-6 leading-relaxed">
+                            Toutes nos interventions sont effectuées par des techniciens certifiés utilisant des outillages de précision. Les pièces sélectionnées dans l'option <span class="text-primary font-bold italic">Standard</span> et <span class="text-primary font-bold italic">Premium</span> respectent scrupuleusement le cahier des charges constructeur.
+                        </p>
+<div class="flex gap-4">
+<div class="flex-1 p-4 bg-surface-container-lowest rounded">
+<span class="block font-technical text-[10px] text-on-surface-variant mb-1 uppercase">Main d'œuvre</span>
+<span class="font-bold">Garantie à Vie</span>
+</div>
+<div class="flex-1 p-4 bg-surface-container-lowest rounded">
+<span class="block font-technical text-[10px] text-on-surface-variant mb-1 uppercase">Certificat</span>
+<span class="font-bold">ISO 9001:2015</span>
+</div>
+</div>
+</div>
+<!-- Decorative backgorund icon -->
+<span class="material-symbols-outlined absolute -right-8 -bottom-8 text-9xl text-on-surface-variant/5 rotate-12" data-icon="verified_user">verified_user</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] h-20 flex justify-around items-center px-4 pb-2 z-50">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SCANNER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">REPORTS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">INVENTORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="support_agent">support_agent</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SUPPORT</span>
+</div>
+</nav>
+<!-- FAB (Suppressed based on context of deep details, but shown here as primary call to action for validation) -->
+<div class="fixed bottom-24 right-6 md:right-12 z-40 hidden md:block">
+<button class="premium-gradient w-14 h-14 rounded-full flex items-center justify-center text-on-primary-container shadow-2xl hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+</body></html>

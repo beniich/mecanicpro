@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'DM+Sans', sans-serif;
+            background-color: #111318;
+        }
+        .bebas-font { font-family: 'Bebas+Neue', cursive; }
+        .mono-font { font-family: 'JetBrains+Mono', monospace; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "secondary": "#ffb596",
+                "surface-variant": "#333539",
+                "outline": "#9f8e7a",
+                "on-secondary-container": "#4d1900",
+                "tertiary-container": "#b4b6bf",
+                "on-surface-variant": "#d7c3ae",
+                "on-secondary": "#581e00",
+                "background": "#111318",
+                "surface": "#111318",
+                "primary-container": "#f5a623",
+                "on-error-container": "#ffdad6",
+                "secondary-container": "#f26411",
+                "surface-container-low": "#1a1c20",
+                "secondary-fixed-dim": "#ffb596",
+                "on-primary-fixed-variant": "#633f00",
+                "on-background": "#e2e2e8",
+                "inverse-primary": "#835500",
+                "inverse-on-surface": "#2f3035",
+                "surface-container-high": "#282a2e",
+                "surface-container-highest": "#333539",
+                "surface-container-lowest": "#0c0e12",
+                "tertiary": "#d0d2db",
+                "surface-dim": "#111318",
+                "surface-tint": "#ffb955",
+                "on-primary": "#452b00",
+                "primary": "#ffc880",
+                "outline-variant": "#524534",
+                "on-tertiary-fixed-variant": "#44474e",
+                "error": "#ffb4ab",
+                "on-tertiary-fixed": "#191c22",
+                "surface-bright": "#37393e",
+                "on-primary-container": "#644000",
+                "tertiary-fixed": "#e0e2eb",
+                "on-tertiary": "#2d3037",
+                "secondary-fixed": "#ffdbcd",
+                "on-tertiary-container": "#45474f",
+                "error-container": "#93000a",
+                "on-error": "#690005",
+                "primary-fixed": "#ffddb4",
+                "on-secondary-fixed": "#360f00",
+                "surface-container": "#1e2024",
+                "on-primary-fixed": "#291800",
+                "on-secondary-fixed-variant": "#7c2e00",
+                "on-surface": "#e2e2e8",
+                "tertiary-fixed-dim": "#c4c6cf",
+                "inverse-surface": "#e2e2e8",
+                "primary-fixed-dim": "#ffb955"
+              },
+              fontFamily: {
+                "headline": ["Bebas Neue"],
+                "body": ["DM Sans"],
+                "technical": ["JetBrains Mono"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface selection:bg-primary/30 min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full border-b border-[#524534]/15 fixed top-0 z-40">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623] text-2xl" data-icon="precision_manufacturing">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] bebas-font uppercase">MECAPRO</h1>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<nav class="flex gap-6">
+<a class="text-[#e2e2e8]/60 hover:bg-[#282a2e] px-3 py-1 rounded transition-colors duration-200" href="#">Planning</a>
+<a class="text-[#e2e2e8]/60 hover:bg-[#282a2e] px-3 py-1 rounded transition-colors duration-200" href="#">Tâches</a>
+<a class="text-[#f5a623] font-bold" href="#">Profil</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+</div>
+</div>
+</header>
+<main class="pt-24 px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-2">
+<p class="text-primary font-technical tracking-widest text-xs uppercase">Configuration Système</p>
+<h2 class="text-5xl md:text-7xl font-headline tracking-wider uppercase text-on-surface">Paramètres &amp; Sécurité</h2>
+</div>
+<div class="hidden md:block">
+<span class="text-on-surface-variant font-technical text-sm px-4 py-2 bg-surface-container-low rounded-lg border border-outline-variant/10">
+                    ID STATION: <span class="text-primary">MP-7782-X</span>
+</span>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Left Column: User Profile -->
+<div class="md:col-span-4 space-y-6">
+<div class="bg-surface-container-high rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+<div class="flex flex-col items-center text-center space-y-4">
+<div class="relative">
+<img alt="Avatar Utilisateur" class="w-32 h-32 rounded-xl object-cover grayscale hover:grayscale-0 transition-all duration-500" data-alt="Corporate headshot of a professional man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcQkhB_xPwcnv76JeJd7FucWdgsxGih9aOs3N9c_n00XO_iF2tuniO_fjVM2Bw0Ujycx9_QXGctPnFagBgczNxwTyv8PEdPmFcJfdLE7p_OzwQ-yuZJwpxZUi5hA-vKjBeaLAW7qnr1nL1PE1TnKMd6RtyCNdraOrXVz4pQ1t37UQqbqVcxgvzvYSMFcAEdUg4hEh6bkZcO9e_CEdzouA8is7YGWDeqdJTaIOhTX5eUV7Fh3fjMMwzH6nZzit9yY87ElpzYQHUNAyc"/>
+<button class="absolute -bottom-2 -right-2 bg-primary text-on-primary p-2 rounded-lg shadow-lg active:scale-95 duration-100">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+<div>
+<h3 class="text-xl font-bold font-body">Marc-Antoine Lefebvre</h3>
+<p class="text-on-surface-variant text-sm font-technical uppercase">Chef d'Atelier Senior</p>
+</div>
+</div>
+<div class="mt-8 space-y-4">
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/10">
+<label class="text-[10px] text-on-surface-variant uppercase font-medium">Email Professionnel</label>
+<p class="font-technical text-on-surface">m.lefebvre@mecapro.tech</p>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/10">
+<label class="text-[10px] text-on-surface-variant uppercase font-medium">Téléphone</label>
+<p class="font-technical text-on-surface">+33 6 45 92 10 32</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
+<h4 class="font-headline text-2xl tracking-wide uppercase mb-4">Notifications</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-body">Alertes Critiques SMS</span>
+<div class="w-10 h-5 bg-primary-container rounded-full relative flex items-center px-1">
+<div class="w-3.5 h-3.5 bg-on-primary-container rounded-full translate-x-5"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-body">Rapports de Maintenance</span>
+<div class="w-10 h-5 bg-surface-container-highest rounded-full relative flex items-center px-1 border border-outline-variant/30">
+<div class="w-3.5 h-3.5 bg-on-surface-variant rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Security & API -->
+<div class="md:col-span-8 space-y-6">
+<!-- Security Card -->
+<div class="bg-surface-container-high rounded-xl p-8">
+<div class="flex items-center gap-4 mb-8">
+<span class="material-symbols-outlined text-secondary-container text-3xl" data-icon="verified_user">verified_user</span>
+<h3 class="text-3xl font-headline tracking-wide uppercase">Sécurité du Compte</h3>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 hover:bg-surface-container-low transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-secondary-container/10 rounded-lg text-secondary-container">
+<span class="material-symbols-outlined" data-icon="lock_reset">lock_reset</span>
+</div>
+<span class="text-[10px] bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded font-bold uppercase">Activé</span>
+</div>
+<h4 class="font-bold mb-1">Double Authentification (2FA)</h4>
+<p class="text-on-surface-variant text-xs mb-4">Protégez votre compte avec une étape de validation supplémentaire par application mobile.</p>
+<button class="text-primary text-xs font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                CONFIGURER <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/10 hover:bg-surface-container-low transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary-container/10 rounded-lg text-primary-container">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+</div>
+<h4 class="font-bold mb-1">Historique de Connexion</h4>
+<p class="text-on-surface-variant text-xs mb-4">Consultez les dernières sessions actives et déconnectez les appareils suspects.</p>
+<button class="text-primary text-xs font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                VOIR LES LOGS <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- API Keys Table-style Card -->
+<div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="key">key</span>
+<h3 class="text-3xl font-headline tracking-wide uppercase">Gestion des Clés API</h3>
+</div>
+<button class="bg-primary text-on-primary font-bold px-6 py-2 rounded-xl flex items-center gap-2 active:scale-95 duration-100">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                            NOUVELLE CLÉ
+                        </button>
+</div>
+<div class="space-y-3 overflow-hidden">
+<!-- Table Header -->
+<div class="grid grid-cols-4 px-4 pb-2 text-[10px] text-on-surface-variant font-technical uppercase tracking-widest border-b border-outline-variant/10">
+<div>Label</div>
+<div>Clé / ID</div>
+<div>Dernière Utilisation</div>
+<div class="text-right">Action</div>
+</div>
+<!-- Row 1 -->
+<div class="grid grid-cols-4 items-center px-4 py-4 bg-surface-container-high rounded-lg hover:bg-surface-bright transition-colors">
+<div class="font-bold text-sm">ERP_Sync_Main</div>
+<div class="font-technical text-xs opacity-60">sk_live_•••••••••412k</div>
+<div class="font-technical text-xs">Aujourd'hui, 09:42</div>
+<div class="flex justify-end">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-4 items-center px-4 py-4 bg-surface rounded-lg hover:bg-surface-bright transition-colors">
+<div class="font-bold text-sm">Diagnostic_Pad_1</div>
+<div class="font-technical text-xs opacity-60">sk_live_•••••••••890n</div>
+<div class="font-technical text-xs">12 Jan 2024</div>
+<div class="flex justify-end">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-4 items-center px-4 py-4 bg-surface-container-high rounded-lg hover:bg-surface-bright transition-colors">
+<div class="font-bold text-sm">Inventory_Scanner</div>
+<div class="font-technical text-xs opacity-60">sk_test_•••••••••122w</div>
+<div class="font-technical text-xs">Jamais</div>
+<div class="flex justify-end">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#0c0e12] flex justify-around items-center px-2 py-3 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-[10px] font-medium uppercase tracking-tight font-body mt-1">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="text-[10px] font-medium uppercase tracking-tight font-body mt-1">Tâches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="text-[10px] font-medium uppercase tracking-tight font-body mt-1">Factures</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="text-[10px] font-medium uppercase tracking-tight font-body mt-1">Sécurité</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-xl px-3 py-1.5 shadow-[0_0_12px_rgba(245,166,35,0.1)] translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-medium uppercase tracking-tight font-body mt-1">Profil</span>
+</a>
+</nav>
+</body></html>

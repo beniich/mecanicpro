@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MECAPRO - Journal d'Audit de Sécurité</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#c4c6cf",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "inverse-primary": "#835500",
+              "surface-container-lowest": "#0c0e12",
+              "surface-bright": "#37393e",
+              "on-secondary-container": "#4d1900",
+              "on-background": "#e2e2e8",
+              "background": "#111318",
+              "on-primary": "#452b00",
+              "error": "#ffb4ab",
+              "secondary-fixed-dim": "#ffb596",
+              "on-tertiary-fixed": "#191c22",
+              "surface-container-low": "#1a1c20",
+              "surface-container": "#1e2024",
+              "inverse-surface": "#e2e2e8",
+              "on-primary-fixed": "#291800",
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-high": "#282a2e",
+              "surface": "#111318",
+              "primary-fixed": "#ffddb4",
+              "surface-container-highest": "#333539",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-surface": "#e2e2e8",
+              "outline-variant": "#524534",
+              "primary-fixed-dim": "#ffb955",
+              "on-secondary": "#581e00",
+              "tertiary": "#d0d2db",
+              "surface-variant": "#333539",
+              "on-tertiary-container": "#45474f",
+              "on-surface-variant": "#d7c3ae",
+              "primary": "#ffc880",
+              "surface-dim": "#111318",
+              "secondary-fixed": "#ffdbcd",
+              "on-error": "#690005",
+              "on-tertiary": "#2d3037",
+              "secondary": "#ffb596",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed": "#360f00",
+              "on-error-container": "#ffdad6",
+              "inverse-on-surface": "#2f3035",
+              "secondary-container": "#f26411",
+              "primary-container": "#f5a623",
+              "surface-tint": "#ffb955",
+              "error-container": "#93000a",
+              "on-primary-fixed-variant": "#633f00"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "technical": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.75rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+        .font-bebas { font-family: 'Bebas Neue', cursive; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full border-b border-[#524534]/15 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623] text-2xl">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] font-bebas">MECAPRO</h1>
+</div>
+<div class="hidden md:flex gap-8">
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors duration-200 font-medium text-sm uppercase tracking-wider" href="#">Planning</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors duration-200 font-medium text-sm uppercase tracking-wider" href="#">Tâches</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors duration-200 font-medium text-sm uppercase tracking-wider" href="#">Factures</a>
+<a class="text-[#f5a623] font-bold transition-colors duration-200 font-medium text-sm uppercase tracking-wider" href="#">Sécurité</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-xs">person</span>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Page Header & Stats -->
+<div class="mb-10">
+<h2 class="text-4xl font-bebas tracking-wider text-on-background mb-6 uppercase">Journal d'Audit de Sécurité</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- KPI Card 1 -->
+<div class="bg-surface-container-high p-6 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+<p class="text-on-surface-variant text-sm font-medium uppercase tracking-tighter mb-2">Connexions (24h)</p>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-bebas text-primary tracking-wide">142</span>
+<span class="text-xs text-primary font-mono bg-primary/10 px-2 py-1 rounded">NORMAL</span>
+</div>
+</div>
+<!-- KPI Card 2 -->
+<div class="bg-surface-container-high p-6 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<p class="text-on-surface-variant text-sm font-medium uppercase tracking-tighter mb-2">Échecs Critiques</p>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-bebas text-error tracking-wide">03</span>
+<span class="text-xs text-error font-mono bg-error/10 px-2 py-1 rounded">ALERTE</span>
+</div>
+</div>
+<!-- KPI Card 3 -->
+<div class="bg-surface-container-high p-6 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<p class="text-on-surface-variant text-sm font-medium uppercase tracking-tighter mb-2">Modifs. Mots de Passe</p>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-bebas text-on-surface tracking-wide">08</span>
+<span class="text-xs text-on-surface-variant font-mono bg-surface-container-highest px-2 py-1 rounded">SYNC</span>
+</div>
+</div>
+<!-- KPI Card 4 -->
+<div class="bg-surface-container-high p-6 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary-container"></div>
+<p class="text-on-surface-variant text-sm font-medium uppercase tracking-tighter mb-2">Accès Sensibles</p>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-bebas text-tertiary tracking-wide">24</span>
+<span class="text-xs text-tertiary font-mono bg-tertiary/10 px-2 py-1 rounded">AUDIT</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Filters & Tools -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<div class="flex gap-2">
+<button class="bg-surface-container-highest text-on-surface px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 border border-outline-variant/10">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                    Filtrer par type
+                </button>
+<button class="bg-surface-container-highest text-on-surface px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 border border-outline-variant/10">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+                    7 derniers jours
+                </button>
+</div>
+<div class="relative w-full md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-lg">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary text-on-surface" placeholder="Rechercher un technicien..." type="text"/>
+</div>
+</div>
+<!-- Audit Log Table -->
+<div class="bg-surface-container-low overflow-hidden rounded-xl border border-outline-variant/5">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-highest/50">
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-widest text-on-surface-variant font-body">Horodatage</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-widest text-on-surface-variant font-body">Utilisateur / ID</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-widest text-on-surface-variant font-body">Action de Sécurité</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-widest text-on-surface-variant font-body">Cible / Ressource</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-widest text-on-surface-variant font-body">Statut / IP</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1: Sensitive Access -->
+<tr class="bg-surface hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">2023-10-27 14:22:10</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-xs uppercase">ML</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Marc Lefebvre</p>
+<p class="text-[10px] font-mono text-on-surface-variant">TECH-8821-X</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="bg-tertiary/10 text-tertiary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tight">Accès Données Sensibles</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">DB_CLIENTS_PAYMENT_INFO</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary">AUTORISÉ</span>
+<span class="font-mono text-[10px] text-on-surface-variant">192.168.1.42</span>
+</div>
+</td>
+</tr>
+<!-- Row 2: Failed Login -->
+<tr class="bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">2023-10-27 13:05:45</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-error/10 flex items-center justify-center text-error font-bold text-xs uppercase">JS</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Jean S. (Inconnu)</p>
+<p class="text-[10px] font-mono text-on-surface-variant">EXT-UNKNOWN</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="bg-error/10 text-error px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tight">Connexion Échouée</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">PORTAL_MAIN_ADMIN</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-error">REJETÉ (MDP ERR)</span>
+<span class="font-mono text-[10px] text-on-surface-variant">45.22.10.154</span>
+</div>
+</td>
+</tr>
+<!-- Row 3: Password Change -->
+<tr class="bg-surface hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">2023-10-27 11:30:12</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container/10 flex items-center justify-center text-secondary-container font-bold text-xs uppercase">AD</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Amélie Durand</p>
+<p class="text-[10px] font-mono text-on-surface-variant">ADMIN-001</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="bg-secondary-container/10 text-on-secondary-container px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tight">Modif. Mot de Passe</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">USER_PROFILE_TECH_8821</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary">SUCCÈS</span>
+<span class="font-mono text-[10px] text-on-surface-variant">10.0.0.5</span>
+</div>
+</td>
+</tr>
+<!-- Row 4: Successful Login -->
+<tr class="bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">2023-10-27 09:15:22</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant font-bold text-xs uppercase">PR</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Pierre Rivard</p>
+<p class="text-[10px] font-mono text-on-surface-variant">TECH-4492-Y</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tight">Connexion Réussie</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">MOBILE_APP_V4</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary">MFA VALIDÉ</span>
+<span class="font-mono text-[10px] text-on-surface-variant">192.168.1.102</span>
+</div>
+</td>
+</tr>
+<!-- Row 5: Sensitive Export -->
+<tr class="bg-surface hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">2023-10-27 08:45:00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary/10 flex items-center justify-center text-tertiary font-bold text-xs uppercase">JD</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Julien Dupont</p>
+<p class="text-[10px] font-mono text-on-surface-variant">MGR-022</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="bg-error/20 text-error px-3 py-1 rounded text-[10px] font-bold uppercase tracking-tight animate-pulse">Export Données</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">SALARY_LIST_OCT23.CSV</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary">TERMINE</span>
+<span class="font-mono text-[10px] text-on-surface-variant">10.0.4.12</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Load More -->
+<div class="bg-surface-container-low px-6 py-4 flex items-center justify-between border-t border-outline-variant/10">
+<p class="text-xs text-on-surface-variant font-body">Affichage de 5 sur 1,248 événements</p>
+<div class="flex gap-2">
+<button class="bg-surface-container-highest p-2 rounded-lg text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="bg-surface-container-highest p-2 rounded-lg text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined mb-1">calendar_today</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined mb-1">build</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Tâches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined mb-1">receipt_long</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Factures</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-xl px-3 py-1.5 shadow-[0_0_12px_rgba(245,166,35,0.1)] translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">verified_user</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Sécurité</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Profil</span>
+</a>
+</nav>
+<!-- FAB (Suppressed on Details/Audit) -->
+</body></html>

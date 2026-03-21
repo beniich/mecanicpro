@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: 'DM Sans', sans-serif; }
+      .font-bebas { font-family: 'Bebas Neue', sans-serif; }
+      .font-mono { font-family: 'JetBrains Mono', monospace; }
+      .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-[#111318] flex justify-between items-center px-6 h-20 w-full fixed top-0 z-50 border-b border-[#524534]/15">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623]" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8">
+<span class="font-['JetBrains_Mono'] text-sm tracking-tighter text-[#f5a623]">INVENTORY</span>
+<span class="font-['JetBrains_Mono'] text-sm tracking-tighter text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors cursor-pointer">SCANNER</span>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Operator profile avatar icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR-ul2Oqb1oUEVctU6s9vVxSlBqSf9Bb3YXN6mccB99jmvO7lVV90CXKYdDNAHOz6EWcprEkEq1cWu1uQAXVeREPqVPgCaupI8lOUy7x6i32X7OPt34uryYMij-68-N1r5PyXunozidWr8UJCL8KFY56OQGKGgs7BxcJoIK9FynW6CH7HRn1Scm5EgOIJ6LYtKUPyBcn_q1SLyIQwkzRQEnMXAt3UYNWSOFSZM7fV3921b2qniy-NPt7YzYi0A5gnaL5zeMXbTodpq"/>
+</div>
+</div>
+</header>
+<main class="pt-28 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Device Status & Calibration -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Printer Status Card -->
+<section class="bg-surface-container-high rounded-xl p-6 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">Device Node</p>
+<h2 class="text-2xl font-bebas text-primary tracking-wide">ZBR-450 THERMAL</h2>
+</div>
+<span class="flex items-center gap-2 px-3 py-1 bg-primary-container/20 text-primary-fixed rounded-full text-xs font-mono">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                            ONLINE
+                        </span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+<span class="text-sm text-on-surface-variant">IP Address</span>
+<span class="font-mono text-sm text-on-surface">192.168.1.142</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/15">
+<span class="text-sm text-on-surface-variant">Media Level</span>
+<span class="font-mono text-sm text-on-surface">84%</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-sm text-on-surface-variant">Resolution</span>
+<span class="font-mono text-sm text-on-surface">300 DPI</span>
+</div>
+</div>
+</section>
+<!-- Configuration Controls -->
+<section class="bg-surface-container-low rounded-xl p-6 space-y-6">
+<h3 class="text-xs font-mono uppercase tracking-[0.2em] text-outline">Calibration Hardware</h3>
+<div class="space-y-4">
+<label class="block">
+<span class="text-xs text-on-surface-variant mb-2 block ml-1 uppercase">Vitesse d'impression</span>
+<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary-container" type="range"/>
+<div class="flex justify-between mt-1 font-mono text-[10px] text-outline">
+<span>2 IPS</span>
+<span>6 IPS</span>
+</div>
+</label>
+<label class="block">
+<span class="text-xs text-on-surface-variant mb-2 block ml-1 uppercase">Densité (Température)</span>
+<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-secondary-container" type="range"/>
+<div class="flex justify-between mt-1 font-mono text-[10px] text-outline">
+<span>-10</span>
+<span>+30</span>
+</div>
+</label>
+</div>
+<button class="w-full py-4 bg-surface-container-high border border-primary-container/30 text-primary-container font-bebas text-lg tracking-widest hover:bg-primary-container/10 transition-all active:scale-[0.98]">
+                        FORCE CALIBRATION
+                    </button>
+</section>
+</div>
+<!-- Right Column: Technical Interface -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Main Configuration Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- QR Format Section -->
+<div class="bg-surface-container-high rounded-xl p-8 flex flex-col justify-between">
+<div>
+<h3 class="font-bebas text-3xl text-on-surface mb-2 tracking-tight">QR CONFIGURATION</h3>
+<p class="text-sm text-on-surface-variant mb-8 leading-relaxed">Paramètres de génération des codes-barres haute densité pour les surfaces métalliques.</p>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center justify-between">
+<span class="font-mono text-xs uppercase tracking-tighter">ECC Level</span>
+<select class="bg-transparent border-none text-primary font-mono text-sm focus:ring-0 p-0">
+<option>HIGH (H)</option>
+<option>QUARTILE (Q)</option>
+</select>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center justify-between">
+<span class="font-mono text-xs uppercase tracking-tighter">Module Size</span>
+<span class="text-primary font-mono text-sm">4.2 mm</span>
+</div>
+</div>
+</div>
+<!-- Print Preview Glass Card -->
+<div class="bg-surface-container-highest/60 backdrop-blur-xl rounded-xl p-8 border border-outline-variant/10 flex flex-col items-center justify-center text-center">
+<div class="bg-white p-4 rounded-lg mb-4 shadow-[0_0_30px_rgba(245,166,35,0.15)]">
+<img class="w-32 h-32 opacity-90 grayscale" data-alt="A sample black and white QR code on a white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0ohcsXl21ezzY9I-pgPRQPGYvPU8OlDaZiTu332qGMstJK4dza1tabyvYeXX1l8H8K4c3pfZWoCnj2hH2V7xw7_hg0f9w9YAvwyeSjF94W9J8UPDGiVDoyNfNFYNNXGNkUIsr8yGIMlqrBAp8iSul3C7Lt-jObWTDE5lvmk-JbHaNsawr_Lh9GXkkiIZu8A6ra3liwmfvNVz4O-Lh_UAUFzs-_Dm-Qa38uLKcFzUoFgm7EDQbN2clfPXcm5g2GxFUfx7b3RXY2dst"/>
+</div>
+<p class="font-mono text-[10px] text-outline-variant tracking-widest uppercase mb-1">Preview ID</p>
+<p class="font-mono text-sm text-primary tracking-tighter">VIN-882934-SYS-DIAG</p>
+</div>
+</div>
+<!-- Technical Connection Settings -->
+<section class="bg-surface-container-low rounded-xl p-8">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-secondary" data-icon="terminal">terminal</span>
+<h3 class="font-bebas text-xl tracking-wider">INTERFACE DE CONNEXION</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="space-y-1">
+<label class="text-[10px] font-mono text-outline-variant uppercase ml-1">Protocole</label>
+<div class="bg-surface-container-highest rounded-lg p-3 text-sm font-mono text-on-surface">ZPL II / EPL</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-mono text-outline-variant uppercase ml-1">Baud Rate</label>
+<div class="bg-surface-container-highest rounded-lg p-3 text-sm font-mono text-on-surface">9600 bps</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-mono text-outline-variant uppercase ml-1">Parité</label>
+<div class="bg-surface-container-highest rounded-lg p-3 text-sm font-mono text-on-surface">NONE</div>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-outline-variant/10">
+<div class="flex flex-col md:flex-row gap-4">
+<button class="flex-1 py-4 bg-gradient-to-r from-primary-container to-secondary-container rounded-lg text-on-primary font-bebas text-xl tracking-widest shadow-lg shadow-primary-container/20 active:scale-95 transition-transform">
+                                TEST D'IMPRESSION
+                            </button>
+<button class="flex-1 py-4 bg-surface-container-highest border border-outline-variant text-on-surface font-bebas text-xl tracking-widest hover:bg-surface-bright transition-colors">
+                                SAUVEGARDER CONFIG
+                            </button>
+</div>
+</div>
+</section>
+<!-- Data Stream Console -->
+<div class="bg-surface-container-lowest rounded-xl p-4 font-mono text-[11px] leading-relaxed border border-outline-variant/5">
+<div class="flex justify-between items-center mb-3 text-outline text-[9px] uppercase tracking-widest">
+<span>Console Output</span>
+<span class="text-primary-container">Connected to ttyUSB0</span>
+</div>
+<div class="space-y-1 opacity-70">
+<p class="text-on-surface-variant"><span class="text-secondary">[14:22:01]</span> CMD: ^XA^FO50,50^BQN,2,10^FDQA,VIN882934^FS^XZ</p>
+<p class="text-on-surface-variant"><span class="text-secondary">[14:22:02]</span> PRINTER_READY: ACK</p>
+<p class="text-on-surface-variant"><span class="text-secondary">[14:22:02]</span> BUFFER_STATUS: 100% CLEAR</p>
+<p class="text-primary-container"><span class="text-secondary">[14:22:05]</span> PRINT_JOB: SUCCESSFUL</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 bg-[#0c0e12] z-50 h-20 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] md:hidden">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SCANNER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">INVENTORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="support_agent">support_agent</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SUPPORT</span>
+</div>
+</nav>
+</body></html>

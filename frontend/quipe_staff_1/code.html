@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;700&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#1a1c20",
+              "error-container": "#93000a",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary": "#2d3037",
+              "surface-container-highest": "#333539",
+              "on-tertiary-fixed-variant": "#44474e",
+              "surface-container": "#1e2024",
+              "on-primary-fixed-variant": "#633f00",
+              "surface-tint": "#ffb955",
+              "surface-bright": "#37393e",
+              "secondary-fixed-dim": "#ffb596",
+              "surface-dim": "#111318",
+              "on-surface": "#e2e2e8",
+              "error": "#ffb4ab",
+              "on-error-container": "#ffdad6",
+              "outline": "#9f8e7a",
+              "background": "#111318",
+              "secondary": "#ffb596",
+              "primary": "#ffc880",
+              "inverse-surface": "#e2e2e8",
+              "on-surface-variant": "#d7c3ae",
+              "inverse-primary": "#835500",
+              "surface-variant": "#333539",
+              "inverse-on-surface": "#2f3035",
+              "on-tertiary-container": "#45474f",
+              "primary-fixed": "#ffddb4",
+              "tertiary": "#d0d2db",
+              "tertiary-fixed": "#e0e2eb",
+              "surface": "#111318",
+              "on-error": "#690005",
+              "outline-variant": "#524534",
+              "on-secondary": "#581e00",
+              "on-background": "#e2e2e8",
+              "on-secondary-fixed": "#360f00",
+              "surface-container-lowest": "#0c0e12",
+              "on-secondary-container": "#4d1900",
+              "tertiary-container": "#b4b6bf",
+              "secondary-container": "#f26411",
+              "on-primary-container": "#644000",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-primary": "#452b00",
+              "on-tertiary-fixed": "#191c22",
+              "primary-container": "#f5a623",
+              "primary-fixed-dim": "#ffb955",
+              "on-primary-fixed": "#291800",
+              "surface-container-high": "#282a2e"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "label": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .industrial-gradient {
+        background: linear-gradient(135deg, #f5a623 0%, #f26411 100%);
+      }
+      .glass-card {
+        background: rgba(51, 53, 57, 0.6);
+        backdrop-filter: blur(20px);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 h-16 shadow-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623]">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-tighter text-[#f5a623] font-['Space_Grotesk'] uppercase">MECAPRO</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-500">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-sm text-primary">person</span>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-28 px-4 space-y-6">
+<!-- Page Header & Global Stats -->
+<section class="space-y-4">
+<div class="flex flex-col">
+<span class="text-primary font-label text-[10px] tracking-widest uppercase mb-1">Système de Gestion</span>
+<h2 class="text-4xl font-headline tracking-wider text-on-surface">Équipe &amp; Staff</h2>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-high p-4 rounded-xl relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-tight">Capacité Totale</p>
+<div class="text-3xl font-headline text-primary mt-1">12/14</div>
+<p class="text-[9px] text-on-surface-variant/60 font-label mt-1">MÉCANICIENS ACTIFS</p>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-tight">Efficacité Labo</p>
+<div class="text-3xl font-headline text-primary mt-1">94.2%</div>
+<p class="text-[9px] text-on-surface-variant/60 font-label mt-1">+2.4% DEPUIS HIER</p>
+</div>
+</div>
+</section>
+<!-- Search & Filter Tab -->
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap">TOUS</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-lg text-xs font-medium whitespace-nowrap">LIBRE (4)</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-lg text-xs font-medium whitespace-nowrap">OCCUPÉ (6)</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-4 py-2 rounded-lg text-xs font-medium whitespace-nowrap">EN PAUSE (2)</button>
+</div>
+<!-- Team Grid - Asymmetric Layout -->
+<section class="grid grid-cols-1 gap-4">
+<!-- Mechanic Card 1: Occupé -->
+<div class="bg-surface-container p-4 rounded-xl border-l-4 border-secondary-container">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-3">
+<div class="relative">
+<img class="w-14 h-14 rounded-lg object-cover grayscale" data-alt="Portrait d'un mécanicien professionnel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3GNrJdy5RO17EI05nOlpP6HXUb3eDKdupnUfRk9gxIWZDqBXlees61Jcr31MC9gaLrxH35RqUHNYmF4j6vfTI9V9aLgeTn7FNB8rNGCQzJ4sDhsE_Q4Jer6iZI7xA0A2TYq9WOK7gyU8YyTT45UnMHahdpmTkcnvfhR8vvaQmPaKwIEU3ihXl23yPm3hW786d-CLeFKm5qvzlDRXJxbMkx0sBeIMKxkMDndlQus4kW6wTo1AKexdiacnS6ixPNDwuKXVmr1PXdWWl"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary-container rounded-full border-2 border-surface flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+</div>
+</div>
+<div>
+<h3 class="font-bold text-on-surface text-lg">Jean-Marc L.</h3>
+<p class="text-xs font-label text-on-surface-variant uppercase">ID: MEC-0042</p>
+</div>
+</div>
+<div class="bg-secondary-container/20 text-secondary-container px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
+                        Occupé
+                    </div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-label text-on-surface-variant uppercase">Efficacité du jour</span>
+<span class="text-sm font-label text-primary">88%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full industrial-gradient" style="width: 88%"></div>
+</div>
+<div class="flex justify-between text-[11px] pt-1">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span class="font-label uppercase">Shift: 08:00 - 17:00</span>
+</div>
+<div class="text-on-surface-variant">
+<span class="font-label">BOX #04</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Mechanic Card 2: Libre -->
+<div class="bg-surface-container p-4 rounded-xl border-l-4 border-primary">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-3">
+<div class="relative">
+<img class="w-14 h-14 rounded-lg object-cover grayscale" data-alt="Portrait d'un ingénieur en tenue d'atelier" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA92jXiSx8qeDaupxug14mr0jKSygMqJxFq2NXF8I4iAo4_TC4ck7LdWRS_dVIcFDpvGnV2ElK8yhzveWBTnTjsMLqy525ZH4_9NQAh_pFJw3GTT3ZG45m8JEQ9s53cQTYTn5euj2UHjXaaf6nTnfaI0x3W0F_RQ0hxjAssEY_AUXytLfY-x0jIqgE24c9gz_FfM7RlxJOBlpi6AEs5bHWLEkHHIVT7qHfJ0aY3n6PE-0kHDz00iUuKXyahNHq4oOsE3fUypqbBK7ze"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full border-2 border-surface flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-on-primary rounded-full animate-pulse"></span>
+</div>
+</div>
+<div>
+<h3 class="font-bold text-on-surface text-lg">Thomas B.</h3>
+<p class="text-xs font-label text-on-surface-variant uppercase">ID: MEC-0056</p>
+</div>
+</div>
+<div class="bg-primary/20 text-primary px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
+                        Libre
+                    </div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-label text-on-surface-variant uppercase">Efficacité du jour</span>
+<span class="text-sm font-label text-primary">96%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full industrial-gradient" style="width: 96%"></div>
+</div>
+<div class="flex justify-between text-[11px] pt-1">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span class="font-label uppercase">Shift: 07:00 - 16:00</span>
+</div>
+<div class="text-primary font-bold">
+<span class="font-label uppercase">DISPONIBLE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Mechanic Card 3: En pause -->
+<div class="bg-surface-container-low p-4 rounded-xl border-l-4 border-surface-container-highest">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-3 opacity-60">
+<div class="relative">
+<img class="w-14 h-14 rounded-lg object-cover grayscale" data-alt="Portrait d'un membre de l'équipe technique" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsTZ704L3tUEQvciS-KJfK7sA4J9uMsiHsSfkFxeGSrKZIjANST9W1gkDRNd0ujnnpDAqJVEwbgI-BjhwP6YJVg0mSFSGUDXIAAz9bD6qrbGoWbu4TbnhmlrvNwAwQmY8uY-BfHrkurW_IXUsBTpgk6q9CyjDFMqC6KL2V1H4lmafb7n_ChPLuy1HRjFchnfvn-CKm42BiNw6ZSO0hNeRit6eUNsE7rAkenjAifYpmppk6yLyTx1O8jfv_GkO7tIN55SGA07grE4GY"/>
+</div>
+<div>
+<h3 class="font-bold text-on-surface text-lg">Sarah K.</h3>
+<p class="text-xs font-label text-on-surface-variant uppercase">ID: MEC-0021</p>
+</div>
+</div>
+<div class="bg-surface-container-highest/40 text-on-surface-variant px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
+                        En pause
+                    </div>
+</div>
+<div class="space-y-3 opacity-60">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-label text-on-surface-variant uppercase">Efficacité du jour</span>
+<span class="text-sm font-label text-on-surface-variant">--</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-surface-container-highest" style="width: 72%"></div>
+</div>
+<div class="flex justify-between text-[11px] pt-1">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">timer</span>
+<span class="font-label uppercase">Retour: 14:15</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Mechanic Card 4: Occupé -->
+<div class="bg-surface-container p-4 rounded-xl border-l-4 border-secondary-container">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-3">
+<div class="relative">
+<img class="w-14 h-14 rounded-lg object-cover grayscale" data-alt="Portrait d'un technicien automobile senior" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm-zfDmR8fOgQVvs2ohc1nQzP69mVyPdouWZrLMRN9c_lnxsMtkgq3WGcgs1bGGur7qmbS2_HsvRtshdFCQ5UcP5RtYQyBdvsemVT4OYnOO0fLbfhZeniES2z8O1IjGr0aE-gf0DIeJyeKpCVxYMRoSThnGgQVfMzA1B-0VoxtaQbVoiIy_Y7Nm3NHl3LATJ7mJvLTehNgswaAkwAY-lr1yOvp7Y0iO7KCzQ8hktYXz0RZTsbYEeJOJ3mk6EtveY1QhRpUVKechMm6"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary-container rounded-full border-2 border-surface flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+</div>
+</div>
+<div>
+<h3 class="font-bold text-on-surface text-lg">Alexandre V.</h3>
+<p class="text-xs font-label text-on-surface-variant uppercase">ID: MEC-0089</p>
+</div>
+</div>
+<div class="bg-secondary-container/20 text-secondary-container px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
+                        Occupé
+                    </div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-label text-on-surface-variant uppercase">Efficacité du jour</span>
+<span class="text-sm font-label text-primary">91%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full industrial-gradient" style="width: 91%"></div>
+</div>
+<div class="flex justify-between text-[11px] pt-1">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span class="font-label uppercase">Shift: 09:00 - 18:00</span>
+</div>
+<div class="text-on-surface-variant">
+<span class="font-label">BOX #01</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Planning CTA Area -->
+<section class="mt-8">
+<div class="glass-card rounded-2xl p-6 border border-outline-variant/10 relative overflow-hidden">
+<div class="relative z-10 flex flex-col items-center text-center space-y-4">
+<span class="material-symbols-outlined text-4xl text-primary">calendar_month</span>
+<div>
+<h4 class="text-xl font-headline tracking-wide uppercase">Gestion des Shifts</h4>
+<p class="text-xs text-on-surface-variant px-4">Modifiez les horaires de l'équipe et gérez les congés techniques.</p>
+</div>
+<button class="w-full industrial-gradient py-3 rounded-lg text-on-primary font-bold text-sm tracking-widest uppercase active:scale-95 transition-transform">
+                        Ouvrir le Planning
+                    </button>
+</div>
+<div class="absolute top-0 right-0 p-2 opacity-5">
+<span class="material-symbols-outlined text-[120px]">engineering</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full bg-[#0c0e12] flex justify-around items-center px-4 py-3 pb-safe z-50 rounded-t-xl border-t border-white/5 shadow-[0_-8px_24px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 active:scale-90 transition-transform" href="#">
+<div class="bg-primary/10 p-2 rounded-full -mt-6 border-4 border-[#0c0e12]">
+<span class="material-symbols-outlined text-primary text-3xl">qr_code_scanner</span>
+</div>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-lg px-4 py-1.5 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Team</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

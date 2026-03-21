@@ -9,7 +9,7 @@ using Serilog;
 using System.Security.Cryptography;
 using MecaPro.Infrastructure.Persistence;
 using MecaPro.Infrastructure.Identity;
-using MecaPro.Application.Common;
+using MecaPro.Application;
 using MecaPro.Infrastructure.CRM;
 using MecaPro.Infrastructure.Notifications;
 using MecaPro.Infrastructure.Payment;

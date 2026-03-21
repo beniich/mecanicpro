@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#e0e2eb",
+                        "surface-container-highest": "#333539",
+                        "secondary": "#ffb596",
+                        "outline-variant": "#524534",
+                        "on-tertiary-container": "#45474f",
+                        "surface-dim": "#111318",
+                        "primary-fixed": "#ffddb4",
+                        "on-error": "#690005",
+                        "surface-container": "#1e2024",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#111318",
+                        "error": "#ffb4ab",
+                        "inverse-surface": "#e2e2e8",
+                        "outline": "#9f8e7a",
+                        "on-primary-container": "#644000",
+                        "on-background": "#e2e2e8",
+                        "inverse-primary": "#835500",
+                        "on-primary-fixed-variant": "#633f00",
+                        "on-secondary-fixed": "#360f00",
+                        "tertiary": "#d0d2db",
+                        "surface-container-high": "#282a2e",
+                        "surface-variant": "#333539",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#ffb955",
+                        "on-surface": "#e2e2e8",
+                        "on-primary": "#452b00",
+                        "on-tertiary": "#2d3037",
+                        "secondary-container": "#f26411",
+                        "on-secondary-container": "#4d1900",
+                        "surface-container-low": "#1a1c20",
+                        "surface-container-lowest": "#0c0e12",
+                        "primary": "#ffc880",
+                        "on-secondary": "#581e00",
+                        "surface-bright": "#37393e",
+                        "surface-tint": "#ffb955",
+                        "secondary-fixed-dim": "#ffb596",
+                        "inverse-on-surface": "#2f3035",
+                        "tertiary-fixed-dim": "#c4c6cf",
+                        "background": "#111318",
+                        "primary-container": "#f5a623",
+                        "on-tertiary-fixed-variant": "#44474e",
+                        "tertiary-container": "#b4b6bf",
+                        "on-secondary-fixed-variant": "#7c2e00",
+                        "secondary-fixed": "#ffdbcd",
+                        "on-tertiary-fixed": "#191c22",
+                        "on-primary-fixed": "#291800",
+                        "on-surface-variant": "#d7c3ae"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Inter"],
+                        "industrial": ["Bebas Neue"],
+                        "technical": ["JetBrains Mono"],
+                        "standard": ["DM Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.75rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-standard min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-6 h-20 w-full bg-[#111318] dark:bg-[#111318] border-b border-[#524534]/15 fixed top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623] text-3xl">settings_input_component</span>
+<h1 class="font-industrial uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 font-industrial tracking-widest text-sm">
+<a class="text-[#f5a623] transition-colors" href="#">DASHBOARD</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">PLANNING</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">CONTRATS</a>
+</nav>
+<div class="h-10 w-10 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+<img alt="Operator" class="w-full h-full object-cover" data-alt="Operator profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN1grqBjoeI5R9Awr5i2JiRa-TkS4jEZBHHsfPxfap0aWPn4mYGPX3bM7m2158g5CG0WSKkHEznpbOhXCuuIjaoDGWkEb1x_GMfHxSJfaEpcyjNJcPk2KmQV6EgnrLxwm-Uk6LjYqJJh3VWGXrW2ppuh8KlHa7vIBwtiUCmRMxc7ff4LFQHCIE437BhY0TthoRIS34HmedDg3CKJjYhBnfMB_5l0I2nGALJbQyQ4MW-nvXQPkW2KnWOPmblYHtK480aayKPPpjtRuH"/>
+</div>
+</div>
+</header>
+<main class="pt-28 px-4 md:px-12 max-w-7xl mx-auto">
+<!-- Dashboard Hero Stats -->
+<section class="bento-grid mb-12">
+<!-- Active Loans KPI -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-high p-6 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+<p class="font-industrial text-[#e2e2e8]/60 tracking-wider text-sm mb-2">VÉHICULES EN COURS</p>
+<div class="flex items-end gap-3">
+<span class="font-industrial text-6xl text-primary-container leading-none">08</span>
+<span class="font-technical text-on-surface-variant text-sm mb-1">/ 12 TOTAL</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary-fixed text-xs font-technical">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+                    +2 DEPUIS HIER
+                </div>
+</div>
+<!-- Returns Today KPI -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-high p-6 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<p class="font-industrial text-[#e2e2e8]/60 tracking-wider text-sm mb-2">RETOURS PRÉVUS JOUR</p>
+<div class="flex items-end gap-3">
+<span class="font-industrial text-6xl text-primary leading-none">03</span>
+<span class="font-technical text-on-surface-variant text-sm mb-1">UNITÉS</span>
+</div>
+<div class="mt-4 bg-surface-container-lowest rounded-full h-1.5 w-full">
+<div class="h-full bg-gradient-to-r from-primary to-secondary-container rounded-full w-[66%]"></div>
+</div>
+</div>
+<!-- Fleet Status -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-high p-6 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<p class="font-industrial text-[#e2e2e8]/60 tracking-wider text-sm">FLOTTE OPÉRATIONNELLE</p>
+<span class="material-symbols-outlined text-primary-container">verified</span>
+</div>
+<div class="font-technical text-4xl text-on-surface">94.2%</div>
+<div class="flex gap-2 mt-4">
+<span class="px-2 py-0.5 bg-primary-container/10 text-primary-container text-[10px] font-technical border border-primary-container/20">READY</span>
+<span class="px-2 py-0.5 bg-error-container/20 text-error text-[10px] font-technical border border-error/20">1 MAINT.</span>
+</div>
+</div>
+</section>
+<!-- Main Workspace: Planning & Inspection -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+<!-- Left: Quick Selection & Vehicle List -->
+<div class="lg:col-span-1 space-y-6">
+<div class="bg-surface-container-low p-1 rounded-xl flex">
+<button class="flex-1 py-2 bg-surface-container-highest rounded-lg font-industrial text-primary text-sm tracking-widest">ACTIFS</button>
+<button class="flex-1 py-2 font-industrial text-on-surface/40 text-sm tracking-widest hover:text-on-surface transition-colors">PLANNING</button>
+</div>
+<div class="space-y-3">
+<!-- Vehicle Card 1 -->
+<div class="bg-surface-container-high p-4 hover:bg-surface-bright transition-all cursor-pointer group border-l-2 border-transparent hover:border-primary">
+<div class="flex justify-between items-start mb-2">
+<span class="font-technical text-xs text-primary bg-primary/10 px-2 py-0.5">VHC-8829</span>
+<span class="material-symbols-outlined text-on-surface/30 group-hover:text-primary transition-colors">more_vert</span>
+</div>
+<h3 class="font-industrial text-xl text-on-surface tracking-tight">RENAULT CLIO IV</h3>
+<p class="font-technical text-[11px] text-on-surface-variant mb-4">PLATE: AB-123-CD | 42,590 KM</p>
+<div class="flex items-center gap-4 text-xs font-standard">
+<div class="flex items-center gap-1 text-on-surface/60">
+<span class="material-symbols-outlined text-sm">local_gas_station</span> 75%
+                            </div>
+<div class="flex items-center gap-1 text-on-surface/60">
+<span class="material-symbols-outlined text-sm">person</span> M. DUPONT
+                            </div>
+</div>
+</div>
+<!-- Vehicle Card 2 -->
+<div class="bg-surface-container-high p-4 hover:bg-surface-bright transition-all cursor-pointer group border-l-2 border-secondary-container">
+<div class="flex justify-between items-start mb-2">
+<span class="font-technical text-xs text-primary bg-primary/10 px-2 py-0.5">VHC-9041</span>
+<span class="material-symbols-outlined text-on-surface/30 group-hover:text-primary transition-colors">more_vert</span>
+</div>
+<h3 class="font-industrial text-xl text-on-surface tracking-tight">PEUGEOT 208 GT</h3>
+<p class="font-technical text-[11px] text-on-surface-variant mb-4">PLATE: EF-456-GH | 12,102 KM</p>
+<div class="flex items-center gap-4 text-xs font-standard">
+<div class="flex items-center gap-1 text-on-surface/60">
+<span class="material-symbols-outlined text-sm">local_gas_station</span> 100%
+                            </div>
+<span class="text-secondary-fixed-dim bg-secondary-container/10 px-2 py-0.5 font-technical text-[10px]">EN RETARD</span>
+</div>
+</div>
+<!-- Vehicle Card 3 -->
+<div class="bg-surface-container-high p-4 hover:bg-surface-bright transition-all cursor-pointer group border-l-2 border-transparent hover:border-primary">
+<div class="flex justify-between items-start mb-2">
+<span class="font-technical text-xs text-primary bg-primary/10 px-2 py-0.5">VHC-4412</span>
+<span class="material-symbols-outlined text-on-surface/30 group-hover:text-primary transition-colors">more_vert</span>
+</div>
+<h3 class="font-industrial text-xl text-on-surface tracking-tight">DACIA SANDERO</h3>
+<p class="font-technical text-[11px] text-on-surface-variant mb-4">PLATE: JK-789-LM | 89,443 KM</p>
+<div class="flex items-center gap-4 text-xs font-standard">
+<div class="flex items-center gap-1 text-on-surface/60">
+<span class="material-symbols-outlined text-sm">local_gas_station</span> 40%
+                            </div>
+<div class="flex items-center gap-1 text-on-surface/60">
+<span class="material-symbols-outlined text-sm">person</span> MME MARTIN
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Inspection & Contract Form (The Workspace) -->
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-surface-container-high p-8 rounded-xl shadow-2xl relative overflow-hidden">
+<!-- Glassmorphism header for current action -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-container via-secondary-container to-primary"></div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h2 class="font-industrial text-3xl text-on-surface tracking-wide">MISE À DISPOSITION</h2>
+<p class="font-technical text-sm text-primary-container/80">CONTRAT #PR-2024-0812</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-highest text-on-surface px-4 py-2 font-industrial text-sm tracking-widest border border-outline-variant/30 hover:bg-surface-bright transition-colors">SCAN QR</button>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 font-industrial text-sm tracking-widest hover:scale-105 transition-transform">VALIDER</button>
+</div>
+</div>
+<!-- Technical Form Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Left Column: Details -->
+<div class="space-y-6">
+<div>
+<label class="block font-standard text-xs text-on-surface-variant mb-2 font-medium">LOCATAIRE / CLIENT</label>
+<input class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary text-on-surface font-standard py-3 px-4 rounded-lg" type="text" value="Jean-Marc VILLENEUVE"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-standard text-xs text-on-surface-variant mb-2 font-medium">KILOMÉTRAGE DÉPART</label>
+<input class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary text-primary font-technical py-3 px-4 rounded-lg" type="text" value="42590"/>
+</div>
+<div>
+<label class="block font-standard text-xs text-on-surface-variant mb-2 font-medium">CARBURANT</label>
+<div class="flex items-center bg-surface-container-lowest rounded-lg px-4 py-3">
+<span class="material-symbols-outlined text-primary text-sm mr-2">local_gas_station</span>
+<select class="bg-transparent border-none p-0 text-on-surface font-technical text-sm w-full focus:ring-0">
+<option>Full (8/8)</option>
+<option>3/4 (6/8)</option>
+<option>1/2 (4/8)</option>
+<option>1/4 (2/8)</option>
+</select>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-standard text-xs text-on-surface-variant mb-2 font-medium">DATE DE RETOUR ESTIMÉE</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary text-on-surface font-technical py-3 px-4 rounded-lg" type="date" value="2024-05-24"/>
+</div>
+</div>
+</div>
+<!-- Right Column: Visual Inspection Map -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-center mb-4">
+<span class="font-industrial text-sm tracking-widest text-on-surface/60">ÉTAT DES LIEUX</span>
+<span class="bg-error/10 text-error px-2 py-0.5 text-[10px] font-technical border border-error/20">2 DOMMAGES</span>
+</div>
+<!-- Vehicle Diagram Placeholder -->
+<div class="relative aspect-video bg-[#1a1c20] rounded-lg overflow-hidden flex items-center justify-center p-4">
+<img alt="Car Layout" class="opacity-30 mix-blend-screen w-full h-full object-contain" data-alt="Technical blueprint of a car top-down view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQNTuQ1c4r03kGg1d6_vXwgce0Z9KsMgR1Wj0Zk_Z6JvVlGSOkP_fW90DJI8fCrzg2ipltPZlgrPHJLci45rK3Qn4UikjLbrVwait6KzI1VC0wrH1urZvpWWMNzhPv6UOneLkl33QVr4owXe4ls4Z9yI7L73Moi2OhsKw0GosCUwwFIrGuZXctuTReR1-dPKmVbbzzuy5XMtE-HQ15IRWUuJNILLRrG3_bzfjbAslA3suTg5gyemKiP1Y5dtotp4_lHzs_OhmalxiG"/>
+<!-- Markers for damage -->
+<div class="absolute top-1/4 left-1/3 w-6 h-6 bg-error/80 rounded-full border-2 border-surface animate-pulse flex items-center justify-center text-[10px] font-bold">1</div>
+<div class="absolute bottom-1/3 right-1/4 w-6 h-6 bg-error/80 rounded-full border-2 border-surface flex items-center justify-center text-[10px] font-bold">2</div>
+</div>
+<div class="mt-4 space-y-2">
+<div class="flex items-center justify-between text-[11px] font-technical text-on-surface/60 border-b border-outline-variant/5 pb-2">
+<span>#1 RAYURE PORTE AVG</span>
+<span class="text-error">SIGNALÉ</span>
+</div>
+<div class="flex items-center justify-between text-[11px] font-technical text-on-surface/60">
+<span>#2 IMPACT PARE-BRISE</span>
+<span class="text-error">SIGNALÉ</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Checklist / Constraints -->
+<div class="mt-8 pt-8 border-t border-outline-variant/10">
+<h4 class="font-industrial text-sm tracking-[0.2em] text-on-surface-variant mb-4 uppercase">Checklist Sécurité</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 border-2 border-outline rounded flex items-center justify-center group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary fill-icon">check</span>
+</div>
+<span class="text-xs font-standard text-on-surface/70">Papiers VHC</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 border-2 border-outline rounded flex items-center justify-center group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary fill-icon">check</span>
+</div>
+<span class="text-xs font-standard text-on-surface/70">Gilet / Triangle</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 border-2 border-outline rounded flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="text-xs font-standard text-on-surface/70">Plein effectué</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 border-2 border-outline rounded flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="text-xs font-standard text-on-surface/70">Double Clés</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Recent Activity / Logs -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5">
+<h4 class="font-industrial text-sm tracking-widest text-on-surface-variant mb-6">HISTORIQUE RÉCENT</h4>
+<div class="space-y-4">
+<div class="flex items-center gap-4 py-3 border-b border-outline-variant/10">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<div class="flex-1">
+<p class="text-sm font-standard">RETOUR: Renault Clio (AB-123-CD)</p>
+<p class="text-[10px] font-technical text-on-surface/40">OPÉRATEUR: ALAIN M. | 09:42</p>
+</div>
+<div class="text-right">
+<span class="font-technical text-xs text-primary">+128 KM</span>
+</div>
+</div>
+<div class="flex items-center gap-4 py-3 border-b border-outline-variant/10">
+<div class="w-2 h-2 rounded-full bg-secondary-container"></div>
+<div class="flex-1">
+<p class="text-sm font-standard">DÉPART: Peugeot 208 (EF-456-GH)</p>
+<p class="text-[10px] font-technical text-on-surface/40">OPÉRATEUR: ALAIN M. | 08:15</p>
+</div>
+<div class="text-right">
+<span class="font-technical text-xs text-on-surface/60">CONTRAT SIGNE</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 bg-[#0c0e12] dark:bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] h-20 z-50">
+<a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined fill-icon">dashboard</span>
+<span class="font-technical text-[10px] uppercase tracking-tighter mt-1">DASHBOARD</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+<span class="font-technical text-[10px] uppercase tracking-tighter mt-1">SCANNER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-technical text-[10px] uppercase tracking-tighter mt-1">REPORTS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-technical text-[10px] uppercase tracking-tighter mt-1">INVENTORY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-technical text-[10px] uppercase tracking-tighter mt-1">SUPPORT</span>
+</a>
+</nav>
+</body></html>

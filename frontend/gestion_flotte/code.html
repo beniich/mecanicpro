@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+        .font-bebas { font-family: 'Bebas Neue', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(51, 53, 57, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 h-20 w-full sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623]" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8">
+<a class="font-['JetBrains_Mono'] text-sm tracking-widest text-[#f5a623]" href="#">DASHBOARD</a>
+<a class="font-['JetBrains_Mono'] text-sm tracking-widest text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">FLOTTE</a>
+<a class="font-['JetBrains_Mono'] text-sm tracking-widest text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">FACTURES</a>
+</div>
+<div class="h-10 w-10 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+<img alt="Operator" data-alt="User avatar for fleet manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgUiKXLJA6u6VtruGA_Nb34lIROZEM8G3MJYNOt8-4gTDwE-vC0euUSYgSbuGZYX8Dui61Uzzk_9d6pbuzZyu0XFAF8chwoLYWu87e_s9cfB2q-91M9An0xSisJPJk_T6g8hSeb_bGBUJQzvVRrQL8LIPq9098e31klnzF3NES_ilWgGobg7r8pdN57FwWL_fW3U_juAcCl51kI3E1A4qHKbvXHNcP9OhoCNGQdz5v_9N6gWAMHGzs0n9DJ1aKnfFwQTrElAkEbUif"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-8">
+<!-- Fleet Hero State -->
+<section class="mb-12">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Status Card (Bento Big) -->
+<div class="lg:col-span-2 bg-surface-container-high rounded-xl p-8 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+<div class="flex justify-between items-start mb-12">
+<div>
+<p class="font-mono text-xs text-on-surface-variant uppercase tracking-widest mb-1">GLOBAL_FLEET_STATUS</p>
+<h2 class="font-headline text-6xl tracking-tight text-primary">OPERATIONAL_94%</h2>
+</div>
+<div class="text-right">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="hub" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-lg">
+<p class="text-[10px] font-mono text-on-surface-variant mb-1">VEHICLES_TOTAL</p>
+<p class="font-headline text-3xl">142</p>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg">
+<p class="text-[10px] font-mono text-on-surface-variant mb-1">IN_TRANSIT</p>
+<p class="font-headline text-3xl text-primary">88</p>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg border-l-2 border-error/50">
+<p class="text-[10px] font-mono text-on-surface-variant mb-1">MAINTENANCE</p>
+<p class="font-headline text-3xl text-error">12</p>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg">
+<p class="text-[10px] font-mono text-on-surface-variant mb-1">IDLE_RESERVE</p>
+<p class="font-headline text-3xl">42</p>
+</div>
+</div>
+</div>
+<!-- Live Map Preview (Bento Small) -->
+<div class="bg-surface-container-low rounded-xl overflow-hidden relative min-h-[300px] flex items-end">
+<img alt="Fleet Map" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" data-alt="Dark stylized map with digital data overlays" data-location="Paris" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkQVBfLUcUVKws__80t91ZsXIhp2H1DgIb6fXbrCmDatwdpjOqICsCYU3u4LzVjWgjJV0FaywgIpwhf60HRpj759NmsStc71c0nmYBdpeAEpHSab3TQCKsZgFBRO2fTKlylDRWI4YPlpFuB_qkAsRAYbWzRCTy62WbH-nWfjQXS7HOBd4NXbQWTSLHPDnKOGtYKsl9nSuzjS5pwrlTV443XAZJfFXX9j-DMGFPREHTYx1zSlvhp34C_-vB4_DCUh3ptWQmnzp5fHgj"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="relative p-6 w-full">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-mono text-[10px] text-primary">LIVE_TRACKING_ACTIVE</span>
+</div>
+<h3 class="font-headline text-2xl mb-4">REGION_EUROPE_NORTH</h3>
+<button class="w-full bg-surface-container-highest py-3 rounded-lg font-mono text-xs uppercase tracking-widest hover:bg-surface-bright transition-colors border border-outline-variant/20">Expand_Interface</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Grouped Alerts & Tasks -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+<!-- Critical Alerts Cluster -->
+<div class="lg:col-span-4 space-y-4">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-headline text-xl tracking-wider">CRITICAL_ALERTS</h3>
+<span class="font-mono text-xs text-error bg-error-container/20 px-2 py-0.5 rounded">03_PENDING</span>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl border-l-2 border-error relative">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-error" data-icon="report_problem">report_problem</span>
+<div>
+<p class="font-mono text-xs text-error font-bold mb-1">ENGINE_FAILURE_RISK</p>
+<p class="text-sm text-on-surface-variant mb-3">Unit #TX-9921 reports critical oil pressure drop. Immediate recall required.</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-error-container/40 text-error text-[10px] font-bold rounded uppercase">Dispatch_Service</button>
+<button class="px-3 py-1 bg-surface-container-lowest text-on-surface-variant text-[10px] font-bold rounded uppercase">Ignore</button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl border-l-2 border-primary-container relative">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="schedule">schedule</span>
+<div>
+<p class="font-mono text-xs text-primary font-bold mb-1">UPCOMING_INSPECTION</p>
+<p class="text-sm text-on-surface-variant">Batch [Heavy-Duty] - 14 vehicles due for regulatory check in 48h.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Fleet Table / Centralized Data -->
+<div class="lg:col-span-8 bg-surface-container-low rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-lowest/50">
+<h3 class="font-headline text-xl tracking-wider">FLEET_INVENTORY</h3>
+<div class="flex gap-2">
+<div class="bg-surface-container-highest px-3 py-1.5 rounded-lg flex items-center gap-2 border border-outline-variant/20">
+<span class="material-symbols-outlined text-xs" data-icon="filter_list">filter_list</span>
+<span class="font-mono text-[10px]">FILTER</span>
+</div>
+<div class="bg-surface-container-highest px-3 py-1.5 rounded-lg flex items-center gap-2 border border-outline-variant/20">
+<span class="material-symbols-outlined text-xs" data-icon="search">search</span>
+<span class="font-mono text-[10px]">FIND_ID</span>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest/30">
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">VIN_IDENTIFIER</th>
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">UNIT_TYPE</th>
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">STATUS</th>
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant uppercase tracking-widest text-right">METRICS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">FR-77-BK-209</td>
+<td class="px-6 py-4 text-sm">Volvo FH Electric</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded bg-primary-container/10 text-primary text-[10px] font-bold">ACTIVE</span>
+</td>
+<td class="px-6 py-4 text-right font-mono text-sm">12,402 KM</td>
+</tr>
+<tr class="bg-surface-container-lowest/10 hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">DE-12-LL-990</td>
+<td class="px-6 py-4 text-sm">Scania G-Series</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded bg-error-container/10 text-error text-[10px] font-bold">FAULT</span>
+</td>
+<td class="px-6 py-4 text-right font-mono text-sm">98,122 KM</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">FR-09-RT-441</td>
+<td class="px-6 py-4 text-sm">Renault Master E-Tech</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded bg-surface-bright/50 text-on-surface-variant text-[10px] font-bold">CHARGING</span>
+</td>
+<td class="px-6 py-4 text-right font-mono text-sm">4,550 KM</td>
+</tr>
+<tr class="bg-surface-container-lowest/10 hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">FR-88-XS-332</td>
+<td class="px-6 py-4 text-sm">Mercedes Actros</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded bg-primary-container/10 text-primary text-[10px] font-bold">ACTIVE</span>
+</td>
+<td class="px-6 py-4 text-right font-mono text-sm">66,210 KM</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 flex justify-center border-t border-outline-variant/10">
+<button class="font-mono text-[10px] text-on-surface-variant hover:text-primary transition-colors">LOAD_ALL_RECORDS_V2.0</button>
+</div>
+</div>
+</section>
+<!-- Centralized Billing -->
+<section class="bg-surface-container-high rounded-xl p-8 mb-12">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+<div>
+<h3 class="font-headline text-3xl tracking-wide mb-1 text-on-surface">CENTRALIZED_BILLING</h3>
+<p class="text-on-surface-variant text-sm">Current period: Oct 01 - Oct 31, 2023</p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="flex-1 md:flex-none text-right">
+<p class="font-mono text-[10px] text-on-surface-variant uppercase">TOTAL_PAYABLE</p>
+<p class="font-headline text-4xl text-primary">€42,890.12</p>
+</div>
+<button class="bg-gradient-to-r from-primary-container to-secondary-container px-6 py-3 rounded-lg text-on-primary-container font-headline text-xl tracking-wider hover:scale-[1.02] active:scale-95 transition-all">PROCESS_PAYMENT</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="local_gas_station">local_gas_station</span>
+<span class="font-mono text-[10px] text-on-surface-variant">42% OF TOTAL</span>
+</div>
+<h4 class="text-xs font-mono uppercase text-on-surface-variant mb-1">FUEL_&amp;_ENERGY</h4>
+<p class="font-headline text-3xl">€18,013.40</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="build_circle">build_circle</span>
+<span class="font-mono text-[10px] text-on-surface-variant">28% OF TOTAL</span>
+</div>
+<h4 class="text-xs font-mono uppercase text-on-surface-variant mb-1">MAINTENANCE_LOGS</h4>
+<p class="font-headline text-3xl">€12,009.22</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/10">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="shield">shield</span>
+<span class="font-mono text-[10px] text-on-surface-variant">30% OF TOTAL</span>
+</div>
+<h4 class="text-xs font-mono uppercase text-on-surface-variant mb-1">INSURANCE_&amp;_TAX</h4>
+<p class="font-headline text-3xl">€12,867.50</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#0c0e12] border-t border-[#524534]/15 flex justify-around items-center px-4 pb-2 h-20 z-50 shadow-[0_-4px_24px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">DASHBOARD</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">SCANNER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">REPORTS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">INVENTORY</span>
+</a>
+</nav>
+<!-- FAB Contextual (Only on main screens) -->
+<button class="fixed bottom-24 right-6 md:bottom-8 md:right-8 bg-primary-container text-on-primary-container p-4 rounded-full shadow-lg hover:rotate-12 transition-transform duration-300 flex items-center justify-center group">
+<span class="material-symbols-outlined text-2xl" data-icon="add_box">add_box</span>
+<span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 font-mono text-[10px] uppercase font-bold">Register_Unit</span>
+</button>
+</body></html>

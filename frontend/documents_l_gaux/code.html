@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;700&amp;family=Space+Grotesk:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["DM Sans"],
+              "label": ["JetBrains Mono"],
+              "brand": ["Bebas Neue"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "1rem", "xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .font-bebas { font-family: 'Bebas Neue', sans-serif; }
+      .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] flex justify-between items-center px-6 h-20 w-full docked full-width top-0 border-b border-[#524534]/15 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623]" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 font-label text-sm">
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">DASHBOARD</a>
+<a class="text-[#f5a623]" href="#">REPORTS</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">INVENTORY</a>
+</div>
+<div class="h-10 w-10 rounded-full border-2 border-primary-container/30 overflow-hidden bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">account_circle</span>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-6 py-8 pb-32">
+<!-- Page Hero / Identity -->
+<div class="mb-12">
+<div class="flex items-baseline gap-4 mb-2">
+<h2 class="font-brand text-6xl tracking-wider text-primary">LEGAL_VAULT</h2>
+<div class="h-1 flex-grow bg-surface-container-highest relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-1/3 bg-gradient-to-r from-primary-container to-secondary-container"></div>
+</div>
+</div>
+<p class="font-mono-tech text-xs text-on-surface-variant tracking-widest uppercase opacity-70">Secured Archive // Professional Certifications // Safety Audits</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Quick Status: Critical Compliance -->
+<div class="md:col-span-4 bg-surface-container-low p-6 flex flex-col justify-between border-l-2 border-secondary overflow-hidden relative group">
+<div class="absolute top-0 right-0 p-4 opacity-5">
+<span class="material-symbols-outlined text-9xl">security</span>
+</div>
+<div>
+<span class="font-mono-tech text-[10px] text-secondary tracking-tighter uppercase block mb-4">Compliance Score</span>
+<div class="font-brand text-7xl text-on-surface leading-none mb-2">98<span class="text-2xl text-primary">%</span></div>
+<p class="text-sm text-on-surface-variant max-w-[200px]">All professional certifications are current. Next audit in 14 days.</p>
+</div>
+<div class="mt-8 flex gap-2">
+<span class="px-2 py-1 bg-primary/10 text-primary font-mono-tech text-[10px] rounded">AUTO_SYNC_ON</span>
+<span class="px-2 py-1 bg-secondary/10 text-secondary font-mono-tech text-[10px] rounded">ENCRYPTED_AES256</span>
+</div>
+</div>
+<!-- Main Document Categories -->
+<div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Insurance Vault -->
+<div class="bg-surface-container-high p-5 rounded-lg group hover:bg-surface-bright transition-colors cursor-pointer border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-lowest rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="policy">policy</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">open_in_new</span>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1">Assurances Garage</h3>
+<p class="text-xs text-on-surface-variant mb-4">RC Pro, Multirisque &amp; Protection Juridique.</p>
+<div class="flex items-center justify-between font-mono-tech text-[10px]">
+<span class="text-primary">3 DOCUMENTS</span>
+<span class="text-on-surface-variant/40">EXP: 31.12.2024</span>
+</div>
+</div>
+<!-- Professional Certs -->
+<div class="bg-surface-container-high p-5 rounded-lg group hover:bg-surface-bright transition-colors cursor-pointer border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-lowest rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">open_in_new</span>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1">Certifications Pro</h3>
+<p class="text-xs text-on-surface-variant mb-4">Habilitations électriques (B1V, B2V) &amp; Certificats clim.</p>
+<div class="flex items-center justify-between font-mono-tech text-[10px]">
+<span class="text-primary">12 DOCUMENTS</span>
+<span class="text-on-surface-variant/40">UPDATED: 04.05.2024</span>
+</div>
+</div>
+<!-- Safety Controls -->
+<div class="bg-surface-container-high p-5 rounded-lg group hover:bg-surface-bright transition-colors cursor-pointer border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-lowest rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="rule">rule</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">open_in_new</span>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1">Contrôles Sécurité</h3>
+<p class="text-xs text-on-surface-variant mb-4">Ponts élévateurs, Compresseurs &amp; Extincteurs.</p>
+<div class="flex items-center justify-between font-mono-tech text-[10px]">
+<span class="text-error">1 ACTION REQUIRED</span>
+<span class="text-on-surface-variant/40">AUDIT: 14D</span>
+</div>
+</div>
+<!-- Legal Entity -->
+<div class="bg-surface-container-high p-5 rounded-lg group hover:bg-surface-bright transition-colors cursor-pointer border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-surface-container-lowest rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">open_in_new</span>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1">Documents Kbis</h3>
+<p class="text-xs text-on-surface-variant mb-4">Statuts, SIREN, RGE &amp; TVA Intracommunautaire.</p>
+<div class="flex items-center justify-between font-mono-tech text-[10px]">
+<span class="text-primary">4 DOCUMENTS</span>
+<span class="text-on-surface-variant/40">VERIFIED</span>
+</div>
+</div>
+</div>
+<!-- Activity Log / Recent Uploads -->
+<div class="md:col-span-12 lg:col-span-7 bg-surface-container-lowest p-0 rounded-xl overflow-hidden border border-outline-variant/10">
+<div class="px-6 py-4 bg-surface-container flex justify-between items-center">
+<h4 class="font-mono-tech text-xs font-bold tracking-widest text-on-surface">VAULT_ACTIVITY_LOG</h4>
+<span class="text-[10px] text-on-surface-variant">LAST_SCAN: 09:42 AM</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-[10px] uppercase font-label tracking-widest text-on-surface-variant/60">
+<th class="px-6 py-3 font-normal">Document_ID</th>
+<th class="px-6 py-3 font-normal">Subject</th>
+<th class="px-6 py-3 font-normal">Operator</th>
+<th class="px-6 py-3 font-normal">Status</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-outline-variant/5 hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4 font-mono-tech text-xs">DOC-HABL-0024</td>
+<td class="px-6 py-4">Habilitation Électrique B2V - J. DURAND</td>
+<td class="px-6 py-4 text-xs">ADMIN_SYST</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase">Verified</span>
+</td>
+</tr>
+<tr class="bg-surface-container-low/30 border-b border-outline-variant/5 hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4 font-mono-tech text-xs">AUD-PONT-9921</td>
+<td class="px-6 py-4">Contrôle Annuel Ponts Élévateurs #04</td>
+<td class="px-6 py-4 text-xs">SAFETY_OFF</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[10px] font-bold rounded uppercase">Processing</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/5 hover:bg-surface-container-high transition-colors">
+<td class="px-6 py-4 font-mono-tech text-xs">INS-RC-2024</td>
+<td class="px-6 py-4">Attestation Assurance RC Pro 2024</td>
+<td class="px-6 py-4 text-xs">ADMIN_SYST</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase">Active</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Upload Zone / CTA -->
+<div class="md:col-span-12 lg:col-span-5 bg-gradient-to-br from-surface-container-high to-surface-container-lowest p-8 rounded-xl flex flex-col items-center justify-center text-center border-2 border-dashed border-outline-variant/30 hover:border-primary/50 transition-all group">
+<div class="w-16 h-16 bg-surface-container-highest rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<h4 class="font-headline font-bold text-xl mb-2">Déposer un document</h4>
+<p class="text-sm text-on-surface-variant mb-6">Glissez-déposez vos fichiers PDF ou images. Format max 20Mo.</p>
+<button class="bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-fixed font-bold py-3 px-8 rounded-lg shadow-lg hover:brightness-110 active:scale-95 transition-all text-sm tracking-wide">
+                    EXPLORER LES FICHIERS
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full bg-[#0c0e12] dark:bg-[#0c0e12] flex justify-around items-center px-4 pb-2 z-50 h-20 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] md:hidden">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SCANNER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">REPORTS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">INVENTORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="support_agent">support_agent</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SUPPORT</span>
+</div>
+</nav>
+<!-- Floating UI Decorations -->
+<div class="fixed top-1/4 right-0 w-64 h-64 bg-primary/5 blur-[120px] -z-10 rounded-full"></div>
+<div class="fixed bottom-1/4 left-0 w-64 h-64 bg-secondary/5 blur-[120px] -z-10 rounded-full"></div>
+</body></html>

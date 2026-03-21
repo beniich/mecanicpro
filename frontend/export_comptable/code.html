@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Export Comptable | Digital Foreman</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Inter"],
+              "industrial": ["Bebas Neue"],
+              "technical": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] flex justify-between items-center px-6 h-20 w-full docked full-width top-0 border-b border-[#524534]/15 z-50 sticky">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623]" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6">
+<a class="font-['JetBrains_Mono'] text-sm tracking-tighter text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">DASHBOARD</a>
+<a class="font-['JetBrains_Mono'] text-sm tracking-tighter text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">SCANNER</a>
+<a class="font-['JetBrains_Mono'] text-sm tracking-tighter text-[#f5a623]" href="#">REPORTS</a>
+<a class="font-['JetBrains_Mono'] text-sm tracking-tighter text-[#e2e2e8]/60 hover:text-[#f5a623] transition-colors" href="#">INVENTORY</a>
+</nav>
+<div class="flex items-center gap-3 bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant/10">
+<span class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary text-xs font-bold border border-primary/20" data-alt="Operator profile avatar placeholder">OP</span>
+<span class="font-technical text-xs text-on-surface-variant">OPERATOR_042</span>
+</div>
+</div>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-on-surface-variant">menu</span>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-8">
+<!-- Header Section -->
+<div class="mb-12">
+<h2 class="font-industrial text-6xl md:text-8xl tracking-tight text-on-surface mb-2">EXPORT COMPTABLE</h2>
+<div class="flex items-center gap-4">
+<div class="h-1 w-24 bg-gradient-to-r from-primary-container to-secondary-container"></div>
+<p class="font-technical text-primary text-sm tracking-widest uppercase">Protocol: Data Extraction v4.2</p>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Quick Export Card -->
+<div class="md:col-span-8 bg-surface-container-high rounded-xl p-8 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+<div>
+<h3 class="font-industrial text-3xl text-on-surface">GENERATION DE FICHIER</h3>
+<p class="text-on-surface-variant text-sm mt-1">Sélectionnez le format de sortie pour votre logiciel de comptabilité.</p>
+</div>
+<div class="flex gap-2 bg-surface-container-lowest p-1 rounded-lg">
+<button class="px-4 py-2 rounded-md bg-primary-container text-on-primary-container font-technical text-xs font-bold">CSV</button>
+<button class="px-4 py-2 rounded-md text-on-surface-variant font-technical text-xs hover:bg-surface-variant">XML</button>
+<button class="px-4 py-2 rounded-md text-on-surface-variant font-technical text-xs hover:bg-surface-variant">FEC</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="bg-surface-container-low p-6 rounded-lg border border-outline-variant/10 group cursor-pointer hover:border-primary/30 transition-all">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="upload_file">upload_file</span>
+<span class="font-technical text-[10px] text-primary/40">ID: EX_SALES_001</span>
+</div>
+<h4 class="font-industrial text-xl mb-1">JOURNAL DES VENTES</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Extraction complète des écritures de vente, incluant TVA et comptes clients.</p>
+<div class="mt-6 flex items-center justify-between">
+<span class="font-technical text-xs text-secondary">PERIODIC: MONTHLY</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg border border-outline-variant/10 group cursor-pointer hover:border-primary/30 transition-all">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="receipt_long">receipt_long</span>
+<span class="font-technical text-[10px] text-primary/40">ID: EX_PURCH_002</span>
+</div>
+<h4 class="font-industrial text-xl mb-1">JOURNAL DES ACHATS</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Compilation des factures fournisseurs, notes de frais et décaissés périodiques.</p>
+<div class="mt-6 flex items-center justify-between">
+<span class="font-technical text-xs text-secondary">PERIODIC: QUARTERLY</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Configuration Sidebar -->
+<div class="md:col-span-4 space-y-6">
+<div class="bg-surface-container-high rounded-xl p-6">
+<h4 class="font-industrial text-xl mb-4 text-primary">PARAMÈTRES</h4>
+<div class="space-y-4">
+<div>
+<label class="block font-technical text-[10px] text-on-surface-variant uppercase mb-2">Période d'export</label>
+<div class="relative">
+<select class="w-full bg-surface-container-highest border-none rounded-lg text-sm text-on-surface font-technical p-3 appearance-none focus:ring-1 focus:ring-primary/50">
+<option>OCTOBRE 2023</option>
+<option>SEPTEMBRE 2023</option>
+<option>Q3 2023</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-on-surface-variant pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block font-technical text-[10px] text-on-surface-variant uppercase mb-2">Logiciel Cible</label>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container-highest text-[10px] font-technical text-on-surface rounded border border-outline-variant/20">SAGE 100</span>
+<span class="px-3 py-1 bg-surface-container-highest text-[10px] font-technical text-on-surface rounded border border-outline-variant/20">CEGID</span>
+<span class="px-3 py-1 bg-primary/10 text-[10px] font-technical text-primary rounded border border-primary/30">QUADRATUS</span>
+<span class="px-3 py-1 bg-surface-container-highest text-[10px] font-technical text-on-surface rounded border border-outline-variant/20">IBIZA</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-4 bg-gradient-to-r from-primary-container to-secondary-container rounded-lg font-industrial text-xl text-on-primary-container active:scale-[0.98] transition-transform">
+                        INITIALISER L'EXPORT
+                    </button>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-primary/10">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="verified_user">verified_user</span>
+<h4 class="font-technical text-xs tracking-widest text-on-surface">STATUS: READY</h4>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[10px] font-technical text-on-surface-variant">
+<span>TOTAL_ENTRIES</span>
+<span class="text-primary">1,284</span>
+</div>
+<div class="flex justify-between text-[10px] font-technical text-on-surface-variant">
+<span>LAST_SYNC</span>
+<span class="text-on-surface">14.10.23 08:42</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Data Table Section -->
+<div class="md:col-span-12">
+<div class="bg-surface-container-high rounded-xl overflow-hidden">
+<div class="px-8 py-6 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="font-industrial text-2xl">PRÉVISUALISATION DES FLUX</h3>
+<div class="flex items-center gap-4">
+<span class="font-technical text-xs text-on-surface-variant">FILTER: ALL_TRANSACTIONS</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="tune">tune</span>
+</div>
+</div>
+<div class="overflow-x-auto no-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/10">
+<th class="px-8 py-4 font-technical text-[10px] text-on-surface-variant uppercase tracking-widest">Date</th>
+<th class="px-8 py-4 font-technical text-[10px] text-on-surface-variant uppercase tracking-widest">Référence</th>
+<th class="px-8 py-4 font-technical text-[10px] text-on-surface-variant uppercase tracking-widest">Libellé</th>
+<th class="px-8 py-4 font-technical text-[10px] text-on-surface-variant uppercase tracking-widest">Compte</th>
+<th class="px-8 py-4 font-technical text-[10px] text-on-surface-variant uppercase tracking-widest text-right">Débit</th>
+<th class="px-8 py-4 font-technical text-[10px] text-on-surface-variant uppercase tracking-widest text-right">Crédit</th>
+<th class="px-8 py-4 font-technical text-[10px] text-on-surface-variant uppercase tracking-widest text-center">Statut</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="bg-surface hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-4 font-technical text-xs">14/10/2023</td>
+<td class="px-8 py-4 font-technical text-xs text-primary">FAC-2023-1042</td>
+<td class="px-8 py-4 text-xs">Client: IND-MECHA-SOLUTIONS</td>
+<td class="px-8 py-4 font-technical text-xs">411000</td>
+<td class="px-8 py-4 font-technical text-xs text-right">1,450.00</td>
+<td class="px-8 py-4 font-technical text-xs text-right">0.00</td>
+<td class="px-8 py-4 text-center">
+<span class="inline-block w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(255,200,128,0.5)]"></span>
+</td>
+</tr>
+<tr class="bg-surface-container-low hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-4 font-technical text-xs">13/10/2023</td>
+<td class="px-8 py-4 font-technical text-xs text-primary">ACH-2023-0892</td>
+<td class="px-8 py-4 text-xs">Fournisseur: ELEC-PARTS-SNC</td>
+<td class="px-8 py-4 font-technical text-xs">401000</td>
+<td class="px-8 py-4 font-technical text-xs text-right">0.00</td>
+<td class="px-8 py-4 font-technical text-xs text-right">342.15</td>
+<td class="px-8 py-4 text-center">
+<span class="inline-block w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(255,200,128,0.5)]"></span>
+</td>
+</tr>
+<tr class="bg-surface hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-4 font-technical text-xs">12/10/2023</td>
+<td class="px-8 py-4 font-technical text-xs text-primary">FAC-2023-1041</td>
+<td class="px-8 py-4 text-xs">Client: AEROSPACE-DYNAMICS</td>
+<td class="px-8 py-4 font-technical text-xs">411000</td>
+<td class="px-8 py-4 font-technical text-xs text-right">8,920.00</td>
+<td class="px-8 py-4 font-technical text-xs text-right">0.00</td>
+<td class="px-8 py-4 text-center">
+<span class="inline-block w-2 h-2 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.5)]"></span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 bg-[#0c0e12] dark:bg-[#0c0e12] h-20 z-50 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)]">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">DASHBOARD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">SCANNER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411]">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">REPORTS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">INVENTORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">SUPPORT</span>
+</div>
+</nav>
+<!-- Floating Action Button Contextual -->
+<div class="hidden md:flex fixed bottom-8 right-8">
+<button class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-3xl" data-icon="download">download</span>
+</button>
+</div>
+</body></html>

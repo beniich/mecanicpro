@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MECAPRO - Révisions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#ffb596",
+              "surface-variant": "#333539",
+              "outline": "#9f8e7a",
+              "on-secondary-container": "#4d1900",
+              "tertiary-container": "#b4b6bf",
+              "on-surface-variant": "#d7c3ae",
+              "on-secondary": "#581e00",
+              "background": "#111318",
+              "surface": "#111318",
+              "primary-container": "#f5a623",
+              "on-error-container": "#ffdad6",
+              "secondary-container": "#f26411",
+              "surface-container-low": "#1a1c20",
+              "secondary-fixed-dim": "#ffb596",
+              "on-primary-fixed-variant": "#633f00",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "inverse-on-surface": "#2f3035",
+              "surface-container-high": "#282a2e",
+              "surface-container-highest": "#333539",
+              "surface-container-lowest": "#0c0e12",
+              "tertiary": "#d0d2db",
+              "surface-dim": "#111318",
+              "surface-tint": "#ffb955",
+              "on-primary": "#452b00",
+              "primary": "#ffc880",
+              "outline-variant": "#524534",
+              "on-tertiary-fixed-variant": "#44474e",
+              "error": "#ffb4ab",
+              "on-tertiary-fixed": "#191c22",
+              "surface-bright": "#37393e",
+              "on-primary-container": "#644000",
+              "tertiary-fixed": "#e0e2eb",
+              "on-tertiary": "#2d3037",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-container": "#45474f",
+              "error-container": "#93000a",
+              "on-error": "#690005",
+              "primary-fixed": "#ffddb4",
+              "on-secondary-fixed": "#360f00",
+              "surface-container": "#1e2024",
+              "on-primary-fixed": "#291800",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-surface": "#e2e2e8",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "inverse-surface": "#e2e2e8",
+              "primary-fixed-dim": "#ffb955"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "technical": ["JetBrains Mono"],
+              "label": ["DM Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #111318;
+            color: #e2e2e8;
+            font-family: 'DM Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] flex justify-between items-center px-6 py-4 w-full docked full-width top-0 border-b border-[#524534]/15 z-40">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623] text-2xl" data-icon="precision_manufacturing">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] dark:text-[#f5a623] font-['Bebas_Neue'] uppercase">MECAPRO</h1>
+</div>
+<div class="hidden md:flex gap-8">
+<a class="text-[#f5a623] font-bold font-['DM_Sans'] text-sm tracking-widest" href="#">PLANNING</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors duration-200 font-['DM_Sans'] text-sm tracking-widest" href="#">TÂCHES</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors duration-200 font-['DM_Sans'] text-sm tracking-widest" href="#">FACTURES</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#e2e2e8]/60" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="person">person</span>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-8">
+<!-- Hero Section / KPI -->
+<div class="mb-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-surface-container-low p-8 rounded-xl border-l-2 border-secondary-container flex flex-col justify-between">
+<div>
+<h2 class="font-headline text-5xl tracking-wider text-on-surface mb-2 uppercase">Révisions Planifiées</h2>
+<p class="text-on-surface-variant font-body">Suivi technique et maintenance préventive de la flotte.</p>
+</div>
+<div class="mt-8 flex gap-12">
+<div>
+<p class="font-technical text-primary text-4xl font-bold tracking-tighter">12</p>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">En attente</p>
+</div>
+<div>
+<p class="font-technical text-secondary text-4xl font-bold tracking-tighter">04</p>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Cette semaine</p>
+</div>
+<div>
+<p class="font-technical text-tertiary text-4xl font-bold tracking-tighter">€4.2k</p>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Coût estimé</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl flex flex-col items-center justify-center text-center">
+<div class="relative w-32 h-32 mb-4">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-lowest" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary-container" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="100" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-technical text-2xl font-bold text-primary">72%</span>
+<span class="text-[8px] uppercase font-bold tracking-tighter">Performance</span>
+</div>
+</div>
+<p class="font-label text-xs text-on-surface-variant">Optimisation de l'atelier</p>
+</div>
+</div>
+<!-- Bento Layout for Tasks -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Main List -->
+<div class="lg:col-span-8 space-y-4">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-2xl tracking-widest text-on-surface uppercase italic">File d'attente technique</h3>
+<div class="flex gap-2">
+<button class="bg-surface-container-highest px-4 py-2 rounded text-xs font-bold tracking-tighter hover:bg-surface-bright transition-colors">FILTRER</button>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded text-xs font-bold tracking-tighter shadow-[0_0_12px_rgba(245,166,35,0.2)]">NOUVELLE RÉVISION</button>
+</div>
+</div>
+<!-- Revision Card 1 -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col md:flex-row border-l-4 border-primary">
+<div class="p-6 flex-grow">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px] font-bold font-technical mb-2 inline-block">DISTRIBUTION</span>
+<h4 class="text-xl font-bold font-body">Volkswagen Golf VIII</h4>
+<p class="font-technical text-sm text-on-surface-variant tracking-wider">VIN: WVWZZZCDZLW123456</p>
+</div>
+<div class="text-right">
+<p class="font-technical text-lg text-primary font-bold">14 OCT</p>
+<p class="text-[10px] uppercase text-on-surface-variant font-bold">08:30 AM</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-outline-variant/10 pt-4">
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Durée Estimée</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-technical text-sm">4h 30m</span>
+</div>
+</div>
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Coût Prévu</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="payments">payments</span>
+<span class="font-technical text-sm text-secondary">€640.00</span>
+</div>
+</div>
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Statut</p>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-[10px] font-bold uppercase">Confirmé</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-highest md:w-48 p-4 flex flex-col justify-center items-center gap-3 border-l border-outline-variant/10">
+<div class="bg-surface p-2 rounded-lg">
+<img class="w-32 h-20 object-cover rounded" data-alt="Dark gray hatchback front view illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIc65HJHsyXnMDqvaPYTtmxqp7yGSbuNo4c98ncFrR2Sk6cwOufuB-Brst-YuIWAVbDwK6yPZQ0CqemwF1qg7kpFE-VMBqMKYp_QGYdcg7mUyEb2arxcU5bWeoZ-aMlLPyHGIp7-y-JFmlT7Bk4xurzYUqwMLvXJkHRW7lBBo7BaQEgZzFwt6QxFhVLsaHjMDyN2ySeXvZ01IPTiMZMRI3zH9hMPYeYgrY_4s2DH5uEQd5alMd1AJhkNYnNRHqW80qrKAcifLpw_A5"/>
+</div>
+<button class="w-full py-2 bg-outline-variant/20 hover:bg-outline-variant/40 rounded text-[10px] font-bold tracking-widest transition-all uppercase">Détails</button>
+</div>
+</div>
+<!-- Revision Card 2 -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col md:flex-row border-l-4 border-tertiary">
+<div class="p-6 flex-grow">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="bg-tertiary/10 text-tertiary px-2 py-0.5 rounded text-[10px] font-bold font-technical mb-2 inline-block">VIDANGE COMPLÈTE</span>
+<h4 class="text-xl font-bold font-body">Renault Clio V</h4>
+<p class="font-technical text-sm text-on-surface-variant tracking-wider">VIN: VF1RJA0016543210</p>
+</div>
+<div class="text-right">
+<p class="font-technical text-lg text-on-surface font-bold">15 OCT</p>
+<p class="text-[10px] uppercase text-on-surface-variant font-bold">10:00 AM</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-outline-variant/10 pt-4">
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Durée Estimée</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-technical text-sm">1h 15m</span>
+</div>
+</div>
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Coût Prévu</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="payments">payments</span>
+<span class="font-technical text-sm text-secondary">€185.00</span>
+</div>
+</div>
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Statut</p>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<span class="text-[10px] font-bold uppercase">En attente</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-highest md:w-48 p-4 flex flex-col justify-center items-center gap-3 border-l border-outline-variant/10">
+<div class="bg-surface p-2 rounded-lg">
+<img class="w-32 h-20 object-cover rounded" data-alt="Blue compact city car side view icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj9pbbVtIkwrzhZcaKcLLW7KBvs-dX1eZCXQhnbFM5VSZwXMbSu5usSGK7K-AS9j9ChnCCbL4y-V2UwysLek0KZCkRLoySY8rRm-QU5-lLlhdwUrdObxsHBNxGNL46t-uY1fLU12VzPvOUjtNIxoPZJn-N3HxxckUuN_P-e6wN3LfNYX_dqVPQovBh5zbLPW-FffDV-foU6WLCy8bb8gSfSihRqHAaJyUQPAyTmpFZJbny0dKjQr4vtytQn6GU0WsSRZG6ILlDRxPV"/>
+</div>
+<button class="w-full py-2 bg-outline-variant/20 hover:bg-outline-variant/40 rounded text-[10px] font-bold tracking-widest transition-all uppercase">Détails</button>
+</div>
+</div>
+<!-- Revision Card 3 -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col md:flex-row border-l-4 border-secondary">
+<div class="p-6 flex-grow">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="bg-secondary/10 text-secondary px-2 py-0.5 rounded text-[10px] font-bold font-technical mb-2 inline-block">DIAGNOSTIC ÉLEC</span>
+<h4 class="text-xl font-bold font-body">Peugeot 3008 Hybrid</h4>
+<p class="font-technical text-sm text-on-surface-variant tracking-wider">VIN: VR3M4HZY2LK987654</p>
+</div>
+<div class="text-right">
+<p class="font-technical text-lg text-secondary font-bold">16 OCT</p>
+<p class="text-[10px] uppercase text-on-surface-variant font-bold">14:00 PM</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 border-t border-outline-variant/10 pt-4">
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Durée Estimée</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-technical text-sm">2h 45m</span>
+</div>
+</div>
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Coût Prévu</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="payments">payments</span>
+<span class="font-technical text-sm text-secondary">€120.00</span>
+</div>
+</div>
+<div>
+<p class="text-[9px] uppercase text-on-surface-variant mb-1">Statut</p>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-[10px] font-bold uppercase text-secondary">Urgent</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-highest md:w-48 p-4 flex flex-col justify-center items-center gap-3 border-l border-outline-variant/10">
+<div class="bg-surface p-2 rounded-lg">
+<img class="w-32 h-20 object-cover rounded" data-alt="Modern hybrid SUV silhouette on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsWvnkdFnV2baF9o0lNL9K1fm6ZgPbuSxNGk1O-RTWG7TCsTLJPT02jacUoBmfjmUeqfBbwP7cu2dbzj8eyM5TtObHgvh-gCOlaxFkxm7-UD3mburmilnhZmCe0jm6LFBeCWSNcJqeOZvBt7ZXSq0Y-HZGlTwkrSo6Ckz70kLeJA8U29X_j44CpKaXXWhsplOWrizaj8xSwCWbjHRvIlVHMknakJSLy_F1Swokx4S53kBZpqZCfr4Ut3-gGTr9lj0PmLCcLftE08Xu"/>
+</div>
+<button class="w-full py-2 bg-outline-variant/20 hover:bg-outline-variant/40 rounded text-[10px] font-bold tracking-widest transition-all uppercase">Détails</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Details & Insights -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Shop Availability -->
+<div class="bg-surface-container-low p-6 rounded-xl">
+<h3 class="font-label text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-6">Capacité d'Atelier</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-[10px] uppercase font-bold mb-2">
+<span>Pont Élévateur A</span>
+<span class="text-primary">85%</span>
+</div>
+<div class="h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[85%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] uppercase font-bold mb-2">
+<span>Pont Élévateur B</span>
+<span class="text-secondary">40%</span>
+</div>
+<div class="h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[40%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] uppercase font-bold mb-2">
+<span>Zone Diagnostic</span>
+<span class="text-tertiary">95%</span>
+</div>
+<div class="h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[95%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Inventory Check -->
+<div class="bg-surface-container-high p-6 rounded-xl">
+<h3 class="font-label text-xs font-bold tracking-widest text-on-surface-variant uppercase mb-4">Stock Pièces Critiques</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-surface rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" data-icon="oil_barrel">oil_barrel</span>
+<div>
+<p class="text-xs font-bold">Huile 5W30</p>
+<p class="text-[9px] font-technical text-on-surface-variant">STOCK: 12L</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-xs text-error" data-icon="warning">warning</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="settings_input_component">settings_input_component</span>
+<div>
+<p class="text-xs font-bold">Kits Distrib.</p>
+<p class="text-[9px] font-technical text-on-surface-variant">STOCK: 05</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-xs text-primary" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+<button class="w-full mt-4 py-2 border border-outline-variant/20 rounded text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-outline-variant/10 transition-colors">Gérer l'inventaire</button>
+</div>
+<!-- Calendar Mini View -->
+<div class="bg-[#f5a623] p-6 rounded-xl text-on-primary-fixed">
+<h3 class="font-headline text-2xl tracking-widest uppercase mb-2">Prochaine Urgence</h3>
+<p class="font-technical text-3xl font-bold mb-2">12:30</p>
+<p class="font-body text-sm font-medium opacity-80 mb-4">Réception BMW Série 3 (Freinage)</p>
+<div class="bg-black/10 p-3 rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="room_service">room_service</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Préparer le poste de travail 04</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-[#0c0e12] dark:bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] rounded-t-xl md:hidden">
+<div class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-xl px-3 py-1.5 shadow-[0_0_12px_rgba(245,166,35,0.1)] translate-y-[-2px] transition-transform">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Planning</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Tâches</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Factures</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Sécurité</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Profil</span>
+</div>
+</nav>
+</body></html>

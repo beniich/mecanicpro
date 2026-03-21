@@ -180,7 +180,13 @@ public record RevisionDto(Guid Id, Guid VehicleId, string Type, DateTime Schedul
 public record InvoiceDto(Guid Id, string Number, decimal Amount, DateTime Date, string Status, string? PdfUrl);
 public record UserProfileDto(string Id, string Name, string Email, string Role, string? Avatar, string? GarageId);
 public record PartDto(Guid Id, string Reference, string Name, string Category, string? Brand, decimal UnitPrice, int StockQuantity, bool IsLowStock);
-public record PagedResult<T>(IEnumerable<T> Items, int Total, int Page, int PageSize);
+public record PagedResult<T>(IEnumerable<T> Items, int Total, int Page, int PageSize)
+{
+    public int TotalPages => (int)Math.Ceiling((double)Total / PageSize);
+    public bool HasPrevious => Page > 1;
+    public bool HasNext => Page < TotalPages;
+}
+
 public record QrCodeDto(string Token, string Url, string Image, string LicensePlate);
 public record DiagnosticDto(Guid Id, Guid VehicleId, string FaultCode, string Description, string Severity, string Status, DateTime CreatedAt);
     public record CustomerDto(Guid Id, string FirstName, string LastName, string Email, string? Phone, string Segment, int LoyaltyPoints, DateTime CreatedAt, bool IsBusiness = false, string? CompanyName = null);
@@ -194,10 +200,11 @@ public record DiagnosticDto(Guid Id, Guid VehicleId, string FaultCode, string De
 public record LoyaltyTransactionDto(int Points, string Reason, DateTime Date);
 
 public record RevisionTaskDto(Guid Id, string Description, int EstimatedMinutes, int? ActualMinutes, bool IsCompleted);
-public record RevisionPartDto(Guid Id, string PartName, int Quantity, decimal UnitPrice, decimal Total);
-
-    List<RevisionTaskDto> Tasks, List<RevisionPartDto> Parts
+public record RevisionPartDto(Guid Id, string PartName, int Quantity, decimal UnitPrice, decimal Total);public record RevisionDetailDto(
+    Guid Id, Guid VehicleId, string Type, DateTime ScheduledDate, string Status, 
+    decimal? ActualCost, List<RevisionTaskDto> Tasks, List<RevisionPartDto> Parts
 );
+
 
 public record WorkshopScheduleDto(DateTime Date, List<AppointmentDto> Appointments);
 public record AppointmentDto(Guid Id, string Title, string Description, string Status, DateTime Start, int DurationMinutes, string? ResourceName);

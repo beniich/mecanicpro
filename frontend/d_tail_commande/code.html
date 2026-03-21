@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MECAPRO - Détail Commande Fournisseur</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#b4b6bf",
+              "secondary-container": "#f26411",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-primary": "#452b00",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "on-secondary": "#581e00",
+              "surface-container-lowest": "#0c0e12",
+              "on-secondary-container": "#4d1900",
+              "on-secondary-fixed": "#360f00",
+              "on-error": "#690005",
+              "outline-variant": "#524534",
+              "tertiary": "#d0d2db",
+              "tertiary-fixed": "#e0e2eb",
+              "surface": "#111318",
+              "on-primary-fixed": "#291800",
+              "surface-container-high": "#282a2e",
+              "primary-fixed-dim": "#ffb955",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed": "#191c22",
+              "on-tertiary": "#2d3037",
+              "surface-container": "#1e2024",
+              "on-primary-fixed-variant": "#633f00",
+              "surface-container-highest": "#333539",
+              "on-tertiary-fixed-variant": "#44474e",
+              "secondary-fixed": "#ffdbcd",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "surface-container-low": "#1a1c20",
+              "error-container": "#93000a",
+              "surface-variant": "#333539",
+              "inverse-on-surface": "#2f3035",
+              "on-surface-variant": "#d7c3ae",
+              "inverse-primary": "#835500",
+              "primary-fixed": "#ffddb4",
+              "on-tertiary-container": "#45474f",
+              "on-error-container": "#ffdad6",
+              "surface-dim": "#111318",
+              "on-surface": "#e2e2e8",
+              "error": "#ffb4ab",
+              "secondary": "#ffb596",
+              "primary": "#ffc880",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "background": "#111318",
+              "surface-bright": "#37393e",
+              "secondary-fixed-dim": "#ffb596",
+              "surface-tint": "#ffb955"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "label": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'DM Sans', sans-serif;
+        background-color: #111318;
+        color: #e2e2e8;
+      }
+      .technical-grid {
+        background-image: radial-gradient(circle, #282a2e 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] flex justify-between items-center px-6 py-4 w-full docked full-width top-0 sticky z-50 bg-[#0c0e12] shadow-none border-none">
+<div class="flex items-center gap-4">
+<button class="text-[#f5a623] hover:bg-[#282a2e] transition-colors p-2 rounded-lg active:scale-95 duration-100">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-3xl font-black text-[#f5a623] tracking-widest font-['Bebas_Neue'] uppercase">MECAPRO</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex gap-6 mr-6">
+<span class="font-['JetBrains_Mono'] text-xs uppercase tracking-tighter text-[#e2e2e8] cursor-pointer hover:text-[#f5a623]">Logs System</span>
+<span class="font-['JetBrains_Mono'] text-xs uppercase tracking-tighter text-[#e2e2e8] cursor-pointer hover:text-[#f5a623]">Hardware</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border-2 border-primary-container overflow-hidden">
+<img alt="Operator Profile" data-alt="User avatar placeholder in industrial style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTFAJZooltOHuDkYhhoi5PLF8JKmik9SU39yBrDkZUsny-JLoZhs-laoGNZd-9V4PMvDwd97H8sVEW68A6CEZzZBQtEgrpG0mAaEWhfHDToMwZPUB8E3pzSwhAeEqCGdb9u5fO6tUXpHDcTmR4iP7oLJDutHRwl3gRGSqb865R-uItftlsXjkmmQ97d1J4VF8wW12hJOhOCuPmJyJsucXXXSjDtekLkCjIFpFNe1Ulni7MQrtWfLv7GZwp15LFnYTbALpAkBn6yJrS"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
+<!-- Header Section: Technical Identification -->
+<section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">package_2</span>
+<span class="font-['JetBrains_Mono'] text-sm text-on-surface-variant tracking-widest uppercase">Bon de Commande</span>
+</div>
+<h2 class="text-5xl font-['Bebas_Neue'] tracking-wider text-on-surface leading-none">PO-4829-XJ</h2>
+<div class="flex gap-4">
+<span class="bg-surface-container-high px-3 py-1 rounded text-xs font-['JetBrains_Mono'] text-primary border-l-2 border-secondary-container">STATUT: EN ATTENTE</span>
+<span class="bg-surface-container-high px-3 py-1 rounded text-xs font-['JetBrains_Mono'] text-on-surface-variant">FOURNISSEUR: EURO-PARTS LTD</span>
+</div>
+</div>
+<div class="w-full md:w-auto flex flex-col items-end gap-2">
+<p class="font-['JetBrains_Mono'] text-[10px] text-on-surface-variant uppercase tracking-widest">Date de création: 2023-10-24</p>
+<div class="bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-bold flex items-center gap-3 cursor-pointer hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-container/10">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="uppercase tracking-tighter text-sm">Valider la réception en stock</span>
+</div>
+</div>
+</section>
+<!-- KPI Summary Bar (Bento style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface-container-high p-6 rounded-xl border-l-2 border-secondary relative overflow-hidden">
+<p class="text-[10px] font-['JetBrains_Mono'] text-on-surface-variant uppercase mb-2">Total Articles</p>
+<p class="text-4xl font-['Bebas_Neue'] text-primary">12 UNITS</p>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-10">
+<span class="material-symbols-outlined text-8xl">list_alt</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl border-l-2 border-tertiary relative overflow-hidden">
+<p class="text-[10px] font-['JetBrains_Mono'] text-on-surface-variant uppercase mb-2">Valeur Estimée</p>
+<p class="text-4xl font-['Bebas_Neue'] text-tertiary">4 290.50 €</p>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-10">
+<span class="material-symbols-outlined text-8xl">payments</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl border-l-2 border-secondary-container relative overflow-hidden">
+<p class="text-[10px] font-['JetBrains_Mono'] text-on-surface-variant uppercase mb-2">Poids Total</p>
+<p class="text-4xl font-['Bebas_Neue'] text-secondary-container">145.2 KG</p>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-10">
+<span class="material-symbols-outlined text-8xl">scale</span>
+</div>
+</div>
+</div>
+<!-- Detailed Article List (Technical Table) -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container">
+<h3 class="font-['Bebas_Neue'] text-2xl tracking-wide">Inventaire des articles</h3>
+<div class="flex gap-2">
+<button class="bg-surface-container-highest p-2 rounded hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+</button>
+<button class="bg-surface-container-highest p-2 rounded hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-sm">print</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-6 py-4 text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-on-surface-variant">Reference / VIN</th>
+<th class="px-6 py-4 text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-on-surface-variant">Description</th>
+<th class="px-6 py-4 text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-on-surface-variant">Commandé</th>
+<th class="px-6 py-4 text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-on-surface-variant">Reçu</th>
+<th class="px-6 py-4 text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-on-surface-variant text-right">Statut</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="px-6 py-6 font-['JetBrains_Mono'] text-sm text-primary">BRK-90210-XT</td>
+<td class="px-6 py-6">
+<div class="font-bold text-on-surface">Plaquettes de frein céramique</div>
+<div class="text-[10px] text-on-surface-variant uppercase">Type: Performance HD</div>
+</td>
+<td class="px-6 py-6 font-['JetBrains_Mono'] text-lg">04</td>
+<td class="px-6 py-6">
+<input class="w-20 bg-surface-container-highest border-none rounded font-['JetBrains_Mono'] text-center focus:ring-1 focus:ring-primary-container" type="number" value="4"/>
+</td>
+<td class="px-6 py-6 text-right">
+<span class="bg-primary/10 text-primary px-2 py-1 rounded text-[10px] font-bold uppercase border border-primary/20">Complet</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-surface-container-low/30 hover:bg-surface-container-high/50 transition-colors group">
+<td class="px-6 py-6 font-['JetBrains_Mono'] text-sm text-primary">OIL-FLTR-V8</td>
+<td class="px-6 py-6">
+<div class="font-bold text-on-surface">Filtre à huile magnétique</div>
+<div class="text-[10px] text-on-surface-variant uppercase">Compat: V8 Engines</div>
+</td>
+<td class="px-6 py-6 font-['JetBrains_Mono'] text-lg">10</td>
+<td class="px-6 py-6">
+<input class="w-20 bg-surface-container-highest border-none rounded font-['JetBrains_Mono'] text-center focus:ring-1 focus:ring-secondary-container text-secondary-container" type="number" value="8"/>
+</td>
+<td class="px-6 py-6 text-right">
+<span class="bg-secondary-container/10 text-secondary-container px-2 py-1 rounded text-[10px] font-bold uppercase border border-secondary-container/20">Partiel (-2)</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="px-6 py-6 font-['JetBrains_Mono'] text-sm text-primary">SPRK-NGK-X9</td>
+<td class="px-6 py-6">
+<div class="font-bold text-on-surface">Bougies Iridium haute pression</div>
+<div class="text-[10px] text-on-surface-variant uppercase">Pack x8 units</div>
+</td>
+<td class="px-6 py-6 font-['JetBrains_Mono'] text-lg">02</td>
+<td class="px-6 py-6">
+<input class="w-20 bg-surface-container-highest border-none rounded font-['JetBrains_Mono'] text-center focus:ring-1 focus:ring-primary-container" type="number" value="2"/>
+</td>
+<td class="px-6 py-6 text-right">
+<span class="bg-primary/10 text-primary px-2 py-1 rounded text-[10px] font-bold uppercase border border-primary/20">Complet</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Quality Control & Notes Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<h4 class="font-['Bebas_Neue'] text-xl tracking-wide text-on-surface-variant">Contrôle Qualité Réception</h4>
+<div class="bg-surface-container-high p-6 rounded-xl space-y-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border-2 border-primary-container flex items-center justify-center group-hover:bg-primary-container/10">
+<span class="material-symbols-outlined text-primary-container text-xs font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-sm">Emballages scellés et intacts</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border-2 border-outline-variant flex items-center justify-center group-hover:bg-primary-container/10"></div>
+<span class="text-sm">Conformité aux spécifications techniques</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border-2 border-outline-variant flex items-center justify-center group-hover:bg-primary-container/10"></div>
+<span class="text-sm">Certificats de conformité inclus</span>
+</label>
+</div>
+</div>
+<div class="space-y-4">
+<h4 class="font-['Bebas_Neue'] text-xl tracking-wide text-on-surface-variant">Observations / Anomalies</h4>
+<textarea class="w-full h-32 bg-surface-container-lowest border-outline-variant/20 rounded-xl p-4 text-sm font-['DM_Sans'] focus:ring-1 focus:ring-primary-container focus:border-primary-container placeholder:text-on-surface-variant/30" placeholder="Saisir les remarques sur la livraison..."></textarea>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 right-0 flex justify-around items-center px-4 pb-safe bg-[#0c0e12] dark:bg-[#0c0e12] z-50 h-20 rounded-t-xl shadow-[0_-4px_20px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#524534] opacity-60 hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined">gavel</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold">Sinistres</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#524534] opacity-60 hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined">shutter_speed</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold">Photos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#524534] opacity-60 hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined">engineering</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#282a2e]/40 rounded-lg px-3 py-1 border-l-2 border-[#f26411]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">package_2</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold">Achats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#524534] opacity-60 hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined">factory</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold">Impact</span>
+</a>
+</nav>
+<!-- Contextual FAB (Hidden on this detail screen per rules, but included if needed on dashboard) -->
+</body></html>

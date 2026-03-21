@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#ffb596",
+              "surface-variant": "#333539",
+              "outline": "#9f8e7a",
+              "on-secondary-container": "#4d1900",
+              "tertiary-container": "#b4b6bf",
+              "on-surface-variant": "#d7c3ae",
+              "on-secondary": "#581e00",
+              "background": "#111318",
+              "surface": "#111318",
+              "primary-container": "#f5a623",
+              "on-error-container": "#ffdad6",
+              "secondary-container": "#f26411",
+              "surface-container-low": "#1a1c20",
+              "secondary-fixed-dim": "#ffb596",
+              "on-primary-fixed-variant": "#633f00",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "inverse-on-surface": "#2f3035",
+              "surface-container-high": "#282a2e",
+              "surface-container-highest": "#333539",
+              "surface-container-lowest": "#0c0e12",
+              "tertiary": "#d0d2db",
+              "surface-dim": "#111318",
+              "surface-tint": "#ffb955",
+              "on-primary": "#452b00",
+              "primary": "#ffc880",
+              "outline-variant": "#524534",
+              "on-tertiary-fixed-variant": "#44474e",
+              "error": "#ffb4ab",
+              "on-tertiary-fixed": "#191c22",
+              "surface-bright": "#37393e",
+              "on-primary-container": "#644000",
+              "tertiary-fixed": "#e0e2eb",
+              "on-tertiary": "#2d3037",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-container": "#45474f",
+              "error-container": "#93000a",
+              "on-error": "#690005",
+              "primary-fixed": "#ffddb4",
+              "on-secondary-fixed": "#360f00",
+              "surface-container": "#1e2024",
+              "on-primary-fixed": "#291800",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-surface": "#e2e2e8",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "inverse-surface": "#e2e2e8",
+              "primary-fixed-dim": "#ffb955"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "technical": ["JetBrains Mono"],
+              "label": ["DM Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+        .bebas { font-family: 'Bebas Neue', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] border-b border-[#524534]/15 flex justify-between items-center px-6 py-4 w-full sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623]" data-icon="precision_manufacturing">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] dark:text-[#f5a623] bebas uppercase">MECAPRO</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors duration-200 font-medium uppercase text-xs tracking-wider" href="#">Planning</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors duration-200 font-medium uppercase text-xs tracking-wider" href="#">Tâches</a>
+<a class="text-[#f5a623] font-bold uppercase text-xs tracking-wider" href="#">Factures</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#f5a623]/80 transition-colors duration-200 font-medium uppercase text-xs tracking-wider" href="#">Sécurité</a>
+<button class="bg-surface-container-high p-2 rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 pt-8 space-y-12">
+<!-- Subscription Header Section (Asymmetric Bento) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<div class="lg:col-span-8 bg-surface-container-low p-8 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary-container to-secondary-container"></div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+<div>
+<span class="text-on-surface-variant text-xs font-bold uppercase tracking-widest block mb-2">Abonnement Actuel</span>
+<h2 class="bebas text-6xl text-primary tracking-wider">PLAN PRO</h2>
+<div class="mt-4 flex items-center gap-4">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold border border-primary/20">ACTIF</span>
+<span class="text-on-surface/60 text-sm mono">ID: MP-992-SUBS</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-on-surface-variant text-xs uppercase tracking-widest">Prochaine facturation</p>
+<p class="bebas text-4xl text-on-surface">12 AVR 2024</p>
+<p class="text-secondary text-sm font-bold mt-1">49.00€ / mois</p>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-outline-variant/15 pt-8">
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase mb-1">Mécaniciens</p>
+<p class="mono text-lg font-bold">08 / 10</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase mb-1">Stockage Cloud</p>
+<p class="mono text-lg font-bold">45.2 GB</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase mb-1">Support</p>
+<p class="mono text-lg font-bold">24/7 VIP</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase mb-1">Terminaux</p>
+<p class="mono text-lg font-bold">ILLIMITÉ</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-high p-6 rounded-xl flex-1 flex flex-col justify-between border border-outline-variant/10">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="upgrade">upgrade</span>
+<span class="text-[10px] font-bold text-on-secondary-container bg-secondary-container px-2 py-0.5 rounded uppercase">Recommandé</span>
+</div>
+<div class="mt-4">
+<h3 class="bebas text-2xl tracking-wide">Passer à l'offre Enterprise</h3>
+<p class="text-on-surface-variant text-sm mt-2 leading-relaxed">Multi-garages, API personnalisée et rapports de performance avancés.</p>
+</div>
+<button class="mt-6 w-full bg-primary-container text-on-primary-container font-bold py-3 rounded-lg hover:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+                        DÉCOUVRIR L'OFFRE
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Billing History -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="bebas text-3xl tracking-wider flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="receipt_long">receipt_long</span>
+                    Historique des Factures
+                </h3>
+<div class="flex items-center gap-2">
+<button class="bg-surface-container-low px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-tight hover:bg-surface-container-high transition-colors">Filtres</button>
+<button class="bg-surface-container-low px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-tight hover:bg-surface-container-high transition-colors">Exporter CSV</button>
+</div>
+</div>
+<!-- Technical Table -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50">
+<th class="px-6 py-4 label-sm text-on-surface-variant uppercase tracking-[0.15em] text-[10px] font-bold">ID Facture</th>
+<th class="px-6 py-4 label-sm text-on-surface-variant uppercase tracking-[0.15em] text-[10px] font-bold">Date d'émission</th>
+<th class="px-6 py-4 label-sm text-on-surface-variant uppercase tracking-[0.15em] text-[10px] font-bold">Désignation</th>
+<th class="px-6 py-4 label-sm text-on-surface-variant uppercase tracking-[0.15em] text-[10px] font-bold text-right">Montant</th>
+<th class="px-6 py-4 label-sm text-on-surface-variant uppercase tracking-[0.15em] text-[10px] font-bold">Statut</th>
+<th class="px-6 py-4 label-sm text-on-surface-variant uppercase tracking-[0.15em] text-[10px] font-bold text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5 mono text-sm font-medium">#INV-2024-003</td>
+<td class="px-6 py-5 text-sm">12 Mars 2024</td>
+<td class="px-6 py-5 text-sm">Abonnement MecaPro - Plan Pro (Mensuel)</td>
+<td class="px-6 py-5 text-sm font-bold text-right mono">49.00 €</td>
+<td class="px-6 py-5">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold border border-primary/20 flex items-center w-fit gap-1">
+<span class="w-1 h-1 rounded-full bg-primary"></span> PAYÉ
+                                </span>
+</td>
+<td class="px-6 py-5 text-center">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-xl" data-icon="download">download</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group bg-surface-container-low/30">
+<td class="px-6 py-5 mono text-sm font-medium">#INV-2024-002</td>
+<td class="px-6 py-5 text-sm">12 Fév. 2024</td>
+<td class="px-6 py-5 text-sm">Abonnement MecaPro - Plan Pro (Mensuel)</td>
+<td class="px-6 py-5 text-sm font-bold text-right mono">49.00 €</td>
+<td class="px-6 py-5">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold border border-primary/20 flex items-center w-fit gap-1">
+<span class="w-1 h-1 rounded-full bg-primary"></span> PAYÉ
+                                </span>
+</td>
+<td class="px-6 py-5 text-center">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-xl" data-icon="download">download</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5 mono text-sm font-medium">#INV-2024-001</td>
+<td class="px-6 py-5 text-sm">12 Janv. 2024</td>
+<td class="px-6 py-5 text-sm">Installation &amp; Paramétrage Initial</td>
+<td class="px-6 py-5 text-sm font-bold text-right mono">149.00 €</td>
+<td class="px-6 py-5">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold border border-primary/20 flex items-center w-fit gap-1">
+<span class="w-1 h-1 rounded-full bg-primary"></span> PAYÉ
+                                </span>
+</td>
+<td class="px-6 py-5 text-center">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-xl" data-icon="download">download</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Method & Support -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container-high p-6 rounded-xl border border-outline-variant/10">
+<h4 class="bebas text-xl tracking-wide mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="credit_card">credit_card</span>
+                    Mode de Paiement
+                </h4>
+<div class="flex items-center justify-between bg-surface-container-lowest p-4 rounded-lg">
+<div class="flex items-center gap-4">
+<div class="w-12 h-8 bg-surface-container-highest rounded flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<div>
+<p class="text-sm font-bold">VISA terminant par 8842</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Expire le 09/26</p>
+</div>
+</div>
+<button class="text-xs font-bold text-primary uppercase hover:underline">Modifier</button>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl border border-outline-variant/10">
+<h4 class="bebas text-xl tracking-wide mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="contact_support">contact_support</span>
+                    Besoin d'aide ?
+                </h4>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-4">Une question sur votre facturation ou votre abonnement ? Nos experts sont là pour vous répondre.</p>
+<div class="flex gap-3">
+<button class="flex-1 bg-surface-container-lowest border border-outline-variant/20 text-xs font-bold py-2 rounded-lg hover:bg-surface-container-highest transition-colors">LIRE LA FAQ</button>
+<button class="flex-1 bg-surface-container-lowest border border-outline-variant/20 text-xs font-bold py-2 rounded-lg hover:bg-surface-container-highest transition-colors uppercase">Contacter Support</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] flex justify-around items-center px-2 py-3 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="calendar_today">calendar_today</span>
+<span class="text-[10px] font-medium uppercase tracking-tight mt-1">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="build">build</span>
+<span class="text-[10px] font-medium uppercase tracking-tight mt-1">Tâches</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-xl px-3 py-1.5 shadow-[0_0_12px_rgba(245,166,35,0.1)] translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="receipt_long">receipt_long</span>
+<span class="text-[10px] font-medium uppercase tracking-tight mt-1">Factures</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="verified_user">verified_user</span>
+<span class="text-[10px] font-medium uppercase tracking-tight mt-1">Sécurité</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span class="text-[10px] font-medium uppercase tracking-tight mt-1">Profil</span>
+</a>
+</nav>
+</body></html>

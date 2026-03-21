@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .font-bebas { font-family: 'Bebas Neue', sans-serif; }
+      .font-dm { font-family: 'DM Sans', sans-serif; }
+      .font-mono { font-family: 'JetBrains Mono', monospace; }
+      
+      /* Industrial Tonal Layering */
+      .milled-surface {
+        background-color: #1e2024;
+        border-left: 2px solid #f26411;
+      }
+      .glass-panel {
+        background-color: rgba(40, 42, 46, 0.6);
+        backdrop-filter: blur(20px);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-dm selection:bg-primary/30 min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] flex justify-between items-center px-6 h-20 w-full docked border-b border-[#524534]/15 sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623] text-2xl" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-bebas uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 items-center text-sm font-mono tracking-wider">
+<span class="text-[#f5a623]">RECORDS_SYNC: ACTIVE</span>
+<span class="text-on-surface-variant/40 text-xs">TERM_ID: 08-FX9</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center overflow-hidden">
+<img alt="Operator" class="w-full h-full object-cover" data-alt="User avatar for technical operator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADzQgIoOE4d-aBCX7yv-4gTLxI-mvoq2jSgN9AvyhPAnK-_Gk2YFs0wnSwr0n3kTfB81SjNU3zG3PcAexWNbo3v1MU4tG5fhHQOhM6T5DRw_jd6KPKy2ZvA6G2dVJj-TS8qBGS5jmPly80Ntf-1l7XLu-26mBEPsPQBLUqspYs5wGbkqC2iBVpuIVZNmUbvO-iva3sfgjf3H7ShV5L11KhYI3HwAOhecJVDzrbNHoWAmFSmhX28eIA9FIk2k9RCyEWMrIGba5-rW1t"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 pt-8">
+<!-- Scanner & Quick Action Bento -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+<!-- Scanning Module -->
+<div class="lg:col-span-8 bg-surface-container-high rounded-xl p-8 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-9xl" data-icon="qr_code_scanner">qr_code_scanner</span>
+</div>
+<div class="relative z-10">
+<h2 class="font-bebas text-3xl tracking-wide mb-2">SCANNER_UNIT_01</h2>
+<p class="text-on-surface-variant mb-8 font-mono text-sm">EN ATTENTE D'ENTRÉE... [MODE: RETOUR_FOURNISSEUR]</p>
+<div class="flex flex-col md:flex-row gap-4">
+<div class="flex-grow bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/10 focus-within:border-primary/50 transition-colors">
+<label class="block text-[10px] text-primary uppercase font-mono mb-1">Identification de la Pièce (SKU/VIN)</label>
+<input class="w-full bg-transparent border-none focus:ring-0 font-mono text-xl text-on-surface placeholder:text-on-surface/20" placeholder="SCN-994-X8..." type="text"/>
+</div>
+<button class="bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-bebas text-xl px-10 py-4 rounded-xl flex items-center justify-center gap-3 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="camera">camera</span>
+                            VALIDER_LE_SCAN
+                        </button>
+</div>
+</div>
+</div>
+<!-- Metrics -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-secondary-container">
+<p class="text-xs font-mono uppercase text-on-surface-variant mb-1">Total Retours En Attente</p>
+<div class="flex items-end justify-between">
+<span class="font-bebas text-5xl text-primary">24</span>
+<span class="text-xs font-mono text-secondary mb-1">PIÈCES</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-primary">
+<p class="text-xs font-mono uppercase text-on-surface-variant mb-1">Remboursements Validés</p>
+<div class="flex items-end justify-between">
+<span class="font-bebas text-5xl text-on-surface">12.8k</span>
+<span class="text-xs font-mono text-primary mb-1">EUR_EST</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Waiting List Table -->
+<div class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bebas text-2xl tracking-widest text-on-surface-variant">LISTE_DES_RETOURS_EN_COURS</h3>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded bg-surface-container-highest text-xs font-mono border border-outline-variant/15 hover:bg-surface-bright transition-colors">FILTRER par STATUT</button>
+<button class="px-4 py-2 rounded bg-surface-container-highest text-xs font-mono border border-outline-variant/15 hover:bg-surface-bright transition-colors">EXPORT_CSV</button>
+</div>
+</div>
+<div class="overflow-x-auto bg-surface-container-lowest rounded-xl border border-outline-variant/10">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant/20">
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">ID_RETOUR</th>
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">PIÈCE / DÉSIGNATION</th>
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">FOURNISSEUR</th>
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">MOTIF</th>
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">STATUT_FIN</th>
+<th class="px-6 py-4 font-mono text-[10px] text-on-surface-variant tracking-widest uppercase">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-6 py-5 font-mono text-sm text-primary">#RET-8842</td>
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface">Injecteur Rail-Common HighP</div>
+<div class="text-[10px] font-mono text-on-surface-variant/60">VIN: XJ772-991-L</div>
+</td>
+<td class="px-6 py-5 text-sm">BOSCH_INDUSTRIAL_FR</td>
+<td class="px-6 py-5">
+<span class="bg-error-container/20 text-error border border-error/20 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">DÉFAUT_STRUCT</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(255,200,128,0.5)]"></div>
+<span class="text-xs font-mono uppercase">En attente scan</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="bg-surface-container-low/30 hover:bg-surface-container transition-colors group">
+<td class="px-6 py-5 font-mono text-sm text-primary">#RET-8843</td>
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface">Vilebrequin Renforcé V12</div>
+<div class="text-[10px] font-mono text-on-surface-variant/60">VIN: MZ90-002-K</div>
+</td>
+<td class="px-6 py-5 text-sm">TURBO_DYNAMICS_CORP</td>
+<td class="px-6 py-5">
+<span class="bg-surface-bright text-tertiary border border-outline-variant/20 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">ERREUR_COMMANDE</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary-container"></div>
+<span class="text-xs font-mono uppercase">Expédié / Logistique</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-6 py-5 font-mono text-sm text-primary">#RET-8844</td>
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface">Pompe à Eau Magnétique</div>
+<div class="text-[10px] font-mono text-on-surface-variant/60">VIN: WP-990-22-F</div>
+</td>
+<td class="px-6 py-5 text-sm">GLOBAL_PARTS_HUB</td>
+<td class="px-6 py-5">
+<span class="bg-error-container/20 text-error border border-error/20 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">DÉFAUT_SCELLÉ</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary-container/40"></div>
+<span class="text-xs font-mono uppercase text-on-surface-variant/60">Contrôle Qualité</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Supplier Refund Status Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant/10">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-bebas text-xl text-on-surface tracking-wider">STATUT_REMBOURSEMENTS</h4>
+<span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-[10px] font-mono uppercase text-on-surface-variant">
+<span>Crédit Fournisseur</span>
+<span>82% COMPLET</span>
+</div>
+<div class="h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary-container" style="width: 82%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-[10px] font-mono uppercase text-on-surface-variant">
+<span>Échanges Standards</span>
+<span>45% COMPLET</span>
+</div>
+<div class="h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary-container" style="width: 45%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl border border-outline-variant/20 flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-4xl text-primary mb-4" data-icon="precision_manufacturing">precision_manufacturing</span>
+<p class="font-mono text-sm text-on-surface mb-2 tracking-tighter">BESOIN D'ASSISTANCE LOGISTIQUE ?</p>
+<p class="text-xs text-on-surface-variant mb-6 max-w-xs">Contactez l'équipe de gestion des fournisseurs pour les litiges de plus de 30 jours.</p>
+<button class="w-full py-3 bg-surface-container-lowest border border-primary/20 text-primary font-bebas tracking-widest text-lg hover:bg-primary/5 transition-colors active:scale-[0.98]">
+                    OUVRIR_TICKET_LOGISTIQUE
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full bg-[#0c0e12] flex justify-around items-center px-4 pb-2 z-50 h-20 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)]">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-mono text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-mono text-[10px] uppercase tracking-tighter">SCANNER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-mono text-[10px] uppercase tracking-tighter">REPORTS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-mono text-[10px] uppercase tracking-tighter">INVENTORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<span class="font-mono text-[10px] uppercase tracking-tighter">SUPPORT</span>
+</div>
+</nav>
+</body></html>

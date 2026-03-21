@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Manrope:wght@300;400;500;600;700&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#1a1c20",
+              "error-container": "#93000a",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary": "#2d3037",
+              "surface-container-highest": "#333539",
+              "on-tertiary-fixed-variant": "#44474e",
+              "surface-container": "#1e2024",
+              "on-primary-fixed-variant": "#633f00",
+              "surface-tint": "#ffb955",
+              "surface-bright": "#37393e",
+              "secondary-fixed-dim": "#ffb596",
+              "surface-dim": "#111318",
+              "on-surface": "#e2e2e8",
+              "error": "#ffb4ab",
+              "on-error-container": "#ffdad6",
+              "outline": "#9f8e7a",
+              "background": "#111318",
+              "secondary": "#ffb596",
+              "primary": "#ffc880",
+              "inverse-surface": "#e2e2e8",
+              "on-surface-variant": "#d7c3ae",
+              "inverse-primary": "#835500",
+              "surface-variant": "#333539",
+              "inverse-on-surface": "#2f3035",
+              "on-tertiary-container": "#45474f",
+              "primary-fixed": "#ffddb4",
+              "tertiary": "#d0d2db",
+              "tertiary-fixed": "#e0e2eb",
+              "surface": "#111318",
+              "on-error": "#690005",
+              "outline-variant": "#524534",
+              "on-secondary": "#581e00",
+              "on-background": "#e2e2e8",
+              "on-secondary-fixed": "#360f00",
+              "surface-container-lowest": "#0c0e12",
+              "on-secondary-container": "#4d1900",
+              "tertiary-container": "#b4b6bf",
+              "secondary-container": "#f26411",
+              "on-primary-container": "#644000",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-primary": "#452b00",
+              "on-tertiary-fixed": "#191c22",
+              "primary-container": "#f5a623",
+              "primary-fixed-dim": "#ffb955",
+              "on-primary-fixed": "#291800",
+              "surface-container-high": "#282a2e"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Inter"],
+              "industrial": ["Bebas Neue"],
+              "technical": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(51, 53, 57, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .map-gradient-overlay {
+            background: linear-gradient(to bottom, transparent 0%, #111318 90%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#111318] flex justify-between items-center px-6 h-16 shadow-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623]" data-icon="precision_manufacturing">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-tighter text-[#f5a623] font-['Space_Grotesk'] uppercase">MECAPRO</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:bg-white/5 active:scale-95 duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-16 pb-24 min-h-screen">
+<!-- Map Background Snippet -->
+<div class="relative w-full h-64 overflow-hidden">
+<img class="w-full h-full object-cover opacity-40 grayscale contrast-125" data-alt="Dark stylized satellite map of an industrial zone" data-location="Paris, France" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6Ay-0--RjA0zg34kNZZznqeRWU5pRpB26djfBjUSeIOBF4evKNYO6MbP9UbvpD0BBqOl3-zarTejqSK6WQHMQkk9jwy5ql4TRrElY3K2SDUVeRllrWJlScxnOudO_ji4HYmpRznKmCLb4edP7zEJFSWtu3AaI6MLLr_7qvPzxu_4RBIfTmjWPI1qDF9pjyE38LRSw-5Ah0dKEeRU01C1Sk2huFHgsN38sXsT6xlKpdSbPzOROvglSJnd_2QcmSOYfSljvcyed2W6C"/>
+<div class="absolute inset-0 map-gradient-overlay"></div>
+<!-- Live Status Indicator -->
+<div class="absolute top-4 left-6 flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1 rounded-full">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="font-industrial text-primary tracking-widest text-sm">LIVE TRACKING</span>
+</div>
+</div>
+<!-- Main Content Canvas -->
+<div class="px-6 -mt-20 relative z-10 space-y-6">
+<!-- Tracking Hero Card -->
+<div class="bg-surface-container-high rounded-xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="font-industrial text-4xl text-on-surface tracking-tight leading-none mb-1">EN ROUTE</h2>
+<p class="text-on-surface-variant text-sm font-medium">LIVRAISON ESTIMÉE</p>
+</div>
+<div class="text-right">
+<p class="font-technical text-2xl text-primary font-bold">14:45</p>
+<p class="text-on-surface-variant text-xs uppercase tracking-tighter">AUJOURD'HUI</p>
+</div>
+</div>
+<!-- Timeline Progress Bar -->
+<div class="relative py-4">
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-3/4"></div>
+</div>
+<div class="flex justify-between mt-3">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-xs text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-[10px] text-on-surface-variant uppercase mt-1">Expédié</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-xs text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-[10px] text-on-surface-variant uppercase mt-1">Hub</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-xs text-primary" data-icon="local_shipping" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="text-[10px] text-primary font-bold uppercase mt-1">Transit</span>
+</div>
+<div class="flex flex-col items-center opacity-30">
+<span class="material-symbols-outlined text-xs" data-icon="inventory_2">inventory_2</span>
+<span class="text-[10px] uppercase mt-1">Livre</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Details Bento Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container rounded-xl p-4 flex flex-col justify-between">
+<span class="text-on-surface-variant text-[10px] uppercase tracking-wider font-bold">Transporteur</span>
+<div class="flex items-center gap-2 mt-2">
+<div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="package_2">package_2</span>
+</div>
+<span class="font-industrial text-xl">DHL EXPRESS</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 flex flex-col justify-between">
+<span class="text-on-surface-variant text-[10px] uppercase tracking-wider font-bold">N° Suivi</span>
+<p class="font-technical text-primary text-sm mt-2">JD0146002934</p>
+</div>
+</div>
+<!-- Technical Logistics Log -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-white/5">
+<div class="px-4 py-3 bg-surface-container-high flex justify-between items-center">
+<h3 class="font-industrial text-sm tracking-widest text-on-surface-variant">LOGISTIQUE DÉTAILLÉE</h3>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="history">history</span>
+</div>
+<div class="divide-y divide-white/5">
+<div class="p-4 flex gap-4">
+<span class="font-technical text-xs text-on-surface-variant pt-1">10:24</span>
+<div>
+<p class="text-sm font-bold text-on-surface uppercase">Arrivé au centre de tri</p>
+<p class="text-xs text-on-surface-variant">HUB GLOBAL PARIS - CDG</p>
+</div>
+</div>
+<div class="p-4 flex gap-4 bg-surface-container-low">
+<span class="font-technical text-xs text-on-surface-variant pt-1">08:12</span>
+<div>
+<p class="text-sm font-bold text-on-surface uppercase">En transit vers destination</p>
+<p class="text-xs text-on-surface-variant">LYON LOGISTICS CENTER</p>
+</div>
+</div>
+<div class="p-4 flex gap-4">
+<span class="font-technical text-xs text-on-surface-variant pt-1">04:45</span>
+<div>
+<p class="text-sm font-bold text-on-surface uppercase">Départ de l'entrepôt</p>
+<p class="text-xs text-on-surface-variant">MECAPRO STOCK #04 - FRANKFURT</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full py-4 rounded-xl bg-gradient-to-r from-primary-container to-secondary-container text-on-primary font-industrial text-xl tracking-widest shadow-lg shadow-primary/10 active:scale-95 transition-transform uppercase">
+                Contacter le livreur
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-6 bg-[#0c0e12] z-50 rounded-t-xl border-t border-white/5 shadow-[0_-8px_24px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-lg px-4 py-1.5 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Inventory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 opacity-60 hover:text-[#f5a623] hover:opacity-100 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['JetBrains_Mono'] text-[10px] tracking-tighter uppercase mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

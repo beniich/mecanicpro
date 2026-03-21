@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#b4b6bf",
+              "secondary-container": "#f26411",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-primary": "#452b00",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "on-secondary": "#581e00",
+              "surface-container-lowest": "#0c0e12",
+              "on-secondary-container": "#4d1900",
+              "on-secondary-fixed": "#360f00",
+              "on-error": "#690005",
+              "outline-variant": "#524534",
+              "tertiary": "#d0d2db",
+              "tertiary-fixed": "#e0e2eb",
+              "surface": "#111318",
+              "on-primary-fixed": "#291800",
+              "surface-container-high": "#282a2e",
+              "primary-fixed-dim": "#ffb955",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed": "#191c22",
+              "on-tertiary": "#2d3037",
+              "surface-container": "#1e2024",
+              "on-primary-fixed-variant": "#633f00",
+              "surface-container-highest": "#333539",
+              "on-tertiary-fixed-variant": "#44474e",
+              "secondary-fixed": "#ffdbcd",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "surface-container-low": "#1a1c20",
+              "error-container": "#93000a",
+              "surface-variant": "#333539",
+              "inverse-on-surface": "#2f3035",
+              "on-surface-variant": "#d7c3ae",
+              "inverse-primary": "#835500",
+              "primary-fixed": "#ffddb4",
+              "on-tertiary-container": "#45474f",
+              "on-error-container": "#ffdad6",
+              "surface-dim": "#111318",
+              "on-surface": "#e2e2e8",
+              "error": "#ffb4ab",
+              "secondary": "#ffb596",
+              "primary": "#ffc880",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "background": "#111318",
+              "surface-bright": "#37393e",
+              "secondary-fixed-dim": "#ffb596",
+              "surface-tint": "#ffb955"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "label": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .technical-glow {
+            box-shadow: 0 0 24px rgba(245, 166, 35, 0.08);
+        }
+        .progress-bar-gradient {
+            background: linear-gradient(90deg, #f5a623 0%, #f26411 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] flex justify-between items-center px-6 py-4 w-full sticky top-0 z-50 bg-[#0c0e12] shadow-none border-none">
+<div class="flex items-center gap-4">
+<button class="text-[#f5a623] hover:bg-[#282a2e] transition-colors p-2 rounded-lg">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-3xl font-black text-[#f5a623] tracking-widest font-['Bebas_Neue'] uppercase">MECAPRO</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden md:block">
+<p class="text-xs font-label text-on-surface-variant uppercase tracking-tighter">Technicien Senior</p>
+<p class="text-sm font-bold">Jean-Luc Picard</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border-2 border-primary-container overflow-hidden">
+<img alt="Avatar" data-alt="Portrait of a professional auto mechanic in uniform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9_j9SWWNGqYbsLhyGWahpwyRc0pgpGtl3MegpLZ8Ca7yW60m6P-Y9jsZF8vzjCXnfaotrstbMbB1VNu0CxhB4G7mvg6qn0sUWX1cPfM_9HrT-QDr54xxF_SHvfylk6eS7S1Q7r2hZM5cKYFsis_QJJWuymt_luEiVHA-jSYRNMKNSW3Y86_YzaKGwYqG6yiA8fTIiSCVbNeYCbI8ICY-_nD-WM6TfKiM9t1SIRoVJRT9zGvVTfK4N7UmwPBXsUOr_X7MHmm5RzxgK"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 mt-8">
+<!-- Module Header Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-8 space-y-8">
+<!-- Course Hero -->
+<div class="relative h-[400px] w-full rounded-xl overflow-hidden group">
+<img alt="Diagnostic EV" class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" data-alt="Close up of high voltage electric vehicle internal components" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHfV_HqF-5nncR63M3tpPZkjDLQUHJD9Q1tmBwB2u885PQuO_M9EERPEGX5UeKUcmA7HmqAiBnpyV2q4fmzopMkfpWzLbr3J3115RKF-6piX23jqRMZx1GLMHH1sZZSlWKDDRlOXmFxynfI875omPinaaJkorjNkZkz9UtNOESINcV1XPWAgnAtKeBYv4Ppy_syMmoqRVR7j1H4dhfGGf6RKx7oeTYXGZp-ytYV8h09LLY_h0PCwEb_ejrq5sgKLS-3_IqpUsR539-"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-90"></div>
+<div class="absolute bottom-8 left-8 right-8">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-primary-container text-on-primary-container text-[10px] font-label font-bold px-3 py-1 rounded uppercase tracking-widest">Niveau 3 - Expert</span>
+<span class="bg-surface-container-highest/60 backdrop-blur-md text-on-surface text-[10px] font-label font-bold px-3 py-1 rounded uppercase tracking-widest">Module EV-042</span>
+</div>
+<h2 class="text-5xl md:text-7xl font-headline tracking-wider text-on-surface uppercase leading-none">Diagnostic Systèmes HT</h2>
+<p class="mt-4 text-on-surface-variant max-w-2xl font-medium">Analyse avancée des chaînes de traction électrique et protocoles de mise en sécurité des batteries haute tension (HV).</p>
+</div>
+</div>
+<!-- Learning Path / Content Table -->
+<div class="bg-surface-container-low rounded-xl p-8">
+<h3 class="font-headline text-3xl mb-6 tracking-wide text-primary">Programme de Formation</h3>
+<div class="space-y-4">
+<!-- Chapter 1 -->
+<div class="group flex items-center justify-between p-5 bg-surface-container-high rounded-lg hover:bg-[#282a2e] transition-all cursor-pointer">
+<div class="flex items-center gap-6">
+<span class="font-label text-2xl text-on-surface-variant opacity-30">01</span>
+<div>
+<h4 class="font-bold text-lg text-on-surface uppercase">Sécurité &amp; Équipements EPI</h4>
+<p class="text-sm text-on-surface-variant font-label">Vérification des gants composites et VAT</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- Chapter 2 (Active) -->
+<div class="group flex items-center justify-between p-5 bg-surface-container-highest rounded-lg border-l-4 border-secondary-container transition-all cursor-pointer relative overflow-hidden">
+<div class="flex items-center gap-6">
+<span class="font-label text-2xl text-secondary-container">02</span>
+<div>
+<h4 class="font-bold text-lg text-on-surface uppercase">Intervention sur Onduleur AC/DC</h4>
+<p class="text-sm text-on-surface-variant font-label">Diagnostic des semi-conducteurs de puissance</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-label text-secondary-container animate-pulse uppercase">En cours</span>
+<span class="material-symbols-outlined text-secondary-container">play_arrow</span>
+</div>
+</div>
+<!-- Chapter 3 -->
+<div class="group flex items-center justify-between p-5 bg-surface-container-low border border-outline-variant/10 rounded-lg hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex items-center gap-6">
+<span class="font-label text-2xl text-on-surface-variant opacity-30">03</span>
+<div>
+<h4 class="font-bold text-lg text-on-surface-variant uppercase">Gestion Thermique des Cellules</h4>
+<p class="text-sm text-on-surface-variant opacity-60 font-label">Boucles de refroidissement glycol/pompe à chaleur</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-30">lock</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar / Stats & Action -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Progress Card -->
+<div class="bg-surface-container-high rounded-xl p-8 relative overflow-hidden technical-glow">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary-container"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Progression Globale</h4>
+<p class="font-headline text-5xl text-primary mt-1">45%</p>
+</div>
+<span class="material-symbols-outlined text-4xl text-primary-container/20">query_stats</span>
+</div>
+<div class="w-full h-3 bg-surface-container-lowest rounded-full overflow-hidden mb-6">
+<div class="h-full progress-bar-gradient" style="width: 45%;"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-3 rounded">
+<p class="text-[10px] font-label uppercase text-on-surface-variant">Temps passé</p>
+<p class="text-lg font-bold">12h 45m</p>
+</div>
+<div class="bg-surface-container-low p-3 rounded">
+<p class="text-[10px] font-label uppercase text-on-surface-variant">Score actuel</p>
+<p class="text-lg font-bold font-label">88/100</p>
+</div>
+</div>
+</div>
+<!-- Final Evaluation CTA -->
+<div class="bg-gradient-to-br from-surface-container-highest to-surface-container-high rounded-xl p-8 border border-outline-variant/20 relative">
+<div class="absolute -top-4 -right-4 bg-error-container text-white text-[10px] font-bold px-3 py-1 rounded rotate-12 uppercase">Requis pour Certification</div>
+<h4 class="font-headline text-2xl mb-2 tracking-wide text-on-surface uppercase">Examen Final</h4>
+<p class="text-sm text-on-surface-variant mb-6">L'évaluation finale sera débloquée une fois tous les modules visionnés à 100%.</p>
+<button class="w-full bg-surface-container-lowest text-outline-variant border border-outline-variant font-bold py-4 px-6 rounded-lg uppercase tracking-widest flex items-center justify-center gap-3 cursor-not-allowed">
+<span class="material-symbols-outlined">lock_clock</span>
+                        Évaluation bloquée
+                    </button>
+<p class="text-[10px] text-center mt-4 font-label text-on-surface-variant uppercase italic">Terminez 2 chapitres restants</p>
+</div>
+<!-- Technical Details -->
+<div class="bg-surface-container-low rounded-xl p-6">
+<h5 class="font-label text-xs uppercase tracking-[0.2em] text-primary-container mb-4">Informations Techniques</h5>
+<ul class="space-y-3">
+<li class="flex justify-between text-sm py-2 border-b border-outline-variant/10">
+<span class="text-on-surface-variant">ID Formation:</span>
+<span class="font-label">EV-DIAG-2024-X</span>
+</li>
+<li class="flex justify-between text-sm py-2 border-b border-outline-variant/10">
+<span class="text-on-surface-variant">Format:</span>
+<span class="font-label">Interactif SCORM</span>
+</li>
+<li class="flex justify-between text-sm py-2 border-b border-outline-variant/10">
+<span class="text-on-surface-variant">Instructeur:</span>
+<span class="font-label">H. FORD</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 right-0 flex justify-around items-center px-4 pb-safe bg-[#0c0e12] z-50 h-20 rounded-t-xl shadow-[0_-4px_20px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#524534] opacity-60 hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined">gavel</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold mt-1">Sinistres</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#524534] opacity-60 hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined">shutter_speed</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold mt-1">Photos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#282a2e]/40 rounded-lg px-3 py-1 border-l-2 border-[#f26411]" href="#">
+<span class="material-symbols-outlined">engineering</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold mt-1">Planning</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#524534] opacity-60 hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined">package_2</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold mt-1">Achats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#524534] opacity-60 hover:text-[#ffc880] transition-all" href="#">
+<span class="material-symbols-outlined">factory</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase font-bold mt-1">Impact</span>
+</a>
+</nav>
+</body></html>

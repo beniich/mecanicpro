@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using MecaPro.Application.Common;
+using MecaPro.Application;
 using MecaPro.Infrastructure.Persistence;
 using MecaPro.Infrastructure.Invoicing;
 using MecaPro.Domain.Common;

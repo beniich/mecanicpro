@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body { font-family: 'DM Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] flex justify-between items-center px-6 h-20 w-full docked full-width top-0 border-b border-[#524534]/15 sticky z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623] text-3xl" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex gap-6 mr-8">
+<a class="text-[#e2e2e8]/60 font-['Bebas_Neue'] tracking-wider hover:text-[#f5a623] transition-colors" href="#">DASHBOARD</a>
+<a class="text-[#e2e2e8]/60 font-['Bebas_Neue'] tracking-wider hover:text-[#f5a623] transition-colors" href="#">SCANNER</a>
+<a class="text-[#f5a623] font-['Bebas_Neue'] tracking-wider" href="#">SUPPORT</a>
+</div>
+<div class="h-10 w-10 rounded-full bg-surface-container-highest border-2 border-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Operator Profile" data-alt="Profile avatar for the garage operator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO9vd_DFbbtXA2ucDyV9itxNPmnwgtkUb2Ve3Fo_cV44a5EkVC3-KMHG49oAsweNQxjQO7jv_Kz8gM1JURp0NjrO_X6LuGXl20Zy2G-YjQ7D5lNSKmej5w2GgJGsywHyFnECnw5siloGr5c81LYb8G77dB8qmnl1ycACPlZsqfEBYP4k0Me1wUGaCMRvutD3JVRE8BqjcVqjyBPw5Et7vOvmEf3Ljy8eEmi-r90UAwSRN4zd50aOWvQEamzZQQY_pxhF3tmS72O6c8"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto p-6 space-y-8">
+<!-- Hero Support Section -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-surface-container-low p-8 rounded-xl border-l-4 border-secondary-container">
+<h2 class="font-headline text-5xl tracking-wide mb-2">BESOIN D'ASSISTANCE ?</h2>
+<p class="text-on-surface-variant max-w-xl">Signalez un dysfonctionnement matériel ou logiciel. Nos techniciens interviennent en moins de 15 minutes pour les cas critiques.</p>
+</div>
+<!-- Active Tickets Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-high p-5 rounded-xl border-l-2 border-primary-container relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono text-xs text-on-surface-variant">TICKET-ID: #8829-X</span>
+<span class="bg-primary-container/20 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-primary/20">EN COURS</span>
+</div>
+<h3 class="font-bold text-lg mb-1">Erreur Scanner OBD-II</h3>
+<p class="text-sm text-on-surface-variant mb-4">Échec de communication avec le module central sur les modèles 2023.</p>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="support_agent">support_agent</span>
+</div>
+<span class="text-xs font-mono">Agent: Marc L.</span>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl" data-icon="qr_code_scanner">qr_code_scanner</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl border-l-2 border-error relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<span class="font-mono text-xs text-on-surface-variant">TICKET-ID: #8901-A</span>
+<span class="bg-error-container/30 text-error px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-error/30 animate-pulse">URGENT</span>
+</div>
+<h3 class="font-bold text-lg mb-1">Interface Dashboard bloquée</h3>
+<p class="text-sm text-on-surface-variant mb-4">L'écran tactile ne répond plus après la mise à jour v4.2.</p>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="engineering">engineering</span>
+</div>
+<span class="text-xs font-mono">Status: Diagnostic...</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Panel -->
+<div class="bg-surface-container-highest p-6 rounded-xl space-y-6">
+<div class="space-y-2">
+<label class="font-headline text-xl tracking-wider text-primary">OUVRIR UN TICKET</label>
+<div class="h-1 w-12 bg-secondary-container"></div>
+</div>
+<form class="space-y-4">
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest ml-1">Type d'incident</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-xl text-sm p-3 focus:ring-2 focus:ring-primary-container">
+<option>BUG LOGICIEL</option>
+<option>PANNE MATÉRIELLE</option>
+<option>ACCÈS / COMPTE</option>
+<option>AUTRE</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest ml-1">Description</label>
+<textarea class="w-full bg-surface-container-lowest border-none rounded-xl text-sm p-3 focus:ring-2 focus:ring-primary-container" placeholder="Décrivez le problème rencontré..." rows="4"></textarea>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest ml-1">Urgence</label>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-surface-container-low text-[10px] font-bold rounded-lg border border-outline-variant/20 hover:bg-primary-container/10 transition-colors" type="button">FAIBLE</button>
+<button class="flex-1 py-2 bg-surface-container-low text-[10px] font-bold rounded-lg border border-outline-variant/20 hover:bg-primary-container/10 transition-colors" type="button">NORMALE</button>
+<button class="flex-1 py-2 bg-secondary-container text-on-primary text-[10px] font-bold rounded-lg shadow-lg" type="button">CRITIQUE</button>
+</div>
+</div>
+<button class="w-full py-4 bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-headline text-xl tracking-widest rounded-xl hover:opacity-90 active:scale-95 transition-all">
+                        ENVOYER LA REQUÊTE
+                    </button>
+</form>
+</div>
+</section>
+<!-- Technical Documentation / FAQ -->
+<section class="space-y-4">
+<h3 class="font-headline text-3xl tracking-wide">Ressources Techniques</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-surface-container p-4 rounded-xl flex items-center gap-4 hover:bg-surface-container-high transition-colors cursor-pointer border border-outline-variant/10">
+<div class="bg-surface-bright p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+</div>
+<div>
+<p class="font-bold text-sm">Manuel OBD-II</p>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase tracking-tighter">Documentation v2.4</p>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl flex items-center gap-4 hover:bg-surface-container-high transition-colors cursor-pointer border border-outline-variant/10">
+<div class="bg-surface-bright p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="video_settings">video_settings</span>
+</div>
+<div>
+<p class="font-bold text-sm">Tutos Scanner</p>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase tracking-tighter">12 Vidéos disponibles</p>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl flex items-center gap-4 hover:bg-surface-container-high transition-colors cursor-pointer border border-outline-variant/10">
+<div class="bg-surface-bright p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</div>
+<div>
+<p class="font-bold text-sm">Logs Système</p>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase tracking-tighter">Accès Terminal Garage</p>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl flex items-center gap-4 hover:bg-surface-container-high transition-colors cursor-pointer border border-outline-variant/10">
+<div class="bg-surface-bright p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="update">update</span>
+</div>
+<div>
+<p class="font-bold text-sm">Firmware Hub</p>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase tracking-tighter">Dernier: 2024.11.02</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Ticket History Table -->
+<section class="bg-surface-container-low rounded-xl overflow-hidden">
+<div class="p-4 border-b border-outline-variant/15 flex justify-between items-center bg-surface-container">
+<h3 class="font-headline text-xl tracking-wider">Historique des Requêtes</h3>
+<span class="text-[10px] font-mono bg-surface-container-highest px-3 py-1 rounded-full uppercase text-on-surface-variant">Affichage: 30 derniers jours</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant text-[10px] uppercase font-bold tracking-[0.2em]">
+<tr>
+<th class="px-6 py-4">ID</th>
+<th class="px-6 py-4">Sujet</th>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4">Priorité</th>
+<th class="px-6 py-4">Statut</th>
+</tr>
+</thead>
+<tbody class="text-sm font-body">
+<tr class="bg-surface border-b border-outline-variant/5">
+<td class="px-6 py-4 font-mono text-primary">#7762-Y</td>
+<td class="px-6 py-4">Étalonnage banc d'essai</td>
+<td class="px-6 py-4 font-mono opacity-60">22 OCT 2024</td>
+<td class="px-6 py-4"><span class="text-xs">Normale</span></td>
+<td class="px-6 py-4"><span class="bg-on-surface-variant/10 px-3 py-1 rounded-full text-[10px] font-bold">RÉSOLU</span></td>
+</tr>
+<tr class="bg-surface-container-low border-b border-outline-variant/5">
+<td class="px-6 py-4 font-mono text-primary">#7741-K</td>
+<td class="px-6 py-4">Problème impression rapport</td>
+<td class="px-6 py-4 font-mono opacity-60">18 OCT 2024</td>
+<td class="px-6 py-4"><span class="text-xs">Faible</span></td>
+<td class="px-6 py-4"><span class="bg-on-surface-variant/10 px-3 py-1 rounded-full text-[10px] font-bold">RÉSOLU</span></td>
+</tr>
+<tr class="bg-surface">
+<td class="px-6 py-4 font-mono text-primary">#7700-Z</td>
+<td class="px-6 py-4">Mise à jour base de données VIN</td>
+<td class="px-6 py-4 font-mono opacity-60">12 OCT 2024</td>
+<td class="px-6 py-4"><span class="text-xs">Haute</span></td>
+<td class="px-6 py-4"><span class="bg-on-surface-variant/10 px-3 py-1 rounded-full text-[10px] font-bold">RÉSOLU</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-[#0c0e12] dark:bg-[#0c0e12] fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 z-50 h-20 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] md:hidden">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SCANNER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">REPORTS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">INVENTORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SUPPORT</span>
+</div>
+</nav>
+</body></html>

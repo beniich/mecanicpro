@@ -36,7 +36,7 @@
                                      <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center border border-sky-500/20">
                                           <span class="material-symbols-outlined text-sky-500 text-sm">@(section.Icon)</span>
                                      </div>
-                                     <span class="text-[10px] font-black uppercase tracking-tight">@section.Title</span>
+                                     <span class="text-[10px] font-black uppercase tracking-tight">@(section.Title)</span>
                                 </div>
                                 <div class="w-5 h-5 rounded-md border-2 @(section.IsActive ? "bg-sky-500 border-sky-500" : "border-gray-700") flex items-center justify-center">
                                      @if (section.IsActive) { <span class="material-symbols-outlined text-black text-[12px] font-black">check</span> }

@@ -152,7 +152,7 @@
     {
         DayOfWeek day = System.Globalization.CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(dt);
         if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday) dt = dt.AddDays(3);
-        return System.Globalization.CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(dt, System.Globalization.NumberFormatInfo.CurrentInfo, System.Globalization.CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        return System.Globalization.CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(dt, System.Globalization.CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
     }
 
     private int GetTopOffset(DateTime start)

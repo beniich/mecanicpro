@@ -16,7 +16,7 @@ using OtpNet;
 using QRCoder;
 using StackExchange.Redis;
 using MecaPro.Infrastructure.Persistence;
-using MecaPro.Application.Common;
+using MecaPro.Application;
 using System.Net;
 using Carter;
 using Microsoft.AspNetCore.Routing;

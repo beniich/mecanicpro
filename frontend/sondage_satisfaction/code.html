@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body { font-family: 'DM Sans', sans-serif; }
+      .bebas { font-family: 'Bebas Neue', sans-serif; }
+      .mono { font-family: 'JetBrains Mono', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] flex justify-between items-center px-6 h-20 w-full docked full-width top-0 border-b border-[#524534]/15 flat no shadows sticky z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623] text-3xl" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623] dark:text-[#f5a623]">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8">
+<a class="text-[#f5a623] font-['JetBrains_Mono'] text-sm tracking-widest" href="#">REPORTS</a>
+<a class="text-[#e2e2e8]/60 font-['JetBrains_Mono'] text-sm tracking-widest hover:text-[#f5a623] transition-colors" href="#">DASHBOARD</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Operator avatar portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5qBDdsnJT0KZBB5y2QSVEXGELsn306DSC8NNC46hhr3t3VrSeijY6M4bzqUyxWwiWCOjfIz7NxmgTz2rqEh5mpfUClYihR72HgL96l6wl1MsulPO7FjRKY6GDykVF3CcRm8ES5rpxk9JfyVbpzk5hNkQIyghlJRpMLtI6YPfyUEHz7ksXnCB-P3DhRtXtirrgrRc26GX6jAYXwSr2LkbAM2ML1H7hbqOOvIEKMddwoGeVnBLcu5nLqEK5yiF_EU58VFUPFyYd2Rjc"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto p-6 pb-32">
+<!-- Hero Section / Title -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="mono text-primary text-xs tracking-widest uppercase mb-2 block">Analytical Module v4.2</span>
+<h2 class="bebas text-6xl md:text-8xl text-on-surface tracking-tight leading-none">SATISFACTION CLIENT</h2>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl flex items-center gap-4 border-l-4 border-secondary shadow-lg">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="rocket_launch">rocket_launch</span>
+<div>
+<div class="text-on-surface-variant text-xs uppercase mono">NPS Global</div>
+<div class="bebas text-4xl text-primary leading-none">+72.4</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+<!-- NPS Distribution (Bento 6 cols) -->
+<div class="md:col-span-8 bg-surface-container-low p-6 rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<h3 class="bebas text-2xl tracking-wide">DISTRIBUTION DES SCORES</h3>
+<span class="mono text-[10px] text-on-surface-variant bg-surface-container-highest px-2 py-1 rounded">LIVE_FEED</span>
+</div>
+<div class="flex items-end justify-between gap-2 h-48 mb-4">
+<!-- Promoters -->
+<div class="flex-1 flex flex-col justify-end items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-lg relative group h-[85%]">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-primary/10 rounded-t-lg"></div>
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 mono text-primary text-sm">68%</div>
+</div>
+<span class="mono text-[10px] text-on-surface-variant">PROMOTERS</span>
+</div>
+<!-- Passives -->
+<div class="flex-1 flex flex-col justify-end items-center gap-2">
+<div class="w-full bg-surface-variant rounded-t-lg h-[22%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 mono text-on-surface-variant text-sm">22%</div>
+</div>
+<span class="mono text-[10px] text-on-surface-variant">PASSIVES</span>
+</div>
+<!-- Detractors -->
+<div class="flex-1 flex flex-col justify-end items-center gap-2">
+<div class="w-full bg-error/20 rounded-t-lg h-[10%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 mono text-error text-sm">10%</div>
+</div>
+<span class="mono text-[10px] text-on-surface-variant">DETRACTORS</span>
+</div>
+</div>
+</div>
+<!-- Sentiment Analysis (Bento 4 cols) -->
+<div class="md:col-span-4 bg-surface-container-high p-6 rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-8xl" data-icon="psychology">psychology</span>
+</div>
+<h3 class="bebas text-2xl tracking-wide mb-6">ANALYSE SÉMANTIQUE</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium">Ponctualité</span>
+<span class="mono text-primary">94%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[94%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium">Propreté</span>
+<span class="mono text-primary">81%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[81%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium">Expertise</span>
+<span class="mono text-primary">89%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[89%]"></div>
+</div>
+</div>
+</div>
+<!-- Verbatims Feed (Bento 12 cols) -->
+<div class="md:col-span-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-primary shadow-xl">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-primary" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-primary" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-primary" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-primary" data-icon="star" data-weight="fill">star</span>
+</div>
+<p class="text-on-surface mb-4 leading-relaxed">"Technicien extrêmement professionnel. Intervention rapide sur le site de Lyon. Chantier rendu parfaitement propre."</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<span class="mono text-[10px] text-on-surface-variant uppercase">INTERVENTION #LYO-882</span>
+<span class="mono text-[10px] text-on-surface-variant">2h ago</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-secondary-container shadow-xl">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-primary" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-primary" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-primary" data-icon="star">star</span>
+<span class="material-symbols-outlined text-primary" data-icon="star">star</span>
+</div>
+<p class="text-on-surface mb-4 leading-relaxed italic">"Le délai de prise de rendez-vous était un peu long, mais le travail effectué est de grande qualité."</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<span class="mono text-[10px] text-on-surface-variant uppercase">INTERVENTION #PAR-401</span>
+<span class="mono text-[10px] text-on-surface-variant">5h ago</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-error shadow-xl">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-error" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="star">star</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="star">star</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="star">star</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="star">star</span>
+</div>
+<p class="text-on-surface mb-4 leading-relaxed">"Impossible de joindre le support après le passage. Le problème persiste sur l'unité centrale."</p>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/10">
+<span class="mono text-[10px] text-on-surface-variant uppercase">INTERVENTION #BOR-229</span>
+<span class="mono text-[10px] text-on-surface-variant">1d ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Creation Interface Section -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+<div class="space-y-6">
+<h3 class="bebas text-4xl tracking-wide">NOUVELLE CAMPAGNE</h3>
+<div class="bg-surface-container-high p-8 rounded-xl border border-outline-variant/10">
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="block mono text-[10px] text-on-surface-variant uppercase tracking-widest">Nom de l'enquête</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg text-primary mono focus:ring-2 focus:ring-primary/50 py-4 px-4" placeholder="POST_INTERVENTION_STANDARD" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block mono text-[10px] text-on-surface-variant uppercase tracking-widest">Déclencheur (Trigger)</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg text-on-surface focus:ring-2 focus:ring-primary/50 py-4 px-4 appearance-none">
+<option>Signature du bon d'intervention</option>
+<option>Clôture du ticket support</option>
+<option>Envoi de la facture</option>
+</select>
+</div>
+<div class="pt-4">
+<button class="w-full bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-bold py-4 rounded-lg uppercase tracking-widest shadow-lg hover:brightness-110 active:scale-95 transition-all">
+                                Activer le Workflow
+                            </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Preview/Simulator -->
+<div class="space-y-6">
+<h3 class="bebas text-4xl tracking-wide opacity-50">PRÉVISUALISATION MOBILE</h3>
+<div class="bg-[#0c0e12] aspect-[9/16] max-w-[320px] mx-auto rounded-[3rem] border-[8px] border-surface-container-highest p-6 shadow-2xl relative overflow-hidden">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 bg-surface-container-highest rounded-full"></div>
+<div class="mt-8 text-center space-y-4">
+<div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="thumb_up">thumb_up</span>
+</div>
+<h4 class="font-bold text-lg">Votre avis compte</h4>
+<p class="text-xs text-on-surface-variant">Comment s'est passée l'intervention de ce matin ?</p>
+<div class="grid grid-cols-5 gap-2 pt-4">
+<button class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center mono text-xs">1</button>
+<button class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center mono text-xs">2</button>
+<button class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center mono text-xs">3</button>
+<button class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center mono text-xs">4</button>
+<button class="aspect-square bg-primary-container text-on-primary-container rounded-lg flex items-center justify-center mono text-xs font-bold">5</button>
+</div>
+<div class="pt-6">
+<textarea class="w-full bg-surface-container-high border-none rounded-xl text-xs h-24 p-3 placeholder:text-on-surface-variant/40 focus:ring-1 focus:ring-primary" placeholder="Un commentaire ?"></textarea>
+</div>
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl text-sm font-bold mt-4">ENVOYER</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 bg-[#0c0e12] dark:bg-[#0c0e12] z-50 h-20 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] transition-all duration-200 ease-in-out">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">DASHBOARD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SCANNER</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411]">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">REPORTS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">INVENTORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter">SUPPORT</span>
+</div>
+</nav>
+<!-- FAB Suppression logic applied: No FAB on analysis screen -->
+</body></html>

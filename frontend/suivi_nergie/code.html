@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;family=DM+Sans:wght@400;500;700&amp;family=Space+Grotesk:wght@300;500;700&amp;family=Manrope:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-highest": "#333539",
+              "secondary": "#ffb596",
+              "outline-variant": "#524534",
+              "on-tertiary-container": "#45474f",
+              "surface-dim": "#111318",
+              "primary-fixed": "#ffddb4",
+              "on-error": "#690005",
+              "surface-container": "#1e2024",
+              "on-error-container": "#ffdad6",
+              "surface": "#111318",
+              "error": "#ffb4ab",
+              "inverse-surface": "#e2e2e8",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "on-background": "#e2e2e8",
+              "inverse-primary": "#835500",
+              "on-primary-fixed-variant": "#633f00",
+              "on-secondary-fixed": "#360f00",
+              "tertiary": "#d0d2db",
+              "surface-container-high": "#282a2e",
+              "surface-variant": "#333539",
+              "error-container": "#93000a",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "secondary-container": "#f26411",
+              "on-secondary-container": "#4d1900",
+              "surface-container-low": "#1a1c20",
+              "surface-container-lowest": "#0c0e12",
+              "primary": "#ffc880",
+              "on-secondary": "#581e00",
+              "surface-bright": "#37393e",
+              "surface-tint": "#ffb955",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#2f3035",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "background": "#111318",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "secondary-fixed": "#ffdbcd",
+              "on-tertiary-fixed": "#191c22",
+              "on-primary-fixed": "#291800",
+              "on-surface-variant": "#d7c3ae"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono"],
+              "industrial": ["Bebas Neue"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(40, 42, 46, 0.6);
+        backdrop-filter: blur(20px);
+      }
+      .power-rail {
+        box-shadow: -2px 0 0 0 #f26411;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#111318] dark:bg-[#111318] flex justify-between items-center px-6 h-20 w-full docked full-width top-0 border-b border-[#524534]/15 z-50 sticky">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623]" style="font-size: 28px;">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] uppercase tracking-[0.05em] text-2xl text-[#f5a623] tracking-widest">SYSTEM_DIAGNOSTICS</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block">
+<p class="font-mono text-[10px] text-on-surface-variant leading-none">STATION_ID</p>
+<p class="font-mono text-xs text-primary">FR-75-ATELIER-04</p>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container overflow-hidden bg-surface-container-highest">
+<img alt="Operator Profile" data-alt="Avatar representant l'opérateur de maintenance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_cDgXcdqcuY5wz9n0GMCCoayUBjDngMGg4sjvCjQ2hsfcY3z59TozCKynNe-gsjVB_BLrmkW-bedDTXOtT9HAGmSD6oMwIJcQaMeoWaBHYbaMHVSZvLUrTEsmXvF0-b7HJIOXdcdfZBqe8T1CB_vTI3EdoHQINvyCdKYy7_EIzZZq4TcpF-WJw3sYY7uEQWa-MBoiw536AGIsyvMNdcptYlP2dCsz1QL99mX0347GYv9_pFRx1BTdBoj9t3Oj7eTjy99DgmC8Okl6"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-8">
+<!-- Dashboard Header -->
+<div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="font-mono text-primary text-sm tracking-widest uppercase mb-2 block">Real-time telemetry</span>
+<h2 class="font-industrial text-6xl tracking-tight text-on-surface">SUIVI CONSOMMATION</h2>
+</div>
+<div class="flex gap-2">
+<div class="bg-surface-container px-4 py-2 rounded-lg border border-outline-variant/15 flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-mono text-xs">SENSORS_ONLINE</span>
+</div>
+<div class="bg-surface-container px-4 py-2 rounded-lg border border-outline-variant/15 flex items-center gap-3">
+<span class="material-symbols-outlined text-sm text-secondary">update</span>
+<span class="font-mono text-xs uppercase">Last sync: 14:02:45</span>
+</div>
+</div>
+</div>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<!-- Electricity Main -->
+<div class="md:col-span-2 bg-surface-container-high rounded-xl p-6 relative overflow-hidden power-rail">
+<div class="flex justify-between items-start mb-4">
+<span class="font-industrial text-xl text-on-surface-variant tracking-wider">PUISSANCE ACTUELLE</span>
+<span class="material-symbols-outlined text-primary">bolt</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-industrial text-7xl text-primary tracking-tighter">42.8</span>
+<span class="font-mono text-2xl text-on-surface-variant">kW</span>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-sm">trending_up</span>
+<span class="font-mono text-xs text-error">+12.4% vs prev_hour</span>
+</div>
+<!-- Mini sparkline simulation -->
+<div class="absolute bottom-0 left-0 w-full h-12 flex items-end opacity-20">
+<div class="w-full h-full bg-gradient-to-t from-primary/40 to-transparent"></div>
+</div>
+</div>
+<!-- Water Consumption -->
+<div class="bg-surface-container-high rounded-xl p-6 border-l-2 border-tertiary-container/30">
+<div class="flex justify-between items-start mb-4">
+<span class="font-industrial text-xl text-on-surface-variant tracking-wider">DÉBIT EAU</span>
+<span class="material-symbols-outlined text-blue-400">water_drop</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-industrial text-5xl text-on-surface tracking-tighter">1.2</span>
+<span class="font-mono text-xl text-on-surface-variant">m³/h</span>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">trending_down</span>
+<span class="font-mono text-xs text-primary">-4.1% efficient</span>
+</div>
+</div>
+<!-- Eco Score -->
+<div class="bg-surface-container-high rounded-xl p-6 flex flex-col justify-between border-l-2 border-primary/30">
+<div>
+<span class="font-industrial text-xl text-on-surface-variant tracking-wider">OBJECTIF ÉCO</span>
+<p class="font-mono text-[10px] text-on-surface-variant mt-1">TARGET_2024</p>
+</div>
+<div class="relative pt-4">
+<div class="flex justify-between mb-1">
+<span class="text-xs font-mono">82% COMPLETE</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary-container to-secondary-container w-[82%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Analytics & Heatmap -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Consumption Chart Area -->
+<div class="lg:col-span-2 bg-surface-container-low rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="font-industrial text-2xl tracking-wide">ANALYSE DES PICS (24H)</h3>
+<div class="flex gap-4 font-mono text-[10px]">
+<div class="flex items-center gap-1"><span class="w-2 h-2 bg-primary"></span> ELECTRICITY</div>
+<div class="flex items-center gap-1"><span class="w-2 h-2 bg-outline"></span> BASELINE</div>
+</div>
+</div>
+<div class="p-6 h-80 relative">
+<!-- Placeholder for Graphic -->
+<div class="absolute inset-0 m-6 border-l border-b border-outline-variant/30 flex flex-col justify-between">
+<div class="w-full border-t border-dashed border-outline-variant/10 h-0"></div>
+<div class="w-full border-t border-dashed border-outline-variant/10 h-0"></div>
+<div class="w-full border-t border-dashed border-outline-variant/10 h-0"></div>
+<div class="w-full border-t border-dashed border-outline-variant/10 h-0"></div>
+</div>
+<!-- Simulated Peaks -->
+<div class="absolute bottom-6 left-6 right-6 h-full flex items-end gap-1 px-4">
+<div class="flex-1 bg-surface-container-high h-[20%] rounded-t-sm"></div>
+<div class="flex-1 bg-surface-container-high h-[25%] rounded-t-sm"></div>
+<div class="flex-1 bg-surface-container-high h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-[85%] rounded-t-sm relative group cursor-pointer">
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 glass-card px-2 py-1 rounded text-[10px] font-mono whitespace-nowrap hidden group-hover:block z-10">PIC_DETECTION: 11:15</div>
+</div>
+<div class="flex-1 bg-primary/30 h-[70%] rounded-t-sm"></div>
+<div class="flex-1 bg-surface-container-high h-[30%] rounded-t-sm"></div>
+<div class="flex-1 bg-surface-container-high h-[22%] rounded-t-sm"></div>
+<div class="flex-1 bg-surface-container-high h-[18%] rounded-t-sm"></div>
+<div class="flex-1 bg-surface-container-high h-[25%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/50 h-[92%] rounded-t-sm"></div>
+<div class="flex-1 bg-surface-container-high h-[35%] rounded-t-sm"></div>
+</div>
+</div>
+<div class="px-6 pb-6 grid grid-cols-2 gap-4">
+<div class="bg-surface-container rounded-lg p-4 border border-outline-variant/10">
+<p class="font-mono text-[10px] text-on-surface-variant uppercase mb-1">Peak Amplitude</p>
+<p class="font-industrial text-2xl text-primary">88.4 kW</p>
+</div>
+<div class="bg-surface-container rounded-lg p-4 border border-outline-variant/10">
+<p class="font-mono text-[10px] text-on-surface-variant uppercase mb-1">Peak Frequency</p>
+<p class="font-industrial text-2xl">4.2 / DAY</p>
+</div>
+</div>
+</div>
+<!-- Equipment Ranking -->
+<div class="bg-surface-container-low rounded-xl flex flex-col">
+<div class="p-6 border-b border-outline-variant/10">
+<h3 class="font-industrial text-2xl tracking-wide uppercase">GROS ÉQUIPEMENTS</h3>
+</div>
+<div class="p-4 space-y-3 flex-1 overflow-y-auto max-h-[460px]">
+<!-- Equipment Row -->
+<div class="bg-surface-container-high p-4 rounded-lg flex items-center justify-between hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">PRESSE_HYDRAU_01</h4>
+<p class="font-mono text-[10px] text-on-surface-variant">ID: #PH-992-B</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono text-sm font-bold text-primary">12.5 kW</p>
+<p class="text-[9px] uppercase text-on-surface-variant">High Load</p>
+</div>
+</div>
+<!-- Equipment Row -->
+<div class="bg-surface-container-high p-4 rounded-lg flex items-center justify-between hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">hvac</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">UNITÉ_CLIM_CENTRAL</h4>
+<p class="font-mono text-[10px] text-on-surface-variant">ID: #AC-440-X</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono text-sm font-bold text-on-surface">8.2 kW</p>
+<p class="text-[9px] uppercase text-on-surface-variant">Stable</p>
+</div>
+</div>
+<!-- Equipment Row -->
+<div class="bg-surface-container-high p-4 rounded-lg flex items-center justify-between hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">oven_gen</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">FOUR_THERM_04</h4>
+<p class="font-mono text-[10px] text-on-surface-variant">ID: #FT-102-K</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono text-sm font-bold text-on-surface">6.7 kW</p>
+<p class="text-[9px] uppercase text-on-surface-variant">Heating_Up</p>
+</div>
+</div>
+<!-- Equipment Row -->
+<div class="bg-surface-container-high p-4 rounded-lg flex items-center justify-between hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">compress</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">COMPRESSEUR_MAIN</h4>
+<p class="font-mono text-[10px] text-on-surface-variant">ID: #CP-881-A</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono text-sm font-bold text-primary">14.1 kW</p>
+<p class="text-[9px] uppercase text-error">Warning_Leak</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Eco Responsibility Footer / Tips -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-surface-container-highest/40 border border-primary/20 rounded-xl p-6 flex items-start gap-6">
+<div class="bg-primary-container/20 p-4 rounded-full">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div>
+<h3 class="font-industrial text-2xl mb-2 text-primary">ACTION ÉCO_RESPONSABLE</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-4">
+                        La réduction de la pression du compresseur principal de <span class="text-on-surface font-bold">0.5 bar</span> durant les heures de nuit permettrait une économie de <span class="text-on-surface font-bold">450 kWh/mois</span>.
+                    </p>
+<button class="bg-primary text-on-primary-container px-4 py-2 rounded font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+                        Appliquer Routine <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-6 flex flex-col justify-center">
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs uppercase opacity-60">Impact Carbone Hebdo</span>
+<span class="font-mono text-xs bg-error-container/20 text-error px-2 py-0.5 rounded">-2.1% trend</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-industrial text-6xl">245.8</span>
+<div class="flex flex-col">
+<span class="font-mono text-xl">kg CO2e</span>
+<span class="font-mono text-[10px] uppercase opacity-40">Estimate based on mix</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-2 bg-[#0c0e12] dark:bg-[#0c0e12] z-50 h-20 border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">DASHBOARD</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">SCANNER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-4 py-1 border-l-2 border-[#f26411] transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">REPORTS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">INVENTORY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-4 py-1 hover:text-[#f5a623]/80 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-tighter mt-1">SUPPORT</span>
+</a>
+</nav>
+</body></html>

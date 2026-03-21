@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MecaPro - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#524534",
+              "outline": "#9f8e7a",
+              "surface-bright": "#37393e",
+              "inverse-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "on-background": "#e2e2e8",
+              "surface-variant": "#333539",
+              "inverse-primary": "#835500",
+              "error": "#ffb4ab",
+              "surface-container-high": "#282a2e",
+              "tertiary-fixed": "#e0e2eb",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "on-secondary": "#581e00",
+              "surface-container-lowest": "#0c0e12",
+              "primary-fixed": "#ffddb4",
+              "on-secondary-fixed": "#360f00",
+              "background": "#111318",
+              "surface": "#111318",
+              "on-primary-container": "#644000",
+              "primary": "#ffc880",
+              "on-tertiary-fixed": "#191c22",
+              "error-container": "#93000a",
+              "tertiary-container": "#b4b6bf",
+              "surface-container": "#1e2024",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "on-surface-variant": "#d7c3ae",
+              "tertiary": "#d0d2db",
+              "surface-container-low": "#1a1c20",
+              "secondary-fixed-dim": "#ffb596",
+              "secondary": "#ffb596",
+              "on-secondary-container": "#4d1900",
+              "surface-dim": "#111318",
+              "on-error": "#690005",
+              "on-tertiary-container": "#45474f",
+              "on-primary-fixed-variant": "#633f00",
+              "secondary-container": "#f26411",
+              "primary-fixed-dim": "#ffb595",
+              "on-surface": "#e2e2e8",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "surface-tint": "#ffb955",
+              "secondary-fixed": "#ffdbcd",
+              "on-primary-fixed": "#291800",
+              "surface-container-highest": "#333539",
+              "on-error-container": "#ffdad6",
+              "inverse-on-surface": "#2f3035"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(40, 42, 46, 0.6);
+        backdrop-filter: blur(20px);
+      }
+      .industrial-gradient {
+        background: linear-gradient(135deg, #f5a623 0%, #f26411 100%);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col">
+<!-- TopAppBar suppressed for Transactional Onboarding Flow -->
+<main class="flex-grow flex flex-col px-6 pt-12 pb-24 max-w-md mx-auto w-full">
+<!-- Brand Header -->
+<header class="mb-10">
+<h1 class="font-headline text-5xl tracking-wider text-primary-container leading-none">MecaPro</h1>
+<p class="text-on-surface-variant font-medium mt-2 text-lg">Prêt pour la maintenance de précision ?</p>
+</header>
+<!-- Onboarding Progress -->
+<section class="mb-8 flex gap-2">
+<div class="h-1.5 flex-1 industrial-gradient rounded-full"></div>
+<div class="h-1.5 flex-1 bg-surface-container-highest rounded-full"></div>
+<div class="h-1.5 flex-1 bg-surface-container-highest rounded-full"></div>
+</section>
+<!-- Main Content Canvas: Asymmetric Bento Style -->
+<div class="grid grid-cols-2 gap-4 mb-8">
+<!-- Large Step Card -->
+<div class="col-span-2 bg-surface-container-high p-6 rounded-xl relative overflow-hidden">
+<div class="absolute -right-8 -top-8 opacity-10">
+<span class="material-symbols-outlined text-[160px]" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<div class="relative z-10">
+<div class="w-12 h-12 rounded-lg bg-primary-container/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">person_add</span>
+</div>
+<h2 class="font-headline text-3xl tracking-tight text-on-surface">Créer votre profil</h2>
+<p class="text-on-surface-variant text-sm mt-2 leading-relaxed">Activez votre compte pour synchroniser vos diagnostics techniques et historiques.</p>
+</div>
+</div>
+<!-- Small Detail Cards -->
+<div class="bg-surface-container-low p-5 rounded-xl border-l-2 border-secondary-container flex flex-col justify-between">
+<span class="material-symbols-outlined text-secondary-container mb-4">directions_car</span>
+<div>
+<h3 class="font-headline text-xl text-on-surface leading-tight">Ajouter Véhicule</h3>
+<p class="text-[11px] text-on-surface-variant mt-1 uppercase tracking-wider">Étape 02</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-xl border-l-2 border-outline-variant flex flex-col justify-between">
+<span class="material-symbols-outlined text-outline mb-4">qr_code_scanner</span>
+<div>
+<h3 class="font-headline text-xl text-on-surface leading-tight">Scanner QR</h3>
+<p class="text-[11px] text-on-surface-variant mt-1 uppercase tracking-wider">Étape 03</p>
+</div>
+</div>
+</div>
+<!-- Dynamic Form Area -->
+<div class="space-y-6">
+<div class="group">
+<label class="block text-xs font-medium text-on-surface-variant uppercase tracking-widest mb-2 px-1">Nom du Technicien</label>
+<div class="bg-surface-container-highest rounded-xl p-4 flex items-center gap-3 ring-1 ring-outline-variant/30 focus-within:ring-primary-container transition-all">
+<span class="material-symbols-outlined text-outline">badge</span>
+<input class="bg-transparent border-none p-0 focus:ring-0 text-on-surface placeholder:text-outline w-full font-body" placeholder="ex: Marc Durand" type="text"/>
+</div>
+</div>
+<div class="group">
+<label class="block text-xs font-medium text-on-surface-variant uppercase tracking-widest mb-2 px-1">ID Atelier</label>
+<div class="bg-surface-container-highest rounded-xl p-4 flex items-center gap-3 ring-1 ring-outline-variant/30 focus-within:ring-primary-container transition-all">
+<span class="material-symbols-outlined text-outline">precision_manufacturing</span>
+<input class="bg-transparent border-none p-0 focus:ring-0 text-primary font-mono w-full" placeholder="MON-7742-X" type="text"/>
+</div>
+</div>
+</div>
+<!-- Technical Illustration Placeholder -->
+<div class="mt-12 mb-8 relative">
+<div class="absolute inset-0 industrial-gradient opacity-5 blur-[80px]"></div>
+<div class="bg-surface-container rounded-xl aspect-video w-full relative flex items-center justify-center overflow-hidden border border-outline-variant/10">
+<img alt="Mechanical interface technical illustration" class="w-full h-full object-cover opacity-40 mix-blend-luminosity" data-alt="Modern technical car engine schematics in blueprint style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr93Tnl4IJZFNpgmkD7A5nrlrHma70z3NMuwiM6wu7Z1s_pkmOnNpBHyf0e7J8H_Hko4bXz3v9eY-Hapm56EsE2TE1XYP7j4-fDECCp-k2nTOkwMtE5260uIvZXsCqfqgDZ4BGXyouiKKlOUfiRwpCququ3UCaOSLGDdZeTxpVapmyPLXfb-vJgOng8qNH_JsQEXJFNyBccgSX6Obqj71_7PumhgRGzSPn7YJbTvdhM8cp8xIMqN4YIdvVMUiyjUh-KJ9leXDDUi10"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-mono text-[10px] text-primary tracking-tighter uppercase">Système Prêt</span>
+</div>
+</div>
+</div>
+<!-- Navigation Actions -->
+<div class="mt-auto pt-6">
+<button class="w-full industrial-gradient text-on-primary py-4 px-6 rounded-xl font-bold text-lg shadow-[0_8px_32px_rgba(245,166,35,0.15)] flex items-center justify-center gap-3 active:scale-[0.98] transition-all">
+<span>COMMENCER LE PROFIL</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full mt-4 text-on-surface-variant font-medium text-sm py-2 hover:text-on-surface transition-colors">
+                Ignorer pour le moment
+            </button>
+</div>
+</main>
+<!-- BottomNavBar Suppressed for Focused Task Journey -->
+<footer class="fixed bottom-0 left-0 w-full p-4 flex justify-center bg-gradient-to-t from-background to-transparent pointer-events-none">
+<p class="font-mono text-[10px] text-outline opacity-40 uppercase tracking-[0.2em]">Precision Toolset v2.4.0</p>
+</footer>
+</body></html>

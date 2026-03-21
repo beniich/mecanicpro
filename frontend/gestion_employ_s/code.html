@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#524534",
+              "outline": "#9f8e7a",
+              "surface-bright": "#37393e",
+              "inverse-surface": "#e2e2e8",
+              "on-primary": "#452b00",
+              "on-tertiary": "#2d3037",
+              "on-background": "#e2e2e8",
+              "surface-variant": "#333539",
+              "inverse-primary": "#835500",
+              "error": "#ffb4ab",
+              "surface-container-high": "#282a2e",
+              "tertiary-fixed": "#e0e2eb",
+              "tertiary-fixed-dim": "#c4c6cf",
+              "on-secondary": "#581e00",
+              "surface-container-lowest": "#0c0e12",
+              "primary-fixed": "#ffddb4",
+              "on-secondary-fixed": "#360f00",
+              "background": "#111318",
+              "surface": "#111318",
+              "on-primary-container": "#644000",
+              "primary": "#ffc880",
+              "on-tertiary-fixed": "#191c22",
+              "error-container": "#93000a",
+              "tertiary-container": "#b4b6bf",
+              "surface-container": "#1e2024",
+              "primary-container": "#f5a623",
+              "on-tertiary-fixed-variant": "#44474e",
+              "on-surface-variant": "#d7c3ae",
+              "tertiary": "#d0d2db",
+              "surface-container-low": "#1a1c20",
+              "secondary-fixed-dim": "#ffb596",
+              "secondary": "#ffb596",
+              "on-secondary-container": "#4d1900",
+              "surface-dim": "#111318",
+              "on-error": "#690005",
+              "on-tertiary-container": "#45474f",
+              "on-primary-fixed-variant": "#633f00",
+              "secondary-container": "#f26411",
+              "primary-fixed-dim": "#ffb955",
+              "on-surface": "#e2e2e8",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "surface-tint": "#ffb955",
+              "secondary-fixed": "#ffdbcd",
+              "on-primary-fixed": "#291800",
+              "surface-container-highest": "#333539",
+              "on-error-container": "#ffdad6",
+              "inverse-on-surface": "#2f3035"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "technical": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #111318;
+            color: #e2e2e8;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .glass-panel {
+            background: rgba(40, 42, 46, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .power-rail {
+            position: absolute;
+            left: 0;
+            top: 15%;
+            bottom: 15%;
+            width: 2px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="pb-24">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#111318] flex justify-between items-center px-6 py-4 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f5a623]">settings_input_component</span>
+<h1 class="font-['Bebas_Neue'] tracking-wider uppercase text-2xl text-[#f5a623]">MecaPro</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-xl hover:bg-[#282a2e] transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#e2e2e8]">search</span>
+</button>
+<button class="p-2 rounded-xl hover:bg-[#282a2e] transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#e2e2e8]">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 pt-8">
+<!-- Page Title & Quick Stats -->
+<div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
+<div>
+<span class="font-technical text-primary text-sm tracking-widest uppercase mb-2 block">Personnel &amp; Opérations</span>
+<h2 class="font-headline text-5xl tracking-tight text-on-surface">GESTION D'ÉQUIPE</h2>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-low px-6 py-4 rounded-xl flex items-center gap-4">
+<span class="font-headline text-3xl text-primary">08</span>
+<span class="text-xs font-technical text-on-surface-variant uppercase leading-tight">MÉCANICIENS<br/>ACTIFS</span>
+</div>
+<div class="bg-surface-container-low px-6 py-4 rounded-xl flex items-center gap-4">
+<span class="font-headline text-3xl text-secondary">92%</span>
+<span class="text-xs font-technical text-on-surface-variant uppercase leading-tight">CHARGE<br/>TOTALE</span>
+</div>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="bento-grid">
+<!-- Main Mechanics List (8 columns) -->
+<section class="col-span-12 lg:col-span-8 space-y-4">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-2xl tracking-wide">PERFORMANCES INDIVIDUELLES</h3>
+<div class="flex gap-2">
+<span class="bg-surface-container-high px-3 py-1 rounded text-xs font-technical border border-outline-variant/20">TRIMESTRE EN COURS</span>
+</div>
+</div>
+<!-- Mechanic Card 1 -->
+<div class="relative bg-surface-container-high rounded-xl p-5 group hover:bg-surface-variant transition-all overflow-hidden">
+<div class="power-rail bg-secondary shadow-[0_0_12px_rgba(242,100,17,0.4)]"></div>
+<div class="flex flex-col md:flex-row items-center gap-6">
+<div class="relative">
+<img alt="Mécanicien Expert" class="w-20 h-20 rounded-xl object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Portrait d'un mécanicien en tenue de travail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcHSw5_8qsJEKnKKy31fFR5cpDHDRrBrSHzWMX5PRZEij6zHrE1gUa0ZCWJb6OOuJBdR5mkWOpGhV7SqCoJDSM_zzkq4f6KENTM2hYwmtYC-yOu-QxfIZYIFwq759n_BQ_t0dN5gjRD-39TWvkAV94wUe9zDZ4sN66GstbcU2xzmcCXdd6t_I3wcXEMKUAuSm4OxIT0OZFETQTON9p1_V748SGY_OY8BpWsv5EEJgddZLefTgOQkHKe1HM7uTr7WVg8z28xjTfy-O"/>
+<div class="absolute -bottom-2 -right-2 bg-primary p-1 rounded-lg">
+<span class="material-symbols-outlined text-on-primary text-xs filled-icon">verified</span>
+</div>
+</div>
+<div class="flex-1 w-full">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-lg text-on-surface">Jean-Marc Lefebvre</h4>
+<span class="font-technical text-xs text-on-surface-variant">ID: MECH-294-JM</span>
+</div>
+<div class="text-right">
+<div class="flex items-center text-primary gap-1">
+<span class="material-symbols-outlined text-sm filled-icon">star</span>
+<span class="font-technical font-bold">4.9</span>
+</div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Satisfaction</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 mt-4">
+<div class="bg-surface-container-lowest p-3 rounded-lg">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Charge actuelle</span>
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-bright rounded-full overflow-hidden">
+<div class="h-full w-[85%] bg-gradient-to-r from-primary to-secondary"></div>
+</div>
+<span class="font-technical text-sm font-bold text-primary">85%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg text-center">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Tâches Finies</span>
+<span class="font-headline text-xl text-on-surface">142</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg text-center">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Statut</span>
+<span class="inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-primary/10 text-primary uppercase">En Atelier</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Mechanic Card 2 -->
+<div class="relative bg-surface-container-high rounded-xl p-5 group hover:bg-surface-variant transition-all overflow-hidden">
+<div class="power-rail bg-primary/30"></div>
+<div class="flex flex-col md:flex-row items-center gap-6">
+<div class="relative">
+<img alt="Mécanicienne Spécialisée" class="w-20 h-20 rounded-xl object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Portrait d'une mécanicienne souriante" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYwcTFhr1sp7eSCgpfVe37vqYUlACrbfbhnzZTM5ZurCVEEnT9ysSuXp9BAfoKLThBJUr0-E_MteHAVkhZKEcfvEAeDp6MSWJ6ujT4vvOiadqTz-LQIgDRlePRfh_eYzYdkESN3yavw7Oqv3veYtWj5cG19T-XFC7ASFAU-LU4Zq5AGDZK1vnmxQLnaf1_yX3B_yLDIh5yuyiAU9zfDF54zvuiLJy3uWX1w__SSnrrFTxn_76_s41Bn3nU8aB8jfS-nuaX_5Paz5Uw"/>
+</div>
+<div class="flex-1 w-full">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-lg text-on-surface">Amira Benali</h4>
+<span class="font-technical text-xs text-on-surface-variant">ID: MECH-112-AB</span>
+</div>
+<div class="text-right">
+<div class="flex items-center text-primary gap-1">
+<span class="material-symbols-outlined text-sm filled-icon">star</span>
+<span class="font-technical font-bold">5.0</span>
+</div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Satisfaction</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 mt-4">
+<div class="bg-surface-container-lowest p-3 rounded-lg">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Charge actuelle</span>
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-bright rounded-full overflow-hidden">
+<div class="h-full w-[40%] bg-gradient-to-r from-primary to-secondary"></div>
+</div>
+<span class="font-technical text-sm font-bold text-primary">40%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg text-center">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Tâches Finies</span>
+<span class="font-headline text-xl text-on-surface">89</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg text-center">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Statut</span>
+<span class="inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-tertiary/10 text-tertiary uppercase">Pause Déj</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Mechanic Card 3 -->
+<div class="relative bg-surface-container-high rounded-xl p-5 group hover:bg-surface-variant transition-all overflow-hidden border border-error/20">
+<div class="power-rail bg-error shadow-[0_0_12px_rgba(255,180,171,0.3)]"></div>
+<div class="flex flex-col md:flex-row items-center gap-6">
+<div class="relative">
+<img alt="Mécanicien Junior" class="w-20 h-20 rounded-xl object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Portrait d'un jeune technicien automobile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWsjb5YBOQxWanL_UuqF7BlAza1h2gI8a6BCwzIrNZeFyRVonrzsFyrNew6KlN0C3zsK438T3hLeibnNPbxCaZlanrM2y_DpXLljvd6H6Qkjrimf_N75ll5OofjDiUZS46CCDFPqZNnSK6xmyUv3-qRTpYwvA8pYiKJ858X--dnxnCnE8MKOMMR-a5V-TJG5-WkSS8IHKpmerP6cLZjmtDt8olCD7cXSSPLk-medbJgu9RG05KhS-a-0gEI65u3P8o3_ME2HS4aSAu"/>
+</div>
+<div class="flex-1 w-full">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-lg text-on-surface">Lucas Dupont</h4>
+<span class="font-technical text-xs text-on-surface-variant">ID: MECH-405-LD</span>
+</div>
+<div class="text-right">
+<div class="flex items-center text-primary gap-1">
+<span class="material-symbols-outlined text-sm filled-icon">star</span>
+<span class="font-technical font-bold">4.2</span>
+</div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Satisfaction</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 mt-4">
+<div class="bg-surface-container-lowest p-3 rounded-lg">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Charge actuelle</span>
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-bright rounded-full overflow-hidden">
+<div class="h-full w-[100%] bg-error"></div>
+</div>
+<span class="font-technical text-sm font-bold text-error">100%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg text-center">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Tâches Finies</span>
+<span class="font-headline text-xl text-on-surface">56</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg text-center">
+<span class="block text-[10px] text-on-surface-variant uppercase mb-1">Statut</span>
+<span class="inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-error/10 text-error uppercase">Surcharge</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Planning Sidebar (4 columns) -->
+<aside class="col-span-12 lg:col-span-4 space-y-6">
+<div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
+<h3 class="font-headline text-2xl mb-6 tracking-wide flex items-center justify-between">
+                        PLANNING DU JOUR
+                        <span class="material-symbols-outlined text-on-surface-variant text-lg">calendar_today</span>
+</h3>
+<div class="space-y-6">
+<!-- Time Block 1 -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="font-technical text-sm font-bold text-primary">09:00</span>
+<div class="w-px flex-1 bg-outline-variant/30 my-2"></div>
+</div>
+<div class="flex-1 bg-surface-container-high p-4 rounded-xl relative overflow-hidden">
+<div class="absolute right-0 top-0 h-full w-1 bg-primary"></div>
+<h5 class="text-sm font-bold mb-1">Briefing Équipe</h5>
+<p class="text-[10px] text-on-surface-variant font-technical">SALLE DE RÉUNION A</p>
+<div class="flex -space-x-2 mt-2">
+<div class="w-6 h-6 rounded-full bg-surface-bright border border-surface flex items-center justify-center text-[10px]">+8</div>
+</div>
+</div>
+</div>
+<!-- Time Block 2 -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="font-technical text-sm font-bold text-primary">10:30</span>
+<div class="w-px flex-1 bg-outline-variant/30 my-2"></div>
+</div>
+<div class="flex-1 bg-surface-container-high p-4 rounded-xl relative overflow-hidden">
+<div class="absolute right-0 top-0 h-full w-1 bg-secondary"></div>
+<h5 class="text-sm font-bold mb-1">Livraison Pièces</h5>
+<p class="text-[10px] text-on-surface-variant font-technical">QUAI DE DÉCHARGEMENT</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[10px] font-technical uppercase">Urgent: Moteur V8</span>
+</div>
+</div>
+</div>
+<!-- Time Block 3 -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="font-technical text-sm font-bold text-on-surface-variant">14:00</span>
+<div class="w-px flex-1 bg-outline-variant/30 my-2"></div>
+</div>
+<div class="flex-1 bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
+<h5 class="text-sm font-bold mb-1 text-on-surface-variant">Contrôle Qualité</h5>
+<p class="text-[10px] text-on-surface-variant/60 font-technical">POSTE 4 - ZONE B</p>
+</div>
+</div>
+<!-- Time Block 4 -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="font-technical text-sm font-bold text-on-surface-variant">16:30</span>
+</div>
+<div class="flex-1 bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
+<h5 class="text-sm font-bold mb-1 text-on-surface-variant">Nettoyage &amp; Clôture</h5>
+<p class="text-[10px] text-on-surface-variant/60 font-technical">TOUTES ZONES</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 bg-primary-container text-on-primary-container py-3 rounded-xl font-bold text-sm tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">add</span>
+                        ÉDITER LE PLANNING
+                    </button>
+</div>
+<!-- Recruitment Metric (Bento style) -->
+<div class="bg-gradient-to-br from-secondary-container to-on-secondary-container p-6 rounded-xl text-on-secondary shadow-lg">
+<span class="material-symbols-outlined text-4xl mb-4">group_add</span>
+<h4 class="font-headline text-3xl leading-none mb-2 tracking-tight">BESOIN DE MAIN D'ŒUVRE</h4>
+<p class="text-sm opacity-80 mb-4">Capacité atteinte. Envisagez le recrutement de 2 techniciens supplémentaires pour le mois prochain.</p>
+<button class="text-xs font-technical font-bold uppercase border-b border-current">VOIR CANDIDATS</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#111318]/80 backdrop-blur-xl z-50 rounded-t-xl border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#949494] hover:text-[#ffc880] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#949494] hover:text-[#ffc880] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">precision_manufacturing</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter">Diagnostic</span>
+</a>
+<div class="flex flex-col items-center justify-center text-[#f5a623] bg-[#f5a623]/10 rounded-xl px-3 py-1 shadow-[0_0_12px_rgba(245,166,35,0.2)]">
+<span class="material-symbols-outlined mb-1 filled-icon">badge</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter">Équipe</span>
+</div>
+<a class="flex flex-col items-center justify-center text-[#949494] hover:text-[#ffc880] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">reset_wrench</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter">Parts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#949494] hover:text-[#ffc880] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1">forum</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tighter">Chat</span>
+</a>
+</nav>
+</body></html>

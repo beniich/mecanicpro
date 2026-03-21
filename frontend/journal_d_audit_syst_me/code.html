@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#c4c6cf",
+              "outline": "#9f8e7a",
+              "on-primary-container": "#644000",
+              "inverse-primary": "#835500",
+              "surface-container-lowest": "#0c0e12",
+              "surface-bright": "#37393e",
+              "on-secondary-container": "#4d1900",
+              "on-background": "#e2e2e8",
+              "background": "#111318",
+              "on-primary": "#452b00",
+              "error": "#ffb4ab",
+              "secondary-fixed-dim": "#ffb596",
+              "on-tertiary-fixed": "#191c22",
+              "surface-container-low": "#1a1c20",
+              "surface-container": "#1e2024",
+              "inverse-surface": "#e2e2e8",
+              "on-primary-fixed": "#291800",
+              "tertiary-fixed": "#e0e2eb",
+              "surface-container-high": "#282a2e",
+              "surface": "#111318",
+              "primary-fixed": "#ffddb4",
+              "surface-container-highest": "#333539",
+              "on-secondary-fixed-variant": "#7c2e00",
+              "on-surface": "#e2e2e8",
+              "outline-variant": "#524534",
+              "primary-fixed-dim": "#ffb955",
+              "on-secondary": "#581e00",
+              "tertiary": "#d0d2db",
+              "surface-variant": "#333539",
+              "on-tertiary-container": "#45474f",
+              "on-surface-variant": "#d7c3ae",
+              "primary": "#ffc880",
+              "surface-dim": "#111318",
+              "secondary-fixed": "#ffdbcd",
+              "on-error": "#690005",
+              "on-tertiary": "#2d3037",
+              "secondary": "#ffb596",
+              "on-tertiary-fixed-variant": "#44474e",
+              "tertiary-container": "#b4b6bf",
+              "on-secondary-fixed": "#360f00",
+              "on-error-container": "#ffdad6",
+              "inverse-on-surface": "#2f3035",
+              "secondary-container": "#f26411",
+              "primary-container": "#f5a623",
+              "surface-tint": "#ffb955",
+              "error-container": "#93000a",
+              "on-primary-fixed-variant": "#633f00"
+            },
+            fontFamily: {
+              "headline": ["Bebas Neue"],
+              "body": ["DM Sans"],
+              "technical": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #524534; border-radius: 10px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-6 py-4 w-full bg-[#111318] dark:bg-[#111318] border-b border-[#524534]/15 fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#f5a623]" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+<h1 class="text-2xl font-black tracking-[0.2em] text-[#f5a623] font-headline uppercase">MECAPRO</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-[#e2e2e8]/60 font-medium hover:text-[#f5a623] transition-colors" href="#">Planning</a>
+<a class="text-[#e2e2e8]/60 font-medium hover:text-[#f5a623] transition-colors" href="#">Tâches</a>
+<a class="text-[#e2e2e8]/60 font-medium hover:text-[#f5a623] transition-colors" href="#">Factures</a>
+<a class="text-[#f5a623] font-bold" href="#">Sécurité</a>
+<a class="text-[#e2e2e8]/60 font-medium hover:text-[#f5a623] transition-colors" href="#">Profil</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Operator profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaeWNP-eHylhlgKPkpQYd9iWKxsVtxJ4H9qli6t10dQ3Jm8fdly6iJ8DMxz_ro6TB2gChLGwLGLCmKinUonndre1K_4zp_FK1QIjWWQqD4QX1T42Yl3tce19KpqRuvrrcTx0fb54SKKdI7K0G4NTxBnuqWUn8EY8LjV3j3fXq1_jr_o_g3L93a1eAAJ7zOJgGcKmpN0stdwPDstqW6-xEpfievGxJnHc1lDQwts1NhN5NWKEJE1cluJwrmO05L7KhtYziQEt2YG3Ws"/>
+</div>
+</div>
+</header>
+<main class="pt-24 px-4 md:px-8 max-w-7xl mx-auto mb-12">
+<!-- Dashboard Header -->
+<div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<p class="font-technical text-primary text-sm tracking-widest uppercase mb-1">Système de Diagnostic Central</p>
+<h2 class="text-5xl font-headline tracking-wider uppercase text-on-surface">LOGS DE SÉCURITÉ</h2>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-high px-4 py-2 rounded-lg text-sm font-medium border border-outline-variant/10 hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">filter_alt</span> FILTRER
+                </button>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg text-sm font-bold border-none hover:opacity-90 transition-all flex items-center gap-2 shadow-[0_0_12px_rgba(245,166,35,0.2)]">
+<span class="material-symbols-outlined text-sm">download</span> EXPORTER
+                </button>
+</div>
+</div>
+<!-- KPI Status Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-surface-container-high p-5 rounded-xl border-l-2 border-secondary relative overflow-hidden">
+<p class="text-on-surface-variant text-xs uppercase font-bold tracking-tighter mb-2">État Global</p>
+<p class="text-4xl font-headline text-primary">OPÉRATIONNEL</p>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-10">
+<span class="material-symbols-outlined text-7xl">check_circle</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl border-l-2 border-error relative overflow-hidden">
+<p class="text-on-surface-variant text-xs uppercase font-bold tracking-tighter mb-2">Erreurs (24h)</p>
+<p class="text-4xl font-headline text-error">12</p>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-10 text-error">
+<span class="material-symbols-outlined text-7xl">warning</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl border-l-2 border-primary relative overflow-hidden">
+<p class="text-on-surface-variant text-xs uppercase font-bold tracking-tighter mb-2">Logs/Min</p>
+<p class="text-4xl font-headline text-on-surface">432</p>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-10">
+<span class="material-symbols-outlined text-7xl">speed</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl border-l-2 border-tertiary-container relative overflow-hidden">
+<p class="text-on-surface-variant text-xs uppercase font-bold tracking-tighter mb-2">Uptime API</p>
+<p class="text-4xl font-headline text-on-surface">99.98%</p>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-10">
+<span class="material-symbols-outlined text-7xl">sensors</span>
+</div>
+</div>
+</div>
+<!-- Log Monitor Console -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/15 flex flex-col h-[600px] shadow-2xl">
+<!-- Console Header -->
+<div class="bg-surface-container-high px-6 py-3 flex items-center justify-between border-b border-outline-variant/15">
+<div class="flex items-center gap-4">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-error/40"></div>
+<div class="w-3 h-3 rounded-full bg-primary/40"></div>
+<div class="w-3 h-3 rounded-full bg-secondary/40"></div>
+</div>
+<span class="font-technical text-xs text-on-surface-variant">CONSOLE_OUTPUT_STREAM: v2.4.0</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-2 text-[10px] font-bold text-primary animate-pulse">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> LIVE
+                    </span>
+</div>
+</div>
+<!-- Table Header -->
+<div class="grid grid-cols-12 px-6 py-3 bg-surface-container-low text-on-surface-variant font-bold text-[10px] uppercase tracking-widest border-b border-outline-variant/5">
+<div class="col-span-2">Horodatage</div>
+<div class="col-span-1">Sévérité</div>
+<div class="col-span-1">Module</div>
+<div class="col-span-8">Message technique</div>
+</div>
+<!-- Scrollable Log List -->
+<div class="flex-1 overflow-y-auto custom-scrollbar font-technical text-sm">
+<!-- Log Entry: ERROR -->
+<div class="grid grid-cols-12 px-6 py-4 border-b border-outline-variant/5 hover:bg-surface-container-high/30 transition-colors group">
+<div class="col-span-2 text-on-surface-variant/60">2023-10-27 14:22:01.034</div>
+<div class="col-span-1">
+<span class="bg-error-container/30 text-error px-2 py-0.5 rounded text-[10px] font-bold border border-error/20 shadow-[0_0_8px_rgba(255,180,171,0.1)]">ERROR</span>
+</div>
+<div class="col-span-1 text-on-surface-variant">API</div>
+<div class="col-span-8 text-on-surface pl-4 border-l border-error/20">
+                        Authentication failure on endpoint <span class="text-error">/auth/admin/token</span> - IP: 192.168.1.104. Potential brute force detected.
+                    </div>
+</div>
+<!-- Log Entry: WARN -->
+<div class="grid grid-cols-12 px-6 py-4 border-b border-outline-variant/5 hover:bg-surface-container-high/30 transition-colors bg-surface-container-low/50">
+<div class="col-span-2 text-on-surface-variant/60">2023-10-27 14:21:45.912</div>
+<div class="col-span-1">
+<span class="bg-primary-container/20 text-primary px-2 py-0.5 rounded text-[10px] font-bold border border-primary/20">WARN</span>
+</div>
+<div class="col-span-1 text-on-surface-variant">DB</div>
+<div class="col-span-8 text-on-surface pl-4 border-l border-primary/20">
+                        Query execution time exceeded threshold: <span class="text-primary">850ms</span> for <span class="italic">SELECT * FROM workshop_inventories...</span>
+</div>
+</div>
+<!-- Log Entry: INFO -->
+<div class="grid grid-cols-12 px-6 py-4 border-b border-outline-variant/5 hover:bg-surface-container-high/30 transition-colors">
+<div class="col-span-2 text-on-surface-variant/60">2023-10-27 14:21:30.221</div>
+<div class="col-span-1">
+<span class="bg-surface-bright/50 text-tertiary px-2 py-0.5 rounded text-[10px] font-bold border border-outline-variant/20">INFO</span>
+</div>
+<div class="col-span-1 text-on-surface-variant">SignalR</div>
+<div class="col-span-8 text-on-surface pl-4 border-l border-outline-variant/20">
+                        Client [ID: HUB_9x22] connected to production stream. Active subscribers: 142.
+                    </div>
+</div>
+<!-- Log Entry: DEBUG -->
+<div class="grid grid-cols-12 px-6 py-4 border-b border-outline-variant/5 hover:bg-surface-container-high/30 transition-colors bg-surface-container-low/50">
+<div class="col-span-2 text-on-surface-variant/60">2023-10-27 14:20:58.001</div>
+<div class="col-span-1">
+<span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold border border-outline-variant/10">DEBUG</span>
+</div>
+<div class="col-span-1 text-on-surface-variant">API</div>
+<div class="col-span-8 text-on-surface/40 pl-4 border-l border-outline-variant/10">
+                        GC thread started. Heap usage: 452MB. Objects collected: 1,245.
+                    </div>
+</div>
+<!-- Log Entry: ERROR -->
+<div class="grid grid-cols-12 px-6 py-4 border-b border-outline-variant/5 hover:bg-surface-container-high/30 transition-colors">
+<div class="col-span-2 text-on-surface-variant/60">2023-10-27 14:19:12.445</div>
+<div class="col-span-1">
+<span class="bg-error-container/30 text-error px-2 py-0.5 rounded text-[10px] font-bold border border-error/20">ERROR</span>
+</div>
+<div class="col-span-1 text-on-surface-variant">DB</div>
+<div class="col-span-8 text-on-surface pl-4 border-l border-error/20">
+                        Connection refused to master-node-01. Attempting failover to secondary-node-02.
+                    </div>
+</div>
+<!-- Log Entry: INFO -->
+<div class="grid grid-cols-12 px-6 py-4 border-b border-outline-variant/5 hover:bg-surface-container-high/30 transition-colors bg-surface-container-low/50">
+<div class="col-span-2 text-on-surface-variant/60">2023-10-27 14:18:50.112</div>
+<div class="col-span-1">
+<span class="bg-surface-bright/50 text-tertiary px-2 py-0.5 rounded text-[10px] font-bold border border-outline-variant/20">INFO</span>
+</div>
+<div class="col-span-1 text-on-surface-variant">SignalR</div>
+<div class="col-span-8 text-on-surface pl-4 border-l border-outline-variant/20">
+                        Broadcasting heart-beat signal to all clients. Status: OK.
+                    </div>
+</div>
+<!-- Filling space for visual effect -->
+<div class="px-6 py-4 text-on-surface-variant/20 animate-pulse italic">
+                    Waiting for next event stream...
+                </div>
+</div>
+<!-- Console Footer -->
+<div class="bg-surface-container-high px-6 py-2 border-t border-outline-variant/15 flex justify-between items-center text-[10px] font-bold text-on-surface-variant uppercase">
+<div>Buffer: 5000/10000 lines</div>
+<div class="flex gap-4">
+<span>Scroll: auto</span>
+<span>Charset: utf-8</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-[#0c0e12] border-t border-[#524534]/15 shadow-[0_-4px_24px_rgba(245,166,35,0.05)] rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined mb-1">calendar_today</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Planning</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined mb-1">build</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Tâches</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined mb-1">receipt_long</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Factures</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#f5a623]/10 text-[#f5a623] rounded-xl px-3 py-1.5 shadow-[0_0_12px_rgba(245,166,35,0.1)] translate-y-[-2px]">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Sécurité</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e2e2e8]/40 px-3 py-1.5 hover:text-[#f5a623]/80">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-['DM_Sans'] text-[10px] font-medium uppercase tracking-tight">Profil</span>
+</div>
+</nav>
+</body></html>
