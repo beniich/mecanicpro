@@ -61,7 +61,7 @@ services:
       - ConnectionStrings__RabbitMQ=rabbitmq
       - Seq__ServerUrl=http://seq:5341
     ports:
-      - "5200:8080"
+      - "5201:8080"
     depends_on:
       - rabbitmq
       - seq
