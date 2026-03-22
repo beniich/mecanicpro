@@ -1,76 +1,118 @@
-version: '3.8'
-
 services:
-  api:
-    image: mecapro-api:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: mecapro_api
-    restart: always
-    ports:
-      - "5000:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=MecaProDb;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;
-      - ConnectionStrings__Redis=redis:6379
-    depends_on:
-      sqlserver:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    networks:
-      - mecapro_net
-
+  # ═══════════════════════════════════════════════════════════════════════════
+  #  INFRASTRUCTURE SERVICES
+  # ═══════════════════════════════════════════════════════════════════════════
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: mecapro_sql
-    restart: always
+    container_name: mecapro-sql
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+      - MSSQL_SA_PASSWORD=YourStrong@Password
     ports:
       - "1433:1433"
-    volumes:
-      - sqlserver_data:/var/opt/mssql
-    healthcheck:
-      test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "${DB_PASSWORD}", "-Q", "SELECT 1" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - mecapro_net
 
   redis:
-    image: redis:7-alpine
-    container_name: mecapro_redis
-    restart: always
+    image: redis:alpine
+    container_name: mecapro-redis
     ports:
       - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - mecapro_net
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: mecapro-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   seq:
     image: datalust/seq:latest
-    container_name: mecapro_seq
-    restart: always
+    container_name: mecapro-logs
     environment:
       - ACCEPT_EULA=Y
     ports:
-      - "5341:5341" # Ingestion port
-      - "8081:80"   # UI port
-    volumes:
-      - seq_data:/data
-    networks:
-      - mecapro_net
+      - "5341:5341"
+      - "8081:80"
 
-volumes:
-  sqlserver_data:
-  redis_data:
-  seq_data:
+  # ═══════════════════════════════════════════════════════════════════════════
+  #  MICROSERVICES
+  # ═══════════════════════════════════════════════════════════════════════════
+  auth-service:
+    build:
+      context: .
+      dockerfile: src/MecaPro.Auth/Dockerfile
+    container_name: mecapro-auth
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MecaPro_AuthDb;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True
+      - Seq__ServerUrl=http://seq:5341
+    ports:
+      - "5100:8080"
+    depends_on:
+      - sqlserver
+      - seq
 
-networks:
-  mecapro_net:
-    driver: bridge
+  notification-service:
+    build:
+      context: .
+      dockerfile: src/MecaPro.Notifications/Dockerfile
+    container_name: mecapro-notifications
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__RabbitMQ=rabbitmq
+      - Seq__ServerUrl=http://seq:5341
+    ports:
+      - "5200:8080"
+    depends_on:
+      - rabbitmq
+      - seq
+
+  inventory-service:
+    build:
+      context: .
+      dockerfile: src/MecaPro.Inventory/Dockerfile
+    container_name: mecapro-inventory
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MecaPro_InventoryDb;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True
+      - ConnectionStrings__RabbitMQ=rabbitmq
+      - Seq__ServerUrl=http://seq:5341
+    ports:
+      - "5300:8080"
+    depends_on:
+      - sqlserver
+      - rabbitmq
+      - seq
+
+  api-monolith:
+    build:
+      context: .
+      dockerfile: src/MecaPro.API/Dockerfile
+    container_name: mecapro-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MecaPro_AppDb;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True
+      - ConnectionStrings__Redis=redis:6379
+      - ConnectionStrings__RabbitMQ=rabbitmq
+      - Seq__ServerUrl=http://seq:5341
+    ports:
+      - "5001:8080"
+    depends_on:
+      - sqlserver
+      - redis
+      - rabbitmq
+      - seq
+
+  gateway:
+    build:
+      context: .
+      dockerfile: src/MecaPro.Gateway/Dockerfile
+    container_name: mecapro-gateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:8080"
+    depends_on:
+      - auth-service
+      - notification-service
+      - inventory-service
+      - api-monolith
