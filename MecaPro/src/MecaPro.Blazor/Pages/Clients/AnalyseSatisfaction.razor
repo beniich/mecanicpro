@@ -3,13 +3,38 @@
 @attribute [Authorize]
 @inject ApiClient Api
 @inject NavigationManager Nav
+@code {
+    private NpsStatsDto? stats;
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        loading = true;
+        stats = await Api.GetAsync<NpsStatsDto>("/api/v1/marketing/nps");
+        loading = false;
+    }
+
+    private List<AnalyticReview> reviews = new()
+    {
+        new("JEAN-MARC L.", "JL", "POSITIVE", "TECH", 5, "SERVICE IRRÉPROCHABLE SUR MA PORSCHE. MARC EST UN EXPERT.", "IL Y A 2 HEURES"),
+        new("SARAH B.", "SB", "POSITIVE", "ACCUEIL", 4, "TRÈS BON ACCUEIL. UN PEU D'ATTENTE POUR LE CAFÉ MAIS PROFESSIONNEL.", "IL Y A 5 HEURES"),
+        new("ALEXANDRE V.", "AV", "NEUTRAL", "DELAI", 3, "RÉVISION OK MAIS VÉHICULE RENDU AVEC 30 MIN DE RETARD.", "HIER"),
+        new("Mélanie D.", "MD", "POSITIVE", "PRIX", 5, "FACTURATION CLAIRE ET OPTIMISÉE. JE RECOMMANDE.", "HIER"),
+        new("Pierre-Yves O.", "PO", "NEGATIVE", "CLEAN", 2, "TRACES DE DOIGTS SUR LE VOLANT APRÈS INTERVENTION.", "IL Y A 2 JOURS"),
+        new("Lucas F.", "LF", "POSITIVE", "TECH", 5, "DIAG IA TRÈS IMPRESSIONNANT. PANNE TROUVÉE EN 5 MIN.", "IL Y A 3 JOURS"),
+    };
+
+    record AnalyticReview(string Name, string Initials, string Sentiment, string Topic, int Stars, string Comment, string RelativeDate);
+}
 
 <PageTitle>MECAPRO — Analyse Satisfaction (NPS)</PageTitle>
 
 <div class="bg-[#111318] text-white min-h-screen pb-24 overflow-x-hidden relative">
-
-    <!-- Gradient Background Decor -->
-    <div class="absolute inset-x-0 top-0 h-[600px] pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-magenta-500/30 via-transparent to-transparent"></div>
 
     <!-- Header -->
     <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
@@ -32,137 +57,78 @@
                 <span class="text-[#FF00FF] text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">CUSTOMER_EXPERIENCE_INSIGHTS</span>
                 <h2 class="text-7xl font-black tracking-tighter italic uppercase leading-none text-white">Analyse NPS</h2>
                 <div class="flex gap-4 mt-6">
-                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase font-black tracking-widest text-[#00FF66]">NPS SCORE: 9.2</span>
-                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase font-black tracking-widest text-white/40">MARS 2026</span>
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase font-black tracking-widest text-[#00FF66]">NPS SCORE: @(stats?.NpsScore ?? 0)</span>
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] uppercase font-black tracking-widest text-white/40">PERIOD: MARS 2026</span>
                 </div>
             </div>
             
             <div class="bg-surface-container-low p-6 border-l-2 border-[#FF00FF]/40 rounded-r-3xl flex items-center gap-8">
                 <div>
                    <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-1">PROMOTEURS</p>
-                   <p class="text-4xl font-black italic text-[#00FF66]">84<span class="text-sm italic opacity-50">%</span></p>
+                   <p class="text-4xl font-black italic text-[#00FF66]">@(stats?.Promoters ?? 0)<span class="text-sm italic opacity-50">#</span></p>
                 </div>
                 <div class="w-px h-10 bg-white/10"></div>
                 <div>
-                   <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-1">DÉRACTEURS</p>
-                   <p class="text-4xl font-black italic text-red-500">2<span class="text-sm italic opacity-50">%</span></p>
+                   <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-1">DETRACTEURS</p>
+                   <p class="text-4xl font-black italic text-red-500">@(stats?.Detractors ?? 0)<span class="text-sm italic opacity-50">#</span></p>
                 </div>
             </div>
         </div>
 
-        <!-- KPI Strip -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-surface-container rounded-3xl p-8 border border-white/5 shadow-xl">
-                 <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-6">RETREIVE_RATE</p>
-                 <div class="flex items-baseline gap-2">
-                    <span class="text-5xl font-black italic text-white">42%</span>
-                    <span class="text-[9px] font-black text-[#00FF66]">+5%</span>
-                 </div>
-                 <div class="w-full h-1 bg-white/5 mt-4 rounded-full overflow-hidden">
-                    <div class="h-full bg-white/20" style="width: 42%;"></div>
-                 </div>
+        @if (loading)
+        {
+            <div class="flex justify-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-[#FF00FF]"></div>
             </div>
-            <div class="bg-surface-container rounded-3xl p-8 border border-white/5 shadow-xl">
-                 <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-6">TIME_TO_REPLY</p>
-                 <div class="flex items-baseline gap-2">
-                    <span class="text-5xl font-black italic text-white font-technical italic">14<span class="text-xl">min</span></span>
-                 </div>
-                 <p class="text-[9px] font-black text-white/20 uppercase mt-4 tracking-widest">AVG. CHATBOT RESPONSE</p>
-            </div>
-            <div class="bg-surface-container rounded-3xl p-8 border border-white/5 shadow-xl">
-                 <p class="text-[8px] font-black uppercase tracking-widest text-[#FF00FF] mb-6">SENTIMENT_POSITIVE</p>
-                 <div class="flex items-baseline gap-2">
-                    <span class="text-5xl font-black italic text-[#FF00FF]">96%</span>
-                 </div>
-                 <p class="text-[9px] font-black text-[#FF00FF]/40 uppercase mt-4 tracking-widest italic">BASE IA SCAN (GPT-4)</p>
-            </div>
-            <div class="bg-surface-container rounded-3xl p-8 border border-white/5 shadow-xl">
-                 <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-6">REVIEWS_TOTAL</p>
-                 <div class="flex items-baseline gap-2">
-                    <span class="text-5xl font-black italic text-white">1,412</span>
-                 </div>
-                 <p class="text-[9px] font-black text-white/20 uppercase mt-4 tracking-widest">TOTAL SINCE JAN</p>
-            </div>
-        </section>
+        }
+        else
+        {
+            <!-- KPI Strip -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-surface-container rounded-3xl p-8 border border-white/5 shadow-xl">
+                    <p class="text-[8px] font-black uppercase tracking-widest text-white/30 mb-6">REPLY_COUNT</p>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-5xl font-black italic text-white">@stats?.TotalReponses</span>
+                        <span class="text-[9px] font-black text-[#00FF66]">+12%</span>
+                    </div>
+                </div>
+                <div class="bg-surface-container rounded-3xl p-8 border border-white/5 shadow-xl">
+                    <p class="text-[8px] font-black uppercase tracking-widest text-[#FF00FF] mb-6">SENTIMENT_POSITIVE</p>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-5xl font-black italic text-[#FF00FF]">96%</span>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Main Analysis Area -->
-        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Verbatims Scroll -->
-            <div class="lg:col-span-2 bg-surface-container rounded-[40px] border border-white/5 p-10 flex flex-col shadow-2xl h-[600px]">
-                <h3 class="font-black text-2xl italic uppercase tracking-tight text-white mb-8">Derniers Commentaires Scannés</h3>
-                <div class="flex-grow overflow-y-auto pr-4 space-y-6 custom-scroll">
-                    @foreach (var review in reviews)
-                    {
-                        <div class="bg-white/[0.03] border border-white/5 rounded-[24px] p-6 relative overflow-hidden group hover:bg-white/[0.05] transition-all">
-                             <div class="flex justify-between items-start mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center font-black text-xs border border-white/10 uppercase italic">@review.Initials</div>
-                                    <div>
-                                        <p class="text-[10px] font-black uppercase tracking-widest text-white">@review.Name</p>
-                                        <p class="text-[8px] font-black text-white/30 uppercase tracking-widest">@review.RelativeDate</p>
+            <!-- Main Analysis Area -->
+            <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Verbatims Scroll -->
+                <div class="lg:col-span-2 bg-surface-container rounded-[40px] border border-white/5 p-10 flex flex-col shadow-2xl h-[600px]">
+                    <h3 class="font-black text-2xl italic uppercase tracking-tight text-white mb-8">Derniers Commentaires Scannés</h3>
+                    <div class="flex-grow overflow-y-auto pr-4 space-y-6 custom-scroll">
+                        @foreach (var review in reviews)
+                        {
+                            <div class="bg-white/[0.03] border border-white/5 rounded-[24px] p-6 relative overflow-hidden group hover:bg-white/[0.05] transition-all">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center font-black text-xs border border-white/10 uppercase italic">@review.Initials</div>
+                                        <div>
+                                            <p class="text-[10px] font-black uppercase tracking-widest text-white">@review.Name</p>
+                                            <p class="text-[8px] font-black text-white/30 uppercase tracking-widest">@review.RelativeDate</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="flex gap-1">
-                                    @for(int i=0; i<5; i++) {
-                                        <span class="material-symbols-outlined text-[10px] @(i < review.Stars ? "text-[#FF00FF]" : "text-white/10")">star</span>
-                                    }
+                                <p class="text-sm italic font-bold text-white/70 leading-relaxed uppercase tracking-tight">"@review.Comment"</p>
+                                <div class="mt-4 flex gap-2">
+                                    <span class="px-2 py-0.5 rounded bg-[#FF00FF]/10 text-[#FF00FF] text-[8px] font-black uppercase tracking-widest">IA: @review.Sentiment</span>
+                                    <span class="px-2 py-0.5 rounded bg-white/5 text-white/30 text-[8px] font-black uppercase tracking-widest">TAG: @review.Topic</span>
                                 </div>
-                             </div>
-                             <p class="text-sm italic font-bold text-white/70 leading-relaxed uppercase tracking-tight">"@review.Comment"</p>
-                             <div class="mt-4 flex gap-2">
-                                <span class="px-2 py-0.5 rounded bg-[#FF00FF]/10 text-[#FF00FF] text-[8px] font-black uppercase tracking-widest">IA: @review.Sentiment</span>
-                                <span class="px-2 py-0.5 rounded bg-white/5 text-white/30 text-[8px] font-black uppercase tracking-widest">TAG: @review.Topic</span>
-                             </div>
-                        </div>
-                    }
-                </div>
-            </div>
-
-            <!-- Sentiment Map -->
-            <div class="bg-[#111318] rounded-[40px] border border-white/5 p-10 flex flex-col justify-center gap-10 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-10 opacity-[0.05]">
-                    <span class="material-symbols-outlined text-[150px]">psychology</span>
-                </div>
-                
-                <h3 class="font-black text-xl italic uppercase tracking-tight text-white relative z-10">Mappage Émotionnel</h3>
-                
-                <div class="space-y-8 relative z-10">
-                    <div>
-                        <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-3">
-                            <span class="text-white/40">ACCUEIL & RÉCEPTION</span>
-                            <span class="text-[#FF00FF]">EXCELLENT</span>
-                        </div>
-                        <div class="h-1 bg-white/5 rounded-full"><div class="h-full bg-[#FF00FF] shadow-[0_0_10px_#FF00FF]" style="width: 98%;"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-3">
-                            <span class="text-white/40">DÉLAIS D'INTERVENTION</span>
-                            <span class="text-yellow-500">OPTIMISABLE</span>
-                        </div>
-                        <div class="h-1 bg-white/5 rounded-full"><div class="h-full bg-yellow-500 shadow-[0_0_10px_#EAB308]" style="width: 72%;"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-3">
-                            <span class="text-white/40">QUALITÉ TECHNIQUE</span>
-                            <span class="text-[#00FF66]">PARFAIT</span>
-                        </div>
-                        <div class="h-1 bg-white/5 rounded-full"><div class="h-full bg-[#00FF66] shadow-[0_0_10px_#00FF66]" style="width: 94%;"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-3">
-                            <span class="text-white/40">CLARTÉ FACTURATION</span>
-                            <span class="text-white">SATISFAISANT</span>
-                        </div>
-                        <div class="h-1 bg-white/5 rounded-full"><div class="h-full bg-white opacity-40 shadow-[0_0_10px_rgba(255,255,255,0.4)]" style="width: 85%;"></div></div>
+                            </div>
+                        }
                     </div>
                 </div>
-
-                <div class="pt-10 border-t border-white/5 text-center">
-                    <p class="text-[8px] font-black text-white/20 uppercase tracking-[0.3em] font-technical">CORRÉLATION IA : 0.92</p>
-                </div>
-            </div>
-        </section>
-
+            </section>
+        }
     </main>
 </div>
 
@@ -171,17 +137,3 @@
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
     .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,0,255,0.1); border-radius: 4px; }
 </style>
-
-@code {
-    private List<AnalyticReview> reviews = new()
-    {
-        new("JEAN-MARC L.", "JL", "POSITIVE", "TECH", 5, "SERVICE IRRÉPROCHABLE SUR MA PORSCHE. MARC EST UN EXPERT.", "IL Y A 2 HEURES"),
-        new("SARAH B.", "SB", "POSITIVE", "ACCUEIL", 4, "TRÈS BON ACCUEIL. UN PEU D'ATTENTE POUR LE CAFÉ MAIS PROFESSIONNEL.", "IL Y A 5 HEURES"),
-        new("ALEXANDRE V.", "AV", "NEUTRAL", "DELAI", 3, "RÉVISION OK MAIS VÉHICULE RENDU AVEC 30 MIN DE RETARD.", "HIER"),
-        new("Mélanie D.", "MD", "POSITIVE", "PRIX", 5, "FACTURATION CLAIRE ET OPTIMISÉE. JE RECOMMANDE.", "HIER"),
-        new("Pierre-Yves O.", "PO", "NEGATIVE", "CLEAN", 2, "TRACES DE DOIGTS SUR LE VOLANT APRÈS INTERVENTION.", "IL Y A 2 JOURS"),
-        new("Lucas F.", "LF", "POSITIVE", "TECH", 5, "DIAG IA TRÈS IMPRESSIONNANT. PANNE TROUVÉE EN 5 MIN.", "IL Y A 3 JOURS"),
-    };
-
-    record AnalyticReview(string Name, string Initials, string Sentiment, string Topic, int Stars, string Comment, string RelativeDate);
-}

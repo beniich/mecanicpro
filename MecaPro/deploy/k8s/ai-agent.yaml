@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-agent
+spec:
+  ports:
+    - port: 3001
+  selector:
+    app: ai-agent
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-agent
+spec:
+  selector:
+    matchLabels:
+      app: ai-agent
+  template:
+    metadata:
+      labels:
+        app: ai-agent
+    spec:
+      containers:
+        - name: ai-agent
+          image: mecapro/ai-agent:latest
+          env:
+            - name: REDIS_URL
+              value: "redis://redis:6379"
+            - name: INTERNAL_API_URL
+              value: "http://api-monolith:8080"
+            - name: ANTHROPIC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mecapro-secrets
+                  key: anthropic-api-key
+          ports:
+            - containerPort: 3001

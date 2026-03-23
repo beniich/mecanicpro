@@ -1,0 +1,471 @@
+@page "/atelier"
+@page "/atelier/hub"
+@layout EmptyLayout
+@attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
+
+<PageTitle>MecaPro — Atelier Hub</PageTitle>
+
+<div class="min-h-screen font-sans pb-10">
+
+    @* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ HEADER *@
+    <div class="glass-card !rounded-none !border-x-0 !border-t-0 px-6 py-5 sticky top-0 z-40 mb-6 border-b">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center shadow-lg shadow-black/20 border border-outline-variant/30">
+                        <ServiceIcons Key="garage" Size="32" />
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold headline-font text-white drop-shadow-md">Atelier MecaPro</h1>
+                        <div class="flex items-center gap-2 mt-0.5">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse inline-block shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                            <span class="text-xs text-green-400 font-medium tracking-wide">Atelier ouvert</span>
+                            <span class="text-xs text-[#A0ABC0] ml-1 opacity-70">· @DateTime.Now.ToString("dddd dd MMMM", new System.Globalization.CultureInfo("fr-FR"))</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button @onclick='() => Nav.NavigateTo("/atelier/visual-map")' class="btn-ghost-glass hidden md:inline-flex items-center gap-2 border-primary/30 text-primary">
+                        <span class="material-symbols-outlined text-base">view_in_ar</span> Carte Interactive
+                    </button>
+                    <button @onclick='() => Nav.NavigateTo("/atelier/revisions")' class="btn-ghost-glass hidden md:inline-flex items-center gap-2">
+                        <span class="material-symbols-outlined text-base">list_alt</span> Journal tâches
+                    </button>
+                    <button @onclick='() => Nav.NavigateTo("/vehicles/new")' class="btn-electric flex items-center gap-2">
+                        <span class="material-symbols-outlined text-base">add</span> Nouveau véhicule
+                    </button>
+                </div>
+            </div>
+
+            @* ── Tabs ── *@
+            <div class="flex gap-2 p-1.5 rounded-2xl bg-[#161E2F]/60 border border-[#384358] w-fit shadow-inner">
+                @foreach (var (id, icon, label) in Tabs)
+                {
+                    <button class="px-5 py-2 text-sm font-bold uppercase tracking-wider rounded-xl transition-all duration-300 @(Section == id ? "bg-[#384358] text-white shadow-md shadow-black/20" : "text-[#A0ABC0] hover:text-white hover:bg-[#242F49]")" @onclick="() => Section = id">
+                        <span class="mr-1.5 opacity-80">@icon</span>@label
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    @* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CONTENT *@
+    <div class="max-w-screen-2xl mx-auto px-6 space-y-6">
+
+        @* ── OVERVIEW ─────────────────────────────────────────── *@
+        @if (Section == "overview")
+        {
+            @* KPIs *@
+            <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5">
+                <KpiCard Icon="🚗" Value="@Vehicles.Count.ToString()" Label="Véhicules atelier" LightTheme="false" />
+                <KpiCard Icon="👷" Value="@Bays.Count(b => b.Status == "working").ToString()" Label="Mécaniciens actifs" Sub="@($"{Bays.Count(b => b.Status == "available")} act.")" LightTheme="false" />
+                <KpiCard Icon="✅" Value="@Vehicles.Count(v => v.Status == "ready").ToString()" Label="Prêts à livrer" LightTheme="false" />
+                <KpiCard Icon="⚙️" Value="@Vehicles.Count(v => v.Status == "waiting_parts").ToString()" Label="Attente pièce" LightTheme="false" />
+                <KpiCard Icon="📦" Value="@StockAlerts.Count.ToString()" Label="Alertes stock" LightTheme="false" />
+                <KpiCard Icon="💶" Value="4 280 €" Label="CA du jour" Sub="+12%" LightTheme="false" />
+            </div>
+
+            @* Menu Services + Panneau droit *@
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                @* Services menu *@
+                <div class="xl:col-span-2 glass-card overflow-hidden">
+                    <div class="px-6 py-5 border-b border-[#384358] flex items-center justify-between bg-[#161E2F]/30">
+                        <h2 class="text-sm font-bold text-white headline-font tracking-wide uppercase">🗂 Services disponibles</h2>
+                        <button @onclick='() => Section = "services"' class="text-xs font-bold text-primary hover:text-primary/80 transition-colors tracking-widest uppercase">Voir tout →</button>
+                    </div>
+                    <div class="p-6">
+                        <ServicesGrid Services="Services" SelectedId="@SelectedServiceId" OnSelect="SelectService" />
+                    </div>
+                </div>
+
+                @* Right panel *@
+                <div class="space-y-6">
+                    @* Service detail *@
+                    @if (SelectedService != null)
+                    {
+                        <div class="glass-card p-5 border-l-[3px] border-l-primary shadow-[0_0_20px_rgba(237,138,103,0.1)] relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 opacity-5 text-8xl">@SelectedService.Emoji</div>
+                            <div class="relative z-10">
+                                <div class="text-[10px] font-black text-primary mb-2 uppercase tracking-widest text-shadow-sm">Sélection active</div>
+                                <div class="font-bold text-xl text-white mb-2 headline-font drop-shadow-sm">@SelectedService.Label</div>
+                                <div class="text-sm text-[#A0ABC0] leading-relaxed mb-4">@SelectedService.Description</div>
+                                <div class="flex flex-wrap gap-3 text-xs font-medium text-[#c4d0e5] mb-5">
+                                    @if (!string.IsNullOrEmpty(SelectedService.EstimatedTime)) { <span class="bg-[#161E2F]/50 px-2.5 py-1.5 rounded-lg border border-[#384358]">⏱ @SelectedService.EstimatedTime</span> }
+                                    @if (SelectedService.PriceFrom.HasValue) { <span class="bg-[#161E2F]/50 px-2.5 py-1.5 rounded-lg border border-[#384358]">💶 @(SelectedService.PriceFrom == 0 ? "Gratuit" : $"dès {SelectedService.PriceFrom} €")</span> }
+                                </div>
+                                <div class="flex gap-3">
+                                    <button @onclick='() => Nav.NavigateTo(SelectedService.Href)' class="btn-electric flex-1 justify-center text-xs">Accéder →</button>
+                                    <button @onclick="() => SelectedServiceId = null" class="btn-ghost-glass text-xs px-4">✕</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="glass-card p-8 text-center border-dashed border-[#384358] flex flex-col items-center justify-center opacity-70">
+                            <div class="text-4xl mb-3 opacity-50 drop-shadow-lg">👆</div>
+                            <div class="text-sm font-medium text-[#A0ABC0] tracking-wide">Sélectionnez un service</div>
+                        </div>
+                    }
+
+                    @* Postes rapide *@
+                    <div class="glass-card overflow-hidden">
+                        <div class="px-5 py-4 border-b border-[#384358] flex items-center justify-between bg-[#161E2F]/30">
+                            <h3 class="text-sm font-bold text-white headline-font uppercase tracking-wide">👷 Postes Actifs</h3>
+                            <button @onclick='() => Section = "bays"' class="text-[10px] font-black tracking-widest text-primary uppercase hover:opacity-80 transition">Tous →</button>
+                        </div>
+                        <div class="p-4 space-y-3">
+                            @foreach (var bay in Bays.Take(4))
+                            {
+                                var cfg = BayCfg[bay.Status];
+                                <div class="flex items-start gap-3 p-3 rounded-xl border border-[#384358] bg-[#161E2F]/40 hover:bg-[#161E2F]/60 transition-colors">
+                                    <div class="w-10 h-10 rounded-xl bg-[#242F49] border border-[#384358] flex items-center justify-center text-xs font-black text-white shrink-0 headline-font shadow-inner">@bay.Initials</div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-xs font-bold text-white truncate drop-shadow-sm">@bay.Name</span>
+                                            <div class="flex items-center gap-1.5 shrink-0 ml-2">
+                                                <span class="w-2 h-2 rounded-full @cfg.Dot inline-block shadow-[0_0_5px_currentColor]"></span>
+                                                <span class="text-[10px] uppercase font-bold text-[#A0ABC0]">@cfg.Label</span>
+                                            </div>
+                                        </div>
+                                        @if (!string.IsNullOrEmpty(bay.VehiclePlate))
+                                        {
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="glass-badge scale-90 origin-left">@bay.VehiclePlate</span>
+                                                <span class="text-[10px] font-bold uppercase text-[#A0ABC0] truncate">@bay.CurrentTask</span>
+                                            </div>
+                                        }
+                                        @if (bay.Progress.HasValue)
+                                        {
+                                            <div class="mt-2 flex items-center gap-2">
+                                                <div class="flex-1 h-1 bg-[#161E2F] rounded-full overflow-hidden border border-[#384358]/50">
+                                                    <div class="h-full bg-primary shadow-[0_0_10px_rgba(237,138,103,0.6)]" style="width:@(bay.Progress)%"></div>
+                                                </div>
+                                                <span class="text-[10px] text-[#A0ABC0] shrink-0 font-technical font-bold">@bay.TimeLeft</span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    @* Alertes stock *@
+                    <div class="glass-card overflow-hidden !border-[#B51A2B]/40">
+                        <div class="px-5 py-4 border-b border-[#B51A2B]/20 flex items-center justify-between bg-[#B51A2B]/10">
+                            <h3 class="text-sm font-bold text-white headline-font uppercase tracking-wide flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-[#B51A2B] animate-pulse"></span> Alertes Stock</h3>
+                            <button @onclick='() => Nav.NavigateTo("/stock/catalogue-promo?filter=lowstock")' class="text-[10px] font-black tracking-widest text-[#ff8a98] uppercase hover:opacity-80 transition">Gérer →</button>
+                        </div>
+                        <div class="p-4 space-y-3">
+                            @foreach (var a in StockAlerts)
+                            {
+                                <div class="flex items-center gap-3 p-3 bg-[#161E2F]/40 border border-[#B51A2B]/30 rounded-xl hover:bg-[#B51A2B]/10 transition-colors">
+                                    <div class="w-8 h-8 rounded-lg bg-[#B51A2B]/20 flex items-center justify-center text-[#ff8a98] border border-[#B51A2B]/40">
+                                        <span class="material-symbols-outlined text-[16px]">warning</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-xs font-bold text-white truncate drop-shadow-sm mb-0.5">@a.Part</div>
+                                        <div class="text-[10px] font-technical text-[#A0ABC0] uppercase">@a.Ref</div>
+                                    </div>
+                                    <div class="text-xs font-black text-[#ff8a98] shrink-0 bg-[#B51A2B]/20 px-2 py-1 rounded-md border border-[#B51A2B]/40 shadow-inner">
+                                        @a.Stock <span class="text-[#A0ABC0] opacity-50">/</span> @a.Min
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* Vehicles table *@
+            <div class="glass-card overflow-hidden mt-6">
+                <div class="px-6 py-5 border-b border-[#384358] flex items-center justify-between bg-[#161E2F]/30">
+                    <h2 class="headline-font text-sm font-bold text-white uppercase tracking-wide">🚗 Véhicules en atelier — @Vehicles.Count en cours</h2>
+                    <button @onclick='() => Section = "vehicles"' class="text-[10px] font-black uppercase text-primary hover:opacity-80 transition tracking-widest">Voir tout →</button>
+                </div>
+                <div class="p-2 overflow-x-auto">
+                    <VehiclesTable Vehicles="Vehicles" OnViewFiche='(id) => Nav.NavigateTo($"/clients/detail-intervention/{id}")' />
+                </div>
+            </div>
+        }
+
+        @* ── SERVICES ──────────────────────────────────────────── *@
+        @if (Section == "services")
+        {
+            <div class="mb-6">
+                <h2 class="text-2xl font-black text-white headline-font uppercase drop-shadow-md">🗂 Annuaire des Services</h2>
+                <p class="text-[12px] font-bold text-primary uppercase tracking-widest mt-1">@Services.Count SERVICES OPÉRATIONNELS</p>
+            </div>
+            
+            <div class="glass-card p-8 mb-8">
+                @* Filter *@
+                <div class="flex flex-wrap gap-4 mb-8 items-center bg-[#161E2F]/40 p-2 rounded-2xl border border-[#384358]">
+                    <div class="flex gap-2 flex-wrap flex-1 px-2">
+                        @foreach (var cat in Categories)
+                        {
+                            <button @onclick="() => SelectedCategory = cat.Key"
+                                class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border transition-all @(SelectedCategory == cat.Key ? "bg-primary border-primary text-white shadow-[0_0_15px_rgba(237,138,103,0.3)]" : "border-transparent text-[#A0ABC0] hover:text-white hover:bg-[#384358]/50")">
+                                @cat.Value
+                            </button>
+                        }
+                    </div>
+                    <div class="relative pr-2">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-sm text-[#A0ABC0] pointer-events-none">search</span>
+                        <input type="search" placeholder="Rechercher…" @bind="ServiceSearch" @bind:event="oninput"
+                            class="pl-9 pr-4 py-2 text-xs font-bold uppercase tracking-wider border border-[#384358] rounded-xl bg-[#242F49] text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-48 transition-all placeholder:text-[#A0ABC0]/50" />
+                    </div>
+                </div>
+                
+                <ServicesGrid Services="FilteredServices" SelectedId="@SelectedServiceId" OnSelect='(id) => { SelectService(id); Section = "overview"; }' Cols="5" />
+            </div>
+
+            @* Featured services *@
+            <div>
+                <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-4 headline-font flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block shadow-[0_0_8px_rgba(237,138,103,0.6)]"></span> Services Essentiels
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    @foreach (var svc in Services.Where(s => new[]{"garage","diagnostic","assistance"}.Contains(s.Id)))
+                    {
+                        <div class="glass-card p-6 cursor-pointer hover:border-primary hover:shadow-[0_0_30px_rgba(237,138,103,0.15)] transition-all group"
+                             @onclick='() => Nav.NavigateTo(svc.Href)'>
+                            <div class="w-14 h-14 rounded-xl bg-[#242F49] border border-[#384358] flex items-center justify-center mb-5 group-hover:bg-primary/10 transition-colors shadow-inner">
+                                <ServiceIcons Key="@svc.Id" Size="44" />
+                            </div>
+                            <div class="font-black text-lg headline-font text-white mb-1 group-hover:text-primary transition-colors drop-shadow-sm">@svc.Label</div>
+                            <div class="text-[10px] font-bold text-[#A0ABC0] uppercase tracking-widest mb-4">@svc.Sublabel</div>
+                            <div class="text-xs text-[#A0ABC0] leading-relaxed opacity-80 mb-5">@svc.Description</div>
+                            
+                            <div class="border-t border-[#384358]/50 pt-4 flex flex-wrap gap-3 text-[10px] font-bold uppercase tracking-wider text-[#dde4f0]">
+                                @if (!string.IsNullOrEmpty(svc.EstimatedTime)) { <span class="bg-[#161E2F]/60 px-2 py-1 rounded-md border border-[#384358]/80">⏱ @svc.EstimatedTime</span> }
+                                @if (svc.PriceFrom.HasValue) { <span class="bg-[#161E2F]/60 px-2 py-1 rounded-md border border-[#384358]/80 text-primary">💶 @(svc.PriceFrom == 0 ? "Gratuit" : $"dès {svc.PriceFrom} €")</span> }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @* ── BAYS ──────────────────────────────────────────────── *@
+        @if (Section == "bays")
+        {
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-black text-white headline-font uppercase drop-shadow-md">👷 Postes de travail</h2>
+                    <p class="text-[12px] font-bold text-[#A0ABC0] uppercase tracking-widest mt-2 flex gap-3">
+                        <span class="text-primary">@Bays.Count(b => b.Status == "working") OCCUPÉS</span>
+                        <span class="text-[#4ade80]">@Bays.Count(b => b.Status == "available") DISPONIBLES</span>
+                        <span class="text-gray-400">@Bays.Count(b => b.Status == "break") EN PAUSE</span>
+                    </p>
+                </div>
+                <button @onclick='() => Nav.NavigateTo("/atelier/journal-taches")' class="btn-ghost-glass text-xs">Journal des tâches →</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                @foreach (var bay in Bays)
+                {
+                    var cfg = BayCfg[bay.Status];
+                    <div class="glass-card p-6 border-t-4 @cfg.Border">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-14 h-14 rounded-2xl bg-[#242F49] border border-[#384358] flex items-center justify-center text-lg font-black text-white headline-font shadow-inner">@bay.Initials</div>
+                            <div>
+                                <div class="font-bold text-white text-lg drop-shadow-sm mb-1">@bay.Name</div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full inline-block @cfg.Dot shadow-[0_0_5px_currentColor]"></span>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-[#A0ABC0]">@cfg.Label</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-[#161E2F]/30 rounded-xl p-4 border border-[#384358]/50">
+                            @if (!string.IsNullOrEmpty(bay.VehiclePlate))
+                            {
+                                <div class="flex items-center justify-between mb-3 border-b border-[#384358]/30 pb-3">
+                                    <span class="glass-badge scale-90 origin-left">@bay.VehiclePlate</span>
+                                    @if (!string.IsNullOrEmpty(bay.TimeLeft)) { <span class="text-[10px] font-bold text-[#A0ABC0] bg-[#242F49] px-2 py-1 rounded-md border border-[#384358]">⏱ @bay.TimeLeft</span> }
+                                </div>
+                                <div class="text-sm font-medium text-white mb-4">@bay.CurrentTask</div>
+                                
+                                @if (bay.Progress.HasValue)
+                                {
+                                    <div>
+                                        <div class="flex justify-between text-[10px] font-bold text-[#A0ABC0] uppercase tracking-widest mb-2">
+                                            <span>Avancement</span><span class="text-white">@bay.Progress%</span>
+                                        </div>
+                                        <div class="h-1.5 bg-[#161E2F] rounded-full overflow-hidden border border-[#384358]">
+                                            <div class="h-full rounded-full shadow-[0_0_10px_currentColor]" style="width:@(bay.Progress)%; background: var(--color-@(bay.Progress >= 80 ? "electric" : bay.Progress >= 40 ? "electric" : "electric")); background-color: @(bay.Progress >= 80 ? "#4ade80" : bay.Progress >= 40 ? "#FFA586" : "#3b82f6")"></div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="flex items-center justify-center h-16 text-xs font-medium text-[#A0ABC0] uppercase tracking-wider opacity-60">
+                                    <span class="material-symbols-outlined mr-2 opacity-50">block</span>
+                                    @(bay.CurrentTask ?? "Aucune tâche assignée")
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        @* ── VEHICLES ──────────────────────────────────────────── *@
+        @if (Section == "vehicles")
+        {
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-black text-white headline-font uppercase drop-shadow-md">🚗 Véhicules en intervention</h2>
+                    <p class="text-[12px] font-bold text-primary uppercase tracking-widest mt-2">@Vehicles.Count VÉHICULES ACTIFS</p>
+                </div>
+                <button @onclick='() => Nav.NavigateTo("/vehicles/new")' class="btn-electric flex items-center gap-2 text-xs">
+                    <span class="material-symbols-outlined text-sm">add</span> Nouveau
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach (var v in Vehicles)
+                {
+                    <div class="glass-card p-6 flex flex-col hover:border-primary/40 transition-colors group">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="glass-badge mb-3 inline-block shadow-sm">@v.Plate</span>
+                                <div class="font-black text-xl text-white headline-font drop-shadow-sm leading-none mb-1 group-hover:text-primary transition-colors">@v.Make</div>
+                                <div class="font-medium text-sm text-[#A0ABC0] uppercase tracking-widest">@v.Model</div>
+                            </div>
+                            <span class="glass-badge @(v.Status == "ready" ? "success" : v.Status == "waiting_parts" ? "danger" : v.Status == "in_progress" ? "electric" : "") scale-90 origin-top-right">
+                                @VehCfg[v.Status].Label
+                            </span>
+                        </div>
+                        
+                        <div class="bg-[#161E2F]/40 rounded-xl p-4 border border-[#384358]/50 flex-1 mb-4">
+                            <div class="text-sm font-medium text-white mb-1">@v.Service</div>
+                            <div class="text-[10px] font-bold text-[#A0ABC0] uppercase tracking-wider flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[14px]">engineering</span> @v.Mechanic
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between text-[10px] font-bold text-[#A0ABC0] uppercase tracking-widest mb-2 px-1">
+                            <span>⏱ @v.StartTime → @v.EstimatedEnd</span>
+                            <span class="text-white">@v.Progress%</span>
+                        </div>
+                        <div class="h-1.5 bg-[#161E2F] rounded-full overflow-hidden border border-[#384358] mb-5">
+                            <div class="h-full rounded-full shadow-[0_0_8px_currentColor]" style="width:@(v.Progress)%; background-color: @(v.Progress >= 100 ? "#10B981" : "#ED8A67")"></div>
+                        </div>
+                        
+                        <button @onclick='() => Nav.NavigateTo($"/clients/detail-intervention/{v.Id}")' class="w-full btn-ghost-glass text-[10px] py-3">Consulter la Fiche →</button>
+                    </div>
+                }
+            </div>
+        }
+
+    </div><!-- /content -->
+</div>
+
+@code {
+
+    // ── State ───────────────────────────────────────────────────
+    private string Section = "overview";
+    private string? SelectedServiceId;
+    private string SelectedCategory = "all";
+    private string ServiceSearch = "";
+
+    private ServiceItem? SelectedService => Services.FirstOrDefault(s => s.Id == SelectedServiceId);
+    private List<ServiceItem> FilteredServices => Services
+        .Where(s => (SelectedCategory == "all" || s.Category == SelectedCategory))
+        .Where(s => string.IsNullOrWhiteSpace(ServiceSearch) || $"{s.Label} {s.Sublabel} {s.Description}".Contains(ServiceSearch, StringComparison.OrdinalIgnoreCase))
+        .ToList();
+
+    private void SelectService(string id) => SelectedServiceId = SelectedServiceId == id ? null : id;
+
+    // ── Tabs ─────────────────────────────────────────────────────
+    private readonly (string id, string icon, string label)[] Tabs =
+    [
+        ("overview",  "📊", "Vue d'ensemble"),
+        ("services",  "🗂",  "Services"),
+        ("bays",      "👷", "Postes"),
+        ("vehicles",  "🚗", "Véhicules"),
+    ];
+
+    // ── Categories ───────────────────────────────────────────────
+    private readonly Dictionary<string, string> Categories = new()
+    {
+        ["all"]       = "Tous",
+        ["reception"] = "Réception",
+        ["reparation"]= "Réparation",
+        ["depannage"] = "Dépannage",
+        ["gestion"]   = "Gestion",
+        ["client"]    = "Client",
+    };
+
+    // ── Bay config ───────────────────────────────────────────────
+    private readonly Dictionary<string, (string Label, string Dot, string Border)> BayCfg = new()
+    {
+        ["working"]   = ("En travail",  "bg-primary animate-pulse", "border-primary/60"),
+        ["available"] = ("Disponible",  "bg-[#4ade80]",               "border-[#4ade80]/40"),
+        ["break"]     = ("En pause",    "bg-[#A0ABC0]",               "border-transparent"),
+    };
+
+    // ── Vehicle config ───────────────────────────────────────────
+    private readonly Dictionary<string, (string Label, string Badge, string Bar)> VehCfg = new()
+    {
+        ["in_progress"]     = ("En cours",       "badge badge-warn",  "progress-amber"),
+        ["waiting_parts"]   = ("Attente pièce",  "badge badge-info",  "progress-blue"),
+        ["waiting_customer"]= ("Attente client", "badge badge-idle",  "progress-purple"),
+        ["ready"]           = ("✓ Prêt",         "badge badge-ok",    "progress-green"),
+    };
+
+    // ── Mock Data (remplacé par API en prod) ─────────────────────
+    private List<BayItem> Bays = new()
+    {
+        new() { Id="b1", Name="Marc Durand",    Initials="MD", Status="working",  CurrentTask="Révision freins AV",     VehiclePlate="MN-012-OP", Progress=65, TimeLeft="45 min" },
+        new() { Id="b2", Name="Jean-Luc Martin",Initials="JM", Status="working",  CurrentTask="Vidange + filtres",       VehiclePlate="AB-123-CD", Progress=80, TimeLeft="20 min" },
+        new() { Id="b3", Name="Sophie Renard",  Initials="SR", Status="working",  CurrentTask="Diagnostic OBD P0301",    VehiclePlate="EF-456-GH", Progress=40, TimeLeft="1h 10" },
+        new() { Id="b4", Name="Pierre Leclerc", Initials="PL", Status="available" },
+        new() { Id="b5", Name="Alain Dubois",   Initials="AD", Status="break",    CurrentTask="Pause déjeuner" },
+    };
+
+    private List<VehicleItem> Vehicles = new()
+    {
+        new() { Id="v1", Plate="MN-012-OP", Make="Volkswagen", Model="Golf VII",  Service="Freins AV complets",    Mechanic="Marc D.",    StartTime="09:30", EstimatedEnd="12:15", Progress=65,  Status="in_progress" },
+        new() { Id="v2", Plate="AB-123-CD", Make="Peugeot",    Model="308 GT",    Service="Vidange + filtres",     Mechanic="Jean-Luc M.",StartTime="10:00", EstimatedEnd="11:30", Progress=80,  Status="in_progress" },
+        new() { Id="v3", Plate="EF-456-GH", Make="Renault",    Model="Clio V",    Service="Diagnostic + Bobine",   Mechanic="Sophie R.",  StartTime="10:30", EstimatedEnd="13:00", Progress=40,  Status="waiting_parts" },
+        new() { Id="v4", Plate="IJ-789-KL", Make="BMW",        Model="Série 3",   Service="Distribution complète", Mechanic="Pierre L.",  StartTime="13:00", EstimatedEnd="18:00", Progress=0,   Status="waiting_customer" },
+        new() { Id="v5", Plate="PQ-345-RS", Make="Toyota",     Model="Yaris",     Service="Pneumatiques x4",       Mechanic="Alain D.",   StartTime="08:30", EstimatedEnd="10:00", Progress=100, Status="ready" },
+    };
+
+    private List<StockAlertItem> StockAlerts = new()
+    {
+        new() { Part="Plaquettes Bosch AV",  Ref="BRK-PLA-001", Stock=2, Min=5 },
+        new() { Part="Bobine Valeo",          Ref="IGN-COL-114", Stock=1, Min=3 },
+        new() { Part="Filtre huile Mann",     Ref="OIL-FLT-220", Stock=3, Min=8 },
+    };
+
+    private List<ServiceItem> Services = new()
+    {
+        new() { Id="reception",    Emoji="🤝", Label="Réception véhicule",   Sublabel="Accueil & enregistrement", Category="reception",  Status="available", Href="/vehicles/new",              Description="Prise en charge du véhicule client, création de la fiche, examen visuel initial.", EstimatedTime="15 min" },
+        new() { Id="levage",       Emoji="⬆️",  Label="Levage / Pont",         Sublabel="Élévateur hydraulique",    Category="reparation", Status="busy",      Href="/atelier/journal-taches",    Description="Mise sur pont hydraulique pour inspection dessous de caisse, vidange, freins.", EstimatedTime="30 min – 2h", PriceFrom=45 },
+        new() { Id="peinture",     Emoji="🎨", Label="Peinture / Carrosserie", Sublabel="Cabine de peinture",       Category="reparation", Status="busy",      Href="/atelier/journal-taches",    Description="Réparation carrosserie, débosselage, apprêt, peinture cabine.", EstimatedTime="1 – 5 jours", PriceFrom=250 },
+        new() { Id="pneumatiques", Emoji="🔄", Label="Pneumatiques",           Sublabel="Montage & équilibrage",    Category="reparation", Status="available", Href="/atelier/journal-taches",    Description="Démontage, montage, équilibrage et gonflage pneus. Contrôle géométrie.", EstimatedTime="45 min", PriceFrom=60 },
+        new() { Id="garage",       Emoji="🏭", Label="Garage central",         Sublabel="Vue d'ensemble atelier",   Category="gestion",    Status="available", Href="/atelier",                   Description="Supervision globale de l'atelier, suivi en temps réel de tous les postes.", EstimatedTime="Temps réel" },
+        new() { Id="assistance",   Emoji="🚐", Label="Assistance routière",    Sublabel="Dépannage 24h/24",         Category="depannage",  Status="available", Href="/atelier/journal-taches",    Description="Intervention rapide sur site, dépannage en bord de route.", EstimatedTime="20 – 60 min", PriceFrom=80 },
+        new() { Id="remorquage",   Emoji="🚛", Label="Remorquage",             Sublabel="Camion plateau",           Category="depannage",  Status="available", Href="/atelier/journal-taches",    Description="Rapatriement véhicule en panne au garage. Camion plateau ou grue.", EstimatedTime="45 – 90 min", PriceFrom=120 },
+        new() { Id="urgence",      Emoji="🆘", Label="Appel d'urgence",        Sublabel="Call center & GPS",        Category="depannage",  Status="available", Href="/chat",                      Description="Centre d'appels dédié, géolocalisation client, coordination terrain.", EstimatedTime="Immédiat" },
+        new() { Id="controle",     Emoji="🔍", Label="Contrôle technique",     Sublabel="Révision & inspection",    Category="reparation", Status="available", Href="/planning/revisions-plannings", Description="Pré-contrôle technique, inspection complète véhicule, rapport détaillé.", EstimatedTime="1h30", PriceFrom=75 },
+        new() { Id="voiture",      Emoji="🚗", Label="Voiture de service",     Sublabel="Véhicule de remplacement", Category="client",     Status="available", Href="/clients",                   Description="Prêt de véhicule de remplacement pendant la durée des réparations.", EstimatedTime="Durée réparation", PriceFrom=0 },
+        new() { Id="taxi",         Emoji="🚕", Label="Taxi / Transfert",       Sublabel="Course & livraison",       Category="client",     Status="available", Href="/clients",                   Description="Transfert client à domicile ou au travail après dépôt du véhicule.", EstimatedTime="Sur demande" },
+        new() { Id="mecanicien",   Emoji="🔧", Label="Mécaniciens",            Sublabel="Équipe technique",         Category="gestion",    Status="available", Href="/atelier/journal-taches",    Description="Gestion des mécaniciens, attribution des tâches, suivi temps de travail.", EstimatedTime="5 techniciens" },
+        new() { Id="service_client",Emoji="💬",Label="Service client",         Sublabel="Accueil & devis",          Category="client",     Status="available", Href="/clients",                   Description="Gestion clientèle, émission de devis, facturation, fidélisation.", EstimatedTime="Lun-Sam 8h-18h" },
+        new() { Id="diagnostic",   Emoji="💻", Label="Diagnostic OBD",         Sublabel="Analyse électronique",     Category="reparation", Status="available", Href="/diagnostic/avancer",        Description="Connexion interface OBD-II, lecture codes défaut, analyse système moteur.", EstimatedTime="30 – 45 min", PriceFrom=49 },
+        new() { Id="moteur",       Emoji="⚙️", Label="Moteur / Vidange",       Sublabel="Révision moteur",          Category="reparation", Status="available", Href="/planning/revisions-plannings", Description="Vidange huile, remplacement filtres, distribution, joints de culasse.", EstimatedTime="45 min – 2 jours", PriceFrom=65 },
+    };
+
+    // ── Models ───────────────────────────────────────────────────
+    public class BayItem        { public string Id { get; set; } = ""; public string Name { get; set; } = ""; public string Initials { get; set; } = ""; public string Status { get; set; } = "available"; public string? CurrentTask { get; set; } public string? VehiclePlate { get; set; } public int? Progress { get; set; } public string? TimeLeft { get; set; } }
+    public class VehicleItem    { public string Id { get; set; } = ""; public string Plate { get; set; } = ""; public string Make { get; set; } = ""; public string Model { get; set; } = ""; public string Service { get; set; } = ""; public string Mechanic { get; set; } = ""; public string StartTime { get; set; } = ""; public string EstimatedEnd { get; set; } = ""; public int Progress { get; set; } public string Status { get; set; } = ""; }
+    public class StockAlertItem { public string Part { get; set; } = ""; public string Ref { get; set; } = ""; public int Stock { get; set; } public int Min { get; set; } }
+    public class ServiceItem    { public string Id { get; set; } = ""; public string Emoji { get; set; } = ""; public string Label { get; set; } = ""; public string Sublabel { get; set; } = ""; public string Category { get; set; } = ""; public string Status { get; set; } = "available"; public string Href { get; set; } = ""; public string Description { get; set; } = ""; public string? EstimatedTime { get; set; } public decimal? PriceFrom { get; set; } }
+}

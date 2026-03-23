@@ -233,3 +233,7 @@ public record RevisionPartDto(Guid Id, string PartName, int Quantity, decimal Un
 
 public record WorkshopScheduleDto(DateTime Date, List<AppointmentDto> Appointments);
 public record AppointmentDto(Guid Id, string Title, string Description, string Status, DateTime Start, int DurationMinutes, string? ResourceName);
+
+public record AbsenceDto(Guid Id, Guid EmployeeId, DateTime StartDate, DateTime EndDate, string Type, string Status, string? Reason);
+public record SkillDto(Guid Id, Guid EmployeeId, string SkillName, int ProficiencyLevel, DateTime LastCertified);
+public record NpsStatsDto(double NpsScore, int TotalReponses, int Promoters, int Detractors);

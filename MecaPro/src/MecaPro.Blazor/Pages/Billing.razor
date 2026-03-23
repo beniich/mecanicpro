@@ -131,6 +131,9 @@
                                         }
                                         @if (inv.Status != "Paid")
                                         {
+                                            <button @onclick="() => PayInvoice(inv.Id)" class="px-4 py-2 bg-primary text-on-primary rounded-xl border border-primary/30 text-[10px] font-black uppercase hover:scale-105 transition-all shadow-[0_0_15px_rgba(0,255,102,0.3)] flex items-center gap-2">
+                                                <span class="material-symbols-outlined text-xs">credit_card</span> PAYER
+                                            </button>
                                             <button class="px-4 py-2 bg-white/5 rounded-xl border border-white/10 text-[10px] font-black uppercase hover:bg-white/10 transition-all">
                                                 RAPPEL
                                             </button>
@@ -188,6 +191,22 @@
     }
 
     private void SetStatusFilter(string f) { statusFilter = f; }
+
+    private async Task PayInvoice(Guid id)
+    {
+        var result = await Api.PostAsync<object>($"/api/v1/billing/checkout/{id}", new { });
+        if (result != null)
+        {
+            var json = JsonSerializer.Serialize(result);
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("checkoutUrl", out JsonElement urlElement))
+            {
+                var checkoutUrl = urlElement.GetString();
+                if (!string.IsNullOrEmpty(checkoutUrl))
+                    await JS.InvokeVoidAsync("open", checkoutUrl, "_self");
+            }
+        }
+    }
 
     private void ExportCsv()
     {

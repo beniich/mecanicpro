@@ -1,0 +1,28 @@
+@inject NavigationManager Nav
+
+<g class="cursor-pointer group transition-transform duration-300 hover:scale-110" @onclick='() => Nav.NavigateTo(Url)'>
+    <!-- Fond Glow -->
+    <circle cx="0" cy="0" r="45" fill="@Color" opacity="0.1" transform="translate(@X, @Y)" />
+    
+    <!-- Cercle principal -->
+    <circle cx="0" cy="0" r="35" fill="#1E293B" stroke="@Color" stroke-width="2.5" class="group-hover:stroke-white transition-all shadow-2xl" transform="translate(@X, @Y)" />
+    
+    <!-- Icone -->
+    <foreignObject x="@(X - 18)" y="@(Y - 18)" width="36" height="36">
+        <div class="flex items-center justify-center w-full h-full">
+            <span class="material-symbols-outlined text-[32px] @(Color == "#FBBF24" ? "text-yellow-400" : "")" style="color: @Color;">@Icon</span>
+        </div>
+    </foreignObject>
+    
+    <!-- Label -->
+    <text x="@X" y="@(Y + 55)" text-anchor="middle" fill="white" font-size="10" font-weight="900" class="uppercase tracking-widest opacity-60 group-hover:opacity-100 group-hover:fill-primary transition-all">@Label</text>
+</g>
+
+@code {
+    [Parameter] public int X { get; set; }
+    [Parameter] public int Y { get; set; }
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public string Icon { get; set; } = "";
+    [Parameter] public string Color { get; set; } = "";
+    [Parameter] public string Url { get; set; } = "";
+}

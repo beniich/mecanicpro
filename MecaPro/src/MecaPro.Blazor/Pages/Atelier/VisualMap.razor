@@ -1,0 +1,292 @@
+@page "/atelier/visual-map"
+@inject NavigationManager Nav
+
+<PageTitle>MecaPro — Interface Visuelle Interactive</PageTitle>
+
+<div class="visual-interface-body">
+    <div class="page">
+        <header>
+            <div class="flex justify-between items-start">
+                <button @onclick='() => Nav.NavigateTo("/atelier/hub")' class="back-btn">
+                    <span class="material-symbols-outlined">arrow_back</span> RETOUR AU HUB
+                </button>
+                <div class="text-right">
+                    <h1 class="text-primary">AUTO SERVICE <span class="text-[12px] opacity-30">v2.1</span></h1>
+                    <p class="text-emerald-400/60 tracking-widest">SYSTÈME INTERACTIF À JOUR</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="flowchart">
+            <div class="grid">
+                <!-- LIGNE 1 -->
+                <div class="card" @onclick='() => Nav.NavigateTo("/atelier/hub")'>
+                    <div class="card-img"><span class="material-symbols-outlined icon-display">lift_chair</span></div>
+                    <div class="card-body">
+                        <div class="card-title"><span class="card-dot"></span>LEVAGE</div>
+                        <div class="card-sub">Ponts & Inspection</div>
+                    </div>
+                </div>
+
+                <div class="card" @onclick='() => Nav.NavigateTo("/tasks")'>
+                    <div class="card-img"><span class="material-symbols-outlined icon-display" style="color: #5bcfcf">tire_repair</span></div>
+                    <div class="card-body">
+                        <div class="card-title"><span class="card-dot"></span>PNEUMATIQUES</div>
+                        <div class="card-sub">Montage · Équilibrage</div>
+                    </div>
+                </div>
+
+                <div class="card" @onclick='() => Nav.NavigateTo("/atelier/revisions")'>
+                    <div class="card-img"><span class="material-symbols-outlined icon-display" style="color: #fca55d">settings_input_component</span></div>
+                    <div class="card-body">
+                        <div class="card-title"><span class="card-dot"></span>MOTEUR</div>
+                        <div class="card-sub">Révision & Distribution</div>
+                    </div>
+                </div>
+
+                <div class="card" @onclick='() => Nav.NavigateTo("/tasks")'>
+                    <div class="card-img"><span class="material-symbols-outlined icon-display" style="color: #f77171">local_shipping</span></div>
+                    <div class="card-body">
+                        <div class="card-title"><span class="card-dot"></span>DÉPANNAGE</div>
+                        <div class="card-sub">Assistance 24/7</div>
+                    </div>
+                </div>
+
+                <!-- HUB CENTRAL -->
+                <div class="hub" @onclick='() => Nav.NavigateTo("/atelier/hub")'>
+                    <div class="hub-img">
+                        <img src="https://images.unsplash.com/photo-1486006396193-471a2abc8817?q=80&w=1000&auto=format&fit=crop" alt="Hub Central">
+                        <div class="hub-overlay"></div>
+                    </div>
+                    <div class="hub-body">
+                        <h2>HUB OPÉRATIONNEL</h2>
+                        <p>Centre de contrôle MecaPro OS</p>
+                        <div class="hub-stats">
+                            <div class="hub-stat text-primary">
+                                <span class="n">12</span>
+                                <span class="l">En cours</span>
+                            </div>
+                            <div class="hub-stat" style="color: #4fd">
+                                <span class="n">98%</span>
+                                <span class="l">Qualité</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIGNE BAS -->
+                <div class="card" @onclick='() => Nav.NavigateTo("/diagnostic/avancer")'>
+                    <div class="card-img"><span class="material-symbols-outlined icon-display" style="color: #3b82f6">memory</span></div>
+                    <div class="card-body">
+                        <div class="card-title"><span class="card-dot"></span>DIAGNOSTIC</div>
+                        <div class="card-sub">Analyse OBD via IA</div>
+                    </div>
+                </div>
+
+                <div class="card" @onclick='() => Nav.NavigateTo("/tasks")'>
+                    <div class="card-img"><span class="material-symbols-outlined icon-display" style="color: #10b981">format_paint</span></div>
+                    <div class="card-body">
+                        <div class="card-title"><span class="card-dot"></span>PEINTURE</div>
+                        <div class="card-sub">Cabine & Carrosserie</div>
+                    </div>
+                </div>
+
+                <div class="card" @onclick='() => Nav.NavigateTo("/parts")'>
+                    <div class="card-img"><span class="material-symbols-outlined icon-display" style="color: #ec4899">inventory_2</span></div>
+                    <div class="card-body">
+                        <div class="card-title"><span class="card-dot"></span>STOCK PIÈCES</div>
+                        <div class="card-sub">Gestion des arrivages</div>
+                    </div>
+                </div>
+
+                <div class="card" @onclick='() => Nav.NavigateTo("/chat")'>
+                    <div class="card-img"><span class="material-symbols-outlined icon-display" style="color: #0ea5e9">support_agent</span></div>
+                    <div class="card-body">
+                        <div class="card-title"><span class="card-dot"></span>SUPPORT</div>
+                        <div class="card-sub">Chat Client Direct</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATUS BAR -->
+        <div class="status">
+            <div class="si">
+                <div class="dot g"></div>
+                <div class="si-label">Flux Atelier :</div>
+                <div class="si-val">OPTIMAL</div>
+            </div>
+            <div class="si">
+                <div class="dot y"></div>
+                <div class="si-label">Techniciens :</div>
+                <div class="si-val">14 ACTIFS</div>
+            </div>
+            <div class="si">
+                <div class="dot b"></div>
+                <div class="si-label">Dernière Sync :</div>
+                <div class="si-val">@DateTime.Now.ToString("HH:mm:ss")</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Exo+2:wght@300;400;600&display=swap');
+
+    .visual-interface-body {
+        --bg: #0F172A; /* Adapté au thème MecaPro */
+        --surface: rgba(255, 255, 255, 0.05);
+        --surface-hover: rgba(237, 138, 103, 0.1); /* Utilise la couleur primaire */
+        --border: rgba(255, 255, 255, 0.08);
+        --accent: #ED8A67; /* Couleur Peach */
+        --text: #ffffff;
+        --muted: rgba(255, 255, 255, 0.6);
+        
+        background: #0F172A;
+        color: var(--text);
+        min-height: 100vh;
+        font-family: 'Exo 2', sans-serif;
+    }
+
+    .page { max-width: 1200px; margin: 0 auto; padding: 40px 20px 100px; }
+
+    header { margin-bottom: 50px; }
+    header h1 {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: clamp(32px, 5vw, 60px);
+        font-weight: 700;
+        letter-spacing: 6px;
+        color: #fff;
+        text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        margin: 0;
+    }
+    header p { color: var(--muted); font-size: 13px; letter-spacing: 2px; margin-top: 8px; text-transform: uppercase; }
+
+    .back-btn {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+    }
+    .back-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+    .flowchart { position: relative; width: 100%; }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        position: relative;
+    }
+
+    .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(.34,1.56,.64,1);
+        backdrop-filter: blur(10px);
+    }
+    .card:hover {
+        transform: translateY(-8px) scale(1.04);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        background: var(--surface-hover);
+        border-color: var(--accent);
+    }
+    .card-img {
+        width: 100%;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.2);
+    }
+    .icon-display {
+        font-size: 60px !important;
+        color: var(--accent);
+        opacity: 0.8;
+        transition: transform 0.3s ease;
+    }
+    .card:hover .icon-display { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 10px var(--accent)); }
+
+    .card-body { padding: 15px; }
+    .card-title {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #fff;
+    }
+    .card-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .card-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
+    .hub {
+        grid-column: 2 / 4;
+        background: rgba(255,255,255,0.05);
+        border: 2px solid var(--border);
+        border-radius: 24px;
+        overflow: hidden;
+        text-align: center;
+        backdrop-filter: blur(20px);
+        transition: all 0.4s ease;
+    }
+    .hub:hover { transform: scale(1.02); border-color: var(--accent); }
+    .hub-img { width: 100%; height: 220px; position: relative; overflow: hidden; }
+    .hub-img img { width: 100%; height: 100%; object-fit: cover; }
+    .hub-overlay { 
+        position: absolute; inset: 0; 
+        background: linear-gradient(to bottom, transparent, #0F172A); 
+    }
+    
+    .hub-body { padding: 20px; }
+    .hub-body h2 {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 26px; font-weight: 700;
+        letter-spacing: 4px; text-transform: uppercase;
+        color: #fff; margin: 0;
+    }
+    .hub-stats { display: flex; justify-content: center; gap: 40px; margin-top: 15px; }
+    .hub-stat .n { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; display: block; }
+    .hub-stat .l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    .status {
+        display: flex; flex-wrap: wrap; justify-content: center;
+        gap: 30px; margin-top: 60px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px; padding: 20px;
+    }
+    .si { display: flex; align-items: center; gap: 10px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; animation: blink 2s infinite; }
+    .dot.g { background: #4fd; box-shadow: 0 0 10px #4fd; }
+    .dot.y { background: #fc8; box-shadow: 0 0 10px #fc8; }
+    .dot.b { background: #8cf; box-shadow: 0 0 10px #8cf; }
+    
+    @@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .si-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .si-val { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600; color: #fff; }
+
+    @@media(max-width:768px){
+        .grid{grid-template-columns:repeat(2,1fr);}
+        .hub{grid-column:1/-1;}
+    }
+</style>

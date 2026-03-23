@@ -7,6 +7,7 @@ using MecaPro.Application.Common;
 using MecaPro.Domain.Common;
 using MecaPro.Domain.Modules.Operations;
 using MecaPro.Domain.Modules.Customers;
+using MecaPro.Domain.Modules.Inventory;
 using MediatR;
 
 namespace MecaPro.Application.Modules.Operations;
@@ -62,6 +63,7 @@ public class OperationsHandlers(
     IVehicleRepository vehicles, 
     IRevisionRepository revisions, 
     ICustomerRepository customers,
+    IPartRepository parts,
     IUnitOfWork uow, 
     ICurrentUserService currentU) : 
     IRequestHandler<CreateVehicleCommand, Result<VehicleDto>>,
@@ -99,10 +101,27 @@ public class OperationsHandlers(
 
     public async Task<Result<bool>> Handle(UpdateRevisionStatusCommand cmd, CancellationToken ct)
     {
-        var rev = await revisions.GetByIdAsync(cmd.Id, ct);
+        var rev = await revisions.GetWithDetailsAsync(cmd.Id, ct);
         if (rev == null) return Result<bool>.Failure("Intervention introuvable.");
+
         if (Enum.TryParse<RevisionStatus>(cmd.Status, out var status))
         {
+            if (status == RevisionStatus.Completed && rev.Status != RevisionStatus.Completed)
+            {
+                foreach (var p in rev.Parts)
+                {
+                    var part = await parts.GetByIdAsync(p.PartId, ct);
+                    if (part != null)
+                    {
+                        try {
+                            part.AdjustStock(-p.Quantity);
+                        } catch (Exception ex) {
+                            return Result<bool>.Failure($"Erreur de stock pour {part.Name} : {ex.Message}");
+                        }
+                    }
+                }
+            }
+
             rev.SetStatus(status);
             await uow.SaveChangesAsync(ct);
             return Result<bool>.Success(true);

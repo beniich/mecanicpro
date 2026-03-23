@@ -2,37 +2,36 @@
 @layout EmptyLayout
 @attribute [Authorize]
 @inject ApiClient Api
+@inject AiStreamService AiStream
 @inject NavigationManager Nav
 
-<PageTitle>MECAPRO — Diagnostic OBD & IA Avancé</PageTitle>
+<PageTitle>MecaPro — Diagnostic OBD & IA Avancé (Glass)</PageTitle>
 
-<div class="bg-[#111318] text-white min-h-screen pb-24">
+<div class="min-h-screen pb-24 font-sans">
 
     <!-- Top Bar -->
-    <header class="fixed top-0 w-full z-50 bg-[#111318]/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-white/5">
-        <div class="flex items-center gap-3 cursor-pointer" @onclick='() => Nav.NavigateTo("/")'>
-            <span class="material-symbols-outlined text-[#00FF66]">precision_manufacturing</span>
-            <h1 class="text-xl font-black tracking-[0.2em] text-[#00FF66] uppercase">MECAPRO</h1>
+    <header class="fixed top-0 w-full z-50 glass-card !border-x-0 !border-t-0 !rounded-none px-6 py-4 flex justify-between items-center text-white bg-[#161E2F]/80">
+        <div class="flex items-center gap-3 cursor-pointer group" @onclick='() => Nav.NavigateTo("/")'>
+            <span class="material-symbols-outlined text-[#FFA586] group-hover:drop-shadow-[0_0_10px_#FFA586] transition-all">precision_manufacturing</span>
+            <h1 class="text-xl font-bold headline-font text-[#FFA586] uppercase tracking-widest drop-shadow-[0_0_5px_rgba(255,165,134,0.3)]">MecaPro</h1>
         </div>
         <div class="flex items-center gap-4">
-            <span class="bg-[#00FF66]/10 border border-[#00FF66]/30 px-4 py-1.5 rounded-xl text-[10px] font-black uppercase text-[#00FF66] tracking-widest flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-[#00FF66] animate-pulse"></span> SYSTEM_ONLINE
+            <span class="glass-badge success flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#4ade80] shadow-[0_0_8px_#4ade80] animate-pulse"></span> SYSTEM ONLINE
             </span>
         </div>
     </header>
 
-    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-10">
+    <main class="pt-24 px-6 max-w-7xl mx-auto space-y-8">
 
         <!-- Header -->
-        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-8 border-b border-white/10">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 py-4 border-b border-[#384358]">
             <div>
-                <span class="text-[#00FF66] text-[10px] tracking-[0.5em] font-black uppercase italic mb-2 block">OBD_III_ANALYZER_CORE</span>
-                <h2 class="text-6xl md:text-7xl font-black tracking-tighter italic uppercase leading-none drop-shadow-[0_0_15px_rgba(0,255,102,0.2)]">Diagnostic Avancé</h2>
+                <span class="text-[#FFA586] drop-shadow-sm text-[10px] tracking-[0.3em] font-bold uppercase mb-2 block">OBD III / IA Assistant</span>
+                <h2 class="text-4xl md:text-5xl font-black headline-font uppercase text-white drop-shadow-md">Diagnostic Avancé</h2>
             </div>
-            <div class="flex gap-4">
-                <button class="bg-white/5 border border-white/10 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all rounded-xl">
-                    HISTORIQUE SCANS
-                </button>
+            <div class="flex gap-3">
+                <button class="btn-ghost-glass text-xs">Historique Scans</button>
             </div>
         </div>
 
@@ -41,35 +40,34 @@
             <!-- Interface Analyse / Input -->
             <div class="lg:col-span-4 space-y-6">
                 <!-- Vehicle Selection -->
-                <div class="bg-surface-container rounded-[32px] border border-white/5 p-8 relative overflow-hidden">
-                    <h3 class="font-black text-lg italic uppercase tracking-widest mb-6">Cible Scan</h3>
+                <div class="glass-card p-6 relative overflow-hidden">
+                    <h3 class="font-black text-sm headline-font text-white uppercase tracking-widest mb-5">Cible Scan</h3>
                     <div class="space-y-4 relative z-10">
                         <div>
-                            <label class="text-[10px] font-black tracking-[0.2em] text-white/40 uppercase mb-2 block">VIN ou Immatriculation</label>
-                            <input type="text" placeholder="AB-123-CD" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm font-technical font-black uppercase text-white outline-none focus:border-[#00FF66]/50 transition-colors" />
+                            <label class="text-[10px] font-bold text-[#A0ABC0] uppercase tracking-widest mb-2 block">VIN ou Immat.</label>
+                            <input type="text" placeholder="AB-123-CD" class="w-full bg-[#161E2F]/60 border border-[#384358] rounded-xl px-4 py-2.5 text-sm font-technical font-bold uppercase text-white outline-none focus:border-[#FFA586] focus:ring-1 focus:ring-[#FFA586]/50 transition-all placeholder:text-[#A0ABC0]/40 shadow-inner" />
                         </div>
-                        <button class="w-full bg-[#00FF66]/10 border border-[#00FF66]/30 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#00FF66]/20 text-[#00FF66] transition-all flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-sm">wifi_tethering</span> CONNEXION OBD-III
+                        <button class="w-full bg-[#384358]/30 border border-[#384358] px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#384358] hover:text-white hover:border-[#A0ABC0]/50 text-[#A0ABC0] transition-all flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-sm">wifi_tethering</span> Connexion OBD-III
                         </button>
                     </div>
-                    <div class="absolute -right-4 -bottom-4 opacity-5 pointer-events-none material-symbols-outlined text-[120px]">directions_car</div>
                 </div>
 
                 <!-- Manual Input -->
-                <div class="bg-surface-container rounded-[32px] border border-white/5 p-8 relative overflow-hidden">
-                    <h3 class="font-black text-lg italic uppercase tracking-widest mb-6">Saisie Codes Défauts</h3>
-                    <p class="text-[10px] text-white/50 uppercase tracking-widest font-bold mb-4">Séparez les codes OBD par des virgules (ex: P0300, C003A)</p>
-                    <textarea @bind="inputCodes" rows="3" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xl font-technical font-black uppercase text-[#00FF66] outline-none focus:border-[#00FF66]/50 transition-colors placeholder:text-[#00FF66]/20 custom-scroll" placeholder="P0171, P0301..."></textarea>
+                <div class="glass-card p-6">
+                    <h3 class="font-black text-sm headline-font text-white uppercase tracking-widest mb-3">Codes Défauts</h3>
+                    <p class="text-[9px] text-[#A0ABC0] uppercase tracking-widest font-bold mb-4 opacity-80">Séparez par des virgules (P0300, P0171)</p>
+                    <textarea @bind="inputCodes" rows="3" class="w-full bg-[#161E2F]/60 border border-[#384358] rounded-xl px-4 py-3 text-lg font-technical font-bold uppercase text-[#FFA586] drop-shadow-[0_0_5px_rgba(255,165,134,0.3)] shadow-inner outline-none focus:border-[#FFA586] focus:ring-1 focus:ring-[#FFA586]/50 transition-all placeholder:text-[#384358] custom-scroll" placeholder="P0171, P0301..."></textarea>
                     
-                    <button @onclick="LancerAnalyse" disabled="@isAnalyzing" class="w-full mt-4 bg-white text-black px-6 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gray-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)] disabled:opacity-50">
+                    <button @onclick="LancerAnalyse" disabled="@isAnalyzing" class="w-full mt-6 btn-electric py-3.5 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                         @if (isAnalyzing)
                         {
-                            <div class="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                            <span>TRAITEMENT IA...</span>
+                            <div class="w-5 h-5 border-[3px] border-[#161E2F]/20 border-t-[#161E2F] rounded-full animate-spin shadow-sm"></div>
+                            <span class="tracking-widest">TRAITEMENT EN COURS...</span>
                         }
                         else
                         {
-                            <span class="material-symbols-outlined text-sm">memory</span> <span>ANALYSE EXPERTE</span>
+                            <span class="material-symbols-outlined text-[18px]">memory</span> <span class="tracking-widest">ANALYSE EXPERTE</span>
                         }
                     </button>
                 </div>
@@ -78,83 +76,57 @@
             <!-- Résultats & IA Chat -->
             <div class="lg:col-span-8 flex flex-col gap-6">
                 <!-- Result Area -->
-                <div class="bg-surface-container flex-grow rounded-[40px] border border-white/5 p-8 flex flex-col relative overflow-hidden shadow-2xl">
-                    @if (showResults)
+                <div class="glass-card flex-grow p-6 sm:p-8 flex flex-col relative min-h-[500px]">
+                    @if (isAnalyzing || aiEvents.Any())
                     {
-                        <div class="flex justify-between items-center mb-8 pb-6 border-b border-white/5">
+                        <div class="flex justify-between items-center mb-6 pb-4 border-b border-[#384358]/60">
                             <div>
-                                <h3 class="font-black text-2xl italic uppercase tracking-tight text-white mb-1">Rapport d'Analyse IA</h3>
-                                <p class="text-xs text-[#00FF66] font-technical uppercase font-bold tracking-widest">SÉVÉRITÉ GLOBALE: HAUTE</p>
-                            </div>
-                            <button class="bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all items-center gap-2 hidden md:flex">
-                                <span class="material-symbols-outlined text-sm">print</span>GÉNÉRER PDF
-                            </button>
-                        </div>
-
-                        <div class="space-y-6 flex-grow overflow-y-auto custom-scroll pr-2">
-                            <!-- Code 1 -->
-                            <div class="bg-[#111318] border-l-4 border-red-500 rounded-2xl p-6">
-                                <div class="flex justify-between items-start mb-4">
-                                    <div class="flex items-center gap-3">
-                                        <span class="font-technical text-2xl text-red-500 font-black tracking-widest">P0301</span>
-                                        <span class="px-2 py-1 bg-red-500/10 text-red-500 text-[8px] font-black uppercase tracking-widest rounded border border-red-500/20">MOTEUR</span>
-                                    </div>
-                                    <span class="material-symbols-outlined text-red-500/50 text-3xl">warning</span>
-                                </div>
-                                <h4 class="font-black uppercase text-white mb-2">Raté d'allumage détecté (Cylindre 1)</h4>
-                                <p class="text-xs text-white/60 font-medium leading-relaxed mb-4">
-                                    Le module de commande du moteur (ECM) a détecté un raté d'allumage répété sur le cylindre 1. Peut endommager le convertisseur catalytique si l'émission clignote.
+                                <h3 class="font-black text-xl headline-font text-white mb-1 tracking-wider uppercase drop-shadow-sm">Orchestrateur IA</h3>
+                                <p class="text-[9px] font-technical uppercase font-bold tracking-widest flex items-center gap-2 @(isAnalyzing ? "text-[#FFA586]" : "text-[#4ade80]")">
+                                    <span class="@(isAnalyzing ? "animate-pulse bg-[#FFA586] shadow-[0_0_8px_#FFA586]" : "bg-[#4ade80] shadow-[0_0_8px_#4ade80]") w-1.5 h-1.5 rounded-full block"></span>
+                                    @(isAnalyzing ? "Analyse Télémétrique en cours..." : "Analyse terminée")
                                 </p>
-                                <div class="bg-white/5 rounded-lg p-4">
-                                    <p class="text-[10px] font-black uppercase text-white/40 tracking-[0.2em] mb-2">RECOMMANDATIONS IA :</p>
-                                    <ul class="text-xs text-[#00FF66] font-medium space-y-1">
-                                        <li>1. Vérifier l'état de la bobine d'allumage du cylindre 1 (inversion avec cyl. 2).</li>
-                                        <li>2. Inspecter la bougie d'allumage (usure, encrassement).</li>
-                                        <li>3. Contrôler le faisceau électrique de l'injecteur n°1.</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Code 2 -->
-                            <div class="bg-[#111318] border-l-4 border-yellow-400 rounded-2xl p-6">
-                                <div class="flex justify-between items-start mb-4">
-                                    <div class="flex items-center gap-3">
-                                        <span class="font-technical text-2xl text-yellow-400 font-black tracking-widest">P0171</span>
-                                        <span class="px-2 py-1 bg-yellow-400/10 text-yellow-400 text-[8px] font-black uppercase tracking-widest rounded border border-yellow-400/20">MÉLANGE</span>
-                                    </div>
-                                    <span class="material-symbols-outlined text-yellow-400/50 text-3xl">air</span>
-                                </div>
-                                <h4 class="font-black uppercase text-white mb-2">Système trop pauvre (Banc 1)</h4>
-                                <p class="text-xs text-white/60 font-medium leading-relaxed mb-4">
-                                    Capteur O2 indique trop d'oxygène résiduel. Fréquemment lié à une prise d'air à l'admission ou un débitmètre défectueux (MAF).
-                                </p>
-                                <div class="bg-white/5 rounded-lg p-4">
-                                    <p class="text-[10px] font-black uppercase text-white/40 tracking-[0.2em] mb-2">RECOMMANDATIONS IA :</p>
-                                    <ul class="text-xs text-[#00FF66] font-medium space-y-1">
-                                        <li>1. Test fumée pour recherche de fuite vide/admission.</li>
-                                        <li>2. Nettoyage du débitmètre MAF aux ultrasons.</li>
-                                        <li>3. Contrôle de la pression de pompe à carburant (rare mais possible).</li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
 
-                        <!-- Chat input part at bottom -->
-                        <div class="mt-8 relative hidden md:block">
-                            <input type="text" placeholder="Poser une question spécifique à l'Assistant IA sur ces codes..." class="w-full bg-[#111318] border border-[#00FF66]/20 rounded-xl px-5 py-4 text-sm font-medium text-white outline-none focus:border-[#00FF66] transition-colors placeholder:text-white/30" />
-                            <button class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#00FF66]/10 text-[#00FF66] rounded-lg flex items-center justify-center hover:bg-[#00FF66] hover:text-black transition-colors">
-                                <span class="material-symbols-outlined text-lg">send</span>
-                            </button>
+                        <div class="flex-grow overflow-y-auto custom-scroll space-y-4 pr-2">
+                            @foreach (var ev in aiEvents)
+                            {
+                                <div class="bg-[#161E2F]/60 border border-[#384358]/50 rounded-xl p-4 text-sm shadow-inner transition-colors hover:bg-[#161E2F]/80">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-[#384358] text-[#dde4f0] shadow-sm">
+                                            @ev.Event
+                                        </span>
+                                        <span class="text-[10px] text-[#A0ABC0] font-technical opacity-70">@DateTime.Now.ToString("HH:mm:ss.fff")</span>
+                                    </div>
+                                    <p class="font-medium text-[#c4d0e5] leading-relaxed font-technical break-words text-xs">
+                                        @GetEventDetails(ev)
+                                    </p>
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrEmpty(finalResult))
+                            {
+                                <div class="bg-[#FFA586]/10 border border-[#FFA586]/30 shadow-[0_0_20px_rgba(255,165,134,0.1)] rounded-2xl p-6 mt-8">
+                                    <div class="flex items-center gap-3 mb-4 border-b border-[#FFA586]/20 pb-4">
+                                        <span class="material-symbols-outlined text-[#FFA586] text-2xl drop-shadow-[0_0_8px_rgba(255,165,134,0.5)]">verified</span>
+                                        <h4 class="font-black uppercase text-white tracking-widest text-sm drop-shadow-sm">Conclusion & Recommandations</h4>
+                                    </div>
+                                    <div class="text-sm font-medium text-[#dde4f0] leading-relaxed max-w-none">
+                                        <!-- Note: Normally we'd use a markdown render component here, but for now we just show text -->
+                                        <p class="whitespace-pre-wrap leading-loose">@finalResult</p>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     }
                     else
                     {
                         <!-- Empty State -->
-                        <div class="h-full flex flex-col items-center justify-center text-center opacity-50 relative pointer-events-none">
-                            <div class="absolute inset-0 bg-[linear-gradient(rgba(0,255,102,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,102,0.03)_1px,transparent_1px)] bg-[size:30px_30px] opacity-20 [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_10%,transparent_100%)]"></div>
-                            <span class="material-symbols-outlined text-[100px] text-[#00FF66]/20 mb-6 drop-shadow-[0_0_20px_rgba(0,255,102,0.1)]">memory</span>
-                            <p class="font-black italic text-2xl uppercase tracking-widest text-white/30">EN ATTENTE DE TÉLÉMÉTRIE</p>
-                            <p class="text-[10px] font-black uppercase tracking-[0.3em] text-[#00FF66]/40 mt-3 max-w-sm">Connectez une interface OBD ou saisissez des codes pour démarrer l'analyse.</p>
+                        <div class="h-full flex flex-col items-center justify-center text-center opacity-40">
+                            <span class="material-symbols-outlined text-7xl text-[#384358] mb-6 drop-shadow-md">memory</span>
+                            <p class="font-black headline-font text-xl text-[#A0ABC0] uppercase tracking-widest mb-2">En attente de télémétrie</p>
+                            <p class="text-xs font-medium text-[#384358] max-w-sm tracking-wide leading-relaxed">Connectez une interface OBD ou saisissez des codes manuellement pour démarrer le diagnostic.</p>
                         </div>
                     }
                 </div>
@@ -164,27 +136,55 @@
 </div>
 
 <style>
-    .custom-scroll::-webkit-scrollbar { width: 4px; }
-    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(0,255,102,0.2); border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: rgba(22, 30, 47, 0.4); border-radius: 8px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(56, 67, 88, 0.8); border-radius: 8px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255, 165, 134, 0.5); }
 </style>
 
 @code {
     private string inputCodes = "P0301, P0171";
     private bool isAnalyzing = false;
-    private bool showResults = false;
+    private List<AiEventDto> aiEvents = new();
+    private string finalResult = "";
 
     private async Task LancerAnalyse()
     {
         if (string.IsNullOrWhiteSpace(inputCodes)) return;
         
         isAnalyzing = true;
-        showResults = false;
-        
-        // Simulation faux chargement IA
-        await Task.Delay(2500);
-        
+        aiEvents.Clear();
+        finalResult = "";
+        StateHasChanged();
+
+        await AiStream.StreamAiAnalyseAsync($"Analyse des codes défauts suivants : {inputCodes}", (ev) => {
+            if (ev.Event == "final_answer") 
+            {
+                var data = JsonSerializer.Deserialize<JsonElement>(ev.Data.ToString()!);
+                finalResult = data.GetProperty("text").GetString() ?? "";
+            }
+            else 
+            {
+                aiEvents.Add(ev);
+            }
+            StateHasChanged();
+        });
+
         isAnalyzing = false;
-        showResults = true;
+        StateHasChanged();
+    }
+
+    private string GetEventDetails(AiEventDto ev)
+    {
+        try {
+            var data = JsonSerializer.Deserialize<JsonElement>(ev.Data.ToString()!);
+            if (ev.Event == "thinking") return data.GetProperty("text").GetString() ?? "...";
+            if (ev.Event == "agent_start") return $"Délégation à l'agent : {data.GetProperty("agentId").GetString()}";
+            if (ev.Event == "agent_done") return $"Réponse reçue de {data.GetProperty("agentId").GetString()}";
+            if (ev.Event == "tool_call") return $"Appel outil : {data.GetProperty("toolName").GetString()}";
+            return ev.Data.ToString() ?? "";
+        } catch {
+            return ev.Data.ToString() ?? "";
+        }
     }
 }

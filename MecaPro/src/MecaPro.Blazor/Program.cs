@@ -19,5 +19,6 @@ builder.Services.AddScoped<AuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<AuthStateProvider>());
 builder.Services.AddScoped<ApiClient>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<AiStreamService>();
 
 await builder.Build().RunAsync();

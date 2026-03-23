@@ -7,7 +7,7 @@ using MecaPro.Domain.Common;
 
 namespace MecaPro.Domain.Modules.Feedback;
 
-public class SurveyCampaign : BaseEntity<Guid>
+public class SurveyCampaign : AggregateRoot<Guid>
 {
     public Guid RevisionId { get; private set; }
     public Guid CustomerId { get; private set; }

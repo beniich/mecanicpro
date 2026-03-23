@@ -24,6 +24,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<VehicleImage> VehicleImages => Set<VehicleImage>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
     public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+    public DbSet<MecaPro.Domain.Modules.Feedback.SurveyCampaign> SurveyCampaigns => Set<MecaPro.Domain.Modules.Feedback.SurveyCampaign>();
+    public DbSet<MecaPro.Domain.Modules.HR.EmployeeAbsence> EmployeeAbsences => Set<MecaPro.Domain.Modules.HR.EmployeeAbsence>();
+    public DbSet<MecaPro.Domain.Modules.HR.EmployeeSkill> EmployeeSkills => Set<MecaPro.Domain.Modules.HR.EmployeeSkill>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

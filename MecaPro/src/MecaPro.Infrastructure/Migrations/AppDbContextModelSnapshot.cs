@@ -22,7 +22,7 @@ namespace MecaPro.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Customer", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Customers.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,337 @@ namespace MecaPro.Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Diagnostic", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Customers.Subscription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("CancelAtPeriodEnd")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CurrentPeriodEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("GarageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("HasApiAccess")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasEcommerce")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsWhiteLabel")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxMechanics")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PlanTier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StripeSubscriptionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.Feedback.SurveyCampaign", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Channel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("NpsScore")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("RevisionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SurveyCampaigns");
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.HR.EmployeeAbsence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmployeeAbsences");
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.HR.EmployeeSkill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastCertified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProficiencyLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmployeeSkills");
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.Inventory.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GarageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IdempotencyKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StripePaymentIntentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TaxRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.Inventory.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PartName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItem");
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.Inventory.Part", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.PrimitiveCollection<string>("CompatibleVehicles")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MinStockAlert")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Parts");
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.Invoicing.Invoice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GarageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("IssuedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PdfBlobUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalTTC")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.Diagnostic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,156 +453,7 @@ namespace MecaPro.Infrastructure.Migrations
                     b.ToTable("Diagnostics");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Invoice", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GarageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("IssuedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PdfBlobUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalTTC")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.Order", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GarageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("IdempotencyKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StripePaymentIntentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TaxRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.OrderItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PartId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PartName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItem");
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.Part", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.PrimitiveCollection<string>("CompatibleVehicles")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MinStockAlert")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reference")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StockQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Parts");
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.Revision", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.Revision", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -322,7 +503,7 @@ namespace MecaPro.Infrastructure.Migrations
                     b.ToTable("Revisions");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.RevisionPart", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.RevisionPart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -357,7 +538,7 @@ namespace MecaPro.Infrastructure.Migrations
                     b.ToTable("RevisionParts");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.RevisionTask", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.RevisionTask", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -395,62 +576,7 @@ namespace MecaPro.Infrastructure.Migrations
                     b.ToTable("RevisionTasks");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Subscription", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("CancelAtPeriodEnd")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CurrentPeriodEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("GarageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("HasApiAccess")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasEcommerce")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsWhiteLabel")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MaxMechanics")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("PlanId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PlanTier")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StripeSubscriptionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Subscriptions");
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.Vehicle", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.Vehicle", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -497,12 +623,10 @@ namespace MecaPro.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.VehicleImage", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.VehicleImage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -533,107 +657,6 @@ namespace MecaPro.Infrastructure.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("VehicleImages");
-                });
-
-            modelBuilder.Entity("MecaPro.Infrastructure.Persistence.AppUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("GarageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastLoginAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StripeCustomerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubscriptionTier")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TotpEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("TotpSecretEncrypted")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("MecaPro.Infrastructure.Persistence.AuditLog", b =>
@@ -783,51 +806,6 @@ namespace MecaPro.Infrastructure.Migrations
                     b.ToTable("OutboxMessages");
                 });
 
-            modelBuilder.Entity("MecaPro.Infrastructure.Persistence.RefreshToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedByIp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Family")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRevoked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReplacedByToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RevokedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TokenHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
-                });
-
             modelBuilder.Entity("MecaPro.Infrastructure.Persistence.SubscriptionPlan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -865,140 +843,7 @@ namespace MecaPro.Infrastructure.Migrations
                     b.ToTable("SubscriptionPlans");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("Roles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("UserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.Customer", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Customers.Customer", b =>
                 {
                     b.OwnsOne("MecaPro.Domain.Common.Address", "Address", b1 =>
                         {
@@ -1067,7 +912,24 @@ namespace MecaPro.Infrastructure.Migrations
                                 .HasForeignKey("CustomerId");
                         });
 
-                    b.OwnsOne("MecaPro.Domain.Common.LoyaltyAccount", "Loyalty", b1 =>
+                    b.OwnsOne("MecaPro.Domain.Common.Phone", "Phone", b1 =>
+                        {
+                            b1.Property<Guid>("CustomerId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("CustomerId");
+
+                            b1.ToTable("Customers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerId");
+                        });
+
+                    b.OwnsOne("MecaPro.Domain.Modules.Customers.LoyaltyAccount", "Loyalty", b1 =>
                         {
                             b1.Property<Guid>("CustomerId")
                                 .HasColumnType("uniqueidentifier");
@@ -1087,7 +949,7 @@ namespace MecaPro.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("CustomerId");
 
-                            b1.OwnsMany("MecaPro.Domain.Common.LoyaltyTransaction", "Transactions", b2 =>
+                            b1.OwnsMany("MecaPro.Domain.Modules.Customers.LoyaltyTransaction", "Transactions", b2 =>
                                 {
                                     b2.Property<Guid>("LoyaltyAccountCustomerId")
                                         .HasColumnType("uniqueidentifier");
@@ -1117,23 +979,6 @@ namespace MecaPro.Infrastructure.Migrations
                             b1.Navigation("Transactions");
                         });
 
-                    b.OwnsOne("MecaPro.Domain.Common.Phone", "Phone", b1 =>
-                        {
-                            b1.Property<Guid>("CustomerId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("CustomerId");
-
-                            b1.ToTable("Customers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CustomerId");
-                        });
-
                     b.Navigation("Address");
 
                     b.Navigation("Email")
@@ -1148,16 +993,7 @@ namespace MecaPro.Infrastructure.Migrations
                     b.Navigation("Phone");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Diagnostic", b =>
-                {
-                    b.HasOne("MecaPro.Domain.Common.Vehicle", null)
-                        .WithMany("Diagnostics")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.Order", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Inventory.Order", b =>
                 {
                     b.OwnsOne("MecaPro.Domain.Common.Money", "TotalAmount", b1 =>
                         {
@@ -1183,9 +1019,9 @@ namespace MecaPro.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.OrderItem", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Inventory.OrderItem", b =>
                 {
-                    b.HasOne("MecaPro.Domain.Common.Order", null)
+                    b.HasOne("MecaPro.Domain.Modules.Inventory.Order", null)
                         .WithMany("Items")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1215,7 +1051,7 @@ namespace MecaPro.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Part", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Inventory.Part", b =>
                 {
                     b.OwnsOne("MecaPro.Domain.Common.Money", "UnitPrice", b1 =>
                         {
@@ -1241,9 +1077,18 @@ namespace MecaPro.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Revision", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.Diagnostic", b =>
                 {
-                    b.HasOne("MecaPro.Domain.Common.Vehicle", null)
+                    b.HasOne("MecaPro.Domain.Modules.Operations.Vehicle", null)
+                        .WithMany("Diagnostics")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.Revision", b =>
+                {
+                    b.HasOne("MecaPro.Domain.Modules.Operations.Vehicle", null)
                         .WithMany("Revisions")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1295,9 +1140,9 @@ namespace MecaPro.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.RevisionPart", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.RevisionPart", b =>
                 {
-                    b.HasOne("MecaPro.Domain.Common.Revision", null)
+                    b.HasOne("MecaPro.Domain.Modules.Operations.Revision", null)
                         .WithMany("Parts")
                         .HasForeignKey("RevisionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1327,24 +1172,18 @@ namespace MecaPro.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.RevisionTask", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.RevisionTask", b =>
                 {
-                    b.HasOne("MecaPro.Domain.Common.Revision", null)
+                    b.HasOne("MecaPro.Domain.Modules.Operations.Revision", null)
                         .WithMany("Tasks")
                         .HasForeignKey("RevisionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Vehicle", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.Vehicle", b =>
                 {
-                    b.HasOne("MecaPro.Domain.Common.Customer", null)
-                        .WithMany("Vehicles")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("MecaPro.Domain.Common.LicensePlate", "LicensePlate", b1 =>
+                    b.OwnsOne("MecaPro.Domain.Modules.Operations.LicensePlate", "LicensePlate", b1 =>
                         {
                             b1.Property<Guid>("VehicleId")
                                 .HasColumnType("uniqueidentifier");
@@ -1361,7 +1200,7 @@ namespace MecaPro.Infrastructure.Migrations
                                 .HasForeignKey("VehicleId");
                         });
 
-                    b.OwnsOne("MecaPro.Domain.Common.VIN", "VIN", b1 =>
+                    b.OwnsOne("MecaPro.Domain.Modules.Operations.VIN", "VIN", b1 =>
                         {
                             b1.Property<Guid>("VehicleId")
                                 .HasColumnType("uniqueidentifier");
@@ -1384,104 +1223,32 @@ namespace MecaPro.Infrastructure.Migrations
                     b.Navigation("VIN");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.VehicleImage", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.VehicleImage", b =>
                 {
-                    b.HasOne("MecaPro.Domain.Common.Vehicle", null)
+                    b.HasOne("MecaPro.Domain.Modules.Operations.Vehicle", null)
                         .WithMany("Images")
                         .HasForeignKey("VehicleId");
                 });
 
-            modelBuilder.Entity("MecaPro.Infrastructure.Persistence.RefreshToken", b =>
-                {
-                    b.HasOne("MecaPro.Infrastructure.Persistence.AppUser", "User")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("MecaPro.Infrastructure.Persistence.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("MecaPro.Infrastructure.Persistence.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MecaPro.Infrastructure.Persistence.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("MecaPro.Infrastructure.Persistence.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.Customer", b =>
-                {
-                    b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("MecaPro.Domain.Common.Order", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Inventory.Order", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Revision", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.Revision", b =>
                 {
                     b.Navigation("Parts");
 
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("MecaPro.Domain.Common.Vehicle", b =>
+            modelBuilder.Entity("MecaPro.Domain.Modules.Operations.Vehicle", b =>
                 {
                     b.Navigation("Diagnostics");
 
                     b.Navigation("Images");
 
                     b.Navigation("Revisions");
-                });
-
-            modelBuilder.Entity("MecaPro.Infrastructure.Persistence.AppUser", b =>
-                {
-                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

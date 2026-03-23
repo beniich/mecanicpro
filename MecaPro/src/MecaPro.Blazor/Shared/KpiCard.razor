@@ -1,10 +1,19 @@
-@* Shared/KpiCard.razor *@
-<div class="kpi-card color-@Color" @onclick="OnClick">
-    <div class="kpi-icon-wrap">@Icon</div>
-    <div class="kpi-info">
-        <div class="kpi-value">@Value</div>
-        <div class="kpi-label">@Label</div>
-        <div class="kpi-trend @(TrendUp ? "trend-up" : "trend-down")">@Trend</div>
+@* KpiCard.razor — Composant KPI mini-card style Atelier (Glass) *@
+<div class="glass-card p-5 border-t-2 @HoverCss">
+    <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-[#161E2F]/60 border border-[#384358] flex items-center justify-center text-2xl shadow-inner shrink-0 leading-none">@Icon</div>
+        <div>
+            <div class="text-3xl font-black headline-font text-white drop-shadow-sm leading-none mb-1">
+                @Value
+            </div>
+            <div class="text-[10px] uppercase font-bold tracking-widest text-[#A0ABC0]">@Label</div>
+            @if (!string.IsNullOrEmpty(Sub))
+            {
+                <div class="flex items-center gap-1.5 mt-2 text-[9px] uppercase font-black tracking-widest text-[#FFA586]">
+                    <span class="material-symbols-outlined text-[10px]">trending_up</span> @Sub
+                </div>
+            }
+        </div>
     </div>
 </div>
 
@@ -12,8 +21,20 @@
     [Parameter] public string Icon { get; set; } = "";
     [Parameter] public string Value { get; set; } = "";
     [Parameter] public string Label { get; set; } = "";
-    [Parameter] public string Trend { get; set; } = "";
-    [Parameter] public bool TrendUp { get; set; }
-    [Parameter] public string Color { get; set; } = "amber";
-    [Parameter] public EventCallback OnClick { get; set; }
+    [Parameter] public string? Sub { get; set; }
+    
+    // LightTheme param preserved for backwards compatibility but we override logic here for Glass theme
+    [Parameter] public bool LightTheme { get; set; } = false;
+
+    // Optional dynamic color input, defaulting to electric Peach border hover
+    [Parameter] public string ColorClass { get; set; } = "";
+
+    // Hover css depending on the color class passed
+    private string HoverCss => ColorClass switch {
+        "text-amber-600" => "border-t-[#FFA586] hover:shadow-[0_0_15px_rgba(255,165,134,0.1)]",
+        "text-green-600" => "border-t-[#4ade80] hover:shadow-[0_0_15px_rgba(74,222,128,0.1)]",
+        "text-blue-600"  => "border-t-[#3b82f6] hover:shadow-[0_0_15px_rgba(59,130,246,0.1)]",
+        "text-red-600"   => "border-t-[#B51A2B] hover:shadow-[0_0_15px_rgba(181,26,43,0.1)]",
+        _                => "border-t-[#384358] hover:border-t-[#FFA586]"
+    };
 }

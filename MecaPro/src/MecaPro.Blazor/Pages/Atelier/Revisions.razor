@@ -1,106 +1,121 @@
 @page "/atelier/revisions"
+@layout EmptyLayout
+@attribute [Authorize]
 
+<PageTitle>MecaPro — Révisions & Tâches (Glass)</PageTitle>
 
+<div class="min-h-screen font-sans pb-10">
 
-<div class="min-h-screen bg-[#0a0b0d] text-white p-8 font-['Outfit']">
     <!-- Main Header -->
-    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
-        <div>
-            <div class="flex items-center gap-3 mb-2">
-                <div class="w-12 h-12 rounded-2xl bg-[#02e1f2]/20 flex items-center justify-center border border-[#02e1f2]/30 shadow-[0_0_40px_rgba(2,225,242,0.15)]">
-                    <span class="material-symbols-outlined text-[#02e1f2]">build_circle</span>
+    <div class="glass-card !border-x-0 !border-t-0 !rounded-none px-6 py-6 mb-8 border-b border-[#384358]">
+        <div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div>
+                <div class="flex items-center gap-4 mb-2">
+                    <div class="w-12 h-12 rounded-xl bg-[#242F49] border border-[#384358] flex items-center justify-center text-[#FFA586] shadow-inner">
+                        <span class="material-symbols-outlined text-2xl">build_circle</span>
+                    </div>
+                    <h1 class="text-2xl font-black headline-font text-white drop-shadow-sm">Flux Révisions</h1>
                 </div>
-                <h1 class="text-4xl font-black italic uppercase tracking-tighter">Révisions <span class="text-[#02e1f2]">Flux</span></h1>
+                <p class="text-[11px] font-bold text-[#A0ABC0] uppercase tracking-widest ml-1">État des interventions atelier</p>
             </div>
-            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.4em]">LISTE COMPLÈTE & ÉTAT DES INTERVENTIONS ATELIER</p>
-        </div>
-        
-        <div class="flex gap-4">
-             <div class="bg-white/5 border border-white/10 p-1 rounded-2xl flex">
-                 <button class="px-6 py-2 rounded-xl bg-white/10 font-bold text-xs uppercase transition-all">Tout</button>
-                 <button class="px-6 py-2 rounded-xl text-gray-500 font-bold text-xs uppercase hover:text-white transition-all">En cours</button>
-                 <button class="px-6 py-2 rounded-xl text-gray-500 font-bold text-xs uppercase hover:text-white transition-all">Planifié</button>
-             </div>
-             <button class="bg-[#02e1f2] text-black px-8 py-3 rounded-2xl font-black uppercase text-sm tracking-widest hover:scale-105 transition-all shadow-[0_0_30px_rgba(2,225,242,0.3)]">
-                 NOUVELLE RÉVISION
-             </button>
+            
+            <div class="flex gap-4">
+                 <div class="bg-[#161E2F]/60 border border-[#384358] p-1.5 rounded-xl flex shadow-inner">
+                     <button class="px-5 py-2 rounded-lg bg-[#FFA586] font-black text-[10px] uppercase tracking-wider text-[#161E2F] transition-all shadow-md">Tout</button>
+                     <button class="px-5 py-2 rounded-lg text-[#A0ABC0] font-bold text-[10px] uppercase tracking-wider hover:text-white transition-all">En cours</button>
+                     <button class="px-5 py-2 rounded-lg text-[#A0ABC0] font-bold text-[10px] uppercase tracking-wider hover:text-white transition-all">Planifié</button>
+                 </div>
+                 <button class="btn-electric text-xs px-6">
+                     <span class="material-symbols-outlined text-[14px]">add</span> NOUVELLE RÉVISION
+                 </button>
+            </div>
         </div>
     </div>
 
     <!-- Active Service Counter & KPIs -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+    <div class="max-w-screen-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-6 mb-8">
         @foreach (var stat in stats)
         {
-            <div class="bg-[#111318]/80 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 hover:bg-white/[0.04] transition-all group">
-                <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-3 italic">@stat.Label</p>
-                <div class="flex justify-between items-end">
-                    <p class="text-4xl font-black italic tracking-tighter @(stat.Color)">@stat.Value</p>
-                    <span class="material-symbols-outlined text-gray-700 group-hover:text-white/20 transition-colors">@stat.Icon</span>
+            var textGlowCss = stat.Label == "Interventions du jour" ? "text-white" : stat.Color;
+            var borderHoverCss = stat.Label == "Retards Planning" ? "hover:border-[#B51A2B] hover:shadow-[0_0_20px_rgba(181,26,43,0.15)]" : stat.Label == "Urgences Critiques" ? "hover:border-[#4ade80] hover:shadow-[0_0_20px_rgba(74,222,128,0.15)]" : "hover:border-[#FFA586] hover:shadow-[0_0_20px_rgba(255,165,134,0.15)]";
+
+            <div class="glass-card p-6 flex justify-between items-center transition-all group @borderHoverCss">
+                <div>
+                    <p class="text-[10px] text-[#A0ABC0] font-bold uppercase tracking-widest mb-1.5">@stat.Label</p>
+                    <p class="text-4xl font-black headline-font @textGlowCss drop-shadow-sm mb-1">@stat.Value</p>
+                </div>
+                <div class="w-14 h-14 rounded-2xl bg-[#161E2F]/60 border border-[#384358] flex items-center justify-center text-[#A0ABC0] group-hover:bg-[#242F49] transition-colors shadow-inner @(stat.Color != "text-white" ? $"group-hover:{stat.Color}" : "group-hover:text-white")">
+                    <span class="material-symbols-outlined text-2xl">@stat.Icon</span>
                 </div>
             </div>
         }
     </div>
 
     <!-- Revisions Grid/Table -->
-    <div class="bg-[#111318]/60 backdrop-blur-3xl border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl relative">
-        <!-- SVG Gradient Background -->
-        <div class="absolute inset-0 bg-gradient-to-br from-[#02e1f2]/5 to-transparent pointer-events-none"></div>
-        
-        <div class="p-8 border-b border-white/5 relative z-10 flex justify-between items-center">
-            <h3 class="text-xl font-black italic uppercase tracking-tighter">Répertoires des Interventions</h3>
-            <div class="flex gap-4">
-                <div class="bg-black/40 border border-white/10 rounded-xl px-4 py-2 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-xs text-gray-500">search</span>
-                    <input type="text" placeholder="Rechercher par Immatriculation / Client..." class="bg-transparent border-none text-[10px] font-bold text-gray-300 focus:outline-none w-64">
+    <div class="max-w-screen-2xl mx-auto px-6 mb-10">
+        <div class="glass-card overflow-hidden">
+            <div class="px-6 py-5 border-b border-[#384358] bg-[#161E2F]/30 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                <h3 class="text-sm font-bold text-white headline-font uppercase tracking-wider">Répertoires des Interventions</h3>
+                
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-[#A0ABC0] pointer-events-none">search</span>
+                    <input type="text" placeholder="Rechercher Immatriculation..." class="pl-9 pr-4 py-2 text-[10px] font-bold uppercase tracking-widest border border-[#384358] rounded-xl bg-[#242F49] text-white focus:outline-none focus:border-[#FFA586] focus:ring-1 focus:ring-[#FFA586] w-64 md:w-80 transition-all placeholder:text-[#A0ABC0]/50">
                 </div>
             </div>
-        </div>
 
-        <div class="p-0 relative z-10">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] bg-black/20">
-                        <th class="px-10 py-5">Véhicule & Client</th>
-                        <th class="px-10 py-5">Type / Description</th>
-                        <th class="px-10 py-5">Statut</th>
-                        <th class="px-10 py-5">Échéance / Rendez-vous</th>
-                        <th class="px-10 py-5 text-right">Devis / Coût</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-white/[0.05]">
-                    @foreach (var rev in revisions)
-                    {
-                        <tr class="hover:bg-white/[0.02] transition-colors cursor-pointer group">
-                            <td class="px-10 py-8">
-                                <div class="flex items-center gap-6">
-                                    <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center font-black text-xl italic group-hover:border-[#02e1f2]/40 transition-all">
-                                        @rev.Plate.Substring(0, 2)
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-black tracking-tight group-hover:text-[#02e1f2] transition-colors uppercase italic tracking-widest leading-relaxed">@rev.Plate</p>
-                                        <p class="text-[10px] text-gray-500 font-medium uppercase font-outfit uppercase tracking-widest">PROPRIÉTAIRE: @rev.Customer</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-10 py-8">
-                                <p class="text-xs font-black uppercase italic tracking-widest text-[#02e1f2]">@rev.Type</p>
-                                <p class="text-[10px] text-gray-400 font-medium font-outfit uppercase tracking-widest italic leading-relaxed">@rev.VehicleModel</p>
-                            </td>
-                            <td class="px-10 py-8">
-                                <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter @(GetStatusStyle(rev.Status))">@rev.Status</span>
-                            </td>
-                            <td class="px-10 py-8">
-                                <p class="text-sm font-black italic">@rev.Date</p>
-                                <p class="text-[10px] font-bold text-gray-500 font-outfit uppercase tracking-widest italic leading-relaxed">@rev.Time</p>
-                            </td>
-                            <td class="px-10 py-8 text-right">
-                                <p class="text-xl font-black italic tracking-tighter">@rev.Cost <span class="text-xs text-gray-500">€</span></p>
-                                <p class="text-[9px] text-gray-500 font-black uppercase tracking-widest mt-1">@(rev.IsPaid ? "PAYÉ" : "EN ATTENTE")</p>
-                            </td>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-[#A0ABC0]">
+                    <thead>
+                        <tr class="border-b border-[#384358]/50 bg-[#161E2F]/40">
+                            <th class="py-3 px-6 font-bold uppercase tracking-wider text-[10px]">Véhicule & Client</th>
+                            <th class="py-3 px-6 font-bold uppercase tracking-wider text-[10px]">Type / Description</th>
+                            <th class="py-3 px-6 font-bold uppercase tracking-wider text-[10px]">Statut</th>
+                            <th class="py-3 px-6 font-bold uppercase tracking-wider text-[10px]">Échéance</th>
+                            <th class="py-3 px-6 font-bold uppercase tracking-wider text-[10px] text-right">Devis</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var rev in revisions)
+                        {
+                            <tr class="border-b border-[#384358]/30 hover:bg-[#242F49]/40 transition-colors cursor-pointer group">
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 rounded-xl bg-[#161E2F]/60 border border-[#384358] flex items-center justify-center font-black text-xl text-white shadow-inner group-hover:text-[#FFA586] transition-colors headline-font">
+                                            @rev.Plate.Substring(0, 2)
+                                        </div>
+                                        <div>
+                                            <div class="glass-badge mb-1.5 inline-block">@rev.Plate</div>
+                                            <div class="text-[10px] text-[#A0ABC0] uppercase tracking-widest font-bold">@rev.Customer</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <p class="text-sm font-black text-white headline-font mb-1 drop-shadow-sm">@rev.Type</p>
+                                    <p class="text-[10px] font-bold text-[#A0ABC0] uppercase tracking-widest">@rev.VehicleModel</p>
+                                </td>
+                                <td class="py-4 px-6">
+                                    @{
+                                        var cssBadge = GetStatusStyle(rev.Status);
+                                    }
+                                    <span class="glass-badge scale-90 origin-left @cssBadge whitespace-nowrap">@rev.Status</span>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <p class="text-sm font-bold text-white mb-1">@rev.Date</p>
+                                    <p class="text-[10px] font-technical font-bold text-[#A0ABC0] uppercase tracking-widest bg-[#161E2F]/60 px-2 py-0.5 rounded border border-[#384358]/50 inline-block">⏱ @rev.Time</p>
+                                </td>
+                                <td class="py-4 px-6 text-right">
+                                    <p class="text-[15px] font-black text-white mb-2 tracking-wide headline-font">@rev.Cost <span class="text-xs text-[#A0ABC0] font-normal">€</span></p>
+                                    @if (rev.IsPaid) {
+                                        <span class="text-[9px] font-black text-[#4ade80] bg-[#4ade80]/10 border border-[#4ade80]/30 px-2 py-1 rounded inline-block uppercase tracking-widest shadow-inner">Payé</span>
+                                    } else {
+                                        <span class="text-[9px] font-black text-[#FFA586] bg-[#FFA586]/10 border border-[#FFA586]/30 px-2 py-1 rounded inline-block uppercase tracking-widest shadow-inner">En attente</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -109,9 +124,9 @@
     private List<StatCard> stats = new()
     {
         new StatCard { Label = "Interventions du jour", Value = "14", Icon = "today", Color = "text-white" },
-        new StatCard { Label = "En attente de pièces", Value = "3", Icon = "hourglass_empty", Color = "text-orange-500" },
-        new StatCard { Label = "Urgences Critiques", Value = "0", Icon = "bolt", Color = "text-green-500" },
-        new StatCard { Label = "Retards Planning", Value = "1", Icon = "error", Color = "text-red-500" }
+        new StatCard { Label = "En attente de pièces", Value = "3", Icon = "inventory_2", Color = "text-[#FFA586]" },
+        new StatCard { Label = "Urgences Critiques", Value = "0", Icon = "flash_on", Color = "text-[#4ade80]" },
+        new StatCard { Label = "Retards Planning", Value = "1", Icon = "error", Color = "text-[#B51A2B]" }
     };
 
     private List<RevisionEntry> revisions = new()
@@ -124,10 +139,10 @@
 
     private string GetStatusStyle(string status) => status switch
     {
-        "EN COURS" => "bg-[#02e1f2]/10 text-[#02e1f2] border border-[#02e1f2]/30",
-        "PLANIFIÉ" => "bg-white/5 text-gray-400 border border-white/10",
-        "TERMINÉ" => "bg-green-500/10 text-green-500 border border-green-500/30",
-        _ => "bg-gray-500/10 text-gray-500 border border-gray-500/30"
+        "EN COURS" => "electric",
+        "PLANIFIÉ" => "",
+        "TERMINÉ"  => "success",
+        _ => ""
     };
 
     public class StatCard {

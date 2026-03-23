@@ -20,14 +20,25 @@ public static class InvoicingMappingExtensions
 
 // Queries
 public record GetInvoicesQuery(Guid CustomerId) : IRequest<Result<List<InvoiceDto>>>;
+public record CreateCheckoutCommand(Guid InvoiceId) : IRequest<Result<CheckoutSessionResult>>;
 
 // Handlers
-public class InvoicingHandlers(IInvoiceRepository invoices) : 
-    IRequestHandler<GetInvoicesQuery, Result<List<InvoiceDto>>>
+public class InvoicingHandlers(IInvoiceRepository invoices, IPaymentService payments) : 
+    IRequestHandler<GetInvoicesQuery, Result<List<InvoiceDto>>>,
+    IRequestHandler<CreateCheckoutCommand, Result<CheckoutSessionResult>>
 {
     public async Task<Result<List<InvoiceDto>>> Handle(GetInvoicesQuery query, CancellationToken ct)
     {
         var items = await invoices.GetByCustomerIdAsync(query.CustomerId, ct);
         return Result<List<InvoiceDto>>.Success(items.Select(i => i.ToDto()).ToList());
+    }
+
+    public async Task<Result<CheckoutSessionResult>> Handle(CreateCheckoutCommand command, CancellationToken ct)
+    {
+        var invoice = await invoices.GetByIdAsync(command.InvoiceId, ct);
+        if (invoice == null) return Result<CheckoutSessionResult>.Failure("Facture introuvable.");
+
+        var result = await payments.CreateCheckoutSessionAsync(invoice.Id, invoice.TotalTTC, "eur", ct);
+        return Result<CheckoutSessionResult>.Success(result);
     }
 }

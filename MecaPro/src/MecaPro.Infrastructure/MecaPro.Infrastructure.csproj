@@ -36,8 +36,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
     <!-- MassTransit -->
-    <PackageReference Include="MassTransit" Version="9.0.1" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.2" />
+    <PackageReference Include="MassTransit" Version="8.3.6" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.6" />
     <!-- PDF -->
     <PackageReference Include="SkiaSharp" Version="2.88.8" />
     <PackageReference Include="Scriban" Version="5.10.0" />

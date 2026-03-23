@@ -15,18 +15,14 @@ export type AgentState = 'idle' | 'thinking' | 'tool_call' | 'done' | 'error';
 export interface ToolDefinition {
   name: string;
   description: string;
-  inputSchema: any; // JSON schema de l'input
+  inputSchema: any;
 }
 
 export interface AgentMessage {
   role: 'user' | 'assistant' | 'system' | 'tool';
-  content: string;
+  content: string | any[];
   name?: string;
-  toolCallId?: string;
-}
-
-export interface OrchestratorPlan {
-  tasks: AgentTask[];
+  tool_use_id?: string;
 }
 
 export interface AgentTask {
@@ -38,50 +34,50 @@ export interface AgentTask {
   result?: any;
 }
 
-export interface StreamEvent {
-  type: 'token' | 'tool_call_start' | 'tool_call_result' | 'agent_state_change' | 'done' | 'error';
-  agentId: AgentId;
-  content?: string;
-  toolName?: string;
-  toolInput?: any;
-  toolResult?: any;
-  state?: AgentState;
-  error?: string;
-}
-
 export interface AgentEvent {
+  type: 'agent_started' | 'agent_thinking' | 'agent_done' | 'tool_called' | 'tool_result' | 'task_delegated';
   agentId: AgentId;
+  taskId?: string;
+  data: Record<string, unknown>;
   timestamp: Date;
-  details: string;
 }
 
-// Types Domaine MecaPro
-export interface VehicleContext {
+export interface StreamEvent {
+  event: 'plan' | 'agent_start' | 'thinking' | 'tool_call' | 'tool_result' | 'agent_done' | 'final_answer' | 'done' | 'error';
+  data: any;
+}
+
+export interface OrchestratorRequest {
+  sessionId: string;
+  userMessage: string;
+  context?: Record<string, unknown>;
+}
+
+export interface OrchestratorResponse {
+  sessionId: string;
+  finalAnswer: string;
+  plan: any;
+  agentResults: Record<AgentId, any>;
+  events: AgentEvent[];
+  totalTokens: number;
+  durationMs: number;
+  success: boolean;
+}
+
+export interface ContentBlock {
+  type: 'text' | 'tool_use';
+  text?: string;
+  id?: string;
+  name?: string;
+  input?: any;
+}
+
+export interface ToolCallRecord {
   id: string;
-  licensePlate: string;
-  make: string;
-  model: string;
-  mileage: number;
-}
-
-export interface DiagnosticInsight {
-  faultCode: string;
-  description: string;
-  severity: 'low' | 'medium' | 'high' | 'critical';
-  recommendedAction: string;
-  estimatedTime?: number;
-}
-
-export interface StockAlert {
-  partId: string;
-  reference: string;
-  currentQuantity: number;
-  minimumThreshold: number;
-}
-
-export interface CustomerContext {
-  id: string;
-  name: string;
-  loyaltyPoints: number;
-  churnRisk: number;
+  toolName: string;
+  input: Record<string, unknown>;
+  output?: string;
+  status: 'running' | 'success' | 'error';
+  error?: string;
+  durationMs?: number;
 }

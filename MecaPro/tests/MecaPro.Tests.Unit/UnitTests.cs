@@ -54,9 +54,10 @@ public class CqrsTests
         var vehicleRepoMock = new Mock<IVehicleRepository>();
         var customerRepoMock = new Mock<ICustomerRepository>();
         var revisionRepoMock = new Mock<IRevisionRepository>();
+        var partRepoMock = new Mock<IPartRepository>();
         var currentUserServiceMock = new Mock<ICurrentUserService>();
         
-        var handler = new OperationsHandlers(vehicleRepoMock.Object, revisionRepoMock.Object, customerRepoMock.Object, uowMock.Object, currentUserServiceMock.Object);
+        var handler = new OperationsHandlers(vehicleRepoMock.Object, revisionRepoMock.Object, customerRepoMock.Object, partRepoMock.Object, uowMock.Object, currentUserServiceMock.Object);
 
         var result = await handler.Handle(command, CancellationToken.None);
 

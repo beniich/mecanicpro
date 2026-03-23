@@ -9,6 +9,8 @@ using MecaPro.Domain.Modules.Customers;
 using MecaPro.Domain.Modules.Operations;
 using MecaPro.Domain.Modules.Inventory;
 using MecaPro.Domain.Modules.Invoicing;
+using MecaPro.Domain.Modules.HR;
+using MecaPro.Domain.Modules.Feedback;
 
 namespace MecaPro.Infrastructure.Persistence.Repositories;
 
@@ -76,4 +78,29 @@ public class PartRepository(AppDbContext db) : Repository<Part, Guid>(db), IPart
         await _set.Where(p => p.Category == category).ToListAsync(ct);
     public async Task<Part?> GetByReferenceAsync(string reference, CancellationToken ct = default) =>
         await _set.FirstOrDefaultAsync(p => p.Reference == reference, ct);
+}
+
+public class AbsenceRepository(AppDbContext db) : Repository<EmployeeAbsence, Guid>(db), IAbsenceRepository
+{
+    public async Task<IEnumerable<EmployeeAbsence>> GetByEmployeeIdAsync(Guid employeeId, CancellationToken ct = default) =>
+        await _set.Where(a => a.EmployeeId == employeeId).ToListAsync(ct);
+}
+
+public class SkillRepository(AppDbContext db) : Repository<EmployeeSkill, Guid>(db), ISkillRepository
+{
+    public async Task<IEnumerable<EmployeeSkill>> GetByEmployeeIdAsync(Guid employeeId, CancellationToken ct = default) =>
+        await _set.Where(s => s.EmployeeId == employeeId).ToListAsync(ct);
+}
+
+public class SurveyRepository(AppDbContext db) : Repository<SurveyCampaign, Guid>(db), ISurveyRepository
+{
+    public async Task<SurveyCampaign?> GetByTokenAsync(string token, CancellationToken ct = default) =>
+        await _set.FirstOrDefaultAsync(s => s.Token == token, ct);
+
+    public async Task<IEnumerable<SurveyCampaign>> GetAllAsync(Guid garageId, CancellationToken ct = default) =>
+        await _set.ToListAsync(ct); // Simplified
+}
+
+public class OrderRepository(AppDbContext db) : Repository<Order, Guid>(db), IOrderRepository
+{
 }

@@ -15,19 +15,19 @@
 </style>
 
 <!-- Global container for the extreme dark violet theme -->
-<div class="min-h-screen p-4 md:p-8 bg-[#2b145d] text-white font-inter selection:bg-[#02e1f2] selection:text-black">
+<div class="min-h-screen p-4 md:p-8 font-inter" style="background: linear-gradient(135deg, #0F172A 0%, #111827 60%, #1F2937 100%); color: white;">
     <div class="max-w-[1600px] mx-auto space-y-12 pb-24">
         
         <!-- Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-                <span class="text-[#02e1f2] text-[10px] tracking-[0.4em] uppercase mb-2 block font-black">SYSTÈME GLOBAL MECAPRO_OS</span>
-                <h2 class="text-4xl md:text-5xl lg:text-7xl font-black italic tracking-wider text-white uppercase leading-none drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                <span class="text-primary text-[10px] tracking-[0.4em] uppercase mb-2 block font-black">SYSTÈME GLOBAL MECAPRO</span>
+                <h2 class="text-4xl md:text-5xl lg:text-7xl font-black italic tracking-wider text-white uppercase leading-none" style="text-shadow: 0 2px 20px rgba(237,138,103,0.2);">
                     CENTRE DE CONTRÔLE
                 </h2>
             </div>
-            <div class="bg-[#352372] px-6 py-4 rounded-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center gap-4 group hover:border-[#02e1f2]/50 transition-colors">
-                 <span class="material-symbols-outlined text-[#02e1f2] text-3xl group-hover:scale-110 transition-transform">pageview</span>
+            <div class="bg-surface-container/60 backdrop-blur-lg px-6 py-4 rounded-2xl border border-outline-variant/20 shadow-xl flex items-center gap-4 group hover:border-primary/40 transition-colors">
+                 <span class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">pageview</span>
                  <input type="text" placeholder="LOCALISER UN MODULE..." class="bg-transparent border-none focus:ring-0 text-sm font-black w-64 placeholder:text-white/30 uppercase italic text-white outline-none"/>
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 md:gap-10">
             @foreach (var cat in categories)
             {
-                <div class="bg-[#352372] rounded-[32px] p-6 md:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.5)] border border-white/5 relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+                <div class="bg-surface-container/50 backdrop-blur-md rounded-[28px] p-6 md:p-8 shadow-2xl border border-outline-variant/20 relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(0,0,0,0.4)] hover:border-primary/20">
                     
                     <!-- Header -->
                     <div class="flex items-center justify-between mb-8">
@@ -45,7 +45,7 @@
                             </div>
                             <div>
                                 <h3 class="text-lg md:text-2xl font-black uppercase tracking-widest text-white leading-tight">@cat.Title</h3>
-                                <p class="text-[#a69ece] text-[9px] md:text-[11px] font-bold uppercase tracking-wider mt-1 opacity-90">@cat.Subtitle</p>
+                                <p class="text-white/40 text-[9px] md:text-[11px] font-bold uppercase tracking-wider mt-1 opacity-90">@cat.Subtitle</p>
                             </div>
                         </div>
                         <!-- Dots like in image -->
@@ -55,25 +55,25 @@
                         </div>
                     </div>
 
-                    <hr class="border-[#a69ece]/10 mb-8" />
+                    <hr class="border-white/5 mb-8" />
 
                     <!-- KPIs -->
                     <div class="grid grid-cols-3 gap-3 md:gap-4 mb-8">
                         <!-- Metric 1 -->
-                        <div class="bg-[#453380] rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-[#4d3a8d] transition-colors border border-white/5 shadow-inner">
-                            <span class="text-[#a69ece] text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T1</span>
+                        <div class="bg-surface-container-high/60 rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-surface-container-high/80 transition-colors border border-outline-variant/20 shadow-inner">
+                            <span class="text-white/40 text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T1</span>
                             <span class="text-2xl md:text-3xl font-black italic text-white mb-2 leading-none">@cat.Metrics.V1</span>
                             <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest mt-1" style="color: @cat.Metrics.SC1;">@cat.Metrics.S1</span>
                         </div>
                         <!-- Metric 2 -->
-                        <div class="bg-[#453380] rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-[#4d3a8d] transition-colors border border-white/5 shadow-inner">
-                            <span class="text-[#a69ece] text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T2</span>
+                        <div class="bg-surface-container-high/60 rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-surface-container-high/80 transition-colors border border-outline-variant/20 shadow-inner">
+                            <span class="text-white/40 text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T2</span>
                             <span class="text-2xl md:text-3xl font-black italic text-white mb-2 leading-none">@cat.Metrics.V2</span>
                             <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest mt-1" style="color: @cat.Metrics.SC2;">@cat.Metrics.S2</span>
                         </div>
                         <!-- Metric 3 -->
-                        <div class="bg-[#453380] rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-[#4d3a8d] transition-colors border border-white/5 shadow-inner">
-                            <span class="text-[#a69ece] text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T3</span>
+                        <div class="bg-surface-container-high/60 rounded-xl md:rounded-2xl p-3 md:p-4 flex flex-col justify-between hover:bg-surface-container-high/80 transition-colors border border-outline-variant/20 shadow-inner">
+                            <span class="text-white/40 text-[8px] md:text-[10px] font-black uppercase tracking-wider mb-2">@cat.Metrics.T3</span>
                             <span class="text-2xl md:text-3xl font-black italic text-white mb-2 leading-none">@cat.Metrics.V3</span>
                             <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest mt-1" style="color: @cat.Metrics.SC3;">@cat.Metrics.S3</span>
                         </div>
@@ -81,7 +81,7 @@
 
                     <!-- Links Header -->
                     <div class="flex items-center justify-between mb-4 px-2">
-                        <h4 class="text-[#a69ece] text-[10px] md:text-xs font-black uppercase tracking-widest">MODULES TEMPS RÉEL</h4>
+                        <h4 class="text-white/40 text-[10px] md:text-xs font-black uppercase tracking-widest">MODULES TEMPS RÉEL</h4>
                         <span class="text-[#a69ece] tracking-widest font-black text-xl leading-none -mt-2 opacity-50">...</span>
                     </div>
 
@@ -108,7 +108,7 @@
                                         <div>
                                             <h5 class="text-white text-xs md:text-sm font-black uppercase tracking-widest transition-colors duration-300"
                                                 onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='white'">@item.Title</h5>
-                                            <p class="text-[#a69ece] text-[8px] md:text-[9px] uppercase tracking-wider mt-0.5 font-bold">@item.Subtitle</p>
+                                            <p class="text-white/30 text-[8px] md:text-[9px] uppercase tracking-wider mt-0.5 font-bold">@item.Subtitle</p>
                                         </div>
                                     </div>
                                     <span class="text-white font-black italic text-[10px] md:text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">On</span>
@@ -133,8 +133,8 @@
     {
         categories = new List<ModuleCategory>
         {
-            new ModuleCategory("CLIENTS & VÉHICULES", "GARAGE CENTRAL MECAPRO", "groups", "#02e1f2", "#1f346e", "#f96b0c",
-                new CategoryMetrics("FLUX CLIENTS", "92%", "OPTIMUM", "#02e1f2", "VÉHICULES", "14", "TENSION", "#f96b0c", "STAFF ACTIF", "86", "STABLE", "#00FF66"),
+            new ModuleCategory("CLIENTS & VÉHICULES", "GARAGE CENTRAL MECAPRO", "groups", "#ED8A67", "#2A2E3D", "#ED8A67",
+                new CategoryMetrics("FLUX CLIENTS", "92%", "OPTIMUM", "#ED8A67", "VÉHICULES", "14", "TENSION", "#F78F7D", "STAFF ACTIF", "86", "STABLE", "#10B981"),
                 new List<ModuleItem> {
                     new("GESTION CLIENTS", "/clients", "Liste & Recherche CRM", "person"),
                     new("HISTORIQUE TECHNIQUE", "/clients", "Recherche par dossier", "build"),
@@ -150,9 +150,11 @@
                 }
             ),
 
-            new ModuleCategory("PLANNING ATELIER", "GESTION DES OPÉRATIONS", "calendar_month", "#f96b0c", "#4a2211", "#02e1f2",
-                new CategoryMetrics("RENDEMENT", "104%", "MAX", "#02e1f2", "RESTARDS", "0", "PARFAIT", "#00FF66", "EQUIPES", "12", "ACTIFS", "#02e1f2"),
+            new ModuleCategory("PLANNING ATELIER", "GESTION DES OPÉRATIONS", "calendar_month", "#F78F7D", "#2A1A14", "#ED8A67",
+                new CategoryMetrics("RENDEMENT", "104%", "MAX", "#ED8A67", "RESTARDS", "0", "PARFAIT", "#10B981", "EQUIPES", "12", "ACTIFS", "#ED8A67"),
                 new List<ModuleItem> {
+                    new("HUB OPÉRATIONNEL", "/atelier/hub", "Centre de contrôle atelier", "dashboard_customize"),
+                    new("MAPPAGE VISUEL 3D", "/atelier/visual-map", "Navigation graphique", "view_in_ar"),
                     new("PLANNING ATELIER", "/planning/planning-atelier", "Vue principale", "event"),
                     new("PLANNING EQUIPES", "/atelier/planning-equipes", "Ressources humaines", "groups"),
                     new("PLANNING CONGÉS", "/atelier/planning-conges", "Absences", "beach_access"),
@@ -166,8 +168,8 @@
                 }
             ),
 
-            new ModuleCategory("DIAGNOSTIC IA", "ANALYSE PRÉDICTIVE", "memory", "#00FF66", "#0f4024", "#FFD700",
-                new CategoryMetrics("PRÉCISION", "99.2%", "OPTIMUM", "#00FF66", "DIAGS EN COURS", "5", "NORMAL", "#f96b0c", "SCANS IA", "1420", "STABLE", "#00FF66"),
+            new ModuleCategory("DIAGNOSTIC IA", "ANALYSE PRÉDICTIVE", "memory", "#10B981", "#0A2518", "#FBD5C5",
+                new CategoryMetrics("PRÉCISION", "99.2%", "OPTIMUM", "#10B981", "DIAGS EN COURS", "5", "NORMAL", "#F78F7D", "SCANS IA", "1420", "STABLE", "#10B981"),
                 new List<ModuleItem> {
                     new("DIAGNOSTIC AVANCÉ", "/diagnostic/avancer", "OBD & Capteurs", "troubleshoot"),
                     new("DIAG. BATTERIE EV", "/diagnostic/batterie-ev", "Véhicules électriques", "battery_charging_full"),
@@ -179,8 +181,8 @@
                 }
             ),
 
-            new ModuleCategory("FINANCE & STATS", "TRÉSORERIE ET COMPTABILITÉ", "point_of_sale", "#FFD700", "#4a4011", "#02e1f2",
-                new CategoryMetrics("CA DU MOIS", "42K", "HAUSSE", "#00FF66", "FACTURES", "12", "ATTENTE", "#FFD700", "MARGE", "34%", "STABLE", "#00FF66"),
+            new ModuleCategory("FINANCE & STATS", "TRÉSORERIE ET COMPTABILITÉ", "point_of_sale", "#FBD5C5", "#352015", "#ED8A67",
+                new CategoryMetrics("CA DU MOIS", "42K", "HAUSSE", "#10B981", "FACTURES", "12", "ATTENTE", "#FBD5C5", "MARGE", "34%", "STABLE", "#10B981"),
                 new List<ModuleItem> {
                     new("ARCHIVES FACTURES", "/archives-factures", "Historique facturation", "inventory_2"),
                     new("FACTURES ABONNEMENTS", "/factures-abonnements", "Récurrent", "receipt"),
@@ -198,8 +200,8 @@
                 }
             ),
 
-            new ModuleCategory("STOCK LOGISTIQUE", "GESTION CHAÎNE APPRO", "inventory", "#FF00FF", "#4a1140", "#f96b0c",
-                new CategoryMetrics("DISPONIBILITÉ", "82%", "BAISSE", "#f96b0c", "RUPTURES", "4", "CRITIQUE", "#FF3333", "RÉASSORT", "15", "EN COURS", "#FFD700"),
+            new ModuleCategory("STOCK LOGISTIQUE", "GESTION CHAÎNE APPRO", "inventory", "#8B5CF6", "#1E1433", "#F78F7D",
+                new CategoryMetrics("DISPONIBILITÉ", "82%", "BAISSE", "#F78F7D", "RUPTURES", "4", "CRITIQUE", "#EF4444", "RÉASSORT", "15", "EN COURS", "#FBD5C5"),
                 new List<ModuleItem> {
                     new("INVENTAIRE STOCK", "/stock/inventaire", "Scan QR/Code", "qr_code_scanner"),
                     new("COMMANDES FOURNISSEURS", "/stock/commandes-1", "Flux entrants", "local_shipping"),
@@ -215,8 +217,8 @@
                 }
             ),
 
-            new ModuleCategory("RH & SÉCURITÉ", "QUALITÉ, SÉCURITÉ & ENVIRONNEMENT", "admin_panel_settings", "#FF3333", "#4a1111", "#02e1f2",
-                new CategoryMetrics("INCIDENTS", "0", "PARFAIT", "#00FF66", "EFFECTIF", "34", "STABLE", "#00FF66", "AUDITS", "2", "PLANIFIÉS", "#FFD700"),
+            new ModuleCategory("RH & SÉCURITÉ", "QUALITÉ, SÉCURITÉ & ENVIRONNEMENT", "admin_panel_settings", "#EF4444", "#2A0F0F", "#ED8A67",
+                new CategoryMetrics("INCIDENTS", "0", "PARFAIT", "#10B981", "EFFECTIF", "34", "STABLE", "#10B981", "AUDITS", "2", "PLANIFIÉS", "#FBD5C5"),
                 new List<ModuleItem> {
                     new("GESTION EMPLOYÉS", "/rh/gestion-employes", "Dossiers employés", "badge"),
                     new("ÉQUIPE STAFF 1", "/rh/equipe-staff-1", "Organigramme", "account_tree"),
@@ -235,8 +237,8 @@
                 }
             ),
 
-            new ModuleCategory("MARKETING SUPPORT", "EXPÉRIENCE CLIENT", "campaign", "#3366FF", "#11224a", "#FF00FF",
-                new CategoryMetrics("SATISFACTION", "9.8", "OPTIMUM", "#00FF66", "TICKETS", "12", "ATTENTE", "#f96b0c", "CAMPAGNES", "3", "ACTIF", "#02e1f2"),
+            new ModuleCategory("MARKETING SUPPORT", "EXPÉRIENCE CLIENT", "campaign", "#3B82F6", "#111E38", "#ED8A67",
+                new CategoryMetrics("SATISFACTION", "9.8", "OPTIMUM", "#10B981", "TICKETS", "12", "ATTENTE", "#F78F7D", "CAMPAGNES", "3", "ACTIF", "#ED8A67"),
                 new List<ModuleItem> {
                     new("ANALYSE SATISFACTION", "/marketing/analyse-satisfaction", "NPS & Avis", "sentiment_very_satisfied"),
                     new("SONDAGE SATISFACTION", "/marketing/sondage-satisfaction", "Formulaires auto", "poll"),

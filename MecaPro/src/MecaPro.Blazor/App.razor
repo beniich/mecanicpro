@@ -1,8 +1,3 @@
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" />
-<MudDialogProvider />
-<MudSnackbarProvider />
-<!-- <MudPopoverProvider /> -->
-
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
@@ -29,6 +24,3 @@
     </Router>
 </CascadingAuthenticationState>
 
-@code {
-    private bool _isDarkMode = true;
-}

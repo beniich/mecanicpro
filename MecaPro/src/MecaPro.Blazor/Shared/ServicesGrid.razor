@@ -1,0 +1,54 @@
+@* ServicesGrid.razor — Grille de services cliquables style Atelier Hub (Glass) *@
+@using MecaPro.Blazor.Pages.Atelier
+
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-@(Cols) gap-4">
+    @foreach (var svc in Services)
+    {
+        var isSelected = svc.Id == SelectedId;
+        var statusDotCss = svc.Status switch {
+            "busy"        => "bg-[#FFA586] shadow-[0_0_8px_#FFA586] animate-pulse",
+            "unavailable" => "bg-[#A0ABC0]",
+            _             => "bg-[#4ade80] shadow-[0_0_8px_#4ade80]"
+        };
+        var statusLabel = svc.Status switch {
+            "busy"        => "Occupé",
+            "unavailable" => "Indispo",
+            _             => "Disponible"
+        };
+        <button @onclick="() => OnSelect.InvokeAsync(svc.Id)"
+                class="flex flex-col items-center gap-3 p-4 rounded-2xl border transition-all duration-300 @(isSelected ? "bg-[#161E2F]/80 border-[#FFA586] shadow-[0_0_20px_rgba(255,165,134,0.15)] ring-1 ring-[#FFA586]/30" : "bg-[#242F49]/40 border-[#384358] hover:bg-[#242F49] hover:border-[#FFA586]/50")">
+            
+            <div class="w-14 h-14 rounded-xl flex items-center justify-center text-3xl transition-colors shadow-inner @(isSelected ? "bg-[#FFA586]/10 border border-[#FFA586]/30" : "bg-[#161E2F] border border-[#384358]")">
+                <span class="@(isSelected ? "drop-shadow-[0_0_10px_rgba(255,165,134,0.6)]" : "opacity-80")">@svc.Emoji</span>
+            </div>
+            
+            <div class="text-[11px] font-black tracking-widest uppercase text-center leading-tight @(isSelected ? "text-[#FFA586] text-shadow-sm" : "text-[#dde4f0]")">@svc.Label</div>
+            
+            <div class="flex items-center gap-1.5 bg-[#161E2F]/60 px-2 py-1 rounded-full border border-[#384358]/50 mt-auto">
+                <span class="w-1.5 h-1.5 rounded-full inline-block @statusDotCss"></span>
+                <span class="text-[9px] font-bold uppercase tracking-widest text-[#A0ABC0]">@statusLabel</span>
+            </div>
+        </button>
+    }
+    @if (!Services.Any())
+    {
+        <div class="col-span-5 py-16 text-center text-sm font-bold uppercase tracking-widest text-[#A0ABC0] opacity-60">Aucun service trouvé</div>
+    }
+</div>
+
+@* Legend *@
+<div class="mt-6 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-[#A0ABC0] border-t border-[#384358] pt-4">
+    <span>@Services.Count SERVICES(S)</span>
+    <div class="flex items-center gap-5 hidden sm:flex">
+        <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-[#4ade80] shadow-[0_0_6px_#4ade80] inline-block"></span>Disponible</span>
+        <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-[#FFA586] shadow-[0_0_6px_#FFA586] animate-pulse inline-block"></span>Occupé</span>
+        <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-[#A0ABC0] inline-block"></span>Indisponible</span>
+    </div>
+</div>
+
+@code {
+    [Parameter] public List<AtelierHub.ServiceItem> Services { get; set; } = new();
+    [Parameter] public string? SelectedId { get; set; }
+    [Parameter] public EventCallback<string> OnSelect { get; set; }
+    [Parameter] public int Cols { get; set; } = 5;
+}

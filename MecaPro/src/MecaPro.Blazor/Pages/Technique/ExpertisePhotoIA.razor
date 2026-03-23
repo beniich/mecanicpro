@@ -1,6 +1,8 @@
 @page "/technique/expertise-photo-ia"
 @layout EmptyLayout
 @attribute [Authorize]
+@inject ApiClient Api
+@inject NavigationManager Nav
 
 <PageTitle>MECAPRO — Expertise Photo IA</PageTitle>
 
@@ -8,7 +10,7 @@
     <!-- Top Nav -->
     <header class="bg-[#111318] sticky top-0 z-[60] w-full flex justify-between items-center px-6 py-4">
         <div class="flex items-center gap-4">
-            <span class="material-symbols-outlined text-[#f5a623] cursor-pointer hover:bg-[#282a2e] p-2 rounded-lg">close</span>
+            <span class="material-symbols-outlined text-[#f5a623] cursor-pointer hover:bg-[#282a2e] p-2 rounded-lg" @onclick='() => Nav.NavigateTo("/")'>close</span>
             <h1 class="text-3xl font-black text-[#f5a623] tracking-widest font-headline uppercase leading-none">MECAPRO</h1>
         </div>
         <div class="flex items-center gap-3">
@@ -16,41 +18,96 @@
                 <span>VIN: WBA-71293-XP09</span>
                 <span class="text-primary font-bold">SCANNER IA ACTIF</span>
             </div>
-            <div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-outline-variant/20 overflow-hidden">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsJLWUGFnpRUeUKgFGb37B9IZBLLP6vF9Dn7TaryF2vYzWFZhi1kN1JdkLEv3dkhx7VH5qWTYJbr92JWumsQLp74OgE7DJgDFYkFwE4JjpRti42xTOwgL64dYKd2Yc5J0X6a1YLaycjhA0EjpTAIwCF9dpDp9TaBIGxOxx7tDvCspZQFsFBJrGG4_4AXpHWKA3dHeiEXcoShM7OJAVGkpV4mFHrjpWSrwypqU_U0mWhir87yG6nS0p9w4Yq3aElzeOEqa--O9Xfs75" alt="Avatar"/>
+            <div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-outline-variant/20 overflow-hidden flex items-center justify-center">
+                <span class="material-symbols-outlined">person</span>
             </div>
         </div>
     </header>
 
-    <main class="relative min-h-[calc(100vh-80px)] flex flex-col bg-black">
+    <main class="relative min-h-[calc(100vh-80px)] flex flex-col bg-black overflow-hidden">
         <!-- Viewport -->
         <section class="flex-grow relative flex items-center justify-center">
-            <div class="absolute inset-0 opacity-40">
-                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPKP0ognLnWKpXuikM77W3fxmDEX1XSqkZC1TWpSSMsxbRweOsYxqD_FIQDtZgmvNHhnMG2uvSpOBdDyh3Lk9pjnOaC2fMR4Ru7uF_SL9fXlK5PnBMeRVYd9JZzNnPAIBu4QiXnz3SzWxFD9EGnxfdv68CvGALCay0XdlW8dcjvEhVyYYPP8aU5i1dDhcTfn__2QzIwrxjCPtUZ4OxnSvMUqJ-KmFTMpD93RdaBGW4YQKi--lJaJWpQzuyuqdDS9Z9qycpMEeZ-7fv" alt="Car"/>
-            </div>
+            @if (!string.IsNullOrEmpty(capturedImage))
+            {
+                <img class="absolute inset-0 w-full h-full object-cover opacity-60" src="@capturedImage" />
+            }
+            else
+            {
+                <div class="absolute inset-0 opacity-40">
+                    <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=2072&auto=format&fit=crop" alt="Car Chassis"/>
+                </div>
+            }
             
             <!-- AI Guides -->
             <div class="relative z-10 w-full h-full flex flex-col items-center justify-center">
-                <span class="material-symbols-outlined text-primary/30 text-[300px] font-thin">directions_car</span>
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[65%] border border-primary/20 rounded-2xl pointer-events-none"></div>
+                <div class="w-80 h-80 border-2 border-dashed @(isAnalyzing ? "border-primary animate-pulse" : "border-white/20") rounded-3xl flex items-center justify-center">
+                    @if (isAnalyzing)
+                    {
+                        <div class="flex flex-col items-center">
+                            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+                            <span class="text-primary font-technical text-xs mt-4 tracking-widest uppercase">Analyse en cours...</span>
+                        </div>
+                    }
+                    else if (result != null)
+                    {
+                        <span class="material-symbols-outlined text-primary text-6xl">check_circle</span>
+                    }
+                    else
+                    {
+                        <span class="material-symbols-outlined text-white/10 text-[120px] font-thin">photo_camera</span>
+                    }
+                </div>
             </div>
 
             <!-- UI Panels -->
             <div class="absolute bottom-6 left-6 right-6 z-20 space-y-4">
-                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-[#1e2024]/80 backdrop-blur-xl p-4 rounded-xl border-l-4 border-[#f26411]">
-                        <p class="text-[10px] font-technical uppercase text-on-surface-variant">Luminosité</p>
-                        <p class="font-headline text-3xl text-primary">88%</p>
+                 @if (result != null)
+                 {
+                    <div class="bg-[#1e2024]/90 backdrop-blur-2xl p-6 rounded-2xl border-l-8 border-primary animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-primary font-black uppercase italic tracking-widest">Compte-rendu Vision IA</h3>
+                            <span class="font-technical text-[10px] text-white/40">CONFIDENCE: @result.aiConfidence.ToString("P0")</span>
+                        </div>
+                        <p class="text-xl font-bold mb-2">Pannes détectées :</p>
+                        <ul class="space-y-2 mb-4">
+                            @foreach(var diag in result.diagnostics)
+                            {
+                                <li class="flex items-center gap-2 text-sm">
+                                    <span class="w-2 h-2 rounded-full @(diag.severity == "Critical" ? "bg-red-500" : "bg-orange-500")"></span>
+                                    <span class="font-bold uppercase tracking-tighter">[@diag.type]</span>
+                                    <span class="text-white/70">@diag.observation</span>
+                                </li>
+                            }
+                        </ul>
+                        <div class="pt-4 border-t border-white/5 flex justify-between items-center text-xs font-technical uppercase">
+                            <span class="text-primary">Temps estimé : @result.estimatedReplacementTime</span>
+                            <button @onclick="() => result = null" class="bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 transition-colors">Nouveau scan</button>
+                        </div>
                     </div>
-                    <!-- ... other meters ... -->
+                 }
+
+                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-[#1e2024]/80 backdrop-blur-xl p-4 rounded-xl border-t border-white/5">
+                        <p class="text-[10px] font-technical uppercase text-white/40">Capteur</p>
+                        <p class="font-headline text-lg text-primary">SONY_IMX_766</p>
+                    </div>
+                    <div class="bg-[#1e2024]/80 backdrop-blur-xl p-4 rounded-xl border-t border-white/5">
+                        <p class="text-[10px] font-technical uppercase text-white/40">ISO</p>
+                        <p class="font-headline text-lg text-white">400</p>
+                    </div>
                 </div>
 
                 <div class="flex justify-between items-center bg-[#0c0e12]/80 backdrop-blur-2xl p-6 rounded-2xl border-t border-outline-variant/10">
-                    <button class="p-4 rounded-full bg-[#333539] text-on-surface"><span class="material-symbols-outlined">collections</span></button>
-                    <button class="w-24 h-24 rounded-full bg-[#f5a623] flex items-center justify-center shadow-2xl shadow-primary/40 active:scale-90 transition-transform">
-                        <span class="material-symbols-outlined text-on-primary-container text-5xl">camera</span>
+                    <div class="relative">
+                        <InputFile OnChange="HandleFileUpload" class="absolute inset-0 opacity-0 cursor-pointer" />
+                        <button class="p-4 rounded-full bg-[#333539] text-white hover:bg-[#444] transition-colors">
+                            <span class="material-symbols-outlined">collections</span>
+                        </button>
+                    </div>
+                    <button @onclick="SimulateScan" class="w-20 h-20 rounded-full bg-[#f5a623] flex items-center justify-center shadow-2xl shadow-primary/40 active:scale-90 transition-transform">
+                        <span class="material-symbols-outlined text-[#111] text-4xl">camera</span>
                     </button>
-                    <button class="p-4 rounded-full bg-[#333539] text-on-surface"><span class="material-symbols-outlined">flash_on</span></button>
+                    <button class="p-4 rounded-full bg-[#333539] text-white"><span class="material-symbols-outlined">flash_on</span></button>
                 </div>
             </div>
         </section>
@@ -58,6 +115,62 @@
 
     <!-- Context Instruction -->
     <div class="fixed top-24 left-1/2 -translate-x-1/2 z-50 px-8 py-3 bg-primary text-on-primary rounded-full shadow-2xl font-headline text-xl uppercase tracking-widest animate-pulse">
-        Alignez la silhouette
+        @(isAnalyzing ? "Analyse en cours..." : "Alignez la pièce")
     </div>
 </div>
+
+@code {
+    private string? capturedImage;
+    private bool isAnalyzing = false;
+    private VisionResultDto? result;
+
+    private async Task HandleFileUpload(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        var buffer = new byte[file.Size];
+        await file.OpenReadStream().ReadAsync(buffer);
+        capturedImage = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+        await AnalyzeImage();
+    }
+
+    private async Task SimulateScan()
+    {
+        isAnalyzing = true;
+        await Task.Delay(2000); // UI delay
+        await AnalyzeImage();
+    }
+
+    private async Task AnalyzeImage()
+    {
+        isAnalyzing = true;
+        // In real app, we'd send the capturedImage to /api/v1/ai-agent/vision
+        // For sample, we call the proxy which hits our ai-agent microservice
+        var response = await Api.PostAsync<VisionResultDto>("/api/v1/ai-agent/vision", new { imageUrl = capturedImage, partType = "Suspension" });
+        if (response != null)
+        {
+            result = response;
+        }
+        isAnalyzing = false;
+    }
+
+    public class VisionResultDto
+    {
+        public string part { get; set; } = "";
+        public List<DiagnosticItem> diagnostics { get; set; } = new();
+        public double aiConfidence { get; set; }
+        public string recommendation { get; set; } = "";
+        public string estimatedReplacementTime { get; set; } = "";
+    }
+
+    public class DiagnosticItem
+    {
+        public string type { get; set; } = "";
+        public string observation { get; set; } = "";
+        public string severity { get; set; } = "";
+    }
+}
+
+<style>
+    .headline-font { font-family: 'Outfit', sans-serif; }
+    .font-technical { font-family: 'JetBrains Mono', monospace; }
+</style>

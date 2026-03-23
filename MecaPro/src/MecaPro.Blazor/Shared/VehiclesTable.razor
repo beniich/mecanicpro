@@ -1,0 +1,57 @@
+@* VehiclesTable.razor — Tableau des véhicules en atelier (Glass Edition) *@
+@using MecaPro.Blazor.Pages.Atelier
+
+<table class="w-full text-left text-sm text-[#A0ABC0]">
+    <thead>
+        <tr class="border-b border-[#384358] bg-[#161E2F]/40">
+            <th class="py-3 px-4 font-bold uppercase tracking-wider text-xs">Immat.</th>
+            <th class="py-3 px-4 font-bold uppercase tracking-wider text-xs">Véhicule</th>
+            <th class="py-3 px-4 font-bold uppercase tracking-wider text-xs">Service</th>
+            <th class="py-3 px-4 font-bold uppercase tracking-wider text-xs">Mécanicien</th>
+            <th class="py-3 px-4 font-bold uppercase tracking-wider text-xs">Horaires</th>
+            <th class="py-3 px-4 font-bold uppercase tracking-wider text-xs">Avancement</th>
+            <th class="py-3 px-4 font-bold uppercase tracking-wider text-xs">Statut</th>
+            <th class="py-3 px-4"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Vehicles)
+        {
+            var cfg = VehCfg.GetValueOrDefault(v.Status, ("—", "glass-badge", "bg-[#384358]"));
+            <tr class="border-b border-[#384358]/50 hover:bg-[#242F49]/40 transition-colors">
+                <td class="py-3 px-4"><span class="glass-badge scale-90 origin-left shadow-sm">@v.Plate</span></td>
+                <td class="py-3 px-4 font-black text-white headline-font drop-shadow-sm">@v.Make @v.Model</td>
+                <td class="py-3 px-4 font-medium uppercase tracking-wide text-xs">@v.Service</td>
+                <td class="py-3 px-4 font-medium uppercase tracking-wide text-xs flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]">engineering</span> @v.Mechanic</td>
+                <td class="py-3 px-4 font-technical font-bold text-xs uppercase tracking-widest text-[#c4d0e5]">⏱ @v.StartTime → @v.EstimatedEnd</td>
+                <td class="py-3 px-4" style="min-width:140px">
+                    <div class="flex items-center gap-3">
+                        <div class="flex-1 h-1.5 bg-[#161E2F] rounded-full overflow-hidden border border-[#384358]">
+                            <div class="h-full rounded-full shadow-[0_0_8px_currentColor] transition-all" style="width:@(v.Progress)%; background-color: @cfg.Item3"></div>
+                        </div>
+                        <span class="text-[10px] font-black tracking-widest text-white">@(v.Progress)%</span>
+                    </div>
+                </td>
+                <td class="py-3 px-4">
+                    <span class="glass-badge @cfg.Item2 origin-left scale-90 whitespace-nowrap">@cfg.Item1</span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                    <button @onclick="() => OnViewFiche.InvokeAsync(v.Id)" class="btn-ghost-glass text-[10px] px-3 py-1.5 text-nowrap hover:border-[#FFA586] hover:text-[#FFA586]">Fiche →</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter] public List<AtelierHub.VehicleItem> Vehicles { get; set; } = new();
+    [Parameter] public EventCallback<string> OnViewFiche { get; set; }
+
+    private static readonly Dictionary<string, (string Label, string Badge, string Bar)> VehCfg = new()
+    {
+        ["in_progress"]      = ("En cours",       "electric",  "#FFA586"),
+        ["waiting_parts"]    = ("Attente pièce",  "danger",    "#B51A2B"),
+        ["waiting_customer"] = ("Attente client", "",          "#384358"),
+        ["ready"]            = ("✓ Prêt",         "success",   "#4ade80"),
+    };
+}

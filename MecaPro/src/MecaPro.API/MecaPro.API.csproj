@@ -16,7 +16,7 @@
   <ItemGroup>
     <!-- Carter (Minimal API modules) -->
     <PackageReference Include="Carter" Version="8.1.0" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
     <!-- Auth -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />

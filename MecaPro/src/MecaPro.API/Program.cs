@@ -13,8 +13,8 @@ using MecaPro.Infrastructure.Persistence.Repositories;
 using MecaPro.Infrastructure.Security;
 using MecaPro.Infrastructure.Modules.CRM;
 using MecaPro.Infrastructure.Modules.Payment;
-using MecaPro.Infrastructure.Modules.Payment;
 using MecaPro.Infrastructure.Modules.Invoicing;
+using MecaPro.Infrastructure.Services.Payments;
 using MecaPro.Application.Common;
 using MecaPro.Domain.Common;
 using MecaPro.Domain.Modules.Customers;
@@ -22,6 +22,7 @@ using MecaPro.Domain.Modules.Operations;
 using MecaPro.Domain.Modules.Inventory;
 using MecaPro.Domain.Modules.Invoicing;
 using MecaPro.Domain.Modules.Feedback;
+using MecaPro.Domain.Modules.HR;
 using MediatR;
 using System.Threading.RateLimiting;
 
@@ -55,39 +56,35 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"))
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()!;
 
 var publicRsa = System.Security.Cryptography.RSA.Create();
-publicRsa.ImportFromPem(jwtSettings.PublicKeyPem);
-
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(opt =>
-    {
-        opt.TokenValidationParameters = new TokenValidationParameters
+try 
+{
+    publicRsa.ImportFromPem(jwtSettings.PublicKeyPem);
+    
+    builder.Services
+        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(opt =>
         {
-            ValidateIssuer           = true,  ValidIssuer          = jwtSettings.Issuer,
-            ValidateAudience         = true,  ValidAudience        = jwtSettings.Audience,
-            ValidateIssuerSigningKey = true,  IssuerSigningKey     = new RsaSecurityKey(publicRsa),
-            ValidateLifetime         = true,  ClockSkew            = TimeSpan.Zero,
-            RequireExpirationTime    = true
-        };
+            opt.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer           = true,  ValidIssuer          = jwtSettings.Issuer,
+                ValidateAudience         = true,  ValidAudience        = jwtSettings.Audience,
+                ValidateIssuerSigningKey = true,  IssuerSigningKey     = new RsaSecurityKey(publicRsa),
+                ValidateLifetime         = true,  ClockSkew            = TimeSpan.Zero,
+                RequireExpirationTime    = true
+            };
 
-        // Return 401 on expired — don't redirect
-        opt.Events = new JwtBearerEvents
-        {
-            OnChallenge = ctx =>
+            opt.Events = new JwtBearerEvents
             {
-                ctx.HandleResponse();
-                ctx.Response.StatusCode  = 401;
-                ctx.Response.ContentType = "application/json";
-                return ctx.Response.WriteAsync("{\"error\":\"Unauthorized\"}");
-            },
-            OnForbidden = ctx =>
-            {
-                ctx.Response.StatusCode  = 403;
-                ctx.Response.ContentType = "application/json";
-                return ctx.Response.WriteAsync("{\"error\":\"Forbidden\"}");
-            }
-        };
-    });
+                OnChallenge = ctx => { ctx.HandleResponse(); ctx.Response.StatusCode = 401; ctx.Response.ContentType = "application/json"; return ctx.Response.WriteAsync("{\"error\":\"Unauthorized\"}"); },
+                OnForbidden = ctx => { ctx.Response.StatusCode = 403; ctx.Response.ContentType = "application/json"; return ctx.Response.WriteAsync("{\"error\":\"Forbidden\"}"); }
+            };
+        });
+}
+catch (System.Security.Cryptography.CryptographicException) 
+{
+    // Ignore RSA configuration if PEM is corrupted, primarily for EF Core tooling where runtime auth isn't needed.
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  AUTHORIZATION — Role-based + Resource-based policies
@@ -230,7 +227,11 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IVehicleRepository,  VehicleRepository>();
 builder.Services.AddScoped<IRevisionRepository, RevisionRepository>();
 builder.Services.AddScoped<IPartRepository,     PartRepository>();
+builder.Services.AddScoped<IOrderRepository,    OrderRepository>();
 builder.Services.AddScoped<IInvoiceRepository,  InvoiceRepository>();
+builder.Services.AddScoped<IAbsenceRepository,  AbsenceRepository>();
+builder.Services.AddScoped<ISkillRepository,    SkillRepository>();
+builder.Services.AddScoped<ISurveyRepository,   SurveyRepository>();
 
 // Domain services
 builder.Services.AddScoped<ICrmService,                  CrmService>();
@@ -239,6 +240,7 @@ builder.Services.AddScoped<IInvoiceSequencer,            InvoiceSequencer>();
 builder.Services.AddScoped<IBlobStorageService,          MockBlobStorageService>();
 builder.Services.AddScoped<ISignalRNotifier,             MockSignalRNotifier>();
 builder.Services.AddScoped<IStripeSubscriptionService,   StripeSubscriptionService>();
+builder.Services.AddScoped<IPaymentService,              StripePaymentService>();
 builder.Services.AddScoped<DatabaseSeeder>();
 
 // ═══════════════════════════════════════════════════════════════════════════

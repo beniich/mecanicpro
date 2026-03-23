@@ -1,117 +1,133 @@
 @page "/stock/catalogue-promo"
-@using System.Collections.Generic
+@inject ApiClient Api
+@inject NavigationManager Nav
 
-<div class="min-h-screen bg-[#0d0e12] text-white p-8 font-['Outfit']">
+<PageTitle>MecaPro — Catalogue & Promos (Glass)</PageTitle>
+
+<div class="min-h-screen font-sans pb-10">
+
     <!-- Flash Sale / Promo Header -->
-    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
-        <div>
-            <div class="flex items-center gap-3 mb-2">
-                <div class="w-12 h-12 rounded-2xl bg-orange-600/20 flex items-center justify-center border border-orange-500/30">
-                    <span class="material-symbols-outlined text-orange-500 text-3xl animate-bounce">sell</span>
+    <div class="glass-card !border-x-0 !border-t-0 !rounded-none px-6 py-6 mb-8 border-b border-[#384358]">
+        <div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div>
+                <div class="flex items-center gap-4 mb-2">
+                    <div class="w-12 h-12 rounded-xl bg-[#242F49] border border-[#384358] flex items-center justify-center text-[#FFA586] shadow-inner">
+                        <span class="material-symbols-outlined text-2xl animate-pulse drop-shadow-[0_0_8px_#FFA586]">sell</span>
+                    </div>
+                    <h1 class="text-2xl font-black headline-font text-white drop-shadow-sm">Flash Promos</h1>
                 </div>
-                <h1 class="text-4xl font-black italic uppercase tracking-tighter shadow-none border-none">Flash <span class="text-orange-500 font-light italic uppercase shadow-none border-none">Promos</span></h1>
+                <p class="text-[11px] font-bold text-[#A0ABC0] uppercase tracking-widest ml-1">Offres temporaires & Ventes flash logistique</p>
             </div>
-            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.4em]">OFFRES TEMPORAIRES & VENTES FLASH LOGISTIQUE</p>
-        </div>
-        
-        <div class="flex gap-4">
-             <div class="bg-black/60 border border-white/5 py-3 px-6 rounded-2xl flex items-center gap-6">
-                 <div>
-                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic shadow-none border-none">Offres Actives</p>
-                      <p class="text-xl font-black italic text-orange-500 italic tracking-tighter shadow-none border-none">X3</p>
-                 </div>
-                 <div class="w-[1px] h-8 bg-white/10"></div>
-                 <div>
-                      <p class="text-[9px] text-gray-400 font-black tracking-widest leading-none mb-1 uppercase italic shadow-none border-none">Prochain Flash</p>
-                      <p class="text-xl font-black italic shadow-none border-none border-0 uppercase tracking-widest leading-relaxed">02:14:55</p>
-                 </div>
-             </div>
-        </div>
-    </div>
-
-    <!-- Featured Promo Matrix -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        @foreach (var promo in activePromos)
-        {
-            <div class="bg-[#111318]/60 backdrop-blur-3xl border @(promo.IsFlash ? "border-orange-500/40" : "border-white/10") rounded-[4rem] p-12 hover:bg-white/[0.04] transition-all cursor-pointer group shadow-2xl relative overflow-hidden flex flex-col items-center text-center">
-                 @if (promo.IsFlash)
-                 {
-                     <div class="absolute top-0 right-0 p-8">
-                         <span class="bg-orange-600 text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest animate-pulse italic shadow-none border-none">FLASH SALE</span>
+            
+            <div class="flex gap-4">
+                 <div class="bg-[#161E2F]/60 border border-[#384358] py-2 px-6 rounded-2xl flex items-center gap-4 shadow-inner">
+                     <div>
+                          <p class="text-[10px] text-[#A0ABC0] font-bold tracking-widest uppercase mb-0.5">Offres Actives</p>
+                          <p class="text-2xl font-black headline-font text-[#FFA586] drop-shadow-[0_0_5px_rgba(255,165,134,0.5)]">@(activePromos?.Count ?? 0)</p>
                      </div>
-                 }
-                 
-                 <div class="w-32 h-32 bg-black border border-white/5 rounded-[3rem] mb-10 flex items-center justify-center group-hover:scale-105 transition-transform relative overflow-hidden">
-                      <span class="material-symbols-outlined text-7xl text-gray-800 opacity-20 shadow-none border-none border-0">@(promo.Icon)</span>
-                      <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-transparent"></div>
-                 </div>
-
-                 <h3 class="text-2xl font-black italic uppercase italic tracking-tighter italic shadow-none border-none mb-4 italic uppercase tracking-widest leading-relaxed">@promo.Title</h3>
-                 <p class="text-xs font-black italic text-gray-500 italic mb-10 uppercase italic tracking-widest leading-relaxed line-clamp-2 italic">@promo.Description</p>
-                 
-                 <div class="grid grid-cols-2 gap-4 w-full mb-12">
-                      <div class="bg-white/5 border border-white/5 p-6 rounded-3xl">
-                           <p class="text-[8px] text-gray-600 font-black uppercase mb-2 italic shadow-none border-none border-0 italic leading-relaxed">PRIX AVANT</p>
-                           <p class="text-lg font-bold text-gray-600 line-through italic shadow-none border-none italic leading-relaxed uppercase tracking-widest">@promo.OldPrice €</p>
-                      </div>
-                      <div class="bg-orange-500/10 border border-orange-500/20 p-6 rounded-3xl">
-                           <p class="text-[8px] text-orange-500 font-extrabold mb-2 italic shadow-none border-none border-0 italic leading-relaxed uppercase tracking-widest">OFFRE FLASH</p>
-                           <p class="text-2xl font-black italic text-orange-500 shadow-none border-none italic leading-relaxed uppercase tracking-widest">@promo.NewPrice <span class="text-xs">€</span></p>
-                      </div>
-                 </div>
-
-                 <div class="mt-auto w-full">
-                      <div class="flex justify-between items-center mb-4 text-[9px] font-black uppercase tracking-widest text-gray-700 italic">
-                           <span>Reste @promo.StockUnits unités</span>
-                           <span class="text-orange-500 uppercase italic">@promo.TimeLeft Restants</span>
-                      </div>
-                      <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden mb-8">
-                           <div class="h-full bg-orange-600" style="width: @(promo.StockUnits * 100 / promo.TotalUnits)%"></div>
-                      </div>
-                      
-                      <button class="w-full @(promo.IsFlash ? "bg-orange-600 text-black border-orange-600 shadow-xl shadow-orange-900/40" : "bg-white/5 border border-white/10 text-white") py-5 px-4 rounded-3xl font-black uppercase text-[10px] tracking-widest italic transition-all shadow-none border-none italic leading-relaxed uppercase tracking-widest font-outfit uppercase tracking-widest">AJOUTER AU PANIER FLASH</button>
                  </div>
             </div>
-        }
+        </div>
     </div>
+
+    @if (loading)
+    {
+        <div class="flex justify-center p-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFA586] shadow-[0_0_15px_#FFA586]"></div>
+        </div>
+    }
+    else
+    {
+        <!-- Featured Promo Matrix -->
+        <div class="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 px-6">
+            @foreach (var promo in activePromos ?? new())
+            {
+                <div class="glass-card p-8 hover:border-[#FFA586]/60 transition-all cursor-pointer group relative overflow-hidden flex flex-col hover:shadow-[0_0_30px_rgba(255,165,134,0.15)]">
+                    @if (promo.IsFlash)
+                    {
+                        <div class="absolute top-5 right-5 z-10">
+                            <span class="bg-[#FFA586]/20 text-[#FFA586] border border-[#FFA586]/40 shadow-[0_0_15px_rgba(255,165,134,0.3)] text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest animate-pulse flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[12px]">bolt</span> Flash
+                            </span>
+                        </div>
+                    }
+                    
+                    <div class="w-20 h-20 bg-[#161E2F] border border-[#384358] rounded-2xl mb-6 flex items-center justify-center group-hover:bg-[#FFA586]/10 group-hover:border-[#FFA586]/30 transition-all shadow-inner">
+                        <span class="material-symbols-outlined text-4xl text-[#A0ABC0] group-hover:text-[#FFA586] transition-colors drop-shadow-sm">@(promo.Icon)</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold headline-font text-white mb-2 leading-tight drop-shadow-sm group-hover:text-[#FFA586] transition-colors">@promo.Title</h3>
+                    <p class="text-xs font-medium text-[#A0ABC0] mb-6 line-clamp-3 leading-relaxed">@promo.Description</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-[#161E2F]/40 border border-[#384358]/50 p-4 rounded-xl shadow-inner">
+                                <p class="text-[9px] text-[#A0ABC0] font-black uppercase tracking-widest mb-1 opacity-80">Prix catalogue</p>
+                                <p class="text-sm font-bold text-[#A0ABC0] line-through decoration-[#B51A2B]/70 decoration-2">@(promo.OldPrice.ToString("N2")) €</p>
+                        </div>
+                        <div class="bg-[#FFA586]/10 border border-[#FFA586]/30 shadow-[0_0_15px_rgba(255,165,134,0.1)] p-4 rounded-xl">
+                                <p class="text-[9px] text-[#FFA586] font-black uppercase tracking-widest mb-1 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-[#FFA586] rounded-full inline-block animate-pulse"></span> Net Flash</p>
+                                <p class="text-xl font-black headline-font text-white leading-none drop-shadow-sm">@(promo.NewPrice.ToString("N2")) <span class="text-xs font-bold text-[#FFA586]">€</span></p>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto pt-5 border-t border-[#384358]/50">
+                        <div class="flex justify-between items-center mb-2 text-[10px] font-black uppercase tracking-widest text-[#A0ABC0]">
+                                <span>@promo.StockUnits en stock</span>
+                                <span class="@(promo.IsFlash ? "text-[#FFA586]" : "text-white")">⏱ @promo.TimeLeft</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-[#161E2F] border border-[#384358]/50 rounded-full overflow-hidden mb-6">
+                                <div class="h-full @(promo.IsFlash ? "bg-[#FFA586] shadow-[0_0_10px_#FFA586]" : "bg-[#4ade80] shadow-[0_0_10px_#4ade80]")" style="width: @(Math.Min(100, promo.StockUnits * 10))%"></div>
+                        </div>
+                        
+                        <button class="w-full @(promo.IsFlash ? "btn-electric" : "btn-ghost-glass text-xs hover:border-[#4ade80] hover:text-[#4ade80]") py-3 rounded-xl">
+                            <span class="flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-[16px]">add_shopping_cart</span> Ajouter au Panier
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>
 
 @code {
-    private List<PromoInfo> activePromos = new()
+    private List<PromoInfo>? activePromos;
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync()
     {
-        new PromoInfo { 
-            Title = "Kit Vidange Premium V6", 
-            Description = "Ensemble comprenant 10L d'huile CASTROL EDGE + 2 Filtres Bosch série Pro.", 
-            Icon = "local_gas_station", 
-            OldPrice = 145.00, 
-            NewPrice = 85.20, 
-            IsFlash = true, 
-            StockUnits = 12, 
-            TotalUnits = 50, 
-            TimeLeft = "12H 45M" 
-        },
-        new PromoInfo { 
-            Title = "Lot Alternateurs 2026", 
-            Description = "Pack de 3 alternateurs PSA révisés. Vendu en lot uniquement pour pro.", 
-            Icon = "bolt", 
-            OldPrice = 420.00, 
-            NewPrice = 295.00, 
-            IsFlash = false, 
-            StockUnits = 2, 
-            TotalUnits = 5, 
-            TimeLeft = "3 JOURS" 
-        },
-        new PromoInfo { 
-            Title = "Gomme Été Michelin PS5", 
-            Description = "Set de 4 pneus 245/45 R18 (Montage inclus en atelier local).", 
-            Icon = "tire_repair", 
-            OldPrice = 880.00, 
-            NewPrice = 740.00, 
-            IsFlash = true, 
-            StockUnits = 4, 
-            TotalUnits = 20, 
-            TimeLeft = "04H 22M" 
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        loading = true;
+        var pagedResult = await Api.GetAsync<PagedResult<PartDto>>("/api/v1/parts?page=1&pageSize=6");
+        
+        if (pagedResult?.Items != null)
+        {
+            activePromos = pagedResult.Items.Select(p => new PromoInfo {
+                Title = p.Name,
+                Description = $"Référence technique: {p.Reference}. Marque: {p.Brand ?? "OEM"}. Composant haute durabilité certifié MecaPro, avec garantie constructeur préservée.",
+                Icon = GetIcon(p.Category),
+                OldPrice = (double)p.UnitPrice * 1.3,
+                NewPrice = (double)p.UnitPrice,
+                IsFlash = p.IsLowStock,
+                StockUnits = p.StockQuantity,
+                TotalUnits = 100,
+                TimeLeft = p.IsLowStock ? "02H 15M" : "3 JOURS"
+            }).ToList();
         }
+        loading = false;
+    }
+
+    private string GetIcon(string category) => category?.ToLower() switch {
+        "moteur" => "settings",
+        "freinage" => "stop_circle",
+        "pneus" => "tire_repair",
+        "electronique" => "cable",
+        _ => "inventory_2"
     };
 
     public class PromoInfo {

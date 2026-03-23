@@ -117,5 +117,26 @@ public class OperationsModule : ICarterModule
                 TodayRevisions:     await db.Revisions.CountAsync(r => r.ScheduledDate.Date == now.Date)
             ));
         });
+
+        dashGrp.MapGet("/finance-metrics", async (AppDbContext db) =>
+        {
+            var now = DateTime.UtcNow;
+            var monthStart = new DateTime(now.Year, now.Month, 1);
+            
+            var monthlyRevenue = await db.Invoices
+                .Where(i => i.IssuedAt >= monthStart && i.Status == "Paid")
+                .SumAsync(i => i.TotalTTC);
+
+            var pendingRevenue = await db.Invoices
+                .Where(i => i.Status != "Paid")
+                .SumAsync(i => i.TotalTTC);
+
+            return Results.Ok(new {
+                MonthlyRevenue = monthlyRevenue,
+                PendingRevenue = pendingRevenue,
+                GrowthPercentage = 12.5, // Mock growth
+                TotalInvoices = await db.Invoices.CountAsync()
+            });
+        });
     }
 }

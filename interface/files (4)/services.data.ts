@@ -1,0 +1,225 @@
+// components/services/services.data.ts
+// Complete services configuration for the atelier
+
+export type ServiceCategory = 'reception' | 'reparation' | 'depannage' | 'gestion' | 'client'
+export type ServiceStatus = 'available' | 'busy' | 'unavailable'
+
+export interface Service {
+  id: string
+  iconKey: string
+  label: string
+  sublabel: string
+  category: ServiceCategory
+  status: ServiceStatus
+  activeCount?: number
+  href: string
+  description: string
+  estimatedTime?: string
+  priceFrom?: number
+  mechanics?: number
+}
+
+export const SERVICES: Service[] = [
+  {
+    id: 'reception',
+    iconKey: 'reception',
+    label: 'Réception véhicule',
+    sublabel: 'Accueil & enregistrement',
+    category: 'reception',
+    status: 'available',
+    activeCount: 3,
+    href: '/vehicles/new',
+    description: 'Prise en charge du véhicule client, création de la fiche, examen visuel initial et remise du ticket de dépôt.',
+    estimatedTime: '15 min',
+  },
+  {
+    id: 'levage',
+    iconKey: 'levage',
+    label: 'Levage / Pont',
+    sublabel: 'Élévateur hydraulique',
+    category: 'reparation',
+    status: 'busy',
+    activeCount: 2,
+    mechanics: 2,
+    href: '/tasks?type=levage',
+    description: 'Mise sur pont hydraulique pour inspection dessous de caisse, vidange, freins, cardan, amortisseurs.',
+    estimatedTime: '30 min – 2h',
+    priceFrom: 45,
+  },
+  {
+    id: 'peinture',
+    iconKey: 'peinture',
+    label: 'Peinture / Carrosserie',
+    sublabel: 'Cabine de peinture',
+    category: 'reparation',
+    status: 'busy',
+    mechanics: 1,
+    href: '/tasks?type=peinture',
+    description: 'Réparation carrosserie, débosselage, apprêt, peinture cabine et vernissage. Teintes constructeur.',
+    estimatedTime: '1 – 5 jours',
+    priceFrom: 250,
+  },
+  {
+    id: 'pneumatiques',
+    iconKey: 'pneumatiques',
+    label: 'Pneumatiques',
+    sublabel: 'Montage & équilibrage',
+    category: 'reparation',
+    status: 'available',
+    mechanics: 1,
+    href: '/tasks?type=pneumatiques',
+    description: 'Démontage, montage, équilibrage et gonflage pneus. Contrôle géométrie et parallélisme.',
+    estimatedTime: '45 min',
+    priceFrom: 60,
+  },
+  {
+    id: 'garage',
+    iconKey: 'garage',
+    label: 'Garage central',
+    sublabel: 'Vue d\'ensemble atelier',
+    category: 'gestion',
+    status: 'available',
+    activeCount: 7,
+    href: '/atelier',
+    description: 'Supervision globale de l\'atelier, suivi en temps réel de tous les postes, gestion des ressources et planning.',
+    estimatedTime: 'Temps réel',
+  },
+  {
+    id: 'assistance',
+    iconKey: 'assistance',
+    label: 'Assistance routière',
+    sublabel: 'Dépannage 24h/24',
+    category: 'depannage',
+    status: 'available',
+    href: '/tasks?type=assistance',
+    description: 'Intervention rapide sur site, dépannage en bord de route, remplacement pneu crevé, batterie, carburant.',
+    estimatedTime: '20 – 60 min',
+    priceFrom: 80,
+  },
+  {
+    id: 'remorquage',
+    iconKey: 'remorquage',
+    label: 'Remorquage',
+    sublabel: 'Camion plateau',
+    category: 'depannage',
+    status: 'available',
+    href: '/tasks?type=remorquage',
+    description: 'Rapatriement véhicule en panne au garage. Camion plateau ou grue selon type de panne.',
+    estimatedTime: '45 – 90 min',
+    priceFrom: 120,
+  },
+  {
+    id: 'urgence',
+    iconKey: 'urgence',
+    label: 'Appel d\'urgence',
+    sublabel: 'Call center & GPS',
+    category: 'depannage',
+    status: 'available',
+    href: '/chat',
+    description: 'Centre d\'appels dédié, géolocalisation client, coordination des équipes terrain en temps réel.',
+    estimatedTime: 'Immédiat',
+  },
+  {
+    id: 'controle',
+    iconKey: 'controle',
+    label: 'Contrôle technique',
+    sublabel: 'Révision & inspection',
+    category: 'reparation',
+    status: 'available',
+    mechanics: 1,
+    href: '/revisions',
+    description: 'Pré-contrôle technique, inspection complète véhicule, rapport détaillé des points à corriger.',
+    estimatedTime: '1h30',
+    priceFrom: 75,
+  },
+  {
+    id: 'voiture_service',
+    iconKey: 'voiture_service',
+    label: 'Voiture de service',
+    sublabel: 'Véhicule de remplacement',
+    category: 'client',
+    status: 'available',
+    activeCount: 4,
+    href: '/customers',
+    description: 'Prêt de véhicule de remplacement pendant la durée des réparations. Flotte de 4 véhicules disponibles.',
+    estimatedTime: 'Durée réparation',
+    priceFrom: 0,
+  },
+  {
+    id: 'taxi',
+    iconKey: 'taxi',
+    label: 'Taxi / Transfert',
+    sublabel: 'Course & livraison',
+    category: 'client',
+    status: 'available',
+    href: '/customers',
+    description: 'Transfert client à domicile ou au travail après dépôt du véhicule. Livraison véhicule réparé.',
+    estimatedTime: 'Sur demande',
+  },
+  {
+    id: 'mecanicien',
+    iconKey: 'mecanicien',
+    label: 'Mécaniciens',
+    sublabel: 'Équipe technique',
+    category: 'gestion',
+    status: 'available',
+    activeCount: 4,
+    mechanics: 4,
+    href: '/tasks',
+    description: 'Gestion des mécaniciens, attribution des tâches, suivi temps de travail et compétences.',
+    estimatedTime: '5 techniciens',
+  },
+  {
+    id: 'service_client',
+    iconKey: 'service_client',
+    label: 'Service client',
+    sublabel: 'Accueil & devis',
+    category: 'client',
+    status: 'available',
+    href: '/customers',
+    description: 'Gestion clientèle, émission de devis, facturation, fidélisation et communication.',
+    estimatedTime: 'Lun-Sam 8h-18h',
+  },
+  {
+    id: 'diagnostic',
+    iconKey: 'diagnostic',
+    label: 'Diagnostic OBD',
+    sublabel: 'Analyse électronique',
+    category: 'reparation',
+    status: 'available',
+    mechanics: 1,
+    href: '/diagnostics',
+    description: 'Connexion interface OBD-II, lecture codes défaut, analyse système moteur/transmission/ABS/airbag.',
+    estimatedTime: '30 – 45 min',
+    priceFrom: 49,
+  },
+  {
+    id: 'moteur',
+    iconKey: 'moteur',
+    label: 'Moteur / Vidange',
+    sublabel: 'Révision moteur',
+    category: 'reparation',
+    status: 'available',
+    mechanics: 2,
+    href: '/revisions',
+    description: 'Vidange huile, remplacement filtres, distribution, joints de culasse, réparations moteur.',
+    estimatedTime: '45 min – 2 jours',
+    priceFrom: 65,
+  },
+]
+
+export const CATEGORY_LABELS: Record<ServiceCategory, string> = {
+  reception: 'Réception',
+  reparation: 'Réparation',
+  depannage: 'Dépannage',
+  gestion: 'Gestion',
+  client: 'Client',
+}
+
+export const CATEGORY_COLORS: Record<ServiceCategory, string> = {
+  reception: '#BA7517',
+  reparation: '#185FA5',
+  depannage: '#A32D2D',
+  gestion: '#534AB7',
+  client: '#0F6E56',
+}
