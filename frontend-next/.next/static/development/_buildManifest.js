@@ -1,0 +1,1 @@
+self.__BUILD_MANIFEST = {"__rewrites":{"afterFiles":[{"source":"/api/:path*","destination":"http://localhost:5000/api/:path*"},{"source":"/hubs/:path*","destination":"http://localhost:5000/hubs/:path*"}],"beforeFiles":[],"fallback":[]},"sortedPages":[]};self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()

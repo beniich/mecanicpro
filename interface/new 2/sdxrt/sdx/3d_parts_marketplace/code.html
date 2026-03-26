@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MecaPro OS V5.0 - 3D Parts Marketplace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#000000",
+              "surface-variant": "#262626",
+              "tertiary": "#ac89ff",
+              "surface-dim": "#0e0e0e",
+              "secondary-fixed": "#00eefc",
+              "background": "#0e0e0e",
+              "primary": "#ff9159",
+              "on-error-container": "#ffd2c8",
+              "surface-container-low": "#131313",
+              "primary-dim": "#ff7524",
+              "primary-container": "#ff7a2f",
+              "on-secondary": "#005359",
+              "on-secondary-container": "#e3fdff",
+              "error": "#ff7351",
+              "surface-tint": "#ff9159",
+              "on-tertiary-fixed-variant": "#4700a7",
+              "on-tertiary-container": "#f8f1ff",
+              "secondary-fixed-dim": "#00deec",
+              "surface-bright": "#2c2c2c",
+              "on-error": "#450900",
+              "tertiary-fixed-dim": "#b190ff",
+              "outline": "#777575",
+              "on-primary": "#531e00",
+              "on-primary-fixed": "#000000",
+              "tertiary-dim": "#874cff",
+              "on-tertiary-fixed": "#1f0052",
+              "secondary-dim": "#00deec",
+              "tertiary-fixed": "#bda1ff",
+              "error-dim": "#d53d18",
+              "primary-fixed": "#ff7a2f",
+              "surface-container-high": "#201f1f",
+              "inverse-on-surface": "#565554",
+              "secondary": "#00eefc",
+              "inverse-surface": "#fcf8f8",
+              "on-tertiary": "#290067",
+              "secondary-container": "#006970",
+              "on-primary-container": "#401500",
+              "on-primary-fixed-variant": "#4f1c00",
+              "on-surface-variant": "#adaaaa",
+              "on-surface": "#ffffff",
+              "surface": "#0e0e0e",
+              "tertiary-container": "#7000ff",
+              "error-container": "#b92902",
+              "on-secondary-fixed": "#003f43",
+              "outline-variant": "#494847",
+              "inverse-primary": "#a14100",
+              "on-secondary-fixed-variant": "#005e64",
+              "on-background": "#ffffff",
+              "primary-fixed-dim": "#f66700",
+              "surface-container": "#1a1919",
+              "surface-container-highest": "#262626"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neumorphic-debossed {
+            box-shadow: inset 4px 4px 8px #080808, inset -2px -2px 6px #1a1a1a;
+        }
+        .neumorphic-embossed {
+            box-shadow: 8px 8px 16px #080808, -4px -4px 12px #222222;
+        }
+        .glow-pedestal {
+            background: radial-gradient(circle at center, rgba(0,238,252,0.15) 0%, transparent 70%);
+        }
+        .laser-sweep {
+            background: linear-gradient(90deg, transparent, rgba(255,145,89,0.3), transparent);
+            background-size: 200% 100%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 h-16 bg-neutral-900/70 backdrop-blur-xl rounded-b-2xl border-b border-white/10 mx-4 mt-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)]">
+<div class="flex items-center gap-4">
+<button class="text-orange-500 hover:text-orange-400 transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-['Space_Grotesk'] tracking-tighter uppercase text-lg font-bold text-orange-500 tracking-widest">MecaPro OS V5.0</h1>
+</div>
+<div class="hidden md:flex items-center gap-8 font-['Space_Grotesk'] uppercase text-sm font-bold">
+<a class="text-cyan-400 drop-shadow-[0_0_8px_rgba(0,238,252,0.6)] hover:text-orange-400 transition-all" href="#">Marketplace</a>
+<a class="text-neutral-500 hover:text-orange-400 transition-all" href="#">Inventory</a>
+<a class="text-neutral-500 hover:text-orange-400 transition-all" href="#">Analytics</a>
+</div>
+<button class="text-orange-500 hover:text-orange-400 transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-7xl mx-auto">
+<!-- Search & Categories -->
+<section class="mb-12 space-y-8">
+<div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+<div class="w-full md:max-w-xl relative">
+<div class="neumorphic-debossed bg-surface-container-low rounded-full px-6 py-4 flex items-center gap-3 border border-white/5">
+<span class="material-symbols-outlined text-neutral-500">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-on-surface w-full placeholder:text-neutral-600 font-label" placeholder="Search 3D components..." type="text"/>
+</div>
+</div>
+<div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar w-full md:w-auto">
+<button class="neumorphic-embossed bg-surface-container-high px-6 py-2 rounded-full border border-secondary/20 text-secondary font-headline text-sm uppercase tracking-wider whitespace-nowrap active:scale-95 transition-all">Performance</button>
+<button class="neumorphic-embossed bg-surface-container px-6 py-2 rounded-full border border-white/5 text-on-surface-variant font-headline text-sm uppercase tracking-wider whitespace-nowrap hover:border-primary/30 transition-all">Exterior</button>
+<button class="neumorphic-embossed bg-surface-container px-6 py-2 rounded-full border border-white/5 text-on-surface-variant font-headline text-sm uppercase tracking-wider whitespace-nowrap hover:border-primary/30 transition-all">Interior</button>
+</div>
+</div>
+</section>
+<!-- Featured 3D Hero Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+<div class="lg:col-span-2 relative h-[400px] rounded-3xl overflow-hidden bg-surface-container border border-white/5 group">
+<div class="absolute inset-0 glow-pedestal"></div>
+<img alt="Engine" class="absolute inset-0 w-full h-full object-contain p-12 drop-shadow-[0_20px_50px_rgba(255,145,89,0.3)] group-hover:scale-105 transition-transform duration-700" data-alt="3D render of a high-performance twin-turbo V8 engine floating in a dark futuristic showroom with orange neon lighting accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlXpL673b9Df2qtTJKjJlq6EztHqmW87NLXlB2mynmY9teuo8Vx1eV2dg4cw_uSmSZgQ40Y7nz4FaAFqMQSVGAoP-d5I761HPnUzXNqog1sW-nZbhk0yRmPZkBfvoMzWkYO3J_cDJ2yhoJrjRrIKIOAfdjB4pm5r5Mf9XARB5JNYd0J_VUPXPrM89YSRM0nOKqo_LUQ6Sxdwgi3uvXo0w4vtAd4SzA5xxJZAgn950hNafKCMRKGb4xju0aDizG6ZXias8ANTbIjh81"/>
+<div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-surface-container-lowest to-transparent">
+<div class="flex justify-between items-end">
+<div>
+<span class="text-primary font-headline text-xs tracking-[0.3em] uppercase mb-2 block">Premium Unit</span>
+<h2 class="text-4xl font-headline font-bold text-on-surface leading-none">V8 TWIN-TURBO <br/><span class="text-secondary">PRO-SERIES</span></h2>
+</div>
+<div class="text-right">
+<div class="text-2xl font-headline text-on-surface mb-2">$14,500.00</div>
+<button class="bg-primary text-on-primary-fixed px-8 py-3 rounded-full font-headline font-bold uppercase tracking-widest hover:bg-primary-dim transition-all active:scale-90 shadow-[0_0_20px_rgba(255,145,89,0.4)]">Initialize Order</button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-8">
+<div class="flex-1 neumorphic-embossed bg-surface-container-high rounded-3xl p-6 border border-white/5 relative overflow-hidden group">
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-secondary/10 blur-3xl group-hover:bg-secondary/20 transition-all"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary text-4xl">ac_unit</span>
+<span class="text-secondary font-headline text-xs tracking-widest">IN STOCK</span>
+</div>
+<div>
+<h3 class="font-headline text-xl font-bold uppercase">Liquid Cooling <br/>Module X-1</h3>
+<p class="text-on-surface-variant text-xs mt-2 font-label">Extreme thermal regulation for AI-driven builds.</p>
+</div>
+</div>
+</div>
+<div class="flex-1 neumorphic-embossed bg-surface-container-high rounded-3xl p-6 border border-white/5 relative overflow-hidden group">
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary text-4xl">settings_input_component</span>
+<span class="text-primary font-headline text-xs tracking-widest">NEW ARRIVAL</span>
+</div>
+<div>
+<h3 class="font-headline text-xl font-bold uppercase">Carbon Fiber <br/>Aero-Wing</h3>
+<p class="text-on-surface-variant text-xs mt-2 font-label">Lightweight structural dynamics, optimized flow.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Grid -->
+<h3 class="font-headline text-2xl font-bold uppercase mb-8 flex items-center gap-4">
+            Available Modules
+            <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product Card 1 -->
+<div class="neumorphic-embossed bg-surface-container rounded-[2rem] p-4 border border-white/5 group">
+<div class="bg-surface-container-lowest h-48 rounded-2xl mb-4 relative overflow-hidden flex items-center justify-center p-6">
+<div class="absolute inset-0 glow-pedestal"></div>
+<img alt="Wheel" class="relative z-10 w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" data-alt="Futuristic 3D chrome car rim with neon blue highlights floating in a dark void with soft atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7oPlTjymIsynw-_-6BJOH55L37t_AmdcmU0giensZ7X2wiTX4qdT4imAoDLSWET_RBYHOdVi08UiKF1t4NT6fJNAcUCLCAGnrf0nZAmZUIaXSlirDGJtSXUvTFitAej5jcytfwfS3WvYdMJhRy-xJmB5Avxb38MdDPftkPJ6SL0KmlErVSgZWoHUmcLJPlNoWhxf4V9K-qM7vreMa6wZGri_9txJpgkGFdAqTbxjTvrnnQgJ1NNx9LQ204WU6F5qD_4PrmIKPSyKp"/>
+</div>
+<div class="px-2">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline font-bold text-lg uppercase leading-tight">Hyper-Forge Rim</h4>
+<span class="text-secondary font-headline text-sm font-bold">$1,200</span>
+</div>
+<p class="text-on-surface-variant text-[10px] uppercase tracking-tighter mb-4 font-label">21" Magnesium Alloy / Matte Black</p>
+<button class="w-full neumorphic-embossed bg-surface-container-high py-3 rounded-xl border border-white/5 font-headline text-xs font-bold uppercase tracking-widest text-on-surface hover:text-primary active:scale-95 transition-all">
+                        Add To Rig
+                    </button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="neumorphic-embossed bg-surface-container rounded-[2rem] p-4 border border-white/5 group">
+<div class="bg-surface-container-lowest h-48 rounded-2xl mb-4 relative overflow-hidden flex items-center justify-center p-6">
+<div class="absolute inset-0 glow-pedestal opacity-50"></div>
+<img alt="Brakes" class="relative z-10 w-full h-full object-contain group-hover:rotate-12 transition-transform duration-500" data-alt="Close up of a 3D rendered high performance ceramic brake disc with orange calipers and glowing metal texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJQULTljNjHhuiroluCSXdJia0zxBNehJkOOzdVIn0hBtRdMnNfklgOdDM_UFANLmPg3ZLWKm9URnskTew0S0hR7-l-E_RFu299tNBK9kJ35fFUIE4xKbbGMGM7swWkRS9TnKKxM8t2XjqATcRXJcJSIthejlDH9RC2Mk7mGXb2PcHN_i-4rRi5Q2G1ljykLtQHnJwz0NojUwLWCjoA9DrvsClEJZOOw1L4fABkPbc6lHWcU_po_Q6mM-LqQR8IA9xQYVdovXYGcYM"/>
+</div>
+<div class="px-2">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline font-bold text-lg uppercase leading-tight">Ceramic Brakes</h4>
+<span class="text-secondary font-headline text-sm font-bold">$3,450</span>
+</div>
+<p class="text-on-surface-variant text-[10px] uppercase tracking-tighter mb-4 font-label">Anti-Heat Matrix / 6-Piston System</p>
+<button class="w-full neumorphic-embossed bg-surface-container-high py-3 rounded-xl border border-white/5 font-headline text-xs font-bold uppercase tracking-widest text-on-surface hover:text-primary active:scale-95 transition-all">
+                        Add To Rig
+                    </button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="neumorphic-embossed bg-surface-container rounded-[2rem] p-4 border border-white/5 group">
+<div class="bg-surface-container-lowest h-48 rounded-2xl mb-4 relative overflow-hidden flex items-center justify-center p-6">
+<div class="absolute inset-0 glow-pedestal"></div>
+<img alt="Suspension" class="relative z-10 w-full h-full object-contain group-hover:-translate-y-2 transition-transform duration-500" data-alt="Digital 3D render of a futuristic hydraulic suspension coil in bright orange and deep black finishes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_zYpX8jwW9p-8uZ5hw2x3P--slDemD8jn-OVREVTRv9bd6KvlC_sg7UX5TAsYixsp_pRJyBAXN29zp9MhoRGhAPev7xjUA9fxe_7kFjJN59j7H_6qEEBVlgfZOqblX06tskAU6PwyhlrZ0ol3WRbLdlQt5-VsoSVI_6QIQhRPMhp84jPPibY_04gLAvLBS6vgEiElatIkIDniNVocEDXfQDXhh5ExjmwITXj5AXWGhaUdrq6rkja3LkYTC3jDdT_5Bakz4I1zrMjE"/>
+</div>
+<div class="px-2">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline font-bold text-lg uppercase leading-tight">Adaptive Coil</h4>
+<span class="text-secondary font-headline text-sm font-bold">$890</span>
+</div>
+<p class="text-on-surface-variant text-[10px] uppercase tracking-tighter mb-4 font-label">Magnetic Fluid / AI Adjustment</p>
+<button class="w-full neumorphic-embossed bg-surface-container-high py-3 rounded-xl border border-white/5 font-headline text-xs font-bold uppercase tracking-widest text-on-surface hover:text-primary active:scale-95 transition-all">
+                        Add To Rig
+                    </button>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="neumorphic-embossed bg-surface-container rounded-[2rem] p-4 border border-white/5 group">
+<div class="bg-surface-container-lowest h-48 rounded-2xl mb-4 relative overflow-hidden flex items-center justify-center p-6">
+<div class="absolute inset-0 glow-pedestal opacity-70"></div>
+<img alt="Intercooler" class="relative z-10 w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" data-alt="Machined aluminum 3D intercooler component with blue neon light reflecting on its metallic fins" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9I_igibdTnnok1iPpl0-5ZnVpGFuGUABhH8y1wsXfOFW6xlpt56jBdISUFI-CMxGNep7zNXqenQm4bwtQNVyYh8rYYIfYQJiOP7uBA6pVPq_C9yYsBBrss34gV1VAeV5tGM6fVLu64WBj8YyMl6vhI0R5sBqSPpYXwm1wCAMhOryq7jNCG5xVDApPFhThjCfuTPIe66nKEajMTchcb815FprXkIzbpScftqEdqrl7ZCkULq5ZDhExfvuHQWiBCOfRWrTXuSoO76wi"/>
+</div>
+<div class="px-2">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-headline font-bold text-lg uppercase leading-tight">Cold-Flow Core</h4>
+<span class="text-secondary font-headline text-sm font-bold">$2,100</span>
+</div>
+<p class="text-on-surface-variant text-[10px] uppercase tracking-tighter mb-4 font-label">High-Flow Mesh / Integrated Sensors</p>
+<button class="w-full neumorphic-embossed bg-surface-container-high py-3 rounded-xl border border-white/5 font-headline text-xs font-bold uppercase tracking-widest text-on-surface hover:text-primary active:scale-95 transition-all">
+                        Add To Rig
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-8 pb-8 pt-4 bg-[#1a1919]/80 backdrop-blur-2xl rounded-t-[2.5rem] border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.9)]">
+<a class="flex flex-col items-center justify-center text-cyan-400 drop-shadow-[0_0_12px_rgba(0,238,252,0.8)] scale-110 group transition-all" href="#">
+<span class="material-symbols-outlined mb-1">directions_car</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold">Garage</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-600 hover:text-orange-500 transition-transform active:scale-90 group transition-all" href="#">
+<span class="material-symbols-outlined mb-1">insert_chart</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-600 hover:text-orange-500 transition-transform active:scale-90 group transition-all" href="#">
+<span class="material-symbols-outlined mb-1">ac_unit</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold">Cooling</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-600 hover:text-orange-500 transition-transform active:scale-90 group transition-all" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold">Profile</span>
+</a>
+</nav>
+</body></html>

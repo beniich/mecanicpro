@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MecaPro OS V5.0 - AI Diagnostic Vision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#f7f9fb",
+              "secondary": "#006970",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#5a4136",
+              "error": "#ba1a1a",
+              "on-primary-fixed": "#351000",
+              "on-secondary-container": "#006a70",
+              "on-secondary-fixed": "#002022",
+              "surface": "#f7f9fb",
+              "secondary-container": "#12f1ff",
+              "surface-variant": "#e0e3e5",
+              "on-error": "#ffffff",
+              "surface-container": "#eceef0",
+              "primary-container": "#ff6b00",
+              "inverse-primary": "#ffb693",
+              "on-background": "#191c1e",
+              "inverse-surface": "#2d3133",
+              "outline": "#8e7164",
+              "surface-tint": "#a04100",
+              "on-tertiary-fixed": "#001d35",
+              "on-primary-container": "#572000",
+              "secondary-fixed-dim": "#00dbe8",
+              "on-primary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-error-container": "#93000a",
+              "on-secondary-fixed-variant": "#004f54",
+              "tertiary": "#0062a1",
+              "on-tertiary-container": "#003357",
+              "error-container": "#ffdad6",
+              "background": "#f7f9fb",
+              "on-tertiary": "#ffffff",
+              "on-tertiary-fixed-variant": "#00497b",
+              "surface-container-highest": "#e0e3e5",
+              "surface-dim": "#d8dadc",
+              "surface-container-low": "#f2f4f6",
+              "primary-fixed-dim": "#ffb693",
+              "secondary-fixed": "#79f4ff",
+              "on-surface": "#191c1e",
+              "tertiary-fixed": "#d0e4ff",
+              "tertiary-fixed-dim": "#9ccaff",
+              "inverse-on-surface": "#eff1f3",
+              "tertiary-container": "#059eff",
+              "primary-fixed": "#ffdbcc",
+              "primary": "#a04100",
+              "surface-container-high": "#e6e8ea",
+              "outline-variant": "#e2bfb0",
+              "on-primary-fixed-variant": "#7a3000"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0rem", "lg": "0rem", "xl": "0rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #f7f9fb;
+        background-image: radial-gradient(#e2bfb0 0.5px, transparent 0.5px);
+        background-size: 24px 24px;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(226, 191, 176, 0.15);
+      }
+      .scanline {
+        background: linear-gradient(to bottom, transparent 50%, rgba(18, 241, 255, 0.05) 50%);
+        background-size: 100% 4px;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background min-h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-6 h-16 w-full fixed top-0 z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-[#E2BFB0]/15 shadow-sm shadow-black/5">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-600 cursor-pointer hover:bg-white/20 transition-colors p-2" data-icon="menu">menu</span>
+<h1 class="text-xl font-black text-[#FF6B00] tracking-tighter font-['Space_Grotesk']">MecaPro OS</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8">
+<span class="text-[0.6875rem] uppercase tracking-[0.05em] font-bold text-[#FF6B00]">Vision</span>
+<span class="text-[0.6875rem] uppercase tracking-[0.05em] font-medium text-slate-500 hover:text-[#A04100] cursor-pointer">Diagnostics</span>
+<span class="text-[0.6875rem] uppercase tracking-[0.05em] font-medium text-slate-500 hover:text-[#A04100] cursor-pointer">Reports</span>
+</div>
+<span class="material-symbols-outlined text-slate-600 cursor-pointer active:opacity-80 transition-all p-2" data-icon="settings_input_component">settings_input_component</span>
+</div>
+</header>
+<div class="flex pt-16 h-screen overflow-hidden">
+<!-- NavigationDrawer (Sidebar) -->
+<aside class="hidden md:flex flex-col gap-2 p-4 h-full w-72 bg-[#F7F9FB] border-r border-[#E2BFB0]/15">
+<div class="px-4 py-6 mb-4">
+<span class="text-lg font-bold text-[#FF6B00] font-['Space_Grotesk']">MecaPro V5.0</span>
+</div>
+<nav class="flex flex-col gap-1">
+<div class="flex items-center gap-3 p-3 bg-[#FF6B00] text-white font-bold duration-300 ease-in-out cursor-pointer">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="uppercase text-[0.6875rem] tracking-[0.05em]">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="uppercase text-[0.6875rem] tracking-[0.05em]">Analytics</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="uppercase text-[0.6875rem] tracking-[0.05em]">Modules</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="uppercase text-[0.6875rem] tracking-[0.05em]">Inventory</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="uppercase text-[0.6875rem] tracking-[0.05em]">System Settings</span>
+</div>
+</nav>
+</aside>
+<!-- Main Content (Camera & Overlays) -->
+<main class="flex-1 relative bg-surface overflow-hidden">
+<!-- Camera Viewport -->
+<div class="absolute inset-0 bg-slate-200">
+<img alt="Turbocharger" class="w-full h-full object-cover" data-alt="high-detail close-up of a modern metallic turbocharger in a brightly lit professional garage environment with industrial textures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO0lI4sV7O4tT0x9WpVPsGmsjmwkOtLb00G1gKQNIF_cLHC-BfT5_D_FaedVm87edFdUFbNjOCXNFc2E3RdpGtaIHjalwDrtFdRHxsYCNDU5whHmEQc9V8tk7xtGBL5uhun7Ld4eTfKBIFXNgfzy-hQi01JxPYEIZVS4I92mRm6zwn7Mxmx3ihD6yxWRdchvE2OwlLZVqoOfb1wylUxCUbOXWn2c0SMyGgdkqC0YP0vfdA4_xCRMGYPiNC6M88A3UIpCvHboZ3zUiY"/>
+<div class="absolute inset-0 scanline pointer-events-none opacity-20"></div>
+<!-- HUD Overlays -->
+<div class="absolute inset-0 border-[24px] border-white/5 pointer-events-none">
+<!-- Target Reticle -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border-2 border-dashed border-[#12F1FF]/40">
+<div class="absolute -top-1 -left-1 w-8 h-8 border-t-4 border-l-4 border-[#12F1FF]"></div>
+<div class="absolute -top-1 -right-1 w-8 h-8 border-t-4 border-r-4 border-[#12F1FF]"></div>
+<div class="absolute -bottom-1 -left-1 w-8 h-8 border-b-4 border-l-4 border-[#12F1FF]"></div>
+<div class="absolute -bottom-1 -right-1 w-8 h-8 border-b-4 border-r-4 border-[#12F1FF]"></div>
+</div>
+</div>
+</div>
+<!-- UI Overlay Elements -->
+<div class="absolute inset-0 p-8 flex flex-col justify-between pointer-events-none">
+<!-- Top HUD Info -->
+<div class="flex justify-between items-start pointer-events-auto">
+<div class="glass-panel p-6 flex flex-col gap-1 border-l-4 border-secondary-container">
+<span class="text-[0.6875rem] font-bold tracking-widest uppercase text-secondary">Active Identification</span>
+<h2 class="text-2xl font-black tracking-tight text-on-surface">GT35 SERIES TURBOCHARGER</h2>
+<div class="flex gap-4 mt-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary-container animate-pulse"></span>
+<span class="text-[0.6875rem] font-mono text-secondary">98% CONFIDENCE</span>
+</div>
+<div class="text-[0.6875rem] font-mono text-slate-500">REF: MECA-8821-X</div>
+</div>
+</div>
+<div class="glass-panel p-4 flex gap-6 items-center">
+<div class="flex flex-col items-end">
+<span class="text-[0.625rem] font-bold text-slate-400">FPS</span>
+<span class="font-mono text-sm">60.0</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[0.625rem] font-bold text-slate-400">TEMP</span>
+<span class="font-mono text-sm text-[#FF6B00]">42°C</span>
+</div>
+<div class="h-8 w-[1px] bg-slate-200"></div>
+<span class="material-symbols-outlined text-[#12F1FF]" data-icon="videocam" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</div>
+</div>
+<!-- Bottom HUD Elements -->
+<div class="flex items-end justify-between pointer-events-auto">
+<!-- Anomalies Panel -->
+<div class="flex flex-col gap-4 max-w-sm">
+<div class="bg-red-500/10 backdrop-blur-xl border border-red-500/20 p-6 border-l-4 border-red-600">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-red-600" data-icon="warning">warning</span>
+<span class="text-xs font-black uppercase tracking-tighter text-red-700">Anomaly Detected</span>
+</div>
+<h3 class="text-xl font-bold text-red-900 mb-1">Oil Seepage</h3>
+<p class="text-sm text-red-800/80 leading-relaxed font-medium">Fluid accumulation detected around compressor housing mating surface. Probable seal degradation.</p>
+</div>
+<div class="glass-panel p-4 flex flex-col gap-2">
+<span class="text-[0.625rem] font-bold text-slate-400 uppercase tracking-widest">Secondary Telemetry</span>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-slate-50 p-2">
+<div class="text-[0.5rem] font-bold text-slate-500">VIBRATION</div>
+<div class="text-sm font-mono text-secondary">NOMINAL</div>
+</div>
+<div class="bg-slate-50 p-2">
+<div class="text-[0.5rem] font-bold text-slate-500">ACOUSTIC</div>
+<div class="text-sm font-mono text-secondary">92% MATCH</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Action -->
+<div class="flex flex-col items-end gap-6">
+<div class="flex flex-col items-end">
+<span class="text-[0.6875rem] font-mono text-secondary-container bg-secondary/80 px-2 py-0.5 mb-2">SYSTEM READY</span>
+<button class="bg-gradient-to-br from-[#FF6B00] to-[#FF8533] text-white px-10 py-5 font-black text-lg tracking-tighter uppercase shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                                Generate Repair Plan
+                            </button>
+</div>
+<!-- Mini Map / Spatial Anchor -->
+<div class="glass-panel w-48 h-32 relative overflow-hidden">
+<div class="absolute inset-0 opacity-40">
+<img alt="Workshop Map" class="w-full h-full object-cover grayscale" data-alt="abstract blueprints and architectural layout of a mechanical workshop floor plan with technical markings" data-location="Berlin Workshop Center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEC1VF7hOgHvckuoNUTXgyHVuICvRBKN47DkLUnaRsItATIQ7BhFWwLCOPx5ZAlhpoTtnkev6EkGquyP-mkhpQCR7JQazGBHVFVdGuy0IV4i5pMIFM2_-2iqyhffdjr89goG5QYiyoRtZQGS0fZursveXnqW_xpjdBdYJgaYFUysQaYbzfWS8YZ6_1EjQ-siJuz7sjHqzw8x8gtjzefjB4eDQramIiU4TG1wRrJcVlvh9kWHuFRb7-ZOuK71MMo2_AjCUgIt_6hEVw"/>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-3 h-3 bg-secondary-container shadow-[0_0_12px_#12F1FF] animate-ping"></div>
+</div>
+<div class="absolute bottom-2 left-2 text-[0.5rem] font-mono text-on-surface bg-white/50 px-1">STATION_04</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 bg-white/80 backdrop-blur-lg border-t border-[#E2BFB0]/15 shadow-[0_-8px_24px_rgba(25,28,30,0.04)]">
+<div class="flex flex-col items-center text-[#FF6B00] scale-105 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="home_max">home_max</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Home</span>
+</div>
+<div class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Status</span>
+</div>
+<div class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="construction">construction</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Tools</span>
+</div>
+<div class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Alerts</span>
+</div>
+</nav>
+</body></html>

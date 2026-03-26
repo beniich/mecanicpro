@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(15px);
+            background: rgba(26, 25, 25, 0.6);
+        }
+        .laser-sweep {
+            background: linear-gradient(90deg, transparent, rgba(255, 145, 89, 0.3), transparent);
+            background-size: 200% 100%;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-surface": "#fcf8f8",
+                        "surface-variant": "#262626",
+                        "primary": "#ff9159",
+                        "on-secondary-fixed": "#003f43",
+                        "on-tertiary-fixed-variant": "#4700a7",
+                        "surface-container": "#1a1919",
+                        "secondary-container": "#006970",
+                        "tertiary-dim": "#874cff",
+                        "secondary-fixed-dim": "#00deec",
+                        "surface-bright": "#2c2c2c",
+                        "tertiary-container": "#7000ff",
+                        "on-tertiary": "#290067",
+                        "error-container": "#b92902",
+                        "surface-container-low": "#131313",
+                        "on-background": "#ffffff",
+                        "on-surface": "#ffffff",
+                        "on-secondary": "#005359",
+                        "on-tertiary-fixed": "#1f0052",
+                        "tertiary-fixed": "#bda1ff",
+                        "on-primary-fixed": "#000000",
+                        "inverse-primary": "#a14100",
+                        "on-surface-variant": "#adaaaa",
+                        "inverse-on-surface": "#565554",
+                        "surface-container-high": "#201f1f",
+                        "on-error": "#450900",
+                        "outline": "#777575",
+                        "tertiary": "#ac89ff",
+                        "on-primary-fixed-variant": "#4f1c00",
+                        "primary-container": "#ff7a2f",
+                        "surface-tint": "#ff9159",
+                        "surface": "#0e0e0e",
+                        "on-tertiary-container": "#f8f1ff",
+                        "primary-fixed": "#ff7a2f",
+                        "on-primary-container": "#401500",
+                        "primary-fixed-dim": "#f66700",
+                        "secondary-dim": "#00deec",
+                        "error": "#ff7351",
+                        "secondary": "#00eefc",
+                        "outline-variant": "#494847",
+                        "surface-container-lowest": "#000000",
+                        "tertiary-fixed-dim": "#b190ff",
+                        "surface-dim": "#0e0e0e",
+                        "on-error-container": "#ffd2c8",
+                        "background": "#0e0e0e",
+                        "primary-dim": "#ff7524",
+                        "on-secondary-container": "#e3fdff",
+                        "surface-container-highest": "#262626",
+                        "secondary-fixed": "#00eefc",
+                        "error-dim": "#d53d18",
+                        "on-secondary-fixed-variant": "#005e64",
+                        "on-primary": "#531e00"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 z-50 flex justify-between items-center w-full px-6 h-14 bg-neutral-900/70 backdrop-blur-md border-b-2 border-[#FF6B00]/30 shadow-[0_1px_0_0_#FF6B00]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#FF6B00]">terminal</span>
+<h1 class="font-headline uppercase tracking-[0.2em] text-xs font-bold text-[#FF6B00]">MECAPRO OS V5.0</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="text-[10px] font-headline text-secondary tracking-widest uppercase">Sync Active</span>
+<span class="text-[8px] text-on-surface-variant font-mono">LATENCY: 12ms</span>
+</div>
+<span class="material-symbols-outlined text-[#FF6B00]">battery_charging_full</span>
+</div>
+</header>
+<div class="flex flex-1 pt-14 pb-10">
+<!-- NavigationDrawer (Suppressed on deep task pages per logic, but included here for shell context if navigating back) -->
+<aside class="hidden md:flex flex-col py-8 gap-4 h-full w-64 border-r border-neutral-800 bg-[#0e0e0e]">
+<div class="px-6 mb-4">
+<h2 class="font-headline text-[10px] tracking-widest text-on-surface-variant uppercase">SYSTEM MODULES</h2>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-4 px-6 py-3 text-neutral-400 hover:bg-[#1a1919] transition-transform duration-200 font-headline text-[10px] tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span>DASHBOARD</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 bg-[#262626] text-[#00eefc] border-l-4 border-[#00eefc] shadow-[inset_0_0_10px_rgba(0,240,255,0.1)] font-headline text-[10px] tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>INVENTORY</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-neutral-400 hover:bg-[#1a1919] transition-transform duration-200 font-headline text-[10px] tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+<span>AI VISION</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 p-6 md:p-10 overflow-y-auto bg-surface-dim">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-secondary text-xs font-headline tracking-[0.3em]">
+<span class="material-symbols-outlined text-sm">precision_manufacturing</span>
+<span>SYSTEM CRITICAL: PRIORITY ALPHA</span>
+</div>
+<h2 class="text-4xl md:text-5xl font-headline font-black italic text-on-surface tracking-tighter">
+                        WORK ORDER #WO-8829
+                    </h2>
+<div class="h-1 w-32 bg-gradient-to-r from-primary to-transparent"></div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-headline font-bold uppercase text-xs tracking-widest hover:brightness-110 transition-all rounded-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                        Mark Complete
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Customer Info Column -->
+<div class="md:col-span-1 space-y-6">
+<div class="bg-surface-container-high p-6 rounded-lg border-l-2 border-primary/20">
+<h3 class="text-[10px] font-headline tracking-[0.2em] text-on-surface-variant mb-4 uppercase">Customer Identity</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a high-end client for an industrial workshop setting, neutral cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGnZKp5E2ZujGadGChcvyLLUJu15ZuUKdj99XKyD8FrnPlWmLBbyLuTTpV46Pn9xXwvIhHFcc0W7c6MDIxmiyfFgIphbRYg3E2CCdfcFIhgijMUg49KYwFcM0T-mOMlyTe6lQfyNaX446lLykPzTMaLYD8KM4G4mzCRlxg3sg9N0uXj557R_QkiSgRdNkOq06Iiqp74wZMy4hmiaGub_dk1sZBcyvnn71Y6MkrTBA1i7j13dCbh_kiVvUwIc4UY7rUh8qFvaXg6OCa"/>
+</div>
+<div>
+<p class="text-lg font-headline font-bold text-on-surface">Elena Vance</p>
+<p class="text-xs text-on-surface-variant font-mono">ID: USER-9921-X</p>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant/10 space-y-2">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Asset:</span>
+<span class="text-on-surface font-mono">Tesla Model S Plaid (2024)</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Status:</span>
+<span class="text-secondary font-headline">TIER 1 LOYALTY</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
+<h3 class="text-[10px] font-headline tracking-[0.2em] text-on-surface-variant mb-4 uppercase">Asset Telemetry</h3>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-xs text-on-surface-variant">Mileage</span>
+<span class="text-sm font-mono text-on-surface">12,482 KM</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-3/4"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-on-surface-variant">Efficiency</span>
+<span class="text-sm font-mono text-secondary">94%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Technical Checklist (The Glassmorphic Core) -->
+<div class="md:col-span-2 space-y-6">
+<div class="glass-panel p-8 rounded-xl border border-outline-variant/20 relative">
+<div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-sm font-headline tracking-[0.4em] text-primary uppercase font-bold">Technical Checklist</h3>
+<span class="text-[10px] font-mono text-on-surface-variant">MODULE: HYDRAULIC_V3</span>
+</div>
+<div class="space-y-6">
+<!-- Diagnostic Run -->
+<div class="flex items-center justify-between p-4 bg-surface-container-highest/40 rounded-sm border-l-4 border-secondary shadow-[0_0_15px_rgba(0,238,252,0.05)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="text-sm font-headline font-bold text-on-surface">Diagnostic Run</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Completed: 09:42 AM</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_vert</span>
+</div>
+<!-- Parts Ordered -->
+<div class="flex items-center justify-between p-4 bg-surface-container-highest/40 rounded-sm border-l-4 border-primary shadow-[0_0_15px_rgba(255,145,89,0.05)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">pending</span>
+<div>
+<p class="text-sm font-headline font-bold text-on-surface">Parts Ordered</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">ETA: 2 Hours (In-Transit)</p>
+</div>
+</div>
+<span class="text-[10px] font-mono text-primary font-bold">REF: #P-990</span>
+</div>
+<!-- Labor in Progress -->
+<div class="flex items-center justify-between p-4 bg-surface-container-highest/20 rounded-sm border-l-4 border-outline-variant opacity-60">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline">radio_button_unchecked</span>
+<div>
+<p class="text-sm font-headline font-bold text-on-surface">Labor in Progress</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Waiting for component arrival</p>
+</div>
+</div>
+<div class="h-1 w-12 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full w-0 bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Insight Section -->
+<div class="bg-[#1a1919] p-6 rounded-lg border border-secondary/20 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary shadow-[0_0_10px_#00eefc]"></div>
+<div class="flex items-start gap-4">
+<div class="p-3 bg-secondary/10 rounded-full">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="space-y-3">
+<p class="text-[10px] font-headline tracking-[0.2em] text-secondary uppercase font-bold">AI Insight: Claude 3.5 Suggestion</p>
+<p class="text-sm text-on-surface font-body leading-relaxed">
+                                    Check transmission fluid viscosity based on mileage. Historical data for this model variant indicates a 14% higher failure rate beyond 12,000 KM under current environmental thermal loads.
+                                </p>
+<div class="flex items-center gap-4 pt-2">
+<button class="text-[10px] font-headline text-secondary tracking-widest hover:underline uppercase">Append to Log</button>
+<button class="text-[10px] font-headline text-on-surface-variant tracking-widest hover:text-on-surface uppercase">Dismiss</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Workshop Live Feed / Map Visual Placeholder -->
+<div class="h-48 rounded-lg bg-surface-container overflow-hidden relative border border-outline-variant/10">
+<img class="w-full h-full object-cover opacity-40 mix-blend-luminosity" data-alt="high-angle wide shot of a modern clean industrial automotive workshop with laser alignment systems and robots, low key lighting with blue accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0OfbJXaAIXeFa_jfqMh3dLEWa9rSi2THE0cVWsn6Xy_fJgtDi1dRoNOtwEAN81wXGS27EDMDDSA27ihOS2AzBJbdP3yKna1xHbvkyRX2HpDkuo4S2XaWK4_ex5f-OXaMHW5JPRCFkzJD_C0VpZtNdPLqYVk1DtjPUtxHvfzcXg5_xu0xMKpbbHEpyDAwSA6hDng-l8AZqM8BqqcAsk46y406ZPED_m_5MIxvrfudCEqXCp0Va5hXrRjdh0zyEqDHu4d_z5vCZbaML"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+<span class="text-[10px] font-headline tracking-widest uppercase text-on-surface">Live Bay Feed: 04</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-10 bg-[#1a1919]/90 backdrop-blur-lg border-t border-neutral-800/50">
+<div class="flex items-center gap-2 px-4 py-1">
+<span class="material-symbols-outlined text-[#00eefc] text-sm">settings_ethernet</span>
+<span class="font-mono text-[9px] uppercase text-[#00eefc]">C# ACTIVE</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-1">
+<span class="material-symbols-outlined text-neutral-600 text-sm">javascript</span>
+<span class="font-mono text-[9px] uppercase text-neutral-600">NODE.JS READY</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-1">
+<span class="material-symbols-outlined text-neutral-600 text-sm">psychology</span>
+<span class="font-mono text-[9px] uppercase text-neutral-600">AI NOMINAL</span>
+</div>
+<div class="absolute right-6 flex items-center gap-2">
+<span class="text-[9px] font-bold text-[#FF6B00]">MECAPRO OS</span>
+</div>
+</footer>
+</body></html>

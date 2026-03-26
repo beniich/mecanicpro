@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#fcf8f8",
+              "surface-variant": "#262626",
+              "primary": "#ff9159",
+              "on-secondary-fixed": "#003f43",
+              "on-tertiary-fixed-variant": "#4700a7",
+              "surface-container": "#1a1919",
+              "secondary-container": "#006970",
+              "tertiary-dim": "#874cff",
+              "secondary-fixed-dim": "#00deec",
+              "surface-bright": "#2c2c2c",
+              "tertiary-container": "#7000ff",
+              "on-tertiary": "#290067",
+              "error-container": "#b92902",
+              "surface-container-low": "#131313",
+              "on-background": "#ffffff",
+              "on-surface": "#ffffff",
+              "on-secondary": "#005359",
+              "on-tertiary-fixed": "#1f0052",
+              "tertiary-fixed": "#bda1ff",
+              "on-primary-fixed": "#000000",
+              "inverse-primary": "#a14100",
+              "on-surface-variant": "#adaaaa",
+              "inverse-on-surface": "#565554",
+              "surface-container-high": "#201f1f",
+              "on-error": "#450900",
+              "outline": "#777575",
+              "tertiary": "#ac89ff",
+              "on-primary-fixed-variant": "#4f1c00",
+              "primary-container": "#ff7a2f",
+              "surface-tint": "#ff9159",
+              "surface": "#0e0e0e",
+              "on-tertiary-container": "#f8f1ff",
+              "primary-fixed": "#ff7a2f",
+              "on-primary-container": "#401500",
+              "primary-fixed-dim": "#f66700",
+              "secondary-dim": "#00deec",
+              "error": "#ff7351",
+              "secondary": "#00eefc",
+              "outline-variant": "#494847",
+              "surface-container-lowest": "#000000",
+              "tertiary-fixed-dim": "#b190ff",
+              "surface-dim": "#0e0e0e",
+              "on-error-container": "#ffd2c8",
+              "background": "#0e0e0e",
+              "primary-dim": "#ff7524",
+              "on-secondary-container": "#e3fdff",
+              "surface-container-highest": "#262626",
+              "secondary-fixed": "#00eefc",
+              "error-dim": "#d53d18",
+              "on-secondary-fixed-variant": "#005e64",
+              "on-primary": "#531e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .timeline-grid {
+            background-size: 40px 40px;
+            background-image: radial-gradient(circle, #262626 1px, transparent 1px);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(38, 38, 38, 0.6);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="bg-neutral-900/70 backdrop-blur-md border-b-2 border-[#FF6B00]/30 shadow-[0_1px_0_0_#FF6B00] flex justify-between items-center w-full px-6 h-14 fixed top-0 z-[100]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#FF6B00]" data-icon="terminal">terminal</span>
+<span class="text-lg font-black text-[#FF6B00] italic">MECAPRO OS V5.0</span>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-8 font-['Space_Grotesk'] uppercase tracking-[0.2em] text-xs font-bold">
+<a class="text-neutral-500 hover:text-[#FF6B00] transition-colors duration-300" href="#">DASHBOARD</a>
+<a class="text-[#00eefc] drop-shadow-[0_0_5px_#00eefc]" href="#">TIMELINE</a>
+<a class="text-neutral-500 hover:text-[#FF6B00] transition-colors duration-300" href="#">INVENTORY</a>
+</nav>
+<span class="material-symbols-outlined text-[#FF6B00] animate-pulse" data-icon="battery_charging_full">battery_charging_full</span>
+</div>
+</header>
+<div class="flex min-h-screen pt-14 pb-10 md:pb-0">
+<!-- NavigationDrawer (Sidebar) -->
+<aside class="hidden md:flex flex-col py-8 gap-4 bg-[#0e0e0e] h-[calc(100vh-3.5rem)] w-64 border-r border-neutral-800 sticky top-14">
+<div class="px-6 mb-4">
+<p class="font-['Space_Grotesk'] text-[10px] tracking-widest text-neutral-400 uppercase">SYSTEM MODULES</p>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-4 px-6 py-3 text-neutral-400 hover:bg-[#1a1919] hover:translate-x-1 transition-transform duration-200 font-['Space_Grotesk'] text-[10px] tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+                    DASHBOARD
+                </a>
+<a class="flex items-center gap-4 px-6 py-3 bg-[#262626] text-[#00eefc] border-l-4 border-[#00eefc] shadow-[inset_0_0_10px_rgba(0,240,255,0.1)] font-['Space_Grotesk'] text-[10px] tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="schedule" style="font-variation-settings: 'FILL' 1;">schedule</span>
+                    TIMELINE
+                </a>
+<a class="flex items-center gap-4 px-6 py-3 text-neutral-400 hover:bg-[#1a1919] hover:translate-x-1 transition-transform duration-200 font-['Space_Grotesk'] text-[10px] tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                    INVENTORY
+                </a>
+<a class="flex items-center gap-4 px-6 py-3 text-neutral-400 hover:bg-[#1a1919] hover:translate-x-1 transition-transform duration-200 font-['Space_Grotesk'] text-[10px] tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                    AI VISION
+                </a>
+</nav>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 bg-surface-dim overflow-x-hidden">
+<!-- Header Section -->
+<section class="p-8 border-b border-outline-variant/10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="font-headline text-4xl font-bold tracking-tighter text-on-surface flex items-center gap-3">
+                            WORKSHOP TIMELINE
+                            <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+</h1>
+<p class="text-on-surface-variant font-body text-sm mt-2 max-w-md">Real-time throughput monitoring and bay allocation synchronization.</p>
+</div>
+<!-- Calendar Strip -->
+<div class="flex gap-2 bg-surface-container p-1 rounded-lg border border-outline-variant/20">
+<button class="flex flex-col items-center justify-center w-12 h-16 rounded bg-surface-container-highest text-secondary border border-secondary/30">
+<span class="text-[10px] font-headline font-bold">MON</span>
+<span class="text-lg font-headline font-black">12</span>
+</button>
+<button class="flex flex-col items-center justify-center w-12 h-16 rounded text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="text-[10px] font-headline">TUE</span>
+<span class="text-lg font-headline font-black">13</span>
+</button>
+<button class="flex flex-col items-center justify-center w-12 h-16 rounded text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="text-[10px] font-headline">WED</span>
+<span class="text-lg font-headline font-black">14</span>
+</button>
+<button class="flex flex-col items-center justify-center w-12 h-16 rounded text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="text-[10px] font-headline">THU</span>
+<span class="text-lg font-headline font-black">15</span>
+</button>
+<button class="flex flex-col items-center justify-center w-12 h-16 rounded text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="text-[10px] font-headline">FRI</span>
+<span class="text-lg font-headline font-black">16</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Timeline View Container -->
+<div class="relative p-8 overflow-x-auto min-w-[1000px]">
+<!-- Time Labels -->
+<div class="flex ml-24 mb-6 border-b border-outline-variant/10 pb-4">
+<div class="w-40 text-[10px] font-headline tracking-[0.2em] text-on-surface-variant">08:00 AM</div>
+<div class="w-40 text-[10px] font-headline tracking-[0.2em] text-on-surface-variant">10:00 AM</div>
+<div class="w-40 text-[10px] font-headline tracking-[0.2em] text-on-surface-variant">12:00 PM</div>
+<div class="w-40 text-[10px] font-headline tracking-[0.2em] text-on-surface-variant">02:00 PM</div>
+<div class="w-40 text-[10px] font-headline tracking-[0.2em] text-on-surface-variant">04:00 PM</div>
+<div class="w-40 text-[10px] font-headline tracking-[0.2em] text-on-surface-variant">06:00 PM</div>
+</div>
+<!-- Timeline Grid Body -->
+<div class="relative timeline-grid min-h-[600px] border-l border-outline-variant/20 ml-24">
+<!-- Current Time Indicator Line -->
+<div class="absolute left-[340px] top-0 bottom-0 w-px bg-secondary z-20 shadow-[0_0_15px_#00eefc]">
+<div class="absolute -top-1.5 -left-1.5 w-3 h-3 rounded-full bg-secondary shadow-[0_0_10px_#00eefc]"></div>
+<div class="absolute -top-6 -left-8 bg-secondary text-on-primary-fixed px-2 py-0.5 rounded text-[10px] font-bold font-headline">LIVE</div>
+</div>
+<!-- Bay Rows -->
+<div class="space-y-12 pt-6">
+<!-- Bay 1 -->
+<div class="relative flex items-center group">
+<div class="absolute -left-24 w-20 text-right">
+<span class="font-headline font-bold text-xs tracking-wider text-primary">BAY 01</span>
+<div class="text-[10px] text-on-surface-variant uppercase">Standard Lift</div>
+</div>
+<!-- Task Block -->
+<div class="ml-10 w-[280px] h-20 glass-panel border-l-4 border-primary p-4 rounded-r-lg flex flex-col justify-between hover:bg-surface-container-highest transition-all group/card cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="text-xs font-bold font-headline text-on-surface group-hover/card:text-primary transition-colors">AUDI A4 - OIL CHANGE</div>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="oil_barrel">oil_barrel</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale" data-alt="Close-up portrait of a professional automotive technician in a dark garage setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeSJCqVphs9SARMPxA91JVujtANdZz2WHuXiqMmVlKt5XJtIibXPIoTyX1E4_aP3fq0bFC4AFBKHK3wp2kLE115dlKVz2wLL_9ZM-JFC9XaABj6z9IlsuanF9v6qkGCb-RJ7lHKQm0jar_mUNtVZR9BhuL9TYeSJxFFvvVSXPzj3BB9F0q-v4kQ9wk-KKeO9Q1sJqH9lt8czo9ZqtCfXQQ734sMSwXJmcwNj6y7YYHuuwnIGl_88m1xNFPoWafUgXLzqPqhTuGl3QU"/>
+</div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Tech: Marcus V.</span>
+</div>
+</div>
+</div>
+<!-- Bay 2 -->
+<div class="relative flex items-center group">
+<div class="absolute -left-24 w-20 text-right">
+<span class="font-headline font-bold text-xs tracking-wider text-secondary">BAY 02</span>
+<div class="text-[10px] text-on-surface-variant uppercase">AI Diagnostic</div>
+</div>
+<!-- Task Block -->
+<div class="ml-[340px] w-[360px] h-20 glass-panel border-l-4 border-secondary p-4 rounded-r-lg flex flex-col justify-between hover:bg-surface-container-highest transition-all group/card cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="text-xs font-bold font-headline text-on-surface group-hover/card:text-secondary transition-colors">BMW M3 - AI FULL SCAN</div>
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="psychology" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale" data-alt="Portrait of a young female mechanical engineer wearing tech gear in a modern lab" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOkMMxhPmJrTy9a63J_dTEWS7HVzghpAvveDdaRc0T-99h3mTpLbYoB3Uz2xFXY_BEQ281ew6Zjoa96txDFiGKn2YUqkbocmM6k4OnYt0Zm9zmsAF4WC7m-Th5in_6Ny3wDUzq2-VozEZfcWqmOlEq76Q3WASguknMWVJOmX54qR425OVV2KzSceYhQpmFNfThIp34-Yzl8yqnL1x9gK264AAelS2VmqkUM2JH4Yr2mjdxzOxhPFG_mKhIZCjACN868dvW-B6ic0xT"/>
+</div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Tech: Sarah Chen</span>
+<span class="ml-auto text-[10px] font-headline text-secondary px-2 py-0.5 border border-secondary/20 rounded">PROCESSING</span>
+</div>
+</div>
+</div>
+<!-- Bay 3 -->
+<div class="relative flex items-center group">
+<div class="absolute -left-24 w-20 text-right">
+<span class="font-headline font-bold text-xs tracking-wider text-on-surface-variant">BAY 03</span>
+<div class="text-[10px] text-on-surface-variant uppercase">EV STATION</div>
+</div>
+<!-- Task Block -->
+<div class="ml-[80px] w-[200px] h-20 glass-panel border-l-4 border-outline-variant p-4 rounded-r-lg flex flex-col justify-between opacity-50 grayscale">
+<div class="flex justify-between items-start">
+<div class="text-xs font-bold font-headline text-on-surface-variant">TESLA MOD 3 - CALIB</div>
+<span class="material-symbols-outlined text-sm" data-icon="ev_station">ev_station</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest italic">COMPLETED</span>
+</div>
+</div>
+<!-- Next Task Block -->
+<div class="ml-[480px] w-[220px] h-20 glass-panel border-l-4 border-primary-container p-4 rounded-r-lg flex flex-col justify-between hover:bg-surface-container-highest transition-all group/card cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="text-xs font-bold font-headline text-on-surface">PORSCHE 911 - TUNE</div>
+<span class="material-symbols-outlined text-sm text-primary-container" data-icon="settings_suggest">settings_suggest</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Pending Parts</span>
+</div>
+</div>
+</div>
+<!-- Bay 4 -->
+<div class="relative flex items-center group">
+<div class="absolute -left-24 w-20 text-right">
+<span class="font-headline font-bold text-xs tracking-wider text-primary">BAY 04</span>
+<div class="text-[10px] text-on-surface-variant uppercase">Heavy Duty</div>
+</div>
+<!-- Task Block -->
+<div class="ml-[120px] w-[420px] h-20 glass-panel border-l-4 border-primary p-4 rounded-r-lg flex flex-col justify-between hover:bg-surface-container-highest transition-all group/card cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="text-xs font-bold font-headline text-on-surface group-hover/card:text-primary transition-colors">FORD F-150 - SUSPENSION</div>
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="build">build</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover grayscale" data-alt="Close-up of a senior mechanic in work overalls inspecting a heavy engine component" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3RBmblKL7McXxjc9UUU4QXsH2aNZuyCzeAE-2pqYyy98_viL-sQlxrem9fCwAl6yuwkEPUQ7bQoV5EQX9wkKSDMFbim_ijEx4VML5PcNR3tkRYrxW-ZqVjdnVwWlqdyT3kJaz6g7hn_KtIjoHk62jyePlQRXgU71kUP05Qu6wbAIrVXx6NAHJf7_3KgkmBsszfj_6qZwxFnfQ9_EhK962Cu0LaGcnn4QE43083i4TteThyPV7F9uufHYYK3gBsaAoWeWyQb-xxvnA"/>
+</div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Tech: Jaxson R.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center border-t border-neutral-800/50 bg-[#1a1919]/90 backdrop-blur-lg h-10 md:hidden">
+<a class="flex flex-col items-center justify-center text-neutral-600" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings_ethernet">settings_ethernet</span>
+<span class="font-mono text-[9px] uppercase">C# ACTIVE</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#00eefc]" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="javascript">javascript</span>
+<span class="font-mono text-[9px] uppercase">NODE.JS READY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-600" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="psychology">psychology</span>
+<span class="font-mono text-[9px] uppercase">AI NOMINAL</span>
+</a>
+</nav>
+<!-- Floating Legend (Task Types) -->
+<div class="fixed bottom-16 right-8 hidden lg:flex flex-col gap-3 p-4 bg-surface-container-high border border-outline-variant/20 rounded-lg shadow-xl glass-panel">
+<h3 class="font-headline text-[10px] font-bold tracking-widest text-on-surface-variant border-b border-outline-variant/20 pb-2 mb-1">TASK CATEGORIES</h3>
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-[10px] font-headline text-on-surface uppercase">Maintenance</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[10px] font-headline text-on-surface uppercase">Advanced AI Diag</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="text-[10px] font-headline text-on-surface uppercase">Hardware Pending</span>
+</div>
+</div>
+</body></html>

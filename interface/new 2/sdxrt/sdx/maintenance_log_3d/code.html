@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MecaPro OS V5.0 - Maintenance Log</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#000000",
+              "surface-variant": "#262626",
+              "tertiary": "#ac89ff",
+              "surface-dim": "#0e0e0e",
+              "secondary-fixed": "#00eefc",
+              "background": "#0e0e0e",
+              "primary": "#ff9159",
+              "on-error-container": "#ffd2c8",
+              "surface-container-low": "#131313",
+              "primary-dim": "#ff7524",
+              "primary-container": "#ff7a2f",
+              "on-secondary": "#005359",
+              "on-secondary-container": "#e3fdff",
+              "error": "#ff7351",
+              "surface-tint": "#ff9159",
+              "on-tertiary-fixed-variant": "#4700a7",
+              "on-tertiary-container": "#f8f1ff",
+              "secondary-fixed-dim": "#00deec",
+              "surface-bright": "#2c2c2c",
+              "on-error": "#450900",
+              "tertiary-fixed-dim": "#b190ff",
+              "outline": "#777575",
+              "on-primary": "#531e00",
+              "on-primary-fixed": "#000000",
+              "tertiary-dim": "#874cff",
+              "on-tertiary-fixed": "#1f0052",
+              "secondary-dim": "#00deec",
+              "tertiary-fixed": "#bda1ff",
+              "error-dim": "#d53d18",
+              "primary-fixed": "#ff7a2f",
+              "surface-container-high": "#201f1f",
+              "inverse-on-surface": "#565554",
+              "secondary": "#00eefc",
+              "inverse-surface": "#fcf8f8",
+              "on-tertiary": "#290067",
+              "secondary-container": "#006970",
+              "on-primary-container": "#401500",
+              "on-primary-fixed-variant": "#4f1c00",
+              "on-surface-variant": "#adaaaa",
+              "on-surface": "#ffffff",
+              "surface": "#0e0e0e",
+              "tertiary-container": "#7000ff",
+              "error-container": "#b92902",
+              "on-secondary-fixed": "#003f43",
+              "outline-variant": "#494847",
+              "inverse-primary": "#a14100",
+              "on-secondary-fixed-variant": "#005e64",
+              "on-background": "#ffffff",
+              "primary-fixed-dim": "#f66700",
+              "surface-container": "#1a1919",
+              "surface-container-highest": "#262626"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neumorphic-card {
+            background: #1a1919;
+            box-shadow: 8px 8px 16px #0a0a0a, -4px -4px 12px #262626;
+        }
+        .neon-path {
+            filter: drop-shadow(0 0 8px rgba(0, 238, 252, 0.6));
+        }
+        .glass-panel {
+            background: rgba(26, 25, 25, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .asymmetric-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+        @media (max-width: 1024px) {
+            .asymmetric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 h-16 bg-neutral-900/70 backdrop-blur-xl rounded-b-2xl border-b border-white/10 mx-4 mt-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-orange-500 hover:text-orange-400 transition-all duration-300 cursor-pointer">menu</span>
+<h1 class="text-lg font-bold text-orange-500 tracking-widest font-['Space_Grotesk'] tracking-tighter uppercase">MecaPro OS V5.0</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 font-['Space_Grotesk'] tracking-tighter uppercase text-sm">
+<a class="text-neutral-500 hover:text-orange-400 transition-all duration-300" href="#">Fleet</a>
+<a class="text-cyan-400 drop-shadow-[0_0_8px_rgba(0,238,252,0.6)]" href="#">Logs</a>
+<a class="text-neutral-500 hover:text-orange-400 transition-all duration-300" href="#">Diagnostics</a>
+</nav>
+<span class="material-symbols-outlined text-orange-500 hover:text-orange-400 transition-all duration-300 cursor-pointer">settings_input_component</span>
+</div>
+</header>
+<main class="pt-28 pb-32 px-6 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="mb-12">
+<h2 class="font-headline text-5xl font-bold tracking-tighter text-on-surface mb-2">MAINTENANCE <span class="text-primary">TIMELINE</span></h2>
+<div class="flex items-center gap-4">
+<div class="h-[2px] w-12 bg-primary"></div>
+<p class="text-on-surface-variant text-sm font-medium tracking-widest uppercase">System Chronology &amp; Component Health</p>
+</div>
+</div>
+<div class="asymmetric-grid">
+<!-- 3D Timeline Section -->
+<div class="relative min-h-[600px] py-8">
+<!-- Vertical Neon Path -->
+<div class="absolute left-8 top-0 bottom-0 w-[4px] bg-secondary/20 rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[60%] bg-secondary neon-path"></div>
+</div>
+<!-- Timeline Entries -->
+<div class="space-y-16 pl-20 relative">
+<!-- Entry 1: Alert -->
+<div class="relative group">
+<!-- Connector Sphere -->
+<div class="absolute -left-[3.75rem] top-6 w-6 h-6 rounded-full bg-surface-container-highest border-4 border-error shadow-[0_0_15px_rgba(255,115,81,0.5)] z-10"></div>
+<div class="neumorphic-card p-6 rounded-xl flex items-start gap-6 transition-transform hover:scale-[1.02] cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center text-error shadow-[inset_2px_2px_5px_#0a0a0a,inset_-2px_-2px_5px_#262626]">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<h3 class="font-headline text-xl font-bold tracking-tight text-on-surface">BRAKE PAD WEAR CRITICAL</h3>
+<span class="text-[10px] font-bold bg-error/10 text-error px-2 py-1 rounded border border-error/20">ALERT</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-4">Front axle sensors reporting 2.1mm remaining thickness. Immediate replacement advised.</p>
+<div class="flex gap-4 text-[11px] font-mono text-on-surface-variant/60">
+<span>REF: BP-992-X</span>
+<span>O DOM: 42,102 KM</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Entry 2: Complete -->
+<div class="relative group">
+<!-- Connector Sphere -->
+<div class="absolute -left-[3.75rem] top-6 w-6 h-6 rounded-full bg-surface-container-highest border-4 border-secondary shadow-[0_0_15px_rgba(0,238,252,0.5)] z-10"></div>
+<div class="neumorphic-card p-6 rounded-xl flex items-start gap-6 transition-transform hover:scale-[1.02] cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center text-secondary shadow-[inset_2px_2px_5px_#0a0a0a,inset_-2px_-2px_5px_#262626]">
+<span class="material-symbols-outlined text-3xl">oil_barrel</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<h3 class="font-headline text-xl font-bold tracking-tight text-on-surface">SYNTHETIC OIL SERVICE</h3>
+<span class="text-[10px] font-bold bg-secondary/10 text-secondary px-2 py-1 rounded border border-secondary/20">COMPLETE</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-4">Full fluid extraction and replacement with 0W-40 Performance Grade. Filter core upgraded.</p>
+<div class="flex gap-4 text-[11px] font-mono text-on-surface-variant/60">
+<span>REF: FL-004-S</span>
+<span>ODOM: 40,000 KM</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Entry 3: Pending -->
+<div class="relative group">
+<!-- Connector Sphere -->
+<div class="absolute -left-[3.75rem] top-6 w-6 h-6 rounded-full bg-surface-container-highest border-4 border-primary shadow-[0_0_15px_rgba(255,145,89,0.5)] z-10"></div>
+<div class="neumorphic-card p-6 rounded-xl flex items-start gap-6 opacity-80 hover:opacity-100 transition-all hover:scale-[1.02] cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center text-primary shadow-[inset_2px_2px_5px_#0a0a0a,inset_-2px_-2px_5px_#262626]">
+<span class="material-symbols-outlined text-3xl">build</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<h3 class="font-headline text-xl font-bold tracking-tight text-on-surface">CHASSIS RE-ALIGNMENT</h3>
+<span class="text-[10px] font-bold bg-primary/10 text-primary px-2 py-1 rounded border border-primary/20">PENDING</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-4">Scheduled for next workshop cycle. Precision laser alignment for high-speed stability.</p>
+<div class="flex gap-4 text-[11px] font-mono text-on-surface-variant/60">
+<span>ETA: 48 HOURS</span>
+<span>SCHED: 12.OCT.24</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar: Detailed View (Glassmorphism) -->
+<div class="space-y-6">
+<div class="glass-panel rounded-3xl p-8 sticky top-24">
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="text-primary font-headline text-xs font-bold tracking-[0.2em] uppercase">Active Diagnostic</span>
+<h4 class="text-3xl font-bold font-headline mt-1">LOG ENTRY #094</h4>
+</div>
+<div class="w-12 h-12 bg-surface-container-highest rounded-xl flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-secondary">analytics</span>
+</div>
+</div>
+<div class="space-y-6">
+<!-- AI Confidence Gauge (Concentric Ring Concept) -->
+<div class="relative flex flex-col items-center py-4">
+<svg class="w-48 h-48 -rotate-90">
+<circle class="text-surface-container-highest" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary drop-shadow-[0_0_8px_rgba(0,238,252,0.4)]" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502" stroke-dashoffset="100" stroke-width="8"></circle>
+<circle class="text-surface-container-highest" cx="96" cy="96" fill="transparent" r="64" stroke="currentColor" stroke-width="6"></circle>
+<circle class="text-primary drop-shadow-[0_0_6px_rgba(255,145,89,0.3)]" cx="96" cy="96" fill="transparent" r="64" stroke="currentColor" stroke-dasharray="402" stroke-dashoffset="120" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-4xl font-headline font-bold">92<span class="text-lg">%</span></span>
+<span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Confidence</span>
+</div>
+</div>
+<!-- Technical Specs Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Pressure</span>
+<span class="font-headline text-xl">14.2 PSI</span>
+</div>
+<div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Temp</span>
+<span class="font-headline text-xl">94.0° C</span>
+</div>
+<div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Viscosity</span>
+<span class="font-headline text-xl">OPTIMAL</span>
+</div>
+<div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Flow</span>
+<span class="font-headline text-xl">2.4 L/M</span>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-bold uppercase tracking-widest text-sm shadow-[0_10px_25px_-5px_rgba(255,145,89,0.4)] hover:scale-[1.02] active:scale-95 transition-all">
+                                EXECUTE OVERRIDE
+                            </button>
+</div>
+</div>
+</div>
+<!-- Secondary Info Card -->
+<div class="bg-surface-container p-6 rounded-3xl border border-white/5">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-secondary text-sm">info</span>
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Fleet Advisory</span>
+</div>
+<p class="text-sm text-on-surface leading-relaxed">
+                        External telemetry suggests 3 additional vehicles in your cluster require similar hydraulic inspection within <span class="text-secondary font-bold">14 days</span>.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-8 pb-8 pt-4 bg-[#1a1919]/80 backdrop-blur-2xl rounded-t-[2.5rem] border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.9)]">
+<a class="flex flex-col items-center justify-center text-neutral-600 hover:text-orange-500 transition-transform active:scale-90 transition-all cubic-bezier(0.34,1.56,0.64,1)" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="directions_car">directions_car</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Fleet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-cyan-400 drop-shadow-[0_0_12px_rgba(0,238,252,0.8)] scale-110 active:scale-90 transition-all cubic-bezier(0.34,1.56,0.64,1)" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="insert_chart">insert_chart</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Logs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-600 hover:text-orange-500 transition-transform active:scale-90 transition-all cubic-bezier(0.34,1.56,0.64,1)" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="ac_unit">ac_unit</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Climate</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-600 hover:text-orange-500 transition-transform active:scale-90 transition-all cubic-bezier(0.34,1.56,0.64,1)" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="person">person</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase font-bold mt-1">Profile</span>
+</a>
+</nav>
+<!-- Floating Action Button (Supressed based on Shell Logic for Log Detail Screen, but shown here for primary log view) -->
+<button class="fixed bottom-28 right-8 w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_15px_35px_rgba(255,145,89,0.4)] hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-3xl">add</span>
+</button>
+</body></html>

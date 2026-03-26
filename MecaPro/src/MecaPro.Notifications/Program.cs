@@ -30,7 +30,19 @@ var audience = builder.Configuration["Jwt:Audience"]!;
 var publicKeyPem = builder.Configuration["Jwt:PublicKeyPem"]!;
 
 var publicRsa = RSA.Create();
-publicRsa.ImportFromPem(publicKeyPem);
+var pkPem = publicKeyPem.Trim();
+if (pkPem.Contains("BEGIN RSA PUBLIC KEY"))
+{
+    var base64 = pkPem
+        .Replace("-----BEGIN RSA PUBLIC KEY-----", "")
+        .Replace("-----END RSA PUBLIC KEY-----", "")
+        .Replace("\n", "").Replace("\r", "").Trim();
+    publicRsa.ImportSubjectPublicKeyInfo(Convert.FromBase64String(base64), out _);
+}
+else
+{
+    publicRsa.ImportFromPem(pkPem);
+}
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

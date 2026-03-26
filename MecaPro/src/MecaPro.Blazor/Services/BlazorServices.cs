@@ -214,7 +214,18 @@ public record PagedResult<T>(IEnumerable<T> Items, int Total, int Page, int Page
 
 public record QrCodeDto(string Token, string Url, string Image, string LicensePlate);
 public record DiagnosticDto(Guid Id, Guid VehicleId, string FaultCode, string Description, string Severity, string Status, DateTime CreatedAt);
-    public record CustomerDto(Guid Id, string FirstName, string LastName, string Email, string? Phone, string Segment, int LoyaltyPoints, DateTime CreatedAt, bool IsBusiness = false, string? CompanyName = null);
+
+public record AiVisionResultDto(
+    string Part, 
+    double AiConfidence, 
+    List<AiDiagnosticDto> Diagnostics, 
+    string Recommendation, 
+    string EstimatedReplacementTime
+);
+
+public record AiDiagnosticDto(string Type, string Observation, string Severity);
+
+public record CustomerDto(Guid Id, string FirstName, string LastName, string Email, string? Phone, string Segment, int LoyaltyPoints, DateTime CreatedAt, bool IsBusiness = false, string? CompanyName = null);
     
     public record CustomerDetailDto(
         Guid Id, string FirstName, string LastName, string Email, string? Phone, string? Street, string? City, string? PostalCode,

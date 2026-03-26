@@ -58,7 +58,19 @@ var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()!;
 var publicRsa = System.Security.Cryptography.RSA.Create();
 try 
 {
-    publicRsa.ImportFromPem(jwtSettings.PublicKeyPem);
+    var pkPem = jwtSettings.PublicKeyPem.Trim();
+    if (pkPem.Contains("BEGIN RSA PUBLIC KEY"))
+    {
+        var base64 = pkPem
+            .Replace("-----BEGIN RSA PUBLIC KEY-----", "")
+            .Replace("-----END RSA PUBLIC KEY-----", "")
+            .Replace("\n", "").Replace("\r", "").Trim();
+        publicRsa.ImportSubjectPublicKeyInfo(Convert.FromBase64String(base64), out _);
+    }
+    else
+    {
+        publicRsa.ImportFromPem(pkPem);
+    }
     
     builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -206,14 +218,21 @@ builder.Services.AddSwaggerGen(c =>
 // ═══════════════════════════════════════════════════════════════════════════
 //  EVENT BUS (MassTransit)
 // ═══════════════════════════════════════════════════════════════════════════
-builder.Services.AddMassTransit(x =>
+try 
 {
-    x.UsingRabbitMq((ctx, cfg) =>
+    builder.Services.AddMassTransit(x =>
     {
-        cfg.Host(builder.Configuration.GetConnectionString("RabbitMQ") ?? "localhost");
-        cfg.ConfigureEndpoints(ctx);
+        x.UsingRabbitMq((ctx, cfg) =>
+        {
+            cfg.Host(builder.Configuration.GetConnectionString("RabbitMQ") ?? "localhost");
+            cfg.ConfigureEndpoints(ctx);
+        });
     });
-});
+}
+catch (Exception ex)
+{
+    Log.Warning("MassTransit initialization failed (RabbitMQ offline): {Message}", ex.Message);
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  APPLICATION SERVICES
@@ -247,7 +266,7 @@ builder.Services.AddScoped<DatabaseSeeder>();
 //  CORS
 // ═══════════════════════════════════════════════════════════════════════════
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins")
-    .Get<string[]>() ?? ["http://localhost:5200", "https://localhost:5201"];
+    .Get<string[]>() ?? ["http://localhost:5200", "https://localhost:5201", "http://localhost:3000"];
 
 builder.Services.AddCors(opt => opt.AddPolicy("AllowBlazor", policy =>
     policy.WithOrigins(allowedOrigins)
@@ -269,6 +288,9 @@ else
 // ═══════════════════════════════════════════════════════════════════════════
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!);
+
+// SignalR
+builder.Services.AddSignalR();
 
 // ─────────────────────────────────────────────────────────────────────────
 var app = builder.Build();
@@ -316,6 +338,10 @@ app.UseAuthorization();
 
 // 10. Carter routes
 app.MapCarter();
+
+// 10.1 SignalR Hubs
+app.MapHub<MecaPro.API.Hubs.ChatHub>("/hubs/chat");
+app.MapHub<MecaPro.API.Hubs.NotificationHub>("/hubs/notifications");
 
 // 11. Health check endpoint
 app.MapHealthChecks("/health").AllowAnonymous();

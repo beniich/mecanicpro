@@ -495,22 +495,47 @@ export class ToolExecutor {
     })
 
     this.register('analyze_part_image', async (input) => {
-      const { imageUrl, partType = 'pièce mécanique' } = input as { imageUrl: string; partType?: string }
+      const { imageUrl, base64Image, partType = 'pièce mécanique' } = input as { imageUrl?: string; base64Image?: string; partType?: string }
       
-      console.log(`[VISION] Analyzing ${partType} from image: ${imageUrl.substring(0, 50)}...`)
+      console.log(`[VISION] Analyzing ${partType}...`)
       
-      // In a real scenario, we'd send the image to Claude 3.5's vision blocks
-      // For this version, we return a high-quality simulated analysis based on the part type
-      return {
-        part: partType,
-        diagnostics: [
-          { type: 'Structural', observation: 'Fissure de fatigue détectée sur le bras de suspension', severity: 'Critical' },
-          { type: 'Condition', observation: 'Corrosion galvanique modérée sur les points de fixation', severity: 'Medium' }
-        ],
-        aiConfidence: 0.94,
-        recommendation: 'Arrêt immédiat du véhicule conseillé. Remplacement prioritaire de la pièce.',
-        estimatedReplacementTime: '2.5 hours'
+      if (!process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === 'YOUR_API_KEY') {
+        // High-quality simulation for dev
+        await new Promise(r => setTimeout(r, 2000));
+        return {
+          part: partType,
+          diagnostics: [
+            { type: 'Structurel', observation: `Déformation détectée sur ${partType}`, severity: 'Critical' },
+            { type: 'Usure', observation: 'Signes de corrosion avancée sur les points de pivot', severity: 'Major' }
+          ],
+          aiConfidence: 0.96,
+          recommendation: 'Remplacement immédiat nécessaire pour garantir la sécurité du véhicule.',
+          estimatedReplacementTime: '3.5 heures'
+        }
       }
+
+      // Real Anthropic Vision Implementation
+      const visionResponse = await client.messages.create({
+        model: 'claude-3-5-sonnet-20240620',
+        max_tokens: 1024,
+        messages: [
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'text',
+                text: `Analyse cette image de ${partType} automobile. Liste les dommages visibles, l'usure et donne une recommandation de réparation. Réponds EXCLUSIVEMENT en JSON avec cette structure: { "part": string, "diagnostics": [{ "type": string, "observation": string, "severity": "Minor"|"Medium"|"Major"|"Critical" }], "aiConfidence": number, "recommendation": string, "estimatedReplacementTime": string }`
+              },
+              base64Image 
+                ? { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: base64Image } }
+                : { type: 'image', source: { type: 'url', url: imageUrl! } }
+            ]
+          }
+        ]
+      });
+
+      const text = visionResponse.content.filter(b => b.type === 'text').map(b => (b as any).text).join('');
+      return JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
     })
 
     // ── Send notification ─────────────────────────────────

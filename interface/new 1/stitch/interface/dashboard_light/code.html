@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MecaPro OS V5.0 - Dashboard Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#f7f9fb",
+              "secondary": "#006970",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#5a4136",
+              "error": "#ba1a1a",
+              "on-primary-fixed": "#351000",
+              "on-secondary-container": "#006a70",
+              "on-secondary-fixed": "#002022",
+              "surface": "#f7f9fb",
+              "secondary-container": "#12f1ff",
+              "surface-variant": "#e0e3e5",
+              "on-error": "#ffffff",
+              "surface-container": "#eceef0",
+              "primary-container": "#ff6b00",
+              "inverse-primary": "#ffb693",
+              "on-background": "#191c1e",
+              "inverse-surface": "#2d3133",
+              "outline": "#8e7164",
+              "surface-tint": "#a04100",
+              "on-tertiary-fixed": "#001d35",
+              "on-primary-container": "#572000",
+              "secondary-fixed-dim": "#00dbe8",
+              "on-primary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-error-container": "#93000a",
+              "on-secondary-fixed-variant": "#004f54",
+              "tertiary": "#0062a1",
+              "on-tertiary-container": "#003357",
+              "error-container": "#ffdad6",
+              "background": "#f7f9fb",
+              "on-tertiary": "#ffffff",
+              "on-tertiary-fixed-variant": "#00497b",
+              "surface-container-highest": "#e0e3e5",
+              "surface-dim": "#d8dadc",
+              "surface-container-low": "#f2f4f6",
+              "primary-fixed-dim": "#ffb693",
+              "secondary-fixed": "#79f4ff",
+              "on-surface": "#191c1e",
+              "tertiary-fixed": "#d0e4ff",
+              "tertiary-fixed-dim": "#9ccaff",
+              "inverse-on-surface": "#eff1f3",
+              "tertiary-container": "#059eff",
+              "primary-fixed": "#ffdbcc",
+              "primary": "#a04100",
+              "surface-container-high": "#e6e8ea",
+              "outline-variant": "#e2bfb0",
+              "on-primary-fixed-variant": "#7a3000"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 191, 176, 0.15);
+        }
+        .submerged-grid {
+            background-image: radial-gradient(#e2bfb0 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+        .mono-data { font-family: 'JetBrains Mono', monospace; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar Shell -->
+<header class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-[#E2BFB0]/15 shadow-sm shadow-black/5 flex justify-between items-center px-6 h-16 w-full fixed top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-600 cursor-pointer">menu</span>
+<h1 class="text-xl font-black text-[#FF6B00] tracking-tighter font-headline">MecaPro OS</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 font-headline text-[0.6875rem] font-bold tracking-[0.05em] uppercase text-slate-600">
+<a class="text-[#FF6B00]" href="#">Dashboard</a>
+<a class="hover:text-[#A04100] transition-colors" href="#">Analytics</a>
+<a class="hover:text-[#A04100] transition-colors" href="#">Modules</a>
+<a class="hover:text-[#A04100] transition-colors" href="#">Inventory</a>
+</div>
+<span class="material-symbols-outlined text-slate-600 cursor-pointer">settings_input_component</span>
+</div>
+</header>
+<div class="flex min-h-screen pt-16 pb-20 md:pb-0">
+<!-- NavigationDrawer Shell (Desktop) -->
+<aside class="hidden md:flex flex-col gap-2 p-4 bg-[#F7F9FB] h-screen w-72 fixed left-0 border-r-0 z-40">
+<div class="py-6 px-4">
+<h2 class="text-lg font-bold text-[#FF6B00] font-headline">MecaPro V5.0</h2>
+<p class="font-['Space_Grotesk'] uppercase text-[0.6875rem] tracking-[0.05em] text-slate-400 mt-1">Industrial Control System</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-[#FF6B00] text-white font-bold transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-headline uppercase text-[0.6875rem] tracking-[0.05em]">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-headline uppercase text-[0.6875rem] tracking-[0.05em]">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-headline uppercase text-[0.6875rem] tracking-[0.05em]">Modules</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-headline uppercase text-[0.6875rem] tracking-[0.05em]">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-headline uppercase text-[0.6875rem] tracking-[0.05em]">System Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-72 p-6 submerged-grid bg-background">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
+<div>
+<span class="label-sm font-headline uppercase tracking-[0.1em] text-slate-400">Workshop Command Center</span>
+<h2 class="text-5xl font-black font-headline tracking-tighter text-on-background mt-2">DASHBOARD <span class="text-primary-container">HUB</span></h2>
+</div>
+<button class="bg-primary-container text-on-primary-container px-8 py-4 font-black font-headline tracking-widest uppercase flex items-center gap-3 shadow-[8px_8px_0px_#A04100] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">
+                    Initiate Scan
+                    <span class="material-symbols-outlined">radar</span>
+</button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Technician Card -->
+<div class="md:col-span-4 glass-panel p-6 shadow-sm">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-16 h-16 bg-surface-container overflow-hidden">
+<img alt="Marcus Thorne" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" data-alt="professional portrait of a middle-aged technician in a clean workshop environment with neutral lighting and sharp focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRMfOdoQBO5LHwqcq-KeFfFb2V_s4A9i0MdSunWnbWUTTKb-WhlV_01tO8744Nc-HgJc3eLNp5BhCDRMPBTBGX0FTDgisBM9XjNw0TKg2nlInN5Uuiap8oCZVRBd7bdJkiHhSNZFJjrS63TCaBeda79_LsMjehxX7r_It0rDYA5SiL6OsqM3-hfInsFlJiyem1U6L9FAE25regZK5wUQg0GZHIqXGJGaQ3dEYzlAXwy36w-rBstgekyy-vy3SaFYq7emDLYVtoPM3-"/>
+</div>
+<div>
+<p class="font-headline font-black text-lg tracking-tight uppercase">Marcus Thorne</p>
+<p class="text-[0.6875rem] font-headline uppercase tracking-wider text-primary">Lead Systems Eng.</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-2">
+<span class="text-[0.6875rem] font-headline uppercase tracking-wider text-slate-400">Status</span>
+<span class="text-[0.6875rem] font-headline font-bold text-secondary-container bg-secondary px-2 py-0.5">ACTIVE</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-2">
+<span class="text-[0.6875rem] font-headline uppercase tracking-wider text-slate-400">Shift Time</span>
+<span class="mono-data text-sm">06:42:15</span>
+</div>
+</div>
+</div>
+<!-- Main Telemetry Gauge Card -->
+<div class="md:col-span-8 bg-surface-container-lowest p-8 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 -mr-16 -mt-16 rotate-45"></div>
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="font-headline font-black text-xl tracking-tighter uppercase mb-1">Core Telemetry</h3>
+<p class="text-[0.6875rem] font-headline uppercase tracking-[0.05em] text-slate-400">Real-time system health visualization</p>
+</div>
+<span class="material-symbols-outlined text-primary-container">query_stats</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+<div class="flex flex-col items-center">
+<div class="relative w-32 h-32 flex items-center justify-center border-4 border-secondary-container/20 rounded-full shadow-[0_8px_24px_rgba(18,241,255,0.1)]">
+<div class="absolute inset-0 border-t-4 border-secondary-container"></div>
+<span class="mono-data text-2xl font-bold text-secondary">88<span class="text-xs">%</span></span>
+</div>
+<p class="mt-4 font-headline uppercase text-[0.6875rem] font-bold tracking-widest">Thermal Sync</p>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative w-32 h-32 flex items-center justify-center border-4 border-primary-container/20 rounded-full shadow-[0_8px_24px_rgba(255,107,0,0.1)]">
+<div class="absolute inset-0 border-r-4 border-primary-container"></div>
+<span class="mono-data text-2xl font-bold text-primary">64<span class="text-xs">%</span></span>
+</div>
+<p class="mt-4 font-headline uppercase text-[0.6875rem] font-bold tracking-widest">Load Torque</p>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative w-32 h-32 flex items-center justify-center border-4 border-secondary-container/20 rounded-full shadow-[0_8px_24px_rgba(18,241,255,0.1)]">
+<div class="absolute inset-0 border-b-4 border-secondary-container"></div>
+<span class="mono-data text-2xl font-bold text-secondary">92<span class="text-xs">%</span></span>
+</div>
+<p class="mt-4 font-headline uppercase text-[0.6875rem] font-bold tracking-widest">Logic Flow</p>
+</div>
+</div>
+</div>
+<!-- Next Service Protocol Card (Frosted Glass) -->
+<div class="md:col-span-12 glass-panel p-10 relative overflow-hidden border-l-4 border-l-primary-container shadow-xl">
+<div class="flex flex-col md:flex-row gap-10 items-center">
+<div class="w-full md:w-1/3 aspect-video bg-surface-container overflow-hidden border border-outline-variant/30">
+<img alt="Vanguard-7 Heavy Unit" class="w-full h-full object-cover" data-alt="cinematic close-up of a high-tech robotic joint with orange cables and metallic surfaces in a clean industrial workshop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvp6oAJvLN73TaMNYzj4F9Cbu-ViZo3WwA0umpa5KV6jVyQwsvngCGDtlSEiwz24JpcafatYgMQxyWecJLTtHHIMa7Oz-D574Wc2PTNAUMfgX1Mmz8--jp-zLHh3gcao_n4040p1sl7cBgcynR_MDmOmQ8FEAZI-yqpG0yuXUnEpZ17eGhxi4ZBn3kEicdFUP9vbNaNA_1wjEOPDp4bPWfhcIpEz_6EJhASNZXklUE9CiOkt953Jf1nVj3PQs7Ff11AG86bky9snJp"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-4">
+<span class="px-2 py-1 bg-primary text-on-primary text-[10px] font-black tracking-widest uppercase">Protocol Alpha</span>
+<span class="text-slate-400 font-mono text-xs">REF: VNG-7-H_092</span>
+</div>
+<h3 class="text-4xl font-black font-headline tracking-tighter uppercase mb-4">Next Service Protocol: Vanguard-7 Heavy Unit</h3>
+<p class="text-on-surface-variant max-w-2xl mb-8 leading-relaxed">
+                                Critical alignment of hydraulic actuators and re-calibration of sensor array #04. Ensure liquid nitrogen cooling is active during the procedure to prevent thermal expansion of the titanium core.
+                            </p>
+<div class="flex flex-wrap gap-4">
+<div class="bg-surface-container-high px-6 py-4 flex flex-col">
+<span class="text-[0.625rem] font-headline uppercase tracking-widest text-slate-500 mb-1">Scheduled For</span>
+<span class="mono-data font-bold">T-MINUS 04:22:10</span>
+</div>
+<div class="bg-surface-container-high px-6 py-4 flex flex-col border-l-2 border-secondary-container">
+<span class="text-[0.625rem] font-headline uppercase tracking-widest text-slate-500 mb-1">Priority Level</span>
+<span class="font-headline font-black text-secondary">CRITICAL-01</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Data Grid -->
+<div class="md:col-span-6 bg-surface-container-lowest p-6 shadow-sm">
+<h4 class="text-[0.6875rem] font-headline font-bold tracking-[0.2em] uppercase text-slate-400 mb-6 flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary-container"></span> Module Inventory Status
+                    </h4>
+<div class="space-y-1">
+<div class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-400">settings_applications</span>
+<span class="font-headline font-bold text-sm">Servo Drive Alpha</span>
+</div>
+<span class="mono-data text-xs bg-surface-container px-2 py-1">QTY: 14</span>
+</div>
+<div class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-400">memory</span>
+<span class="font-headline font-bold text-sm">Neural Link V3</span>
+</div>
+<span class="mono-data text-xs bg-surface-container px-2 py-1">QTY: 02</span>
+</div>
+<div class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-400">bolt</span>
+<span class="font-headline font-bold text-sm">Plasma Relay Coil</span>
+</div>
+<span class="mono-data text-xs bg-error-container text-error px-2 py-1">STOCK LOW</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-6 glass-panel p-6 shadow-sm flex flex-col justify-between">
+<div>
+<h4 class="text-[0.6875rem] font-headline font-bold tracking-[0.2em] uppercase text-slate-400 mb-6 flex items-center gap-2">
+<span class="w-2 h-2 bg-primary-container"></span> Workshop Environmental
+                        </h4>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 border-l-2 border-primary-container bg-white">
+<p class="text-[0.625rem] font-headline uppercase text-slate-400">Ambient Temp</p>
+<p class="mono-data text-xl font-bold">22.4°C</p>
+</div>
+<div class="p-4 border-l-2 border-secondary-container bg-white">
+<p class="text-[0.625rem] font-headline uppercase text-slate-400">Humidity</p>
+<p class="mono-data text-xl font-bold">34%</p>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<p class="text-[0.625rem] font-mono text-slate-400 mb-2">SYSTEM_LOG_ENTRY: ALL_SYSTEMS_NOMINAL</p>
+<div class="w-full bg-surface-container h-1 overflow-hidden">
+<div class="w-2/3 h-full bg-primary-container"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar Shell (Mobile) -->
+<footer class="md:hidden bg-white/80 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 shadow-[0_-8px_24px_rgba(25,28,30,0.04)] border-t border-[#E2BFB0]/15">
+<div class="flex flex-col items-center text-[#FF6B00] scale-105 transition-all duration-200">
+<span class="material-symbols-outlined">home_max</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Home</span>
+</div>
+<div class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">memory</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Status</span>
+</div>
+<div class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">construction</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Tools</span>
+</div>
+<div class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Alerts</span>
+</div>
+</footer>
+</body></html>

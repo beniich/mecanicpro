@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Space+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#f7f9fb",
+                        "secondary": "#006970",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#5a4136",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#351000",
+                        "on-secondary-container": "#006a70",
+                        "on-secondary-fixed": "#002022",
+                        "surface": "#f7f9fb",
+                        "secondary-container": "#12f1ff",
+                        "surface-variant": "#e0e3e5",
+                        "on-error": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "primary-container": "#ff6b00",
+                        "inverse-primary": "#ffb693",
+                        "on-background": "#191c1e",
+                        "inverse-surface": "#2d3133",
+                        "outline": "#8e7164",
+                        "surface-tint": "#a04100",
+                        "on-tertiary-fixed": "#001d35",
+                        "on-primary-container": "#572000",
+                        "secondary-fixed-dim": "#00dbe8",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "tertiary": "#0062a1",
+                        "on-tertiary-container": "#003357",
+                        "error-container": "#ffdad6",
+                        "background": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#00497b",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed-dim": "#ffb693",
+                        "secondary-fixed": "#79f4ff",
+                        "on-surface": "#191c1e",
+                        "tertiary-fixed": "#d0e4ff",
+                        "tertiary-fixed-dim": "#9ccaff",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-container": "#059eff",
+                        "primary-fixed": "#ffdbcc",
+                        "primary": "#a04100",
+                        "surface-container-high": "#e6e8ea",
+                        "outline-variant": "#e2bfb0",
+                        "on-primary-fixed-variant": "#7a3000"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Space Grotesk"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["Space Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 191, 176, 0.15);
+        }
+        .submerged-grid {
+            background-image: radial-gradient(#e0e3e5 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-on-background submerged-grid min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-white/70 backdrop-blur-xl text-slate-600 font-['Space_Grotesk'] font-bold tracking-tight border-b border-[#E2BFB0]/15 shadow-sm shadow-black/5 flex justify-between items-center px-6 h-16 w-full fixed top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="hover:bg-white/20 transition-colors p-2 active:opacity-80 transition-all">
+<span class="material-symbols-outlined text-[#A04100]">menu</span>
+</button>
+<span class="text-xl font-black text-[#FF6B00] tracking-tighter">MecaPro OS</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="hover:bg-white/20 transition-colors p-2 active:opacity-80 transition-all">
+<span class="material-symbols-outlined text-[#A04100]">settings_input_component</span>
+</button>
+</div>
+</header>
+<div class="flex pt-16 min-h-screen">
+<!-- NavigationDrawer (Hidden on mobile) -->
+<aside class="hidden md:flex flex-col gap-2 p-4 bg-[#F7F9FB] h-full w-72 border-r-0 font-['Space_Grotesk'] uppercase text-[0.6875rem] tracking-[0.05em] fixed left-0 top-16 bottom-0 z-40">
+<div class="py-4 px-2">
+<span class="text-lg font-bold text-[#FF6B00]">MecaPro V5.0</span>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">analytics</span> Analytics
+                </a>
+<a class="flex items-center gap-3 p-3 bg-[#FF6B00] text-white font-bold duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span> Modules
+                </a>
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">inventory_2</span> Inventory
+                </a>
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-[#A04100] hover:bg-[#FF6B00]/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">settings</span> System Settings
+                </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-72 p-6 pb-32">
+<!-- Header Section -->
+<section class="mb-10 mt-4">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="label-sm text-[0.6875rem] font-bold uppercase tracking-[0.05em] text-primary">Warehouse Alpha</span>
+<h1 class="text-4xl font-black tracking-tight text-on-background mt-1">Inventory Management</h1>
+</div>
+<!-- Search Bar -->
+<div class="relative w-full md:w-96 group">
+<span class="material-symbols-outlined absolute left-0 bottom-2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b-2 border-outline focus:ring-0 focus:border-primary placeholder:text-outline/50 pl-8 pb-2 font-mono uppercase text-sm transition-all" placeholder="SEARCH SERIAL NO. OR PART NAME..." type="text"/>
+<div class="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-primary group-focus-within:w-4 transition-all duration-300"></div>
+</div>
+</div>
+</section>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<!-- Total SKU -->
+<div class="bg-surface-container-lowest p-6 shadow-sm border-l-4 border-secondary-container">
+<div class="flex justify-between items-start">
+<span class="label-sm font-bold uppercase tracking-widest text-outline">Total SKU Count</span>
+<span class="material-symbols-outlined text-secondary">layers</span>
+</div>
+<div class="mt-4">
+<span class="text-5xl font-mono font-bold tracking-tighter">1,248</span>
+<div class="flex items-center gap-2 mt-2 text-secondary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+4.2% FROM LAST QUARTER</span>
+</div>
+</div>
+</div>
+<!-- Critical Alerts -->
+<div class="bg-surface-container-lowest p-6 shadow-sm border-l-4 border-primary-container">
+<div class="flex justify-between items-start">
+<span class="label-sm font-bold uppercase tracking-widest text-outline">Critical Stock Alerts</span>
+<span class="material-symbols-outlined text-primary">warning</span>
+</div>
+<div class="mt-4">
+<span class="text-5xl font-mono font-bold tracking-tighter text-primary">12</span>
+<div class="flex items-center gap-2 mt-2 text-primary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">priority_high</span>
+<span>IMMEDIATE REORDER REQUIRED</span>
+</div>
+</div>
+</div>
+<!-- Active Orders -->
+<div class="bg-surface-container-lowest p-6 shadow-sm border-l-4 border-secondary">
+<div class="flex justify-between items-start">
+<span class="label-sm font-bold uppercase tracking-widest text-outline">Active Orders</span>
+<span class="material-symbols-outlined text-secondary">conveyor_belt</span>
+</div>
+<div class="mt-4">
+<span class="text-5xl font-mono font-bold tracking-tighter">84</span>
+<div class="flex items-center gap-2 mt-2 text-slate-500 text-xs font-bold">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>12 INBOUND TODAY</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Parts Catalog Header -->
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold uppercase tracking-tight flex items-center gap-2">
+<span class="w-2 h-6 bg-primary"></span>
+                    Critical Components Catalog
+                </h2>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<button class="p-2 border border-outline-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+</div>
+</div>
+<!-- Parts Cards Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Spark Plug Set Card -->
+<div class="glass-card p-0 flex flex-col md:flex-row group overflow-hidden">
+<div class="w-full md:w-48 h-48 bg-surface-container relative">
+<img class="w-full h-full object-cover mix-blend-multiply opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="high-precision mechanical spark plugs with metallic finish on a white technical studio background industrial product photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwT9Al-4qayFd1IzmXYATDB_o0wf7nzjc_VAzxb2eKF3kCuCmOj8HE1pQh-yDsxcvE01X9paAWlNyLs5ERmhHab4rJjBgO5HJxZJNtYSTsIAJ5x-2HQiRPwqQ-kbF5SIbcjOgxkr-Lw5khCepA7aTXJ-exFqF3XNTGhxqccPbt5W7C8rIEoUEPwKqRA8YS2MLQPhneBYSfKlgb_ut8sYits_kyHiHo64IbdIffz28_FEkTyMKm-H6IQ-c-YBQwZDR9C3kkI-TvWudk"/>
+<div class="absolute top-0 left-0 bg-primary text-white px-2 py-1 text-[10px] font-bold uppercase">CRITICAL</div>
+</div>
+<div class="flex-1 p-6 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-mono text-outline uppercase tracking-tighter">SKU: MP-772-SP</span>
+<h3 class="text-lg font-bold uppercase tracking-tight">Spark Plug Set</h3>
+</div>
+<span class="font-mono text-xl font-bold">$184.50</span>
+</div>
+<!-- Stock Level Bar -->
+<div class="mt-6">
+<div class="flex justify-between text-[10px] font-bold uppercase mb-1">
+<span>Stock Level</span>
+<span class="text-primary">14% (8 units)</span>
+</div>
+<div class="h-1 w-full bg-surface-container">
+<div class="h-full bg-primary-container" style="width: 14%"></div>
+</div>
+</div>
+</div>
+<div class="mt-6 flex gap-3">
+<button class="flex-1 bg-primary text-white py-2 font-bold text-xs uppercase hover:bg-primary-container transition-all active:scale-95">Reorder</button>
+<button class="px-4 border border-outline-variant hover:bg-white transition-all"><span class="material-symbols-outlined text-sm">visibility</span></button>
+</div>
+</div>
+</div>
+<!-- High-Pressure Gasket Card -->
+<div class="glass-card p-0 flex flex-col md:flex-row group overflow-hidden">
+<div class="w-full md:w-48 h-48 bg-surface-container relative">
+<img class="w-full h-full object-cover mix-blend-multiply opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="industrial silicone and rubber high pressure gasket ring professional technical close up overhead shot minimalist style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYpDSvROIx9ufAiMTRD86CUCIhwXScGnEoJzc1avgBrplQbwWwkU7MhYqXoGoA8RJPysNscXKZPgKCj5sOsUCgzCgpwlzjftOFyMhdDx2vPLhH9aCh50OH_K9Ht_vS9qFjjQqmgy6cYoebCFG9VdMDItXbvsFLvRN5I7FPviuvNUivdQSGa8OMyiWxqLVnaSbD0UFnSsOmjCIJYV2mUhXHTDrahdd-Ep3EA1dusNun62i8_DzVtO67jodPljSmDfpVu4-qy7-JQTG_"/>
+<div class="absolute top-0 left-0 bg-secondary text-white px-2 py-1 text-[10px] font-bold uppercase">OPTIMAL</div>
+</div>
+<div class="flex-1 p-6 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-mono text-outline uppercase tracking-tighter">SKU: MP-901-GS</span>
+<h3 class="text-lg font-bold uppercase tracking-tight">High-Pressure Gasket</h3>
+</div>
+<span class="font-mono text-xl font-bold">$42.00</span>
+</div>
+<!-- Stock Level Bar -->
+<div class="mt-6">
+<div class="flex justify-between text-[10px] font-bold uppercase mb-1">
+<span>Stock Level</span>
+<span class="text-secondary">82% (156 units)</span>
+</div>
+<div class="h-1 w-full bg-surface-container">
+<div class="h-full bg-secondary-container" style="width: 82%"></div>
+</div>
+</div>
+</div>
+<div class="mt-6 flex gap-3">
+<button class="flex-1 border border-primary text-primary py-2 font-bold text-xs uppercase hover:bg-primary hover:text-white transition-all active:scale-95">Manage</button>
+<button class="px-4 border border-outline-variant hover:bg-white transition-all"><span class="material-symbols-outlined text-sm">history</span></button>
+</div>
+</div>
+</div>
+<!-- Additional Items Table-like Row -->
+<div class="lg:col-span-2 glass-card p-6">
+<table class="w-full text-left">
+<thead class="border-b border-outline-variant">
+<tr class="label-sm text-outline uppercase">
+<th class="pb-4 font-bold">Component</th>
+<th class="pb-4 font-bold">Status</th>
+<th class="pb-4 font-bold">Location</th>
+<th class="pb-4 font-bold text-right">In Stock</th>
+</tr>
+</thead>
+<tbody class="font-mono text-sm">
+<tr class="border-b border-outline-variant/10 hover:bg-white/50 transition-colors">
+<td class="py-4 font-bold">Hydraulic Filter X-12</td>
+<td class="py-4"><span class="px-2 py-0.5 bg-secondary-container/20 text-secondary text-[10px] font-bold">ACTIVE</span></td>
+<td class="py-4">BIN-404-A</td>
+<td class="py-4 text-right">45</td>
+</tr>
+<tr class="border-b border-outline-variant/10 hover:bg-white/50 transition-colors">
+<td class="py-4 font-bold">O-Ring Kit (Metric)</td>
+<td class="py-4"><span class="px-2 py-0.5 bg-primary-container/20 text-primary text-[10px] font-bold">LOW</span></td>
+<td class="py-4">BIN-112-C</td>
+<td class="py-4 text-right">12</td>
+</tr>
+<tr class="hover:bg-white/50 transition-colors">
+<td class="py-4 font-bold">Coolant Pressure Valve</td>
+<td class="py-4"><span class="px-2 py-0.5 bg-surface-container-highest text-outline text-[10px] font-bold">OUT</span></td>
+<td class="py-4">BIN-009-F</td>
+<td class="py-4 text-right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+</div>
+<!-- Scan Barcode Floating Action -->
+<div class="fixed bottom-28 right-8 z-40 md:bottom-12">
+<button class="flex items-center gap-3 bg-primary-container text-on-primary-container p-4 shadow-xl hover:translate-y-[-4px] transition-all duration-300 active:scale-95 group">
+<span class="material-symbols-outlined text-2xl">barcode_scanner</span>
+<span class="font-bold uppercase tracking-widest text-sm pr-2">Scan Barcode</span>
+<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+</div>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 bg-white/80 backdrop-blur-lg border-t border-[#E2BFB0]/15 shadow-[0_-8px_24px_rgba(25,28,30,0.04)]">
+<a class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined">home_max</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined">memory</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Status</span>
+</a>
+<a class="flex flex-col items-center text-[#FF6B00] scale-105 duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined">construction</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Tools</span>
+</a>
+<a class="flex flex-col items-center text-slate-400 opacity-60 hover:opacity-100 transition-opacity duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-['Space_Grotesk'] text-[10px] font-medium">Alerts</span>
+</a>
+</nav>
+</body></html>

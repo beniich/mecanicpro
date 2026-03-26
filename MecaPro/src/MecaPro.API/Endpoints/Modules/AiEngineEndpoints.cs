@@ -41,28 +41,30 @@ public class AiEngineEndpoints : ICarterModule
         grp.MapPost("/vision", async (HttpContext ctx, IHttpClientFactory clientFactory) => 
         {
             var body = await ctx.Request.ReadFromJsonAsync<JsonElement>();
-            var imageUrl = body.GetProperty("imageUrl").GetString();
+            var imageUrl = body.TryGetProperty("imageUrl", out var imgUrl) ? imgUrl.GetString() : null;
+            var base64Image = body.TryGetProperty("base64Image", out var b64) ? b64.GetString() : null;
             var partType = body.GetProperty("partType").GetString();
 
             var client = clientFactory.CreateClient();
             var payload = new { 
                 message = $"Analyse cette image de {partType} pour détecter des dommages.", 
-                context = new { imageUrl, partType, tool = "analyze_part_image" } 
+                sessionId = $"vision_{Guid.NewGuid():N}",
+                context = new { imageUrl, base64Image, partType, tool = "analyze_part_image" } 
             };
             
-            var response = await client.PostAsJsonAsync($"{aiAgentUrl}/api/invoke", payload);
+            // Invoke the agent via the sync endpoint to get JSON directly
+            var response = await client.PostAsJsonAsync($"{aiAgentUrl}/api/invoke-sync", payload);
             if (response.IsSuccessStatusCode)
             {
-                return Results.Ok(new { 
-                    part = partType, 
-                    aiConfidence = 0.95, 
-                    diagnostics = new[] { 
-                        new { type = "Structural", observation = "Dommages détectés par vision IA", severity = "Major" },
-                        new { type = "Condition", observation = "Usure thermique excessive", severity = "Medium" }
-                    },
-                    recommendation = "Remplacement de pièce suggéré après analyse visuelle.",
-                    estimatedReplacementTime = "1.5 hours"
-                });
+                var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+                // The agent returns { output: "JSON_STRING", success: true }
+                // We need to parse the JSON_STRING inside output if it's JSON
+                var outputStr = result.GetProperty("output").GetString();
+                try {
+                    return Results.Content(outputStr, "application/json");
+                } catch {
+                    return Results.Ok(new { rawOutput = outputStr });
+                }
             }
             return Results.BadRequest("AI Agent unavailable");
         });

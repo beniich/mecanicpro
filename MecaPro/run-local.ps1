@@ -1,44 +1,44 @@
-# run-local.ps1 — Script de lancement MecaPro pour environnement Windows
+# run-local.ps1 — Script de lancement MecaPro OPTIMISÉ (V5.1)
 
-Write-Host "🚀 Préparation du lancement de MecaPro..." -ForegroundColor Cyan
-
-# run-local.ps1 — Script de lancement MecaPro pour environnement Windows
-
-$DockerPath = "C:\Program Files\Docker\Docker\resources\bin\docker.exe"
-$DockerComposePath = "C:\Program Files\Docker\Docker\resources\bin\docker-compose.exe"
+Write-Host "🚀 INITIALISATION MÉCAPRO OS V5.1 (MODÈLE HYBRIDE DOCKER-CLIENT)..." -ForegroundColor Cyan
 
 # 1. Vérification des prérequis
-if (!(Test-Path $DockerPath)) {
-    # Fallback to PATH search
-    if (!(Get-Command docker -ErrorAction SilentlyContinue)) {
-        Write-Error "❌ Docker n'est pas installé ou n'est pas dans votre PATH. Veuillez installer Docker Desktop."
-        exit
-    }
-    $DockerPath = "docker"
-    $DockerComposePath = "docker-compose"
-}
-
-if (!(Get-Command dotnet -ErrorAction SilentlyContinue)) {
-    Write-Error "❌ .NET SDK n'est pas installé."
+if (!(Get-Command docker -ErrorAction SilentlyContinue)) {
+    Write-Error "❌ Docker Desktop non détecté dans le PATH."
     exit
 }
 
-# 2. Lancement de l'infrastructure
-Write-Host "1️⃣  Lancement de l'infrastructure (SQL Server, Redis, Seq)..." -ForegroundColor Yellow
-& $DockerComposePath up -d sqlserver redis seq
+if (!(Get-Command dotnet -ErrorAction SilentlyContinue)) {
+    Write-Error "❌ .NET SDK 9.0 non détecté."
+    exit
+}
 
-# 3. Attente du démarrage de SQL Server
-Write-Host "⌛ Attente du démarrage de SQL Server (30s)..."
-Start-Sleep -Seconds 30
+# 2. Nettoyage & Infrastructure Core
+Write-Host "1️⃣  LANCEMENT DE L'INFRASTRUCTURE (SQL, REDIS, RABBITMQ, SEQ)..." -ForegroundColor Yellow
+docker-compose up -d sqlserver redis rabbitmq seq
 
-# 4. Application des migrations
-Write-Host "2️⃣  Mise à jour de la base de données..." -ForegroundColor Yellow
+# 3. Attente robuste pour SQL Server
+Write-Host "⌛ Attente du démarrage de SQL Server (vérification de santé 45s)..." -ForegroundColor Gray
+Start-Sleep -Seconds 45
+
+# 4. Synchronisation des Bases de Données (Migration)
+Write-Host "2️⃣  SYNCHRONISATION DES SCHÉMAS (ENTITY FRAMEWORK)..." -ForegroundColor Yellow
 dotnet ef database update --project src/MecaPro.Infrastructure --startup-project src/MecaPro.API
 
-# 5. Lancement de l'API
-Write-Host "3️⃣  Lancement de l'API (HTTPS: https://localhost:5001)..." -ForegroundColor Green
-Start-Process dotnet "run --project src/MecaPro.API"
+# 5. Lancement des Services Backend (Microservices Core)
+Write-Host "3️⃣  LANCEMENT DES MICROSERVICES (AUTH, API, GATEWAY, INVENTAIRE)..." -ForegroundColor Yellow
+# On lance les builds docker en arrière-plan sans bloquer
+docker-compose up -d --build auth-service api-monolith inventory-service notification-service gateway
 
-# 6. Lancement du Frontend Blazor
-Write-Host "4️⃣  Lancement de l'application Blazor (http://localhost:5200)..." -ForegroundColor Green
-dotnet run --project src/MecaPro.Blazor
+Write-Host "   ✅ Services lancés en arrière-plan via Docker Compose." -ForegroundColor Gray
+Write-Host "   ℹ️ Gateway accessible sur : http://localhost:5000" -ForegroundColor Cyan
+
+# 6. Lancement du Frontend Next.js
+Write-Host "4️⃣  LANCEMENT DU FRONTEND NEXT.JS (TURBO ENGINE)..." -ForegroundColor Green
+Set-Location ..\frontend-next
+
+# On alloue plus de mémoire à Node.js pour éviter les freezes au build Turbo
+$env:NODE_OPTIONS = "--max-old-space-size=4096"
+$env:NEXT_PUBLIC_API_URL = "http://localhost:3000"
+
+npm run dev

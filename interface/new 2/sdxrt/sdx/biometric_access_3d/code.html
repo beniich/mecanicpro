@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-background": "#ffffff",
+              "surface-container": "#1a1919",
+              "primary-fixed-dim": "#f66700",
+              "surface-container-highest": "#262626",
+              "on-secondary-fixed": "#003f43",
+              "error-container": "#b92902",
+              "on-secondary-fixed-variant": "#005e64",
+              "outline-variant": "#494847",
+              "inverse-primary": "#a14100",
+              "on-primary-fixed-variant": "#4f1c00",
+              "on-primary-container": "#401500",
+              "on-surface-variant": "#adaaaa",
+              "surface": "#0e0e0e",
+              "tertiary-container": "#7000ff",
+              "on-surface": "#ffffff",
+              "inverse-on-surface": "#565554",
+              "error-dim": "#d53d18",
+              "surface-container-high": "#201f1f",
+              "primary-fixed": "#ff7a2f",
+              "on-tertiary": "#290067",
+              "inverse-surface": "#fcf8f8",
+              "secondary-container": "#006970",
+              "secondary": "#00eefc",
+              "on-primary": "#531e00",
+              "outline": "#777575",
+              "on-primary-fixed": "#000000",
+              "surface-bright": "#2c2c2c",
+              "on-error": "#450900",
+              "tertiary-fixed-dim": "#b190ff",
+              "secondary-dim": "#00deec",
+              "tertiary-fixed": "#bda1ff",
+              "on-tertiary-fixed": "#1f0052",
+              "tertiary-dim": "#874cff",
+              "on-secondary-container": "#e3fdff",
+              "error": "#ff7351",
+              "surface-tint": "#ff9159",
+              "on-tertiary-fixed-variant": "#4700a7",
+              "on-secondary": "#005359",
+              "on-tertiary-container": "#f8f1ff",
+              "secondary-fixed-dim": "#00deec",
+              "background": "#0e0e0e",
+              "surface-container-low": "#131313",
+              "primary-dim": "#ff7524",
+              "primary-container": "#ff7a2f",
+              "primary": "#ff9159",
+              "on-error-container": "#ffd2c8",
+              "surface-variant": "#262626",
+              "tertiary": "#ac89ff",
+              "surface-dim": "#0e0e0e",
+              "secondary-fixed": "#00eefc"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            backdrop-filter: blur(16px);
+            background: linear-gradient(135deg, rgba(26, 25, 25, 0.7) 0%, rgba(14, 14, 14, 0.8) 100%);
+        }
+        .scanner-indent {
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.8), inset 0 -5px 15px rgba(255,255,255,0.05);
+        }
+        .neon-ring {
+            border: 2px solid #00eefc;
+            box-shadow: 0 0 15px rgba(0, 238, 252, 0.3), inset 0 0 15px rgba(0, 238, 252, 0.3);
+        }
+        .holographic-text {
+            text-shadow: 0 0 10px rgba(0, 238, 252, 0.8), 0 0 20px rgba(0, 238, 252, 0.4);
+            letter-spacing: 0.2em;
+        }
+        .laser-sweep-line {
+            background: linear-gradient(to right, transparent, #ff9159, transparent);
+            height: 2px;
+            width: 100%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim text-on-surface font-body selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full border-b-2 border-orange-500/30 bg-neutral-900/70 backdrop-blur-xl z-50 flex justify-between items-center px-6 h-16 shadow-[0_0_15px_rgba(255,107,0,0.1)]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-orange-500 text-2xl" data-icon="speed">speed</span>
+<h1 class="font-['Space_Grotesk'] tracking-tighter uppercase font-bold text-orange-500 text-xl tracking-widest">NEURAL_DRIVE_OS</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6 font-headline text-sm font-bold uppercase tracking-widest">
+<a class="text-neutral-400 hover:text-orange-400 transition-all duration-300" href="#">DASHBOARD</a>
+<a class="text-orange-500 scale-105 transition-all duration-300" href="#">SECURITY</a>
+<a class="text-neutral-400 hover:text-orange-400 transition-all duration-300" href="#">NETWORK</a>
+</nav>
+<div class="h-8 w-[1px] bg-outline-variant/30 mx-2"></div>
+<span class="material-symbols-outlined text-neutral-400" data-icon="account_circle">account_circle</span>
+</div>
+<div class="absolute bottom-0 left-0 laser-sweep-line opacity-50"></div>
+</header>
+<main class="min-h-screen pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto flex flex-col items-center justify-center">
+<!-- Main Access Hub -->
+<div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<!-- Left Side: System Metrics (Asymmetric Weighted Layout) -->
+<div class="lg:col-span-3 flex flex-col gap-6">
+<div class="p-6 rounded-xl bg-surface-container-high border-l-4 border-secondary/50 shadow-lg">
+<p class="font-label text-on-surface-variant text-[10px] uppercase tracking-[0.2em] mb-2">Security Status</p>
+<h3 class="font-headline text-2xl font-bold text-secondary">ENCRYPTED</h3>
+<div class="mt-4 flex items-center gap-2">
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-full"></div>
+</div>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-surface-container-high border-l-4 border-primary/50 shadow-lg">
+<p class="font-label text-on-surface-variant text-[10px] uppercase tracking-[0.2em] mb-2">Auth Confidence</p>
+<h3 class="font-headline text-3xl font-bold text-primary">99.8%</h3>
+<p class="text-[10px] text-on-surface-variant mt-2 italic">NEURAL_VALIDATION_ACTIVE</p>
+</div>
+</div>
+<!-- Center: The Deep Neumorphic Scanner -->
+<div class="lg:col-span-6 flex flex-col items-center justify-center relative py-12">
+<!-- Floating Holographic Text -->
+<div class="mb-12 text-center">
+<h2 class="holographic-text font-headline text-4xl font-black text-secondary uppercase animate-pulse">ACCESS GRANTED</h2>
+<p class="font-label text-on-surface-variant text-xs mt-2 tracking-widest uppercase opacity-70">Identity Verified: Agent_Alpha_01</p>
+</div>
+<!-- Scanner Indentation -->
+<div class="relative flex items-center justify-center group">
+<!-- Concentric Rings (Pulsing Effect simulation) -->
+<div class="absolute w-[420px] h-[420px] rounded-full neon-ring opacity-10 scale-110"></div>
+<div class="absolute w-[360px] h-[360px] rounded-full neon-ring opacity-20 scale-105"></div>
+<div class="absolute w-[300px] h-[300px] rounded-full neon-ring opacity-40"></div>
+<!-- The Scanner Pit -->
+<div class="w-64 h-64 rounded-full scanner-indent bg-surface-container-low flex items-center justify-center relative overflow-hidden border border-outline-variant/10">
+<!-- Glass Surface -->
+<div class="absolute inset-0 glass-panel opacity-40"></div>
+<!-- Moving Laser Line -->
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-secondary shadow-[0_0_15px_#00eefc] opacity-50 -translate-y-1/2"></div>
+<!-- Icon -->
+<span class="material-symbols-outlined text-8xl text-secondary opacity-80 z-10" data-icon="fingerprint" style="font-variation-settings: 'FILL' 0;">fingerprint</span>
+<!-- Internal Detail -->
+<div class="absolute inset-0 rounded-full border-[10px] border-surface-container-highest/30"></div>
+</div>
+</div>
+<!-- Bottom Status Indicator -->
+<div class="mt-12 flex items-center gap-4 px-6 py-2 rounded-full bg-surface-container-highest/50 border border-outline-variant/20 backdrop-blur-md">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+<span class="font-label text-[10px] uppercase tracking-[0.3em] text-secondary">System Online // Biometrics Ready</span>
+</div>
+</div>
+<!-- Right Side: Data Feed/Logs -->
+<div class="lg:col-span-3 flex flex-col gap-4">
+<div class="glass-panel p-4 rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-center mb-3">
+<span class="font-headline text-xs font-bold text-on-surface">SYS_LOGS</span>
+<span class="material-symbols-outlined text-xs text-secondary" data-icon="terminal">terminal</span>
+</div>
+<div class="space-y-3 font-mono text-[9px] text-on-surface-variant leading-relaxed">
+<p><span class="text-secondary">[OK]</span> INITIALIZING_VECTORS...</p>
+<p><span class="text-secondary">[OK]</span> EXTRACTING_MINUTIAE...</p>
+<p><span class="text-primary">[WAIT]</span> CROSS_REF_INTERPOL...</p>
+<p><span class="text-secondary">[OK]</span> MATCH_FOUND_DB_0x04</p>
+<p><span class="text-secondary">[OK]</span> DECRYPTING_VAULT_KEY</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="location_on">location_on</span>
+<span class="font-headline text-xs font-bold text-on-surface">NODE_LOCATION</span>
+</div>
+<div class="h-24 w-full rounded bg-surface-container-highest overflow-hidden relative">
+<img alt="Digital blueprint map" class="w-full h-full object-cover opacity-30 grayscale" data-alt="Technical blueprint grid map with glowing circuit lines and abstract data visualization nodes on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5JyYtnG9pBxA2gN5PpYsfUN2hjXgwcoOWbzjNuGmFSbaq0uOFY0xT5C47MGKQ_6Y2yWQbRNaI7asOZJ4T83R9R-CS55jIw-J_csTPuT-HoSDAfwTb5L00952dZeEomGg55EYiAcX9P81eUKcH2JHfHplRvYXC_Ekx1mvpimU5Y7a9gGu0wJCxpxyyVNzvZuJr5nGyU4UzOM6n2j1brkJpUQSi4jb-GkMtAKaK2FDFN1RMRaJebQPxPe2NUWt6AOZN8ECaGeaReEWJ"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#ff9159]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Access Control Panel (Bento Style) -->
+<section class="mt-20 w-full grid grid-cols-2 md:grid-cols-4 gap-4">
+<button class="p-6 rounded-xl bg-surface-container-highest border border-outline-variant/10 hover:border-secondary/50 transition-all flex flex-col items-center gap-3 group">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform" data-icon="lock_open">lock_open</span>
+<span class="font-label text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Override</span>
+</button>
+<button class="p-6 rounded-xl bg-surface-container-highest border border-outline-variant/10 hover:border-secondary/50 transition-all flex flex-col items-center gap-3 group">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform" data-icon="face">face</span>
+<span class="font-label text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Retinal</span>
+</button>
+<button class="p-6 rounded-xl bg-surface-container-highest border border-outline-variant/10 hover:border-primary/50 transition-all flex flex-col items-center gap-3 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="emergency_home">emergency_home</span>
+<span class="font-label text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Emergency</span>
+</button>
+<button class="p-6 rounded-xl bg-surface-container-highest border border-outline-variant/10 hover:border-secondary/50 transition-all flex flex-col items-center gap-3 group">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform" data-icon="history">history</span>
+<span class="font-label text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Log History</span>
+</button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-8 w-[90%] max-w-md left-1/2 -translate-x-1/2 z-50 flex justify-around items-center py-2 bg-neutral-800/60 backdrop-blur-2xl rounded-2xl border border-neutral-700/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:bg-neutral-700/50 hover:text-orange-300 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="home_app_logo">home_app_logo</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:bg-neutral-700/50 hover:text-orange-300 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="navigation">navigation</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-orange-500/20 text-orange-500 rounded-xl p-3 shadow-[0_0_15px_rgba(255,107,0,0.4)] transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:bg-neutral-700/50 hover:text-orange-300 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-3 hover:bg-neutral-700/50 hover:text-orange-300 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</a>
+</nav>
+</body></html>

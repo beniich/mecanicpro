@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#fcf8f8",
+              "surface-variant": "#262626",
+              "primary": "#ff9159",
+              "on-secondary-fixed": "#003f43",
+              "on-tertiary-fixed-variant": "#4700a7",
+              "surface-container": "#1a1919",
+              "secondary-container": "#006970",
+              "tertiary-dim": "#874cff",
+              "secondary-fixed-dim": "#00deec",
+              "surface-bright": "#2c2c2c",
+              "tertiary-container": "#7000ff",
+              "on-tertiary": "#290067",
+              "error-container": "#b92902",
+              "surface-container-low": "#131313",
+              "on-background": "#ffffff",
+              "on-surface": "#ffffff",
+              "on-secondary": "#005359",
+              "on-tertiary-fixed": "#1f0052",
+              "tertiary-fixed": "#bda1ff",
+              "on-primary-fixed": "#000000",
+              "inverse-primary": "#a14100",
+              "on-surface-variant": "#adaaaa",
+              "inverse-on-surface": "#565554",
+              "surface-container-high": "#201f1f",
+              "on-error": "#450900",
+              "outline": "#777575",
+              "tertiary": "#ac89ff",
+              "on-primary-fixed-variant": "#4f1c00",
+              "primary-container": "#ff7a2f",
+              "surface-tint": "#ff9159",
+              "surface": "#0e0e0e",
+              "on-tertiary-container": "#f8f1ff",
+              "primary-fixed": "#ff7a2f",
+              "on-primary-container": "#401500",
+              "primary-fixed-dim": "#f66700",
+              "secondary-dim": "#00deec",
+              "error": "#ff7351",
+              "secondary": "#00eefc",
+              "outline-variant": "#494847",
+              "surface-container-lowest": "#000000",
+              "tertiary-fixed-dim": "#b190ff",
+              "surface-dim": "#0e0e0e",
+              "on-error-container": "#ffd2c8",
+              "background": "#0e0e0e",
+              "primary-dim": "#ff7524",
+              "on-secondary-container": "#e3fdff",
+              "surface-container-highest": "#262626",
+              "secondary-fixed": "#00eefc",
+              "error-dim": "#d53d18",
+              "on-secondary-fixed-variant": "#005e64",
+              "on-primary": "#531e00"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .glass-panel {
+            backdrop-filter: blur(16px);
+            background: rgba(26, 25, 25, 0.7);
+        }
+        .laser-glow-secondary {
+            box-shadow: 0 0 15px rgba(0, 238, 252, 0.1);
+        }
+        .laser-glow-primary {
+            box-shadow: 0 0 15px rgba(255, 107, 0, 0.2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary selection:text-on-secondary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-neutral-900/70 backdrop-blur-md border-b-2 border-[#FF6B00]/30 shadow-[0_4_20px_rgba(0,0,0,0.5)] flex justify-between items-center px-6 h-14">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#FF6B00] animate-pulse-slow" data-icon="terminal">terminal</span>
+<h1 class="font-['Space_Grotesk'] text-lg font-black text-[#FF6B00] italic uppercase tracking-[0.2em]">MECAPRO OS V5.0</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 items-center">
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest text-[#00eefc] drop-shadow-[0_0_5px_#00eefc] cursor-pointer">DIAGNOSTICS</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest text-neutral-500 hover:text-[#FF6B00] transition-colors duration-300 cursor-pointer">LOGS</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest text-neutral-500 hover:text-[#FF6B00] transition-colors duration-300 cursor-pointer">NETWORK</span>
+</nav>
+<span class="material-symbols-outlined text-[#FF6B00]" data-icon="battery_charging_full">battery_charging_full</span>
+</div>
+</header>
+<div class="flex min-h-screen pt-14 pb-10 md:pb-0">
+<!-- NavigationDrawer -->
+<aside class="hidden md:flex flex-col py-8 gap-4 h-full w-64 border-r border-neutral-800 bg-[#0e0e0e] sticky top-14">
+<div class="px-6 mb-4">
+<h2 class="font-['Space_Grotesk'] text-[10px] tracking-widest text-neutral-500 uppercase">SYSTEM MODULES</h2>
+</div>
+<nav class="flex flex-col gap-1">
+<div class="flex items-center gap-4 px-6 py-3 text-neutral-400 hover:bg-[#1a1919] hover:translate-x-1 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest">DASHBOARD</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-neutral-400 hover:bg-[#1a1919] hover:translate-x-1 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest">INVENTORY</span>
+</div>
+<div class="flex items-center gap-4 px-6 py-3 text-neutral-400 hover:bg-[#1a1919] hover:translate-x-1 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest">AI VISION</span>
+</div>
+<!-- Active Item for Notifications -->
+<div class="flex items-center gap-4 px-6 py-3 bg-[#262626] text-[#00eefc] border-l-4 border-[#00eefc] shadow-[inset_0_0_10px_rgba(0,240,255,0.1)] cursor-pointer">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span class="font-['Space_Grotesk'] text-[10px] tracking-widest">ALERTS</span>
+</div>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-6 md:p-10 bg-surface-dim">
+<div class="max-w-6xl mx-auto">
+<!-- Section Header -->
+<header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-2 bg-secondary rounded-full shadow-[0_0_8px_#00eefc]"></div>
+<span class="text-secondary font-headline text-xs tracking-widest uppercase">Live Telemetry Active</span>
+</div>
+<h2 class="font-headline text-5xl font-bold tracking-tight text-white uppercase italic">SYSTEM ALERTS</h2>
+</div>
+<div class="flex gap-4">
+<button class="bg-surface-container-highest px-4 py-2 text-xs font-headline tracking-widest border-b border-secondary/50 text-secondary hover:bg-secondary/10 transition-all">
+                            EXPORT LOGS
+                        </button>
+<button class="bg-primary px-4 py-2 text-xs font-headline tracking-widest text-on-primary font-bold hover:brightness-110 transition-all">
+                            ACKNOWLEDGE ALL
+                        </button>
+</div>
+</header>
+<!-- Category Filters (Bento Style Sub-nav) -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-surface-container-high p-4 border-l-2 border-secondary laser-glow-secondary cursor-pointer hover:bg-surface-variant transition-colors">
+<p class="text-[10px] font-headline tracking-widest text-on-surface-variant mb-1">TOTAL EVENTS</p>
+<p class="text-2xl font-headline font-bold text-white">128</p>
+</div>
+<div class="bg-surface-container p-4 border-l-2 border-outline-variant cursor-pointer hover:bg-surface-variant transition-colors">
+<p class="text-[10px] font-headline tracking-widest text-on-surface-variant mb-1">INVENTORY</p>
+<p class="text-2xl font-headline font-bold text-white">14</p>
+</div>
+<div class="bg-surface-container p-4 border-l-2 border-outline-variant cursor-pointer hover:bg-surface-variant transition-colors">
+<p class="text-[10px] font-headline tracking-widest text-on-surface-variant mb-1">AI VISION</p>
+<p class="text-2xl font-headline font-bold text-white">03</p>
+</div>
+<div class="bg-surface-container p-4 border-l-2 border-outline-variant cursor-pointer hover:bg-surface-variant transition-colors">
+<p class="text-[10px] font-headline tracking-widest text-on-surface-variant mb-1">SERVICE</p>
+<p class="text-2xl font-headline font-bold text-white">111</p>
+</div>
+</div>
+<!-- Alerts List -->
+<div class="space-y-4">
+<!-- Critical Alert Card -->
+<div class="group relative overflow-hidden bg-surface-container-highest p-5 md:p-6 border-l-4 border-primary laser-glow-primary animate-pulse-slow">
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="bg-primary/20 p-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary scale-125" data-icon="warning">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-[10px] font-headline font-bold text-primary tracking-widest px-2 py-0.5 border border-primary/30">CRITICAL</span>
+<span class="text-[10px] font-label text-on-surface-variant">2m ago • Microservice ID: INV-A1</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-white">Low stock for Brake Pads (Service A-1)</h3>
+<p class="text-sm text-on-surface-variant mt-1">Current inventory levels reached threshold (5%). Automated re-order pending system clearance.</p>
+</div>
+<div class="flex gap-2 w-full md:w-auto mt-4 md:mt-0">
+<button class="flex-1 md:flex-none border border-primary/50 text-primary text-[10px] font-headline tracking-widest py-2 px-4 hover:bg-primary/10 transition-colors uppercase">RESOLVE</button>
+<button class="flex-1 md:flex-none bg-primary text-on-primary text-[10px] font-headline font-bold tracking-widest py-2 px-4 hover:brightness-110 transition-colors uppercase">VIEW STOCK</button>
+</div>
+</div>
+</div>
+<!-- Info Alert Card -->
+<div class="bg-surface-container p-5 md:p-6 border-l-4 border-secondary/40 hover:bg-surface-container-high transition-colors group">
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="bg-secondary/10 p-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-[10px] font-headline font-bold text-secondary tracking-widest px-2 py-0.5 border border-secondary/30">INFO</span>
+<span class="text-[10px] font-label text-on-surface-variant">15m ago • Service Module: DIAG-CORE</span>
+</div>
+<h3 class="font-headline text-lg font-medium text-white/90">Diagnostic completed for WO-8829</h3>
+<p class="text-sm text-on-surface-variant mt-1">Full system sweep finished for Work Order 8829. No anomalies detected in drivetrain or hydraulic subsystems.</p>
+</div>
+<button class="w-full md:w-auto mt-4 md:mt-0 text-on-surface-variant group-hover:text-secondary flex items-center gap-2 text-[10px] font-headline tracking-widest transition-colors">
+                                VIEW REPORT <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- AI Alert Card -->
+<div class="bg-surface-container p-5 md:p-6 border-l-4 border-tertiary/40 hover:bg-surface-container-high transition-colors group">
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="bg-tertiary/10 p-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="psychology">psychology</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-[10px] font-headline font-bold text-tertiary tracking-widest px-2 py-0.5 border border-tertiary/30">AI VISION</span>
+<span class="text-[10px] font-label text-on-surface-variant">42m ago • Node: CAMERA-04</span>
+</div>
+<h3 class="font-headline text-lg font-medium text-white/90">Anomaly Detected in Engine Bay</h3>
+<p class="text-sm text-on-surface-variant mt-1">Visual recognition system flagged unidentified thermal signature on Cylinder 4 casing. Recommend manual inspection.</p>
+</div>
+<button class="w-full md:w-auto mt-4 md:mt-0 text-on-surface-variant group-hover:text-tertiary flex items-center gap-2 text-[10px] font-headline tracking-widest transition-colors">
+                                STREAM FEED <span class="material-symbols-outlined text-sm" data-icon="videocam">videocam</span>
+</button>
+</div>
+</div>
+<!-- Historical Card -->
+<div class="opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all bg-surface-container-low p-5 md:p-6 border-l-4 border-outline-variant">
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="bg-outline-variant/10 p-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="history">history</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-[10px] font-headline font-bold text-on-surface-variant tracking-widest px-2 py-0.5 border border-outline-variant">ARCHIVED</span>
+<span class="text-[10px] font-label text-on-surface-variant">2h ago • System Update</span>
+</div>
+<h3 class="font-headline text-lg font-medium text-white/70">Database sync successful</h3>
+<p class="text-sm text-on-surface-variant/70 mt-1">Mainframe synchronization with regional server completed. Latency: 42ms.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Alert Visualization Graphic -->
+<section class="mt-16 pt-16 border-t border-outline-variant/20">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-low p-8 relative overflow-hidden flex flex-col items-center">
+<div class="w-32 h-32 rounded-full border-4 border-secondary/20 flex items-center justify-center mb-6 relative">
+<div class="absolute inset-0 border-4 border-secondary border-t-transparent rounded-full rotate-45"></div>
+<span class="font-headline text-3xl font-bold text-secondary">98%</span>
+</div>
+<h4 class="font-headline text-xs tracking-widest text-on-surface-variant uppercase mb-2">Service Health</h4>
+<p class="text-[10px] text-center text-outline uppercase tracking-tight">All microservices operational</p>
+</div>
+<div class="md:col-span-2 bg-surface-container-low p-8">
+<h4 class="font-headline text-xs tracking-widest text-on-surface-variant uppercase mb-6">Real-time alert frequency</h4>
+<div class="h-32 flex items-end gap-1">
+<div class="flex-1 bg-secondary/10 h-[20%]"></div>
+<div class="flex-1 bg-secondary/10 h-[30%]"></div>
+<div class="flex-1 bg-secondary/20 h-[15%]"></div>
+<div class="flex-1 bg-primary/40 h-[90%] relative group">
+<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-on-primary text-[8px] px-1 font-bold">SPIKE</div>
+</div>
+<div class="flex-1 bg-secondary/10 h-[40%]"></div>
+<div class="flex-1 bg-secondary/10 h-[25%]"></div>
+<div class="flex-1 bg-secondary/30 h-[60%]"></div>
+<div class="flex-1 bg-secondary/20 h-[35%]"></div>
+<div class="flex-1 bg-secondary/10 h-[15%]"></div>
+<div class="flex-1 bg-secondary/10 h-[20%]"></div>
+<div class="flex-1 bg-secondary/10 h-[30%]"></div>
+<div class="flex-1 bg-secondary/10 h-[45%]"></div>
+</div>
+<div class="flex justify-between mt-4">
+<span class="text-[8px] font-headline text-outline tracking-widest">00:00</span>
+<span class="text-[8px] font-headline text-outline tracking-widest">06:00</span>
+<span class="text-[8px] font-headline text-outline tracking-widest">12:00</span>
+<span class="text-[8px] font-headline text-outline tracking-widest">18:00</span>
+<span class="text-[8px] font-headline text-outline tracking-widest">NOW</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-[#1a1919]/90 backdrop-blur-lg border-t border-neutral-800 shadow-[0_-4px_10px_rgba(0,0,0,0.4)]">
+<div class="flex flex-col items-center text-neutral-600 gap-1">
+<span class="material-symbols-outlined text-lg" data-icon="settings_ethernet">settings_ethernet</span>
+<span class="font-mono text-[9px] uppercase">C# ACTIVE</span>
+</div>
+<div class="flex flex-col items-center text-neutral-600 gap-1">
+<span class="material-symbols-outlined text-lg" data-icon="javascript">javascript</span>
+<span class="font-mono text-[9px] uppercase">NODE.JS READY</span>
+</div>
+<div class="flex flex-col items-center text-[#00eefc] gap-1">
+<span class="material-symbols-outlined text-lg" data-icon="psychology">psychology</span>
+<span class="font-mono text-[9px] uppercase">AI NOMINAL</span>
+</div>
+</nav>
+</body></html>

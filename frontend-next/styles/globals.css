@@ -1,0 +1,603 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================
+   MecaPro OS V5.0 — Cyber-Atelier Design System
+   ============================================================= */
+
+/* ── Material Symbols ─────────────────────────────────────────── */
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* ── Glass Panel ──────────────────────────────────────────────── */
+.glass-panel {
+  background: rgba(26, 25, 25, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* ── CRT Overlay ──────────────────────────────────────────────── */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.04) 50%),
+    linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.01),
+      rgba(0, 255, 0, 0.005),
+      rgba(0, 0, 255, 0.01)
+    );
+  background-size:
+    100% 3px,
+    3px 100%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.35;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0e0e0e;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #777575;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   OS SHELL LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+
+.os-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #0e0e0e;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
+
+/* ── Top Bar ── */
+.os-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: rgba(14, 14, 14, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 107, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.os-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.os-brand-icon {
+  color: #ff6b00;
+  font-size: 20px;
+}
+
+.os-brand-text {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #ff6b00;
+}
+
+.os-mobile-menu-trigger {
+  background: transparent;
+  border: none;
+  color: #ff6b00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.os-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 95;
+}
+
+.os-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.os-topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 16px;
+}
+
+.os-link-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.os-ping-dot {
+  position: relative;
+  display: inline-flex;
+  height: 8px;
+  width: 8px;
+}
+
+.os-ping-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #00eefc;
+  opacity: 0.6;
+}
+
+.os-ping-core {
+  position: relative;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  background: #00eefc;
+  box-shadow: 0 0 8px #00eefc;
+}
+
+.os-link-label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00eefc;
+}
+
+.os-topbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.os-icon-battery {
+  color: #ff6b00;
+  font-size: 18px;
+}
+.os-icon-wifi {
+  color: #00eefc;
+  font-size: 18px;
+}
+
+/* ── Body Layout ── */
+.os-body {
+  display: flex;
+  flex: 1;
+  padding-top: 56px;
+  padding-bottom: 40px;
+  overflow: hidden;
+}
+
+/* ── Sidebar ── */
+.os-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #0a0a0a;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  padding-top: 32px;
+  padding-bottom: 16px;
+  overflow-y: auto;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 110;
+}
+
+@media (max-width: 768px) {
+  .os-sidebar {
+    position: fixed;
+    top: 56px;
+    bottom: 40px;
+    left: 0;
+    transform: translateX(-100%);
+    width: 280px;
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+  }
+  .os-sidebar--open {
+    transform: translateX(0);
+  }
+}
+
+.os-sidebar-section-label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  color: #444;
+  text-transform: uppercase;
+  padding: 0 24px;
+  margin-bottom: 16px;
+}
+
+.os-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.os-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 24px;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: #666;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.os-nav-item:hover {
+  color: #aaa;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.os-nav-item--active {
+  border-left-color: #00eefc;
+  background: rgba(0, 238, 252, 0.06);
+  color: #00eefc;
+}
+
+.os-nav-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.os-nav-label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── Grouped Nav ── */
+.os-nav--grouped {
+  gap: 0;
+  padding-top: 8px;
+}
+
+.os-nav-group {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.os-nav-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.os-nav-group-header:hover {
+  background: rgba(255, 255, 255, 0.02);
+  color: #888;
+}
+
+.os-nav-group-header--active {
+  color: #999;
+}
+
+.os-nav-group-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.os-nav-group-label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.os-nav-group-chevron {
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.os-nav-group-chevron.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.os-nav-group-items {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.os-nav-item--sub {
+  padding: 8px 12px 8px 24px;
+  gap: 10px;
+  border-left-width: 2px;
+}
+
+.os-nav-item--sub .os-nav-label {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.os-nav-badge {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  background: linear-gradient(90deg, #ff6b00, #ff7a2f);
+  color: #000;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── Telemetry Widget ── */
+.os-telemetry {
+  margin-top: auto;
+  padding: 16px 24px;
+}
+
+.os-telemetry-label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: #444;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding: 12px;
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.os-telemetry-bar-track {
+  height: 2px;
+  background: #1a1a1a;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.os-telemetry-bar-fill {
+  height: 100%;
+  width: 42%;
+  background: #ff6b00;
+  box-shadow: 0 0 8px #ff6b00;
+}
+
+.os-telemetry-values {
+  display: flex;
+  justify-content: space-between;
+  font-family: monospace;
+  font-size: 9px;
+  color: #ff6b00;
+}
+
+/* ── Main Content ── */
+.os-main {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  background: #0e0e0e;
+}
+
+.os-glow-orange {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 107, 0, 0.04);
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.os-glow-cyan {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  background: rgba(0, 238, 252, 0.03);
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.os-content {
+  position: relative;
+  z-index: 1;
+  padding: 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .os-content {
+    padding: 24px 16px;
+  }
+  .os-topbar-right {
+    display: none;
+  }
+}
+
+/* ── Status Bar ── */
+.os-statusbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+}
+
+.os-statusbar-items {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .os-statusbar-items {
+    gap: 12px;
+  }
+  .os-status-item:not(:first-child) {
+    display: none;
+  }
+}
+
+.os-status-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.os-status-icon {
+  font-size: 14px;
+  color: #444;
+}
+
+.os-status-icon--active {
+  color: #00eefc;
+}
+
+.os-status-label {
+  font-family: monospace;
+  font-size: 9px;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.os-status-label--active {
+  color: #00eefc;
+}
+
+.os-build-label {
+  font-family: monospace;
+  font-size: 9px;
+  color: #333;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Laser sweep */
+@keyframes laser-move {
+  0% {
+    transform: translateY(0);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.animate-laser {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff9159, transparent);
+  box-shadow: 0 0 12px #ff9159;
+  animation: laser-move 4s linear infinite;
+  pointer-events: none;
+}
+
+/* Ping */
+@keyframes ping-anim {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.animate-ping {
+  animation: ping-anim 1.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Pulse */
+@keyframes pulse-anim {
+  50% {
+    opacity: 0.4;
+  }
+}
+.animate-pulse {
+  animation: pulse-anim 1.5s ease-in-out infinite;
+}
+
+/* Fade in */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade {
+  animation: fade-in 0.4s ease-out;
+}

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VOLT_AESTHETIC | Accessory Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#0e0e0e",
+              "surface-tint": "#ff9159",
+              "on-secondary-fixed": "#003f43",
+              "tertiary-fixed": "#bda1ff",
+              "on-primary-fixed-variant": "#4f1c00",
+              "on-background": "#ffffff",
+              "on-tertiary-fixed-variant": "#4700a7",
+              "on-error": "#450900",
+              "inverse-on-surface": "#565554",
+              "on-secondary": "#005359",
+              "surface-container": "#1a1919",
+              "secondary-container": "#006970",
+              "surface-variant": "#262626",
+              "on-tertiary": "#290067",
+              "secondary-dim": "#00deec",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#ff7a2f",
+              "surface-container-low": "#131313",
+              "inverse-primary": "#a14100",
+              "on-error-container": "#ffd2c8",
+              "primary-dim": "#ff7524",
+              "outline-variant": "#494847",
+              "surface-dim": "#0e0e0e",
+              "outline": "#777575",
+              "background": "#0e0e0e",
+              "secondary-fixed-dim": "#00deec",
+              "on-primary-container": "#401500",
+              "primary-fixed-dim": "#f66700",
+              "error": "#ff7351",
+              "primary": "#ff9159",
+              "on-primary": "#531e00",
+              "on-secondary-fixed-variant": "#005e64",
+              "on-tertiary-container": "#f8f1ff",
+              "tertiary": "#ac89ff",
+              "secondary-fixed": "#00eefc",
+              "surface-container-highest": "#262626",
+              "on-surface-variant": "#adaaaa",
+              "on-surface": "#ffffff",
+              "error-dim": "#d53d18",
+              "tertiary-container": "#7000ff",
+              "surface-container-lowest": "#000000",
+              "surface-container-high": "#201f1f",
+              "on-tertiary-fixed": "#1f0052",
+              "error-container": "#b92902",
+              "primary-fixed": "#ff7a2f",
+              "surface-bright": "#2c2c2c",
+              "secondary": "#00eefc",
+              "tertiary-dim": "#874cff",
+              "on-secondary-container": "#e3fdff",
+              "tertiary-fixed-dim": "#b190ff",
+              "inverse-surface": "#fcf8f8"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .laser-sweep {
+            background: linear-gradient(90deg, transparent, rgba(255,145,89,0.3), transparent);
+            background-size: 200% 100%;
+        }
+        .glass-panel {
+            backdrop-filter: blur(15px);
+            background: rgba(26, 25, 25, 0.6);
+        }
+        .perspective-container {
+            perspective: 1000px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-neutral-900/70 backdrop-blur-xl">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-500 cursor-pointer">menu_open</span>
+<h1 class="text-xl font-bold tracking-widest text-orange-500 font-headline uppercase">VOLT_AESTHETIC</h1>
+</div>
+<div class="flex items-center gap-6 h-full">
+<nav class="hidden md:flex gap-8 items-center h-full font-headline text-xs tracking-widest">
+<a class="text-orange-500 drop-shadow-[0_0_8px_rgba(255,107,0,0.6)] border-b-2 border-orange-500 h-full flex items-center px-2" href="#">EXPLORE</a>
+<a class="text-neutral-500 hover:bg-white/5 transition-all duration-300 h-full flex items-center px-2" href="#">CONFIGURATOR</a>
+<a class="text-neutral-500 hover:bg-white/5 transition-all duration-300 h-full flex items-center px-2" href="#">ARCHIVE</a>
+</nav>
+<div class="w-10 h-10 rounded-full border border-outline/30 overflow-hidden">
+<img alt="User Profile" data-alt="Stylized avatar of a professional designer wearing techwear accessories in a minimalist vector style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu51AulkP_oyZIzQxSroMtVD-kJgfj2aUS-8rYs3j7RKw4tSlajuI5xeERkLTwr97w6TiAY8Ms2mbUZYU7zzzVva1qcqaRly9eCD3YPA0AGvEG4vOdj8euW-n24jNTHAb725BtksdbkuBa4pb2rEtPZ5-9U_j4Vzezls7xiP6uo4eAu35lu3HH9r_8s5Lm7yElxx3c7R0bw37LljAHUm2cCxJfqA_bHOgxgT4vZJf62SV1ArtcjqXXqecK9j5oIRk-X_Z81K9MEYlC"/>
+</div>
+</div>
+</header>
+<main class="pt-16 pb-32 min-h-screen">
+<div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 mt-12">
+<!-- Left Sidebar: Technical Specs & Catalog -->
+<aside class="lg:col-span-3 space-y-10 order-2 lg:order-1">
+<div>
+<h2 class="font-headline text-3xl font-extrabold tracking-tighter uppercase mb-2">CARBON_V01</h2>
+<p class="text-on-surface-variant text-sm leading-relaxed">High-impact aerospace grade composite casing. Optimized for aerodynamic thermal cooling.</p>
+</div>
+<div class="space-y-4">
+<span class="text-[10px] font-headline tracking-[0.2em] text-secondary uppercase">Material Analysis</span>
+<div class="grid grid-cols-1 gap-3">
+<!-- Quick Tiles -->
+<button class="flex items-center justify-between p-4 bg-surface-container-highest border border-secondary/20 shadow-[0_0_15px_rgba(0,238,252,0.1)] rounded-md transition-all group">
+<div class="flex flex-col items-start">
+<span class="text-[10px] font-headline text-secondary uppercase tracking-widest">Active State</span>
+<span class="text-sm font-medium">Carbon Fiber</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+</button>
+<button class="flex items-center justify-between p-4 bg-surface-container-low hover:bg-surface-container transition-all rounded-md group">
+<div class="flex flex-col items-start">
+<span class="text-[10px] font-headline text-on-surface-variant uppercase tracking-widest">Available</span>
+<span class="text-sm font-medium">Matte Titanium</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-lg">radio_button_unchecked</span>
+</button>
+<button class="flex items-center justify-between p-4 bg-surface-container-low hover:bg-surface-container transition-all rounded-md group">
+<div class="flex flex-col items-start">
+<span class="text-[10px] font-headline text-on-surface-variant uppercase tracking-widest">Available</span>
+<span class="text-sm font-medium">Liquid Chrome</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-lg">radio_button_unchecked</span>
+</button>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border-l-2 border-primary/40">
+<h3 class="font-headline text-xs tracking-widest uppercase mb-4 text-primary">System Health</h3>
+<div class="flex items-center gap-6">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-surface-variant" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="2"></circle>
+<circle class="text-secondary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175" stroke-dashoffset="40" stroke-width="4"></circle>
+</svg>
+<span class="absolute font-headline text-sm">94%</span>
+</div>
+<div class="text-[10px] font-label uppercase text-on-surface-variant space-y-1">
+<div>Integrity: Verified</div>
+<div>Stress-Res: 1400MPa</div>
+<div>Weight: 1.2kg</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center: 360 Viewer -->
+<section class="lg:col-span-6 flex flex-col items-center justify-center min-h-[500px] order-1 lg:order-2 perspective-container">
+<div class="relative w-full max-w-lg group">
+<!-- Pedestal -->
+<div class="absolute bottom-[-40px] left-1/2 -translate-x-1/2 w-64 h-8 bg-surface-container-highest rounded-full blur-2xl opacity-40"></div>
+<div class="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-48 h-4 bg-primary/20 rounded-full blur-xl animate-pulse"></div>
+<!-- Main 3D Item Placeholder -->
+<div class="relative z-10 p-8 transform-gpu hover:rotate-y-12 transition-transform duration-700 ease-out">
+<div class="aspect-square bg-gradient-to-tr from-surface-container-low to-surface-container-highest rounded-[40px] flex items-center justify-center overflow-hidden border border-outline-variant/10 shadow-2xl">
+<img alt="Luxury Helmet" class="w-full h-full object-cover mix-blend-screen opacity-90 scale-110" data-alt="ultra-realistic high-tech carbon fiber motorcycle helmet on a black reflective background with cinematic dramatic orange lighting and sharp highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbnCd0wnpUX16MT0hgRkW05pPhwZcaztpphQDVsPGo_rwMCA9VwNKfAXdSVrzBUGIXnH2y8ElD8z1zMD4OyE2D8Oi1FaKtPOh2BqyMTabp0lb74sqxxcjTqhkpBchUo_sR-Y8yGeichOuVJwvLII62SweilMMMjJFYcIRKakRozK_SDVFLmPw7kBANuRpGn6_GUuM2aT5USEKxXFij4H0gZE6u77OGq-xez7aaOGOe6G857cn-2FUrcwtXee0gfESfYAaqIjpIpyvr"/>
+</div>
+<!-- HUD Overlays -->
+<div class="absolute top-4 left-4 font-headline text-[10px] tracking-tighter text-secondary flex flex-col gap-1">
+<div class="bg-secondary/10 px-2 py-1 border-l border-secondary">ROT_X: 45.2°</div>
+<div class="bg-secondary/10 px-2 py-1 border-l border-secondary">SCAN_ACTIVE</div>
+</div>
+<div class="absolute bottom-8 right-8 flex gap-3">
+<div class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-on-surface border border-outline-variant/20 cursor-pointer hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-sm">360</span>
+</div>
+<div class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-on-surface border border-outline-variant/20 cursor-pointer hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-sm">fullscreen</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 360 Progress Indicator -->
+<div class="mt-12 w-full max-w-md h-[2px] bg-surface-container-highest relative">
+<div class="absolute inset-y-0 left-0 w-1/3 bg-primary shadow-[0_0_10px_#ff9159]"></div>
+<div class="absolute -top-1 left-1/3 w-3 h-3 rounded-full bg-primary border-4 border-surface shadow-[0_0_10px_#ff9159]"></div>
+<div class="flex justify-between mt-4 font-headline text-[10px] tracking-widest text-on-surface-variant uppercase">
+<span>360° VIEWPORT</span>
+<span>POS: 122°</span>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Customization & Controls -->
+<aside class="lg:col-span-3 space-y-10 order-3">
+<div>
+<span class="text-[10px] font-headline tracking-[0.2em] text-primary uppercase">Tech Configuration</span>
+<div class="mt-6 space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<label class="text-xs font-headline tracking-widest uppercase">Padding Thickness</label>
+<span class="text-xs font-headline text-secondary">2.5mm</span>
+</div>
+<div class="h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-2/5 shadow-[0_0_8px_rgba(0,238,252,0.5)]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<label class="text-xs font-headline tracking-widest uppercase">Visor Tint</label>
+<span class="text-xs font-headline text-secondary">85%</span>
+</div>
+<div class="h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-4/5 shadow-[0_0_8px_rgba(0,238,252,0.5)]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<span class="text-[10px] font-headline tracking-[0.2em] text-on-surface-variant uppercase">Module Selection</span>
+<div class="grid grid-cols-3 gap-2">
+<div class="aspect-square bg-surface-container-highest rounded border border-outline-variant/30 flex items-center justify-center hover:border-primary cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">bluetooth_drive</span>
+</div>
+<div class="aspect-square bg-surface-container-highest rounded border border-outline-variant/30 flex items-center justify-center hover:border-primary cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">hvac</span>
+</div>
+<div class="aspect-square bg-primary/10 rounded border border-primary flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</div>
+</div>
+</div>
+<div class="p-6 glass-panel rounded-xl border border-outline-variant/20 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[2px] laser-sweep"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="font-headline">
+<div class="text-[10px] tracking-widest text-on-surface-variant uppercase">Total Build</div>
+<div class="text-2xl font-bold text-on-surface tracking-tighter">$1,240.00</div>
+</div>
+<span class="material-symbols-outlined text-primary">analytics</span>
+</div>
+<button class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-headline font-bold uppercase tracking-[0.2em] rounded-md shadow-[0_4px_20px_rgba(255,122,47,0.4)] hover:scale-[1.02] transition-transform active:scale-95">
+                        Add to Rig
+                    </button>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-8 pb-6 pt-2 bg-neutral-900/80 backdrop-blur-2xl rounded-t-3xl">
+<button class="flex items-center justify-center bg-orange-600/20 text-orange-500 rounded-full p-4 shadow-[0_0_15px_rgba(255,107,0,0.4)]">
+<span class="material-symbols-outlined">view_in_ar</span>
+</button>
+<button class="flex items-center justify-center text-neutral-400 p-4 hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined">speed</span>
+</button>
+<button class="flex items-center justify-center text-neutral-400 p-4 hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined">location_on</span>
+</button>
+<button class="flex items-center justify-center text-neutral-400 p-4 hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+</nav>
+</body></html>

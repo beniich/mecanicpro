@@ -57,7 +57,21 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"))
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()!;
 
 var publicRsa = System.Security.Cryptography.RSA.Create();
-publicRsa.ImportFromPem(jwtSettings.PublicKeyPem);
+// Handle both "RSA PUBLIC KEY" (header only differs) and "PUBLIC KEY" PEM formats
+var pkPem = jwtSettings.PublicKeyPem.Trim();
+if (pkPem.Contains("BEGIN RSA PUBLIC KEY"))
+{
+    // Despite the PKCS#1 header, the payload is SPKI/SubjectPublicKeyInfo — use ImportSubjectPublicKeyInfo
+    var base64 = pkPem
+        .Replace("-----BEGIN RSA PUBLIC KEY-----", "")
+        .Replace("-----END RSA PUBLIC KEY-----", "")
+        .Replace("\n", "").Replace("\r", "").Trim();
+    publicRsa.ImportSubjectPublicKeyInfo(Convert.FromBase64String(base64), out _);
+}
+else
+{
+    publicRsa.ImportFromPem(pkPem);
+}
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
