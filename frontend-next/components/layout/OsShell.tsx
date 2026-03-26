@@ -58,6 +58,7 @@ const NAV_GROUPS = [
     color: '#94a3b8',
     items: [
       { href: '/explorateur', icon: 'terminal',         label: 'Explorateur de Modules' },
+      { href: '/code-corrector', icon: 'auto_fix',        label: 'Correcteur de Code', badge: 'AI' },
       { href: '/parametres',  icon: 'tune',             label: 'Paramètres' },
     ],
   },

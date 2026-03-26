@@ -1510,3 +1510,118 @@ export function ParametresPage() {
     </div>
   )
 }
+
+// ─────────────────────────────────────────────────────────────
+// 8. CODE CORRECTOR — AI Code Repair Unit
+// ─────────────────────────────────────────────────────────────
+
+export function CodeCorrectorPage() {
+  const [inputCode, setInputCode] = useState('')
+  const [outputCode, setOutputCode] = useState('')
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [analysisLogs, setAnalysisLogs] = useState<string[]>([])
+
+  const handleFix = () => {
+    if (!inputCode.trim()) return
+    
+    setIsAnalyzing(true)
+    setAnalysisLogs(['INITIATING_CORE_SCAN...', 'ANALYZING_SYNTAX_TREE...'])
+    
+    // Simulate AI analysis
+    setTimeout(() => {
+      setAnalysisLogs(prev => [...prev, 'DETECTING_MEMORY_LEAKS...', 'OPTIMIZING_LOGIC_FLOW...'])
+      
+      setTimeout(() => {
+        // Mock "correction" logic - just a simple uppercase or adding comments for demo
+        const fixed = `// MECAPRO AI AUTO-FIXED\n// TIMESTAMP: ${new Date().toISOString()}\n\n${inputCode}\n\n// OPTIMIZATION: Logic verified for Industrial Node 5.0`
+        setOutputCode(fixed)
+        setAnalysisLogs(prev => [...prev, 'CORRECTION_COMPLETE', 'READY_FOR_DEPLOYMENT'])
+        setIsAnalyzing(false)
+      }, 1500)
+    }, 1000)
+  }
+
+  return (
+    <div className="space-y-8">
+      <PageHeader title="AI CODE" accent="CORRECTOR" subtitle="Neural Code Analysis · Syntax Repair · Performance Tuning" />
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Input Panel */}
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <p className="font-headline text-[10px] uppercase tracking-widest text-neutral-500">Source_Input_Node</p>
+            <StatusBadge label="Awaiting_Input" color="#00eefc" />
+          </div>
+          <div className="relative group">
+            <textarea
+              value={inputCode}
+              onChange={(e) => setInputCode(e.target.value)}
+              placeholder="// Paste your technical code here..."
+              className="w-full h-[400px] bg-black/40 border border-white/5 rounded-xl p-6 font-mono text-xs text-white/80 focus:outline-none focus:border-[#FF6B00]/40 transition-all resize-none group-hover:border-white/10"
+            />
+            <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+              <span className="material-symbols-outlined text-[#FF6B00]">data_object</span>
+            </div>
+          </div>
+          
+          <button
+            onClick={handleFix}
+            disabled={isAnalyzing || !inputCode.trim()}
+            className="w-full bg-[#FF6B00] hover:bg-[#FF7A2F] text-black font-headline font-black py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,107,0,0.3)] hover:shadow-[0_0_30px_rgba(255,107,0,0.5)] active:scale-[0.98] disabled:opacity-50 uppercase tracking-[0.1em] flex items-center justify-center gap-3"
+          >
+            {isAnalyzing ? (
+              <>
+                <span className="material-symbols-outlined animate-spin">sync</span>
+                Analyzing Pulse...
+              </>
+            ) : (
+              <>
+                <span className="material-symbols-outlined font-black">bolt</span>
+                Initiate Code Repair
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Output Panel */}
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <p className="font-headline text-[10px] uppercase tracking-widest text-neutral-500">Corrected_Output_Node</p>
+            <StatusBadge label={isAnalyzing ? 'Processing' : outputCode ? 'Stable' : 'Idle'} color={isAnalyzing ? '#FF6B00' : outputCode ? '#34d399' : '#666'} />
+          </div>
+          
+          <div className="space-y-4 overflow-hidden">
+            <div className="relative group">
+              <textarea
+                value={outputCode}
+                readOnly
+                placeholder="// Analysis results will appear here..."
+                className={`w-full h-[280px] bg-[#1a1919] border border-white/5 rounded-xl p-6 font-mono text-xs ${outputCode ? 'text-[#34d399]' : 'text-neutral-700'} focus:outline-none transition-all resize-none`}
+              />
+              <div className="absolute top-0 right-0 p-4 pointer-events-none">
+                <span className="material-symbols-outlined text-neutral-800">check_circle</span>
+              </div>
+            </div>
+
+            {/* Analysis Logs */}
+            <GlassCard title="SYSTEM LOGS" className="h-[105px]">
+              <div className="font-mono text-[9px] space-y-1 overflow-y-auto max-h-full scrollbar-hidden">
+                {analysisLogs.length === 0 ? (
+                  <p className="text-neutral-700 italic">No activity detected...</p>
+                ) : (
+                  analysisLogs.map((log, i) => (
+                    <div key={i} className="flex gap-2">
+                      <span className="text-[#FF6B00] opacity-50">[{new Date().toLocaleTimeString()}]</span>
+                      <span className={log.includes('COMPLETE') ? 'text-[#34d399]' : 'text-neutral-400'}>{log}</span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </GlassCard>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import '@/styles/globals.css'
 import { OsShell } from '@/components/layout/OsShell'
+import NextAuthSessionProvider from '@/components/providers/SessionProvider'
 
 export const metadata: Metadata = {
   title: { default: 'MecaPro OS', template: '%s — MecaPro OS V5.0' },
@@ -26,9 +27,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-[#0e0e0e] text-white font-['Inter']">
         <div className="crt-overlay" />
-        <QueryProvider>
-          <OsShell>{children}</OsShell>
-        </QueryProvider>
+        <NextAuthSessionProvider>
+          <QueryProvider>
+            <OsShell>{children}</OsShell>
+          </QueryProvider>
+        </NextAuthSessionProvider>
       </body>
     </html>
   )

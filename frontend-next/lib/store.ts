@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { signOut } from 'next-auth/react'
 
 interface User {
   id: string
@@ -30,9 +31,12 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     try {
       await fetch('/api/internal/auth/logout', { method: 'POST' })
+      // Also sign out from NextAuth (Google)
+      await signOut({ redirect: false })
     } catch (e) {}
     
     set({ user: null, token: null })
+    localStorage.removeItem('token')
     if (typeof window !== 'undefined') {
       window.location.href = '/login'
     }

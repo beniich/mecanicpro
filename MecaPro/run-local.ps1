@@ -37,7 +37,6 @@ Write-Host "   ℹ️ Gateway accessible sur : http://localhost:5000" -Foregroun
 Write-Host "4️⃣  LANCEMENT DU FRONTEND NEXT.JS (TURBO ENGINE)..." -ForegroundColor Green
 Set-Location ..\frontend-next
 
-# On alloue plus de mémoire à Node.js pour éviter les freezes au build Turbo
 $env:NODE_OPTIONS = "--max-old-space-size=4096"
 $env:NEXT_PUBLIC_API_URL = "http://localhost:3000"
 

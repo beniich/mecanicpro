@@ -40,7 +40,16 @@ export async function POST(request: Request) {
     }
     
     return NextResponse.json(data)
-  } catch (error) {
-    return NextResponse.json({ error: 'BFF Gateway Connection Error' }, { status: 500 })
+  } catch (error: any) {
+    console.error('BFF Authentication Error:', error.message)
+    
+    // Check if it's a connection error (Gateway down)
+    if (error.code === 'ECONNREFUSED' || error.message.includes('fetch failed')) {
+      return NextResponse.json({ 
+        error: 'BFF Gateway Connection Error: Please ensure Docker Desktop and Backend services are running.' 
+      }, { status: 503 })
+    }
+
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
