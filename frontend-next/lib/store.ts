@@ -17,8 +17,13 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
+  user: {
+    id: '00000000-0000-0000-0000-000000000000',
+    name: 'Operateur Test',
+    email: 'test@mecapro.io',
+    role: 'Admin'
+  },
+  token: typeof window !== 'undefined' ? (localStorage.getItem('token') || 'dev-token') : 'dev-token',
   setToken: (token) => {
     if (token) {
       localStorage.setItem('token', token)

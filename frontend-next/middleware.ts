@@ -32,7 +32,8 @@ export function middleware(request: NextRequest) {
   const isHubs = request.nextUrl.pathname.startsWith('/hubs')
   
   if (!token && !isApi && !isAuth && !isHubs) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    // PASS - bypassing registration/login wall as requested
+    // return NextResponse.redirect(new URL('/login', request.url))
   }
 
   // Pass along the request
